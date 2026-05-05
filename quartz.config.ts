@@ -2,42 +2,48 @@ import { QuartzConfig } from "./quartz/cfg"
 import * as Plugin from "./quartz/plugins"
 
 /**
- * Quartz 4 Configuration
+ * 投研档案库 · Quartz 配置
  *
- * See https://quartz.jzhao.xyz/configuration for more information.
+ * 部署前请修改：
+ * 1. baseUrl: 改成你的 GitHub Pages 地址
+ * 2. pageTitle: 改成你想要的站点名
+ * 3. 如果用自定义域名，baseUrl 改成你的域名（不带 https://）
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Quartz 4",
-    pageTitleSuffix: "",
+    pageTitle: "投研档案库",
+    pageTitleSuffix: " · Research Archive",
     enableSPA: true,
-    enablePopovers: true,
-    analytics: {
-      provider: "plausible",
-    },
-    locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    enablePopovers: true,        // 鼠标悬停在双向链接上预览内容
+    analytics: null,             // 不需要统计分析
+    locale: "zh-CN",
+    baseUrl: "doris-w.github.io/research",  // 改成你的实际地址
+    ignorePatterns: [
+      "private",                 // private/ 文件夹下的内容不会发布
+      "templates",               // 模板不发布
+      ".obsidian",
+      "**/*.canvas",
+    ],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        header: "Schibsted Grotesk",
-        body: "Source Sans Pro",
-        code: "IBM Plex Mono",
+        header: "Source Serif Pro",   // 标题用衬线字体（FT 风格）
+        body: "Inter",                 // 正文用 Inter（清晰好读）
+        code: "JetBrains Mono",        // 代码字体
       },
       colors: {
         lightMode: {
-          light: "#faf8f8",
+          light: "#faf8f5",            // 米白底（FT 那种暖色调）
           lightgray: "#e5e5e5",
           gray: "#b8b8b8",
           darkgray: "#4e4e4e",
           dark: "#2b2b2b",
-          secondary: "#284b63",
+          secondary: "#284b63",        // 深蓝（链接 / 强调）
           tertiary: "#84a59d",
           highlight: "rgba(143, 159, 169, 0.15)",
-          textHighlight: "#fff23688",
+          textHighlight: "#fff236",
         },
         darkMode: {
           light: "#161618",
@@ -60,10 +66,7 @@ const config: QuartzConfig = {
         priority: ["frontmatter", "git", "filesystem"],
       }),
       Plugin.SyntaxHighlighting({
-        theme: {
-          light: "github-light",
-          dark: "github-dark",
-        },
+        theme: { light: "github-light", dark: "github-dark" },
         keepBackground: false,
       }),
       Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: false }),
@@ -73,7 +76,9 @@ const config: QuartzConfig = {
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
     ],
-    filters: [Plugin.RemoveDrafts()],
+    filters: [
+      Plugin.RemoveDrafts(),         // draft: true 的不发布
+    ],
     emitters: [
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),
@@ -86,10 +91,7 @@ const config: QuartzConfig = {
       }),
       Plugin.Assets(),
       Plugin.Static(),
-      Plugin.Favicon(),
       Plugin.NotFoundPage(),
-      // Comment out CustomOgImages to speed up build time
-      Plugin.CustomOgImages(),
     ],
   },
 }
