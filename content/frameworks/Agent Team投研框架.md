@@ -1,5 +1,5 @@
 ---
-title: 六 Agent 投研框架
+title: Agent Team投研框架
 date: 2026-04-15
 tags:
   - 研究框架
