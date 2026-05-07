@@ -10,7 +10,7 @@ tags:
 
 > 一句话：每行 = 一个 AI 行业事件 → 二级市场标的的传导对。强度分级基于 T+0 到 T+5 的价格反应幅度。
 
-<iframe src="/research/reports-html/frameworks/AI-practitioner-vs-stocks.html" width="100%" height="600px" style="border:none;"></iframe>
+<iframe src="/research/reports-html/frameworks/AI-practitioner-vs-stocks.html" width="100%" height="800px" style="border:none;"></iframe>
 <iframe src="/research/你的文件夹/你的文件.html" width="100%" height="600px" style="border:none;"></iframe>
 
 
