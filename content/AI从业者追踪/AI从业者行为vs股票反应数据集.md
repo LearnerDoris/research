@@ -8,10 +8,10 @@ tags:
   - 数据集
 ---
 
-> 📊 **[查看完整可视化报告](../reports-html/frameworks/AI-practitioner-vs-stocks.html)**
+> 📊 **[查看完整可视化报告](../reports-html/frameworks/AI-practitioner-vs-stocks)**
 
 ---
-> 📊 **[查看完整可视化报告](../reports-html/frameworks/AI-practitioner-vs-stocks.html)**
+> 📊 **[查看完整可视化报告](../reports-html/frameworks/AI-practitioner-vs-stocks)**
 > 一句话：每行 = 一个 AI 行业事件 → 二级市场标的的传导对。强度分级基于 T+0 到 T+5 的价格反应幅度。
 
 ## 数据集
