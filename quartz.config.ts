@@ -17,7 +17,7 @@ const config: QuartzConfig = {
     enablePopovers: true,        // 鼠标悬停在双向链接上预览内容
     analytics: null,             // 不需要统计分析
     locale: "zh-CN",
-    baseUrl: "doris-w.github.io/research",  // 改成你的实际地址
+    baseUrl: "learnerdoris.github.io/research",// 改成你的实际地址
     ignorePatterns: [
       "private",                 // private/ 文件夹下的内容不会发布
       "templates",               // 模板不发布
