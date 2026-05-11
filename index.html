@@ -8,10 +8,14 @@
         :root { --primary: #0f172a; --bg: #f8fafc; --card-bg: #ffffff; --text: #334155; --text-light: #64748b; --border: #e2e8f0; --hover: #f1f5f9; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text); max-width: 1000px; margin: 0 auto; padding: 40px 20px; line-height: 1.6; }
         
-        /* 头部样式 */
-        header { border-bottom: 2px solid var(--border); padding-bottom: 20px; margin-bottom: 30px; }
+        /* 头部与搜索栏样式 */
+        header { border-bottom: 2px solid var(--border); padding-bottom: 20px; margin-bottom: 20px; }
         h1 { color: var(--primary); font-size: 2.2em; margin: 0 0 10px 0; }
-        .site-meta { color: var(--text-light); font-size: 0.95em; }
+        .site-meta { color: var(--text-light); font-size: 0.95em; margin-bottom: 15px; }
+        
+        .search-container { margin-bottom: 20px; }
+        .search-input { width: 100%; max-width: 100%; box-sizing: border-box; padding: 12px 20px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; color: var(--text); background-color: var(--card-bg); transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .search-input:focus { outline: none; border-color: #94a3b8; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         
         /* 分类过滤器 */
         .filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
@@ -31,6 +35,9 @@
         .card-excerpt { font-size: 0.9em; color: var(--text-light); flex-grow: 1; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .card-footer { font-size: 0.85em; color: var(--text-light); border-top: 1px solid var(--border); padding-top: 12px; display: flex; justify-content: space-between; }
         
+        /* 无结果提示 */
+        #no-results { display: none; text-align: center; padding: 40px; color: var(--text-light); font-size: 1.1em; width: 100%; grid-column: 1 / -1; }
+        
         footer { margin-top: 50px; text-align: center; color: var(--text-light); font-size: 0.85em; }
         .hidden { display: none !important; }
     </style>
@@ -39,6 +46,10 @@
     <header>
         <h1>📚 投研档案库</h1>
         <div class="site-meta">个人投研档案库 · 共 5 份报告</div>
+        
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-input" placeholder="🔍 搜索报告标题、摘要或关键词...">
+        </div>
     </header>
 
     <div class="filters">
@@ -91,28 +102,67 @@
                 <span>📅 2026-05-07</span>
             </div>
         </a>
+        <div id="no-results">📭 没有找到匹配的报告，请尝试其他关键词。</div>
     </div>
 
     <footer>
-        最后更新：2026-05-11 13:39:21 · 由 build_index.py 自动生成
+        最后更新：2026-05-11 13:44:12 · 由 build_index.py 自动生成
     </footer>
 
     <script>
-        // 分类筛选逻辑
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                // 更新按钮状态
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.card');
+            const noResults = document.getElementById('no-results');
+            
+            let currentFilter = 'all';
+            let searchQuery = '';
+
+            // 核心过滤函数：同时验证“分类”和“搜索词”
+            function updateCards() {
+                let visibleCount = 0;
                 
-                // 筛选卡片
-                const filter = btn.getAttribute('data-filter');
-                document.querySelectorAll('.card').forEach(card => {
-                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                cards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const excerpt = card.querySelector('.card-excerpt').textContent.toLowerCase();
+                    
+                    const matchesFilter = (currentFilter === 'all' || category === currentFilter);
+                    const matchesSearch = (title.includes(searchQuery) || excerpt.includes(searchQuery));
+                    
+                    if (matchesFilter && matchesSearch) {
                         card.classList.remove('hidden');
+                        visibleCount++;
                     } else {
                         card.classList.add('hidden');
                     }
+                });
+                
+                // 控制无结果提示的显示
+                if (visibleCount === 0) {
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
+            }
+
+            // 1. 监听搜索框输入
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                updateCards();
+            });
+
+            // 2. 监听分类按钮点击
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 更新按钮高亮状态
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // 更新当前过滤条件并执行过滤
+                    currentFilter = btn.getAttribute('data-filter');
+                    updateCards();
                 });
             });
         });
