@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 基础设施栈周报 2026-05-04 ~ 2026-05-07</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+<style>
+  :root {
+    --bg:#ffffff;--bg2:#f5f5f3;--bg3:#eeecea;
+    --text:#1a1a1a;--text2:#555552;--text3:#888784;
+    --border:#dddbd8;--accent:#3266ad;--danger:#E24B4A;
+    --warning:#BA7517;--success:#1D9E75;
+    --font:-apple-system,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font);background:var(--bg);color:var(--text);
+       font-size:14px;line-height:1.7;max-width:920px;margin:0 auto;padding:32px 24px 64px;}
+  h1{font-size:23px;font-weight:600;margin-bottom:6px;letter-spacing:-0.01em;}
+  h2{font-size:17px;font-weight:600;margin:36px 0 14px;padding-bottom:8px;border-bottom:1.5px solid var(--border);}
+  h3{font-size:14px;font-weight:600;margin:22px 0 10px;color:var(--text);}
+  h4{font-size:12px;font-weight:600;margin:14px 0 6px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;}
+  p{margin-bottom:10px;}
+  ul,ol{padding-left:22px;margin-bottom:10px;}
+  li{margin-bottom:4px;}
+  strong{font-weight:600;}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;}
+  th{background:var(--bg2);padding:9px 11px;text-align:left;border:1px solid var(--border);font-weight:600;font-size:12px;}
+  td{padding:9px 11px;border:1px solid var(--border);vertical-align:top;}
+  tr:nth-child(even) td{background:var(--bg2);}
+  .header{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px;}
+  .meta{font-size:12px;color:var(--text3);margin-top:5px;}
+  .meta-row{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--text3);margin-top:6px;}
+  .meta-row span{display:flex;align-items:center;gap:5px;}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px;margin:14px 0 18px;}
+  .kpi{background:var(--bg2);border-radius:8px;padding:13px 15px;}
+  .kpi-label{font-size:11px;color:var(--text3);margin-bottom:4px;font-weight:500;}
+  .kpi-value{font-size:18px;font-weight:600;line-height:1.3;}
+  .kpi-sub{font-size:11.5px;color:var(--text2);margin-top:5px;line-height:1.5;}
+  .up{color:var(--success);}
+  .down{color:var(--danger);}
+  .warn{color:var(--warning);}
+  .callout{background:var(--bg2);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;
+           padding:12px 16px;margin:12px 0 18px;font-size:13px;color:var(--text2);}
+  .callout.warn-box{border-color:var(--warning);}
+  .callout.danger-box{border-color:var(--danger);}
+  .callout.success-box{border-color:var(--success);}
+  .chart-wrap{position:relative;width:100%;margin:14px 0 12px;background:var(--bg2);border-radius:8px;padding:16px;}
+  .summary-box{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);
+               border-radius:10px;padding:18px 22px;margin:18px 0 28px;border-left:4px solid var(--accent);}
+  .summary-box h3{margin-top:0;font-size:14px;}
+  .summary-box ol{padding-left:20px;margin-top:8px;}
+  .summary-box ol li{margin-bottom:8px;font-size:13.5px;line-height:1.65;}
+  .stars{color:var(--warning);font-size:11px;letter-spacing:1px;white-space:nowrap;}
+  .stars-high{color:var(--danger);}
+  .stars-low{color:var(--text3);}
+  .signal-box{padding:14px 16px;margin:12px 0;border-radius:6px;background:var(--bg2);border-left:3px solid var(--warning);}
+  .signal-box .sig-title{font-weight:600;font-size:13.5px;margin-bottom:8px;color:var(--text);}
+  .signal-box.strong{border-left-color:var(--danger);}
+  .signal-box.weak{border-left-color:var(--text3);}
+  .signal-box ul{margin:0;padding-left:18px;font-size:13px;}
+  .signal-box li{margin-bottom:5px;}
+  .focus-section{background:var(--bg2);border-radius:8px;padding:16px 20px;margin:14px 0;}
+  .focus-section h3{margin-top:0;font-size:15px;color:var(--text);font-weight:600;}
+  .focus-section .narrative{font-size:12.5px;color:var(--text2);margin-bottom:10px;font-style:italic;}
+  .recommendation-section{margin:14px 0;}
+  .recommendation-section .rec-header{font-size:13px;font-weight:600;margin:14px 0 8px;padding:6px 12px;border-radius:5px;display:inline-block;}
+  .rec-header.add{background:rgba(29,158,117,0.15);color:var(--success);}
+  .rec-header.reduce{background:rgba(226,75,74,0.15);color:var(--danger);}
+  .rec-header.watch{background:rgba(186,117,23,0.15);color:var(--warning);}
+  .verify-box{background:rgba(29,158,117,0.06);border:1px solid rgba(29,158,117,0.25);border-radius:6px;padding:11px 14px;margin:14px 0;font-size:12.5px;}
+  .verify-box .v-title{font-weight:600;color:var(--success);margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;}
+  .sources{margin-top:48px;padding-top:22px;border-top:1.5px solid var(--border);}
+  .sources-title{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;}
+  .sources ul{font-size:12px;color:var(--text3);columns:2;column-gap:32px;padding-left:18px;}
+  .disclaimer{margin-top:18px;font-size:11px;color:var(--text3);padding:11px 15px;background:var(--bg2);border-radius:6px;line-height:1.6;}
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;margin-right:5px;letter-spacing:0.02em;}
+  .badge-strong{background:rgba(226,75,74,0.15);color:var(--danger);}
+  .badge-medium{background:rgba(186,117,23,0.15);color:var(--warning);}
+  hr.div{border:none;border-top:1px solid var(--border);margin:6px 0;}
+  @media(prefers-color-scheme:dark){
+    :root{--bg:#1a1a18;--bg2:#242422;--bg3:#2e2e2c;
+          --text:#e8e6e0;--text2:#b0aea8;--text3:#777572;--border:#3a3a38;}
+    th{background:var(--bg3);}
+    tr:nth-child(even) td{background:var(--bg2);}
+  }
+  @media print{
+    body{max-width:100%;padding:20px;}
+    .chart-wrap{page-break-inside:avoid;}
+  }
+  @media(max-width:600px){
+    body{padding:20px 16px;}
+    .kpi-grid{grid-template-columns:1fr;}
+    .sources ul{columns:1;}
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="meta">📊 AI 基础设施栈周报 · Weekly Brief</div>
+  <h1>2026 年 5 月 4 日 ~ 5 月 7 日（4 个交易日）</h1>
+  <div class="meta-row">
+    <span>📅 数据截止：美东 2026-05-07 收盘</span>
+    <span>⏰ 生成时间：SGT 2026-05-08</span>
+    <span>🎯 时间窗口：5/8 美股盘未收，本周报不纳入</span>
+  </div>
+  <div class="meta" style="margin-top:8px;font-style:italic;">本周特征：从"上调 capex 全员获奖"到"下游兑现度分化"——AMD 财报炸裂、ANET 兑现失败、AVGO OpenAI 融资条款曝光、油价高位回落</div>
+</div>
+
+<!-- ===== 执行摘要 ===== -->
+<div class="summary-box">
+  <h3>📌 本周三个核心结论</h3>
+  <ol>
+    <li><strong>L1 内部因 OpenAI 单点风险二度发酵而开始分化。</strong>AMD 5/5 财报 EPS $1.37 / 营收 $10.25B (+38% YoY) / Q2 指引 $11.2B (+45% YoY) 三项全超，盘后 +18.6%，5/6 创历史新高 $430.60。但同日 AVGO 因 WSJ 报 OpenAI $18B 融资条款（Broadcom 要 MSFT 接 40% 才肯垫资）周四下跌 4%，从 5/5 历史高 $427.36 回落至 5/7 收 $417.21。NVDA $211.50（+1.85%）等 5/20 自家财报。<strong>L1 龙头股的需求基础正在从"OpenAI 集中"重定价到"自定义 silicon 客户分散度"。</strong></li>
+    <li><strong>上周报告设的"翻多触发条件"在 ANET 上首次失效，是触发条件机制的成功验证。</strong>ANET 5/5 财报营收 $2.71B 超共识 $2.62B 但低于上周设定的翻多阈值 $2.78B，叠加 Q2 指引偏保守，盘后 -13.64%。<strong>这正是上周"营收 ≥$2.78B"严格阈值的目的——超共识不等于超预期。</strong>同期 IREN 上周翻多触发条件"Sweetwater 1.4GW 上线"在 5/1 实锤兑现 + 5/5 宣布 $625M 收购 Mirantis；ORCL 减仓阈值 $161 不仅未破，反而在 4/13–5/6 间从 $155 涨至 $194（+25%），减仓判断本周需正式撤回。</li>
+    <li><strong>宏观面双向同时松动：油价从 5/4 高点回落、Warsh 5/11 全院投票临近、5/8 NFP 共识 62k 显著低于 3 月 178k。</strong>Brent 5/4 收 $114.44（+6%），到 5/7 回落至 $100.06（-1%），美伊就开放 Hormuz 海峡谈判进入核心阶段。Warsh 4/29 委员会 13-11 党派票通过、5/11 周全院投票，鸽派降息预期可能因此延后。5/8 NFP 是 4/2 关税生效后第一份就业报告，若 ≤ 50k 将给降息预期添柴。<strong>三件事情同时松动意味着市场叙事下周可能从"AI 财报"快速切换到"宏观货币"。</strong></li>
+  </ol>
+</div>
+
+<!-- ===== 八层热度仪表盘 ===== -->
+<h2>📊 八层热度仪表盘</h2>
+<p style="font-size:13px;color:var(--text2);margin-bottom:8px;">按事件强度降序排列。L1 / L2 / L4 / L7 是本周四大焦点层。</p>
+
+<table>
+  <tr>
+    <th>排序</th>
+    <th>层级</th>
+    <th>本周代表股表现</th>
+    <th>事件强度</th>
+    <th>关键事件（≤25字）</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><strong>L1 硅基大脑</strong></td>
+    <td class="warn">AMD +波动 / AVGO 创高后回落</td>
+    <td><span class="stars stars-high">⭐⭐⭐⭐⭐</span></td>
+    <td>AMD 财报炸裂 + AVGO OpenAI $18B 条款曝光</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><strong>L2 算力血管</strong></td>
+    <td class="down">ANET -13.64%</td>
+    <td><span class="stars stars-high">⭐⭐⭐⭐⭐</span></td>
+    <td>ANET 财报超共识但 Q2 指引偏保守，触发翻空</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><strong>L4 数字记忆</strong></td>
+    <td class="up">MU $577 → $678 (+17%)</td>
+    <td><span class="stars">⭐⭐⭐⭐</span></td>
+    <td>MU 续涨创新高，Mag 7 capex 上调向定价权传导</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><strong>L7 能源原力</strong></td>
+    <td class="warn">VST -1.3% / OKLO +12%</td>
+    <td><span class="stars">⭐⭐⭐⭐</span></td>
+    <td>VST 财报 narrowly 错过翻多阈值；OKLO NRC 批 Aurora</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><strong>L8 应用分发</strong></td>
+    <td class="warn">ORCL +25% (近 3 周) / META 持续承压</td>
+    <td><span class="stars">⭐⭐⭐⭐</span></td>
+    <td>ORCL 反转买入；META 持续 capex 担忧</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td><strong>L5 算力基建商</strong></td>
+    <td class="up">IREN +Sweetwater 上线</td>
+    <td><span class="stars">⭐⭐⭐</span></td>
+    <td>1.4GW 5/1 上线 + 5/5 收购 Mirantis $625M</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td><strong>L3 物理躯干</strong></td>
+    <td class="down">VRT -4.85%</td>
+    <td><span class="stars">⭐⭐⭐</span></td>
+    <td>财报 EPS +17% beat 但当周回吐</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td><strong>L6 能量缓冲</strong></td>
+    <td class="warn">EOSE 持平</td>
+    <td><span class="stars stars-low">⭐</span></td>
+    <td>持续无显著事件</td>
+  </tr>
+</table>
+
+<div class="chart-wrap" style="height:380px;">
+  <canvas id="layerHeatmap" role="img" aria-label="八层涨跌幅与事件强度组合图：L1 双向高强度、L2 高强度且大跌（ANET）、L4 中等强度且涨幅最大、L7 高强度但内部分化、L8 中等强度、L5 中等正面、L3 中等回吐、L6 无事件。">本周八层代表股表现与事件强度热力图</canvas>
+</div>
+
+<hr class="div">
+
+<!-- ===== 上周触发条件验证 ===== -->
+<h2>✅ 上周触发条件验证</h2>
+<div class="verify-box">
+  <div class="v-title">上周报告（4/20–5/1）的"翻多/翻空触发条件"本周兑现情况</div>
+  <ul>
+    <li><strong>ANET 翻多触发：营收 ≥$2.78B + AI 网络指引上调至 $3.5B+</strong> → <span class="down">未达成</span>。实际营收 $2.71B（差 $0.07B）；AI 指引上调至 $3.5B 但 Q2 指引偏保守，<strong>盘后跌 -13.64%</strong>。"严格阈值"机制成功避免了 false positive 入场。</li>
+    <li><strong>VST 翻多触发：EPS ≥$1.32</strong> → <span class="warn">narrowly 错过</span>。实际 EPS $1.31（差 $0.01）；维持 EBITDA 指引 $6.8-7.6B；获升投资级评级；盘前 +3.8% 但 5/7 收盘 -1.3%。条件接近但未触发，维持观望。</li>
+    <li><strong>IREN 翻多触发：Sweetwater 1.4GW 上线</strong> → <span class="up">5/1 已确认上线</span>。叠加 5/5 宣布 $625M 收购 Mirantis（Kubernetes/AI 平台）。本周首次满足上周翻多条件，建议从"观望"上调至"加仓"。</li>
+    <li><strong>NVDA 翻多触发：突破 $216.83 历史前高</strong> → <span class="warn">未触发</span>。本周区间 $207-211，距前高仍有 ~3%；继续观望，等 5/20 财报。</li>
+    <li><strong>META 减仓阈值：跌破 $660</strong> → <span class="warn">未跌破</span>。post-earnings 一度跌 10% 但震荡未确认破位。维持减仓警示。</li>
+    <li><strong>ORCL 减仓阈值：跌破 $161</strong> → <span class="up">完全未触发，反而 4/13 $155 → 5/7 $198 (+28%)</span>。上周减仓判断需正式撤回；OpenAI 单点风险与 Backlog $553B 同时博弈中。</li>
+  </ul>
+</div>
+
+<hr class="div">
+
+<!-- ===== 跨层联动信号 ===== -->
+<h2>🔗 跨层联动信号</h2>
+
+<div class="signal-box strong">
+  <div class="sig-title"><span class="badge badge-strong">强</span>信号 A：L1 自定义芯片周期使 AVGO 与 NVDA 第一次出现"反向脱钩"</div>
+  <ul>
+    <li><strong>5/4 触发：</strong>WSJ/路透报道 OpenAI 与 Broadcom 协议中 Broadcom 要求 MSFT 包销 40% 芯片才肯垫资 $18B 第一阶段（1.3 GW 数据中心）</li>
+    <li><strong>5/5 反应：</strong>AVGO 创历史收盘新高 $427.36，市场原本"忽略"该报道</li>
+    <li><strong>5/7 反转：</strong>AVGO 跌 4%，跌至 $417.21，<strong>同日 NVDA +1.85% 至 $211.50</strong></li>
+    <li><strong>逻辑：</strong>当 OpenAI 单点风险被聚焦时，市场资金从"AVGO（自定义芯片高度依赖 OpenAI 包销）"流向"NVDA（GPU 客户高度分散）"。这是上周报告 L1 内部第一次出现真正的资金分流，与 4/28 那次"集体下跌"完全不同。</li>
+    <li><strong>投资含义：</strong>L1 内部不再适合用"AI 半导体"一条线统揽。AVGO 和 NVDA 在客户分散度这条主轴上正式分叉。</li>
+  </ul>
+</div>
+
+<div class="signal-box strong">
+  <div class="sig-title"><span class="badge badge-strong">强</span>信号 B：L8 capex → L4 价格的传导继续单向放大</div>
+  <ul>
+    <li><strong>持续性证据：</strong>MU 从上周 $577.79 涨至 5/7 $678.30（+17.4%），SNDK 各源数据 $1,300-$1,410 区间继续创新高</li>
+    <li><strong>客观面：</strong>4/29 META 财报上调 2026 capex 上限至 $145B（vs 上周末 $135B），Hargreaves Lansdown 分析师 Britzman 公开归因"part of the increase came from higher memory prices"</li>
+    <li><strong>对比信号 A：</strong>L1 内部现在按"客户分散度"定价；但 L4 仍按"hyperscaler 集体 capex"定价——MU/SNDK 不存在客户集中度问题，所有 hyperscaler 都必须从他们买</li>
+    <li><strong>投资含义：</strong>L4 是过去三周里"最干净"的 AI capex 受益方。下周需关注 MU 6/29 自家财报前的 momentum 是否能维持，标普 500 头号股 SNDK 估值已 PE ~40x 进入顶部担忧区。</li>
+  </ul>
+</div>
+
+<div class="signal-box">
+  <div class="sig-title"><span class="badge badge-medium">中</span>信号 C：宏观面同时松动可能切换市场叙事</div>
+  <ul>
+    <li><strong>油价：</strong>Brent 5/4 收 $114.44（+6%、四年新高）→ 5/7 收 $100.06（-1%）；WTI 同步从 $106.42 回到 $94.81。美伊就开放 Hormuz 谈判进入第 9-10 周</li>
+    <li><strong>Warsh：</strong>4/29 银行委员会 13-11 党派全票通过；5/11 周全院投票；Powell 任期 5/15 结束。Warsh 鹰派立场可能延后年内降息预期</li>
+    <li><strong>NFP：</strong>5/8 4 月就业数据共识 62k（GS 75k），<strong>是 4/2 关税生效后首份就业报告</strong>，若 ≤ 50k 将强化"经济快速放缓 → Fed 必须降息"叙事</li>
+    <li><strong>三方向博弈：</strong>油价回落 + 弱就业 + 鹰派 Fed 接班，叙事在"软着陆 → 必须降息 → 鹰派耽误"之间快速切换</li>
+    <li><strong>投资含义：</strong>L1 / L8 forward P/E 22-30x 高估值层在叙事切换时波动会被放大；L4（MU forward P/E ~9x）和 L5（IREN 现金流刚刚启动）相对低基期标的反而获得估值松绑</li>
+  </ul>
+</div>
+
+<hr class="div">
+
+<!-- ===== 焦点层深度展开 ===== -->
+<h2>🎯 焦点层深度展开</h2>
+
+<div class="focus-section">
+  <h3>L1 硅基大脑：第一次真正的内部分化</h3>
+  <div class="narrative">AMD 财报炸裂 + AVGO OpenAI 条款曝光 = L1 内部按客户分散度重定价。</div>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-label">AMD 5/7 收盘</div><div class="kpi-value warn">$408.46 (-3.07%)</div><div class="kpi-sub">5/6 创 52w 高 $430.60；财报后 +18.6% 单日</div></div>
+    <div class="kpi"><div class="kpi-label">AMD Q1 财报</div><div class="kpi-value up">EPS $1.37 / Rev $10.25B</div><div class="kpi-sub">营收 +38% YoY；Q2 指引 $11.2B (+45% YoY)</div></div>
+    <div class="kpi"><div class="kpi-label">AVGO 5/7 收盘</div><div class="kpi-value warn">$417.21 (-4% Thu)</div><div class="kpi-sub">5/5 历史高 $427.36；OpenAI 融资条款曝光</div></div>
+    <div class="kpi"><div class="kpi-label">NVDA 5/7 收盘</div><div class="kpi-value up">$211.50 (+1.85%)</div><div class="kpi-sub">周累 +5.98%；距前高 $216.83 仅 ~2.5%</div></div>
+  </div>
+
+  <h4>关键信息（按时间序）</h4>
+  <ul style="font-size:13px;">
+    <li>5/5 AMD 财报后续：数据中心营收明确加速、ROCm 软件生态出现实质性突破，Q2 指引隐含数据中心 GPU 已在追赶</li>
+    <li>5/5 AVGO 创新高，"忽略"了同日 WSJ 关于 OpenAI $18B 融资条款的报道</li>
+    <li>5/6 AMD 创 52w 新高 $430.60；NVDA 收 $207.83（前一日）</li>
+    <li>5/7 AVGO -4%（OpenAI 风险被市场重新定价）+ NVDA +1.85%（资金从 AVGO 流向 NVDA）+ AMD -3.07%（earning 后获利回吐）</li>
+  </ul>
+
+  <h4>下周关键观察</h4>
+  <ul style="font-size:13px;">
+    <li>5/20 NVDA Q1 FY27 财报：自家指引 $78B ±2%；Goldman 估 $80.05B、EPS $1.86（vs 共识 $1.74）</li>
+    <li>NVDA 价位区间 $207-211 距前高 $216.83 仅 ~2.5%；财报前一周或上行测试</li>
+    <li>AVGO 是否能修复 $420 损失关口；MSFT 对 OpenAI 包销 40% 芯片态度公开化是关键拐点</li>
+  </ul>
+</div>
+
+<div class="focus-section">
+  <h3>L2 算力血管：触发条件机制的成功验证</h3>
+  <div class="narrative">超共识不等于超预期——上周报告的"严格阈值"成功阻止了一次错误入场。</div>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-label">ANET Q1 营收</div><div class="kpi-value warn">$2.71B</div><div class="kpi-sub">超共识 $2.62B 但低于上周翻多阈值 $2.78B</div></div>
+    <div class="kpi"><div class="kpi-label">ANET Q1 EPS</div><div class="kpi-value up">$0.87 vs $0.79</div><div class="kpi-sub">+10.13% beat</div></div>
+    <div class="kpi"><div class="kpi-label">财报后股价</div><div class="kpi-value down">-13.64%</div><div class="kpi-sub">Q2 指引偏保守是触发因素</div></div>
+    <div class="kpi"><div class="kpi-label">2026 全年指引</div><div class="kpi-value up">$11.5B (+27.7%)</div><div class="kpi-sub">AI 营收目标上调至 $3.5B+</div></div>
+  </div>
+
+  <h4>关键启示（用于本周报投资矩阵设计）</h4>
+  <ul style="font-size:13px;">
+    <li>"超共识"门槛过低，必须用上周报告的"在 prior week 收盘价 + 8% 以上"作为翻多严格阈值</li>
+    <li>Gross margin 同比微缩 0.1pp（42.7% vs 42.8%）+ Q2 保守指引 = 市场对"AI 网络龙头"是否还能维持高估值的第一次正式怀疑</li>
+    <li>本周报对 AVGO 入场上调"突破回调"建议时也需吸取这个经验——单纯创新高不足以确认</li>
+  </ul>
+</div>
+
+<div class="focus-section">
+  <h3>L4 数字记忆：连续第三周扩大领先优势</h3>
+  <div class="narrative">L4 是本月唯一既无客户集中度风险、又有定价权确认的层。</div>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-label">MU 5/7 收盘</div><div class="kpi-value up">$678.30</div><div class="kpi-sub">两周累计 +17.4%（vs 上周 $577.79）</div></div>
+    <div class="kpi"><div class="kpi-label">SNDK 价格区间</div><div class="kpi-value up">$1,300-1,410</div><div class="kpi-sub">YTD +331% 全年最佳标的（数据源略有差异）</div></div>
+    <div class="kpi"><div class="kpi-label">MU 隐含上行</div><div class="kpi-value warn">+41%</div><div class="kpi-sub">Melius 维持 buy，目标价 ~$960（隐含）</div></div>
+    <div class="kpi"><div class="kpi-label">META capex 归因</div><div class="kpi-value">memory pricing</div><div class="kpi-sub">$135B → $145B 上调直接归因</div></div>
+  </div>
+
+  <p style="font-size:13px;">本周 META、MSFT 等下游 hyperscaler 在财报后续电话会上反复强调"more than half of capex variance is component pricing"。这意味着 L4 的合同定价已经是 sticky—下游不会等价格回落，必须接受上行。<strong>L4 是过去三周里唯一一条 capex → 利润的"完整验证链"。</strong></p>
+</div>
+
+<div class="focus-section">
+  <h3>L7 能源原力：双向催化（VST 错过 / OKLO 突破）</h3>
+  <div class="narrative">VST 财报 narrowly 错过；OKLO 因 NRC 批准 Aurora 设计单日 +12%。</div>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-label">VST 5/7 财报</div><div class="kpi-value up">EPS $1.31 / Rev $5.64B</div><div class="kpi-sub">EPS 超共识 $1.28 但低于翻多阈值 $1.32</div></div>
+    <div class="kpi"><div class="kpi-label">VST EBITDA 指引</div><div class="kpi-value up">$6.8-7.6B</div><div class="kpi-sub">维持；获 IG 评级升级；盘前 +3.8%</div></div>
+    <div class="kpi"><div class="kpi-label">OKLO 5/6 反应</div><div class="kpi-value up">+12%（NRC 批 Aurora）</div><div class="kpi-sub">收 ~$79.62（隔天回 $70.66）</div></div>
+    <div class="kpi"><div class="kpi-label">CEG 5/7</div><div class="kpi-value">$322.78</div><div class="kpi-sub">14 GW pipeline 含 Switch 12GW + Equinix 500MW</div></div>
+  </div>
+
+  <p style="font-size:13px;"><strong>VST：</strong>EPS narrowly 错过翻多阈值 + Net Income $1.03B 中含 $723M 未实现对冲收益（一次性），核心 EBITDA 仍维持，维持观望。<strong>OKLO：</strong>NRC 批准 Aurora Principal Design Criteria 是 SMR 板块的重大监管里程碑，但 14 GW 客户管道有 12 GW 是 Switch 一家，集中度风险高。<strong>下周关注：</strong>CEG 是否跟随 OKLO 上扬，能否成立"SMR + 大型核电双脚立"叙事。</p>
+</div>
+
+<hr class="div">
+
+<!-- ===== 投资指引矩阵 ===== -->
+<h2>💡 投资指引矩阵</h2>
+<div class="callout warn-box">
+⚠️ 所有"加仓"建议基于 5/7 收盘价。下周 5/8 NFP、5/11 周 Warsh 投票、5/20 NVDA 财报为关键风险事件。<strong>14 天内有催化剂的标的，加仓建议改为观望并标注催化剂日期。</strong>
+</div>
+
+<div class="recommendation-section">
+  <div class="rec-header add">🟢 加仓候选</div>
+  <div class="kpi-grid">
+    <div class="kpi" style="border-left: 3px solid var(--success);">
+      <div class="kpi-label">MU（当前 $678.30）</div>
+      <div class="kpi-value">入场 $640–670</div>
+      <div class="kpi-sub">
+        <strong>策略：</strong>逢低买入；上限 ≤ 当前收盘价 → 满足规则<br>
+        <strong>催化剂：</strong>HBM 售罄至 2027 + Mag 7 capex 直接传导第三周确认 + Melius 隐含目标价 +41%<br>
+        <strong>止损：</strong>$610（跌破近 5 日低位区间下沿）<br>
+        <strong>持有周期：</strong>中期（至 6/29 自家财报）<br>
+        <strong>风险：</strong>SNDK PE 已 40x，板块顶部担忧逐步上升；6/29 财报前 momentum 是关键
+      </div>
+    </div>
+    <div class="kpi" style="border-left: 3px solid var(--success);">
+      <div class="kpi-label">IREN（当前 ~$50 区间，5/7 财报后）</div>
+      <div class="kpi-value">入场 $48–53</div>
+      <div class="kpi-sub">
+        <strong>策略：</strong>上周翻多触发条件 5/1 已实锤兑现 → 从观望升级为加仓<br>
+        <strong>催化剂：</strong>Sweetwater 1（1.4GW）已上线 + Mirantis $625M 收购扩展软件栈<br>
+        <strong>止损：</strong>跌破 $44（财报后跳空填补防线）<br>
+        <strong>持有周期：</strong>中期（验证 Q4 FY26 客户合约新增）
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="recommendation-section">
+  <div class="rec-header reduce">🔴 减仓候选</div>
+  <div class="kpi-grid">
+    <div class="kpi" style="border-left: 3px solid var(--danger);">
+      <div class="kpi-label">META（capex 担忧未解）</div>
+      <div class="kpi-value">关注 $660 支撑（不变）</div>
+      <div class="kpi-sub">
+        <strong>减仓理由：</strong>capex $145B 上限确认；本周后续没有具象化 AI 营收兑现；Reality Labs 负担持续<br>
+        <strong>关键风险：</strong>8/1 Q2 财报<br>
+        <strong>关注价位：</strong>跌破 $660 触发进一步减仓<br>
+        <strong>本周更新：</strong>未跌破阈值，但反弹乏力，上周减仓判断维持
+      </div>
+    </div>
+    <div class="kpi" style="border-left: 3px solid var(--danger);">
+      <div class="kpi-label">AVGO（OpenAI 单点风险新发酵）</div>
+      <div class="kpi-value">关注 $410 支撑</div>
+      <div class="kpi-sub">
+        <strong>减仓理由：</strong>WSJ 报 Broadcom 要 MSFT 包销 40% 才垫资 $18B → 客户分散度叙事第一次受质疑<br>
+        <strong>关键风险：</strong>MSFT 是否公开拒绝包销条款；NVDA 5/20 财报对比效应<br>
+        <strong>关注价位：</strong>跌破 $410 触发减仓；上方 $427 历史高点为本周强压制位<br>
+        <strong>本周变化：</strong>从上周"加仓候选（突破回调买入）"下调至"减仓候选"
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="recommendation-section">
+  <div class="rec-header watch">🟡 观望（必须等触发条件）</div>
+  <div class="kpi-grid">
+    <div class="kpi" style="border-left: 3px solid var(--warning);">
+      <div class="kpi-label">NVDA（当前 $211.50，5/20 财报）</div>
+      <div class="kpi-value">阈值 $216.83 / $201.80</div>
+      <div class="kpi-sub">
+        <strong>翻多触发：</strong>突破 $216.83 历史前高 → 趋势延续买入<br>
+        <strong>翻空触发：</strong>跌破 50DMA $201.80 → 短期减仓避险<br>
+        <strong>催化剂：</strong>5/20 自家财报；GS 估 Q1 FY27 $80.05B / EPS $1.86（vs 共识 $78.30B / $1.74）<br>
+        <strong>本周变化：</strong>14 天内有重大催化剂 → 维持观望（按 spec 规则）
+      </div>
+    </div>
+    <div class="kpi" style="border-left: 3px solid var(--warning);">
+      <div class="kpi-label">AMD（当前 $408.46，财报已落地）</div>
+      <div class="kpi-value">阈值 $430 / $390</div>
+      <div class="kpi-sub">
+        <strong>翻多触发：</strong>突破 $430.60（5/6 历史高）→ 趋势延续买入<br>
+        <strong>翻空触发：</strong>跌破 $390 → 否定 Q2 指引信心<br>
+        <strong>催化剂：</strong>财报后续电话会内容 / NVDA 5/20 财报对比效应<br>
+        <strong>备注：</strong>Q1 三项全超 + Q2 指引 +45% YoY 是 L1 内部最强基本面
+      </div>
+    </div>
+    <div class="kpi" style="border-left: 3px solid var(--warning);">
+      <div class="kpi-label">VST（当前 $164 区间，财报后）</div>
+      <div class="kpi-value">阈值 $170 / $150</div>
+      <div class="kpi-sub">
+        <strong>翻多触发：</strong>$170 突破 + Mag 7 新 PPA 公告 → 入场<br>
+        <strong>翻空触发：</strong>跌破 $150 → 减仓<br>
+        <strong>备注：</strong>Q1 EPS narrowly 错过翻多阈值；Net Income 含一次性对冲收益 $723M；IG 评级升级是结构利好
+      </div>
+    </div>
+    <div class="kpi" style="border-left: 3px solid var(--warning);">
+      <div class="kpi-label">ORCL（当前 $198.33，撤回上周减仓）</div>
+      <div class="kpi-value">阈值 $200 / $180</div>
+      <div class="kpi-sub">
+        <strong>翻多触发：</strong>突破 $200 + 6/中财报 RPO 增量非 OpenAI 单一驱动 → 入场<br>
+        <strong>翻空触发：</strong>跌破 $180 → 重新进入减仓<br>
+        <strong>备注：</strong>4/13 $155 → 5/7 $198 (+28%)，上周减仓判断本期正式撤回；Backlog $553B 是基本面支撑
+      </div>
+    </div>
+    <div class="kpi" style="border-left: 3px solid var(--warning);">
+      <div class="kpi-label">OKLO（当前 ~$70-80 区间）</div>
+      <div class="kpi-value">阈值 突破 $85 / 跌破 $65</div>
+      <div class="kpi-sub">
+        <strong>翻多触发：</strong>突破 $85 + Switch 12GW 实际进入施工阶段 → 入场<br>
+        <strong>翻空触发：</strong>跌破 $65 → SMR 板块整体回调避险<br>
+        <strong>催化剂：</strong>NRC 批准 Aurora Principal Design Criteria（5/6 已确认）；下一步是 NRC 全套许可<br>
+        <strong>风险：</strong>14 GW 客户管道有 12 GW 集中在 Switch 一家
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ===== 下周关键事件日历 ===== -->
+<h2>📅 下周关键事件日历（5/8–5/15）</h2>
+
+<table>
+  <tr>
+    <th>日期（SGT）</th>
+    <th>事件</th>
+    <th>影响层</th>
+    <th>看多 / 看空触发条件</th>
+  </tr>
+  <tr>
+    <td>5/8 晚 20:30</td>
+    <td><strong>4 月 NFP（关税生效后首份）</strong></td>
+    <td>全板块（间接）</td>
+    <td>看多：≤50k → 强降息预期回归；看空：&gt;100k → 鹰派叙事强化压制 L1/L8 高估值</td>
+  </tr>
+  <tr>
+    <td>5/9 凌晨</td>
+    <td>4 月 NFP 后市场反应</td>
+    <td>全板块</td>
+    <td>L4 / L5 在叙事切换中相对获利</td>
+  </tr>
+  <tr>
+    <td>5/11 周</td>
+    <td><strong>Warsh 全院投票确认</strong></td>
+    <td>全板块</td>
+    <td>鹰派立场或推迟年内降息预期，L1/L8 估值压制；票数差异是次级信号</td>
+  </tr>
+  <tr>
+    <td>5/15</td>
+    <td>Powell 任期结束</td>
+    <td>全板块</td>
+    <td>过渡期内政策连续性是市场关注点</td>
+  </tr>
+  <tr>
+    <td>5/20 盘后</td>
+    <td><strong>NVDA Q1 FY27 财报</strong></td>
+    <td>L1（核心）</td>
+    <td>共识 $78.30B / EPS $1.74；GS 上调至 $80.05B / $1.86；指引上调将重置 L1 全年定价</td>
+  </tr>
+  <tr>
+    <td>持续</td>
+    <td>美伊 Hormuz 谈判</td>
+    <td>L7 / 全板块</td>
+    <td>停火 → 油价回落 → 高估值层估值松绑；破裂 → Brent &gt;$120</td>
+  </tr>
+  <tr>
+    <td>6/29 盘后</td>
+    <td>MU 自家财报</td>
+    <td>L4</td>
+    <td>验证 HBM 定价权能否持续转化为利润</td>
+  </tr>
+</table>
+
+<hr class="div">
+
+<!-- ===== 已知数据缺口 ===== -->
+<h2>⚠️ 已知数据缺口</h2>
+<div class="callout warn-box">
+本期为 Lite 版（核心 18 ticker），存在以下已知缺口：
+<ul style="margin-top:8px;">
+  <li>SNDK 多源价格存在差异（$1,299.67 vs $1,409.98），未取得最权威单一收盘锚点；本周报使用区间表述</li>
+  <li>EOSE / CIFR / CEG 周内事件密度低，仅取得收盘价快照而非完整周事件链</li>
+  <li>ETF 资金流（SMH/SOXX/IGV 周净流入）未取得——通用搜索无法访问 etf.com 详细数据</li>
+  <li>期权异动数据（NVDA / META 财报前 IV）未取得</li>
+  <li>OKLO 5/6 +12% 后单日收盘有两个数值（$79.62 / $70.66 隔日），区间表述</li>
+  <li>5/4 周内 CIFR 周涨跌幅未取得，仅取 5/6 收盘 $21.89</li>
+</ul>
+</div>
+
+<!-- ===== 数据来源 ===== -->
+<div class="sources">
+  <div class="sources-title">数据来源</div>
+  <ul>
+    <li>Yahoo Finance — NVDA / AMD / AVGO / MU / VST / ORCL 价格历史</li>
+    <li>The Motley Fool — Mag 7 财报对比、AMD/META post-earnings 分析</li>
+    <li>Stocktwits — AVGO OpenAI $18B 融资条款报道、OpenAI 营收疑云</li>
+    <li>CNBC — Mag 7 财报、油价与美伊谈判、Warsh 提名进展</li>
+    <li>Arista Investor Relations — Q1 2026 官方财报</li>
+    <li>Vistra Investor Relations / PR Newswire — Q1 2026 官方财报</li>
+    <li>Investing.com — VST earnings call transcript</li>
+    <li>IREN Investor News — Sweetwater 1.4GW 上线公告 / Mirantis 收购公告</li>
+    <li>24/7 Wall St. — OKLO NRC 审批、ANET earnings live coverage</li>
+    <li>Tikr Blog — META Q1 selloff 分析</li>
+    <li>Seeking Alpha — ANET / MU / AVGO 估值分析</li>
+    <li>StockAnalysis.com — 长期价格历史</li>
+    <li>Al Jazeera — Hormuz 海峡冲突、Warsh 提名委员会进展</li>
+    <li>Wikipedia — 2026 Iran war fuel crisis 时间线</li>
+    <li>TradingKey — VRT 5/7 异动分析</li>
+    <li>Heygotrade — META 财报后估值</li>
+    <li>Benzinga / Globe and Mail — NVDA 5/20 earnings preview</li>
+    <li>S&amp;P Global / Goldman Sachs research — NVDA Q1 FY27 estimates</li>
+    <li>FXStreet / FinancialJuice — 4 月 NFP 共识预测</li>
+    <li>CBS News / PBS News / Fortune — Warsh 任命党派背景</li>
+    <li>Washington Post — 5/7 美股大盘表现</li>
+  </ul>
+  <div class="disclaimer">
+    本报告由 AI 自动生成，仅供参考，不构成投资建议。数据存在时间延迟，部分数据为估算值或区间表述。本期为 Lite 版（核心 18 ticker），存在 ETF 资金流、期权数据、SNDK 单一收盘锚点等缺口（详见"已知数据缺口"章节）。投资有风险，决策需谨慎。
+  </div>
+</div>
+
+<script>
+const isDark = matchMedia('(prefers-color-scheme:dark)').matches;
+const gC = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
+const lC = isDark ? '#999' : '#666';
+
+new Chart(document.getElementById('layerHeatmap'), {
+  type: 'bar',
+  data: {
+    labels: [
+      'L1 硅基大脑 ⭐⭐⭐⭐⭐',
+      'L2 算力血管 ⭐⭐⭐⭐⭐',
+      'L4 数字记忆 ⭐⭐⭐⭐',
+      'L7 能源原力 ⭐⭐⭐⭐',
+      'L8 应用分发 ⭐⭐⭐⭐',
+      'L5 算力基建商 ⭐⭐⭐',
+      'L3 物理躯干 ⭐⭐⭐',
+      'L6 能量缓冲 ⭐'
+    ],
+    datasets: [{
+      label: '本周代表股涨跌（%）',
+      data: [-1.5, -13.6, 17.4, 0.5, 2.0, 5.0, -4.85, 0.0],
+      backgroundColor: [
+        '#BA7517',  // L1 双向，混合 → 橙
+        '#E24B4A',  // L2 重大下跌 → 红
+        '#1D9E75',  // L4 续涨 → 绿
+        '#BA7517',  // L7 内部分化 → 橙
+        '#3266ad',  // L8 中等 → 蓝
+        '#1D9E75',  // L5 IREN 兑现 → 绿
+        '#3266ad',  // L3 中等 → 蓝
+        '#888784'   // L6 无事件 → 灰
+      ],
+      borderRadius: 3,
+      borderSkipped: false
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: '本周（5/4–5/7）八层代表股涨跌幅 + 事件强度',
+        color: lC,
+        font: { size: 13, weight: '600' },
+        padding: { bottom: 10 }
+      },
+      tooltip: {
+        callbacks: {
+          label: ctx => '代表股涨跌: ' + ctx.parsed.x.toFixed(1) + '%'
+        }
+      },
+      annotation: {
+        annotations: {
+          posThreshold: {
+            type: 'line',
+            xMin: 5, xMax: 5,
+            borderColor: '#888780',
+            borderWidth: 1,
+            borderDash: [4, 4],
+            label: {
+              display: true,
+              content: '+5%',
+              position: 'start',
+              color: lC,
+              font: { size: 10 },
+              backgroundColor: 'transparent'
+            }
+          },
+          negThreshold: {
+            type: 'line',
+            xMin: -5, xMax: -5,
+            borderColor: '#888780',
+            borderWidth: 1,
+            borderDash: [4, 4]
+          },
+          zeroLine: {
+            type: 'line',
+            xMin: 0, xMax: 0,
+            borderColor: lC,
+            borderWidth: 1.5
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: lC,
+          font: { size: 11 },
+          callback: v => v + '%'
+        },
+        grid: { color: gC },
+        title: {
+          display: true,
+          text: '代表股本周涨跌幅 (%)',
+          color: lC,
+          font: { size: 11 }
+        },
+        suggestedMin: -16,
+        suggestedMax: 20
+      },
+      y: {
+        ticks: { color: lC, font: { size: 11.5 } },
+        grid: { display: false }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
