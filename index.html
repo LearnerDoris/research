@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投研档案库</title>
+    <style>
+        :root { --primary: #0f172a; --bg: #f8fafc; --card-bg: #ffffff; --text: #334155; --text-light: #64748b; --border: #e2e8f0; --hover: #f1f5f9; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text); max-width: 1000px; margin: 0 auto; padding: 40px 20px; line-height: 1.6; }
+        
+        /* 头部样式 */
+        header { border-bottom: 2px solid var(--border); padding-bottom: 20px; margin-bottom: 30px; }
+        h1 { color: var(--primary); font-size: 2.2em; margin: 0 0 10px 0; }
+        .site-meta { color: var(--text-light); font-size: 0.95em; }
+        
+        /* 分类过滤器 */
+        .filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+        .filter-btn { padding: 8px 16px; border: 1px solid var(--border); background: var(--card-bg); border-radius: 20px; cursor: pointer; font-size: 0.9em; font-weight: 500; color: var(--text); transition: all 0.2s ease; }
+        .filter-btn:hover { background: var(--hover); }
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        
+        /* 卡片网格布局 */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        
+        /* 单个卡片样式 */
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: transform 0.2s ease, box-shadow 0.2s ease; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: #cbd5e1; }
+        
+        .card-category { font-size: 0.8em; font-weight: 600; color: var(--primary); background: var(--hover); padding: 4px 10px; border-radius: 12px; display: inline-block; align-self: flex-start; margin-bottom: 12px; }
+        .card-title { font-size: 1.25em; font-weight: 600; color: var(--primary); margin: 0 0 10px 0; line-height: 1.4; }
+        .card-excerpt { font-size: 0.9em; color: var(--text-light); flex-grow: 1; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-footer { font-size: 0.85em; color: var(--text-light); border-top: 1px solid var(--border); padding-top: 12px; display: flex; justify-content: space-between; }
+        
+        footer { margin-top: 50px; text-align: center; color: var(--text-light); font-size: 0.85em; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📚 投研档案库</h1>
+        <div class="site-meta">个人投研档案库 · 共 5 份报告</div>
+    </header>
+
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">全部</button>
+        <button class="filter-btn" data-filter="ai从业者追踪">ai从业者追踪</button>
+        <button class="filter-btn" data-filter="ai八层联动分析">ai八层联动分析</button>
+        <button class="filter-btn" data-filter="个股分析">个股分析</button>
+        
+    </div>
+
+    <div class="grid" id="card-grid">
+        
+        <a href="%E4%B8%AA%E8%82%A1%E5%88%86%E6%9E%90/ORCL-2026-05-06.html" class="card" data-category="个股分析">
+            <div class="card-category">个股分析</div>
+            <h3 class="card-title">Oracle Corporation 商业模式分析报告</h3>
+            <div class="card-excerpt">Oracle的商业模式本质是"把47年积累的企业数据信任优势变现为云服务订阅收入"。公司收入由三大支柱构成：</div>
+            <div class="card-footer">
+                <span>📅 2026-05-07</span>
+            </div>
+        </a>
+        <a href="ai%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA/AI-%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA2026-5-5.html" class="card" data-category="ai从业者追踪">
+            <div class="card-category">ai从业者追踪</div>
+            <h3 class="card-title">AI 从业者行为 vs 股票反应数据集</h3>
+            <div class="card-excerpt">每行 = 一个 AI 行业事件 → 二级市场标的的传导对。强度分级基于 T+0 到 T+5 的价格反应幅度。</div>
+            <div class="card-footer">
+                <span>📅 2026-05-07</span>
+            </div>
+        </a>
+        <a href="ai%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA/AI-%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA2026-5-6.html" class="card" data-category="ai从业者追踪">
+            <div class="card-category">ai从业者追踪</div>
+            <h3 class="card-title">AI从业者-股价联动周报 | 2026-04-30 至 2026-05-06</h3>
+            <div class="card-excerpt">Weekly Practitioner-to-Equity Signal Report &nbsp;·&nbsp; 追踪 23 位顶尖 AI 从业者与 30 余只二级标的的实时传导关系。本期覆盖 2026 年 4 月 30 日至 5 月 6 日。</div>
+            <div class="card-footer">
+                <span>📅 2026-05-07</span>
+            </div>
+        </a>
+        <a href="ai%E5%85%AB%E5%B1%82%E8%81%94%E5%8A%A8%E5%88%86%E6%9E%90/weekly_2026-05-08.html" class="card" data-category="ai八层联动分析">
+            <div class="card-category">ai八层联动分析</div>
+            <h3 class="card-title">AI 基础设施栈周报 2026-05-04 ~ 2026-05-07</h3>
+            <div class="card-excerpt">按事件强度降序排列。L1 / L2 / L4 / L7 是本周四大焦点层。</div>
+            <div class="card-footer">
+                <span>📅 2026-05-08</span>
+            </div>
+        </a>
+        <a href="ai%E5%85%AB%E5%B1%82%E8%81%94%E5%8A%A8%E5%88%86%E6%9E%90/weekly_2026-05-05.html" class="card" data-category="ai八层联动分析">
+            <div class="card-category">ai八层联动分析</div>
+            <h3 class="card-title">AI 基础设施栈周报 2026-04-20 ~ 2026-05-01</h3>
+            <div class="card-excerpt">按事件强度降序排列。L4 / L8 / L1 是过去两周三大焦点层。</div>
+            <div class="card-footer">
+                <span>📅 2026-05-07</span>
+            </div>
+        </a>
+    </div>
+
+    <footer>
+        最后更新：2026-05-11 13:39:21 · 由 build_index.py 自动生成
+    </footer>
+
+    <script>
+        // 分类筛选逻辑
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 更新按钮状态
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 筛选卡片
+                const filter = btn.getAttribute('data-filter');
+                document.querySelectorAll('.card').forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
