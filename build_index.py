@@ -3,6 +3,7 @@ import re
 import urllib.parse
 from datetime import datetime
 
+# 1. 主页模板 (index.html)
 HTML_TEMPLATE = """<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -36,7 +37,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <body>
     <header>
         <h1>📚 投研档案库</h1>
-        <div class="meta">已按照时间倒序排列 · 共 __TOTAL__ 份报告</div>
+        <div class="meta">已按时间倒序排列 · 共 __TOTAL__ 份报告</div>
         <input type="text" id="search" class="search-box" placeholder="🔍 搜索报告名称、内容或分类...">
     </header>
     <div class="filters">
@@ -47,7 +48,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         __CARDS__
         <div id="no-results">📭 没有找到匹配的报告。</div>
     </div>
-    <footer>最后更新时间：__TIME__</footer>
+    <footer>最后更新：__TIME__</footer>
     <script>
         const search = document.getElementById('search');
         const btns = document.querySelectorAll('.filter-btn');
@@ -77,22 +78,43 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </html>
 """
 
-def extract_meta(filepath):
-    # 默认使用文件名作为标题
-    filename_title = os.path.basename(filepath).replace('.html', '')
+# 2. 注入报告页面的导航栏代码
+NAV_HTML = """
+<nav id="auto-nav" style="padding: 15px 20px; background: #fff; border-bottom: 1px solid #e2e8f0; margin: -8px -8px 20px -8px; font-family: -apple-system, sans-serif; display: flex; align-items: center; position: sticky; top: 0; z-index: 999;">
+    <a href="../index.html" style="text-decoration: none; color: #2563eb; font-weight: 600; display: flex; align-items: center; gap: 5px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        返回档案库主页
+    </a>
+</nav>
+"""
+
+def process_report_file(filepath):
+    """为报告文件注入返回按钮"""
+    title = os.path.basename(filepath).replace('.html', '')
     excerpt = "点击查看报告详情..."
     try:
         with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
             content = f.read()
-            # 提取正文第一段作为摘要
-            p_matches = re.findall(r'<p.*?>(.*?)</p>', content, re.IGNORECASE | re.DOTALL)
-            for p in p_matches:
-                clean_p = re.sub(r'<[^>]+>', '', p).strip()
-                if len(clean_p) > 20:
-                    excerpt = clean_p[:120] + "..." if len(clean_p) > 120 else clean_p
-                    break
-    except: pass
-    return filename_title, excerpt
+            
+        # 1. 提取摘要逻辑
+        p_matches = re.findall(r'<p.*?>(.*?)</p>', content, re.IGNORECASE | re.DOTALL)
+        for p in p_matches:
+            clean_p = re.sub(r'<[^>]+>', '', p).strip()
+            if len(clean_p) > 20:
+                excerpt = clean_p[:120] + "..." if len(clean_p) > 120 else clean_p
+                break
+        
+        # 2. 注入导航栏逻辑（如果还没注入过）
+        if 'id="auto-nav"' not in content:
+            # 在 <body> 标签后插入导航栏
+            new_content = re.sub(r'(<body.*?>)', r'\1' + NAV_HTML, content, flags=re.IGNORECASE)
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(new_content)
+                
+    except Exception as e:
+        print(f"处理文件 {filepath} 出错: {e}")
+        
+    return title, excerpt
 
 def run():
     all_reports = []
@@ -104,23 +126,19 @@ def run():
         for file in files:
             if file.endswith('.html') and file != 'index.html':
                 path = os.path.join(root, file)
+                # 处理并注入导航
+                title, excerpt = process_report_file(path)
+                
                 url = urllib.parse.quote(path.replace(os.sep, '/').removeprefix('./'))
-                # 获取文件修改时间
                 mtime = os.path.getmtime(path)
                 date_str = datetime.fromtimestamp(mtime).strftime('%Y-%m-%d')
-                title, excerpt = extract_meta(path)
                 
                 cats.add(cat)
                 all_reports.append({
-                    'title': title,
-                    'url': url,
-                    'date': date_str,
-                    'mtime': mtime, # 用于排序
-                    'cat': cat,
-                    'excerpt': excerpt
+                    'title': title, 'url': url, 'date': date_str, 
+                    'mtime': mtime, 'cat': cat, 'excerpt': excerpt
                 })
 
-    # 【核心修复】按照时间修改顺序倒序排列（最新的在最前）
     all_reports.sort(key=lambda x: x['mtime'], reverse=True)
 
     cards_html = ""
@@ -132,7 +150,7 @@ def run():
     html = HTML_TEMPLATE.replace('__TOTAL__', str(len(all_reports))).replace('__FILTERS__', f_btns).replace('__CARDS__', cards_html).replace('__TIME__', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     
     with open('index.html', 'w', encoding='utf-8') as f: f.write(html)
-    print(f"✅ 成功更新！共处理 {len(all_reports)} 份报告，已按最新时间排序。")
+    print(f"✅ 完成！共更新 {len(all_reports)} 份报告。所有页面已添加“返回主页”按钮。")
 
 if __name__ == "__main__":
     run()
