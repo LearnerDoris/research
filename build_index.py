@@ -100,4 +100,17 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
             function updateCards() {{
                 let visibleCount = 0;
-                cards.forEach(card
+                cards.forEach(card => {{
+                    const category = card.getAttribute('data-category');
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const excerpt = card.querySelector('.card-excerpt').textContent.toLowerCase();
+                    const matchesFilter = (currentFilter === 'all' || category === currentFilter);
+                    const matchesSearch = (title.includes(searchQuery) || excerpt.includes(searchQuery));
+                    
+                    if (matchesFilter && matchesSearch) {{
+                        card.classList.remove('hidden');
+                        visibleCount++;
+                    }} else {{
+                        card.classList.add('hidden');
+                    }}
+                }});
