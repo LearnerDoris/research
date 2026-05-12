@@ -3,84 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>投研档案库 | Data Terminal</title>
+    <title>投研档案库</title>
     <style>
-        :root { --bg-color: #0d1117; --grid-line: rgba(48, 54, 61, 0.5); --card-bg: rgba(22, 27, 34, 0.8); --card-border: #30363d; --text-main: #c9d1d9; --text-muted: #8b949e; --accent-glow: #58a6ff; --accent-cyan: #39d353; --hover-bg: #1f242c; }
-        body { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg-color); background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px); background-size: 40px 40px; color: var(--text-main); max-width: 1100px; margin: 0 auto; padding: 50px 20px; line-height: 1.6; }
-        header { border-bottom: 1px solid var(--card-border); padding-bottom: 25px; margin-bottom: 30px; position: relative; }
-        h1 { color: #ffffff; font-size: 2.5em; margin: 0 0 10px 0; font-weight: 700; letter-spacing: 1px; text-shadow: 0 0 20px rgba(88, 166, 255, 0.4); }
-        .site-meta { color: var(--accent-cyan); font-family: 'Courier New', Courier, monospace; font-size: 0.9em; margin-bottom: 20px; }
-        .search-container { margin-bottom: 25px; position: relative; }
-        .search-input { width: 100%; box-sizing: border-box; padding: 14px 20px 14px 45px; border: 1px solid var(--card-border); border-radius: 6px; font-size: 1rem; color: #fff; background-color: var(--card-bg); backdrop-filter: blur(10px); transition: all 0.3s ease; }
-        .search-input:focus { outline: none; border-color: var(--accent-glow); box-shadow: 0 0 15px rgba(88, 166, 255, 0.2), inset 0 0 5px rgba(88, 166, 255, 0.1); }
-        .search-container::before { content: "⌕"; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 1.5em; color: var(--text-muted); pointer-events: none; }
-        .filters { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
-        .filter-btn { padding: 6px 18px; border: 1px solid var(--card-border); background: transparent; border-radius: 4px; cursor: pointer; font-size: 0.85em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; }
-        .filter-btn:hover { border-color: var(--text-muted); color: var(--text-main); }
-        .filter-btn.active { background: rgba(88, 166, 255, 0.1); color: var(--accent-glow); border-color: var(--accent-glow); box-shadow: 0 0 10px rgba(88, 166, 255, 0.2); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-        .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 24px; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: flex; flex-direction: column; text-decoration: none; color: inherit; position: relative; overflow: hidden; backdrop-filter: blur(5px); }
-        .card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent-glow), transparent); opacity: 0; transition: opacity 0.3s ease; }
-        .card:hover { transform: translateY(-5px); border-color: #4b5563; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5); background: var(--hover-bg); }
-        .card:hover::before { opacity: 1; }
-        .card-category { font-family: 'Courier New', Courier, monospace; font-size: 0.75em; color: var(--accent-glow); border: 1px solid rgba(88, 166, 255, 0.3); background: rgba(88, 166, 255, 0.05); padding: 4px 8px; border-radius: 4px; display: inline-block; align-self: flex-start; margin-bottom: 16px; }
-        .card-title { font-size: 1.2em; font-weight: 600; color: #ffffff; margin: 0 0 12px 0; line-height: 1.4; }
-        .card-excerpt { font-size: 0.9em; color: var(--text-muted); flex-grow: 1; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .card-footer { font-family: 'Courier New', Courier, monospace; font-size: 0.8em; color: var(--text-muted); border-top: 1px solid var(--card-border); padding-top: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .card-footer::after { content: ""; display: block; width: 8px; height: 8px; background-color: var(--accent-cyan); border-radius: 50%; box-shadow: 0 0 8px var(--accent-cyan); }
-        #no-results { display: none; text-align: center; padding: 50px; color: var(--text-muted); font-size: 1.1em; width: 100%; grid-column: 1 / -1; border: 1px dashed var(--card-border); border-radius: 8px; }
-        footer { margin-top: 60px; text-align: center; color: var(--text-muted); font-size: 0.85em; font-family: 'Courier New', Courier, monospace; }
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --text: #334155; --text-light: #64748b; --border: #e2e8f0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); max-width: 1000px; margin: 0 auto; padding: 40px 20px; line-height: 1.6; }
+        header { margin-bottom: 30px; }
+        h1 { font-size: 2.2rem; color: #0f172a; margin-bottom: 8px; font-weight: 700; }
+        .meta { color: var(--text-light); margin-bottom: 24px; font-size: 0.95rem; }
+        .search-box { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; margin-bottom: 24px; box-sizing: border-box; background: var(--card); transition: all 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
+        .search-box:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
+        .filter-btn { padding: 8px 18px; background: var(--card); border: 1px solid var(--border); border-radius: 20px; cursor: pointer; color: var(--text); font-size: 0.9rem; transition: all 0.2s; }
+        .filter-btn:hover { background: #f1f5f9; }
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -8px rgba(0,0,0,0.1); border-color: #cbd5e1; }
+        .card-cat { font-size: 0.8rem; background: #eff6ff; color: var(--primary); padding: 4px 10px; border-radius: 6px; align-self: flex-start; margin-bottom: 12px; font-weight: 500; }
+        .card-title { font-size: 1.15rem; font-weight: 600; margin: 0 0 12px 0; color: #0f172a; line-height: 1.4; }
+        .card-excerpt { font-size: 0.9rem; color: var(--text-light); flex-grow: 1; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-date { font-size: 0.85rem; color: var(--text-light); border-top: 1px solid var(--border); padding-top: 12px; display: flex; align-items: center; gap: 6px; }
         .hidden { display: none !important; }
+        #no-results { display: none; text-align: center; color: var(--text-light); grid-column: 1 / -1; padding: 60px 20px; border: 1px dashed var(--border); border-radius: 12px; }
+        footer { text-align: center; margin-top: 60px; color: var(--text-light); font-size: 0.9rem; }
     </style>
 </head>
 <body>
     <header>
-        <h1>SYS.DATA_TERMINAL</h1>
-        <div class="site-meta">> INITIALIZING... STATUS: ONLINE | RECORDS: 6</div>
-        <div class="search-container"><input type="text" id="search-input" class="search-input" placeholder="Query data core (Title / Abstract / Keywords)..."></div>
+        <h1>📚 投研档案库</h1>
+        <div class="meta">个人知识管理 · 共 6 份深度报告</div>
+        <input type="text" id="search" class="search-box" placeholder="🔍 搜索报告标题、摘要或关键词...">
     </header>
     <div class="filters">
-        <button class="filter-btn active" data-filter="all">ALL_DATA</button>
+        <button class="filter-btn active" data-filter="all">全部</button>
         <button class="filter-btn" data-filter="ai从业者追踪">ai从业者追踪</button>\n        <button class="filter-btn" data-filter="ai八层联动分析">ai八层联动分析</button>\n        <button class="filter-btn" data-filter="个股分析">个股分析</button>\n        
     </div>
-    <div class="grid" id="card-grid">
-        \n        <a href="%E4%B8%AA%E8%82%A1%E5%88%86%E6%9E%90/ORCL-2026-05-06.html" class="card" data-category="个股分析">\n            <div class="card-category">个股分析</div>\n            <h3 class="card-title">Oracle Corporation 商业模式分析报告</h3>\n            <div class="card-excerpt">Oracle的商业模式本质是"把47年积累的企业数据信任优势变现为云服务订阅收入"。公司收入由三大支柱构成：</div>\n            <div class="card-footer"><span>📅 2026-05-07</span></div>\n        </a>\n        <a href="ai%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA/AI-%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA2026-5-5.html" class="card" data-category="ai从业者追踪">\n            <div class="card-category">ai从业者追踪</div>\n            <h3 class="card-title">AI 从业者行为 vs 股票反应数据集</h3>\n            <div class="card-excerpt">每行 = 一个 AI 行业事件 → 二级市场标的的传导对。强度分级基于 T+0 到 T+5 的价格反应幅度。</div>\n            <div class="card-footer"><span>📅 2026-05-07</span></div>\n        </a>\n        <a href="ai%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA/AI%E4%BB%8E%E4%B8%9A%E8%80%85%E8%A1%8C%E4%B8%BA2026-04-28%E8%87%B305-12.html" class="card" data-category="ai从业者追踪">\n            <div class="card-category">ai从业者追踪</div>\n            <h3 class="card-title">AI 从业者行为 vs 股票反应数据集 · 2026-04-28 至 2026-05-12</h3>\n            <div class="card-excerpt">按事件类型分组，组内按时间倒序。Δ% 标 T+0 当日；多日反应单独注明。</div>\n            <div class="card-footer"><span>📅 2026-05-12</span></div>\n        </a>\n        <a href="ai%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA/AI-%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA2026-5-6.html" class="card" data-category="ai从业者追踪">\n            <div class="card-category">ai从业者追踪</div>\n            <h3 class="card-title">AI从业者-股价联动周报 | 2026-04-30 至 2026-05-06</h3>\n            <div class="card-excerpt">Weekly Practitioner-to-Equity Signal Report &nbsp;·&nbsp; 追踪 23 位顶尖 AI 从业者与 30 余只二级标的的实时传导关系。本期覆盖 2026 年 4 月 30 日至 5 月 6 日。</div>\n            <div class="card-footer"><span>📅 2026-05-07</span></div>\n        </a>\n        <a href="ai%E5%85%AB%E5%B1%82%E8%81%94%E5%8A%A8%E5%88%86%E6%9E%90/weekly_2026-05-08.html" class="card" data-category="ai八层联动分析">\n            <div class="card-category">ai八层联动分析</div>\n            <h3 class="card-title">AI 基础设施栈周报 2026-05-04 ~ 2026-05-07</h3>\n            <div class="card-excerpt">按事件强度降序排列。L1 / L2 / L4 / L7 是本周四大焦点层。</div>\n            <div class="card-footer"><span>📅 2026-05-08</span></div>\n        </a>\n        <a href="ai%E5%85%AB%E5%B1%82%E8%81%94%E5%8A%A8%E5%88%86%E6%9E%90/weekly_2026-05-05.html" class="card" data-category="ai八层联动分析">\n            <div class="card-category">ai八层联动分析</div>\n            <h3 class="card-title">AI 基础设施栈周报 2026-04-20 ~ 2026-05-01</h3>\n            <div class="card-excerpt">按事件强度降序排列。L4 / L8 / L1 是过去两周三大焦点层。</div>\n            <div class="card-footer"><span>📅 2026-05-07</span></div>\n        </a>
-        <div id="no-results">> ERROR_404: No matching records found in data core.</div>
+    <div class="grid" id="grid">
+        <a href="%E4%B8%AA%E8%82%A1%E5%88%86%E6%9E%90/ORCL-2026-05-06.html" class="card" data-cat="个股分析">\n  <div class="card-cat">个股分析</div>\n  <h3 class="card-title">Oracle Corporation 商业模式分析报告</h3>\n  <div class="card-excerpt">Oracle的商业模式本质是"把47年积累的企业数据信任优势变现为云服务订阅收入"。公司收入由三大支柱构成：</div>\n  <div class="card-date">📅 2026-05-07</div>\n</a>\n<a href="ai%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA/AI-%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA2026-5-5.html" class="card" data-cat="ai从业者追踪">\n  <div class="card-cat">ai从业者追踪</div>\n  <h3 class="card-title">AI 从业者行为 vs 股票反应数据集</h3>\n  <div class="card-excerpt">每行 = 一个 AI 行业事件 → 二级市场标的的传导对。强度分级基于 T+0 到 T+5 的价格反应幅度。</div>\n  <div class="card-date">📅 2026-05-07</div>\n</a>\n<a href="ai%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA/AI%E4%BB%8E%E4%B8%9A%E8%80%85%E8%A1%8C%E4%B8%BA2026-04-28%E8%87%B305-12.html" class="card" data-cat="ai从业者追踪">\n  <div class="card-cat">ai从业者追踪</div>\n  <h3 class="card-title">AI 从业者行为 vs 股票反应数据集 · 2026-04-28 至 2026-05-12</h3>\n  <div class="card-excerpt">按事件类型分组，组内按时间倒序。Δ% 标 T+0 当日；多日反应单独注明。</div>\n  <div class="card-date">📅 2026-05-12</div>\n</a>\n<a href="ai%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA/AI-%E4%BB%8E%E4%B8%9A%E8%80%85%E8%BF%BD%E8%B8%AA2026-5-6.html" class="card" data-cat="ai从业者追踪">\n  <div class="card-cat">ai从业者追踪</div>\n  <h3 class="card-title">AI从业者-股价联动周报 | 2026-04-30 至 2026-05-06</h3>\n  <div class="card-excerpt">Weekly Practitioner-to-Equity Signal Report &nbsp;·&nbsp; 追踪 23 位顶尖 AI 从业者与 30 余只二级标的的实时传导关系。本期覆盖 2026 年 4 月 30 日至 5 月 6 日。</div>\n  <div class="card-date">📅 2026-05-07</div>\n</a>\n<a href="ai%E5%85%AB%E5%B1%82%E8%81%94%E5%8A%A8%E5%88%86%E6%9E%90/weekly_2026-05-08.html" class="card" data-cat="ai八层联动分析">\n  <div class="card-cat">ai八层联动分析</div>\n  <h3 class="card-title">AI 基础设施栈周报 2026-05-04 ~ 2026-05-07</h3>\n  <div class="card-excerpt">按事件强度降序排列。L1 / L2 / L4 / L7 是本周四大焦点层。</div>\n  <div class="card-date">📅 2026-05-08</div>\n</a>\n<a href="ai%E5%85%AB%E5%B1%82%E8%81%94%E5%8A%A8%E5%88%86%E6%9E%90/weekly_2026-05-05.html" class="card" data-cat="ai八层联动分析">\n  <div class="card-cat">ai八层联动分析</div>\n  <h3 class="card-title">AI 基础设施栈周报 2026-04-20 ~ 2026-05-01</h3>\n  <div class="card-excerpt">按事件强度降序排列。L4 / L8 / L1 是过去两周三大焦点层。</div>\n  <div class="card-date">📅 2026-05-07</div>\n</a>\n
+        <div id="no-results">📭 没有找到匹配的报告，请尝试其他关键词。</div>
     </div>
-    <footer>
-        > LAST_SYNC: 2026-05-12 14:03:09 | GENERATED_BY: build_index.py v2.0
-    </footer>
+    <footer>最后更新：2026-05-12 14:20:00 · 自动生成</footer>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const searchInput = document.getElementById('search-input');
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const cards = document.querySelectorAll('.card');
-            const noResults = document.getElementById('no-results');
-            let currentFilter = 'all';
-            let searchQuery = '';
-            function updateCards() {
-                let visibleCount = 0;
-                cards.forEach(card => {
-                    const category = card.getAttribute('data-category');
-                    const title = card.querySelector('.card-title').textContent.toLowerCase();
-                    const excerpt = card.querySelector('.card-excerpt').textContent.toLowerCase();
-                    const matchesFilter = (currentFilter === 'all' || category === currentFilter);
-                    const matchesSearch = (title.includes(searchQuery) || excerpt.includes(searchQuery));
-                    if (matchesFilter && matchesSearch) { card.classList.remove('hidden'); visibleCount++; }
-                    else { card.classList.add('hidden'); }
-                });
-                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
-            }
-            searchInput.addEventListener('input', (e) => { searchQuery = e.target.value.toLowerCase(); updateCards(); });
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    currentFilter = btn.getAttribute('data-filter');
-                    updateCards();
-                });
+        const search = document.getElementById('search');
+        const btns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.card');
+        const noRes = document.getElementById('no-results');
+        let curFilter = 'all';
+        let q = '';
+        function update() {
+            let vis = 0;
+            cards.forEach(c => {
+                const matchF = (curFilter === 'all' || c.dataset.cat === curFilter);
+                const matchQ = c.innerText.toLowerCase().includes(q);
+                if (matchF && matchQ) { c.classList.remove('hidden'); vis++; }
+                else { c.classList.add('hidden'); }
             });
-        });
+            noRes.style.display = vis === 0 ? 'block' : 'none';
+        }
+        search.addEventListener('input', e => { q = e.target.value.toLowerCase(); update(); });
+        btns.forEach(b => b.addEventListener('click', () => {
+            btns.forEach(x => x.classList.remove('active'));
+            b.classList.add('active');
+            curFilter = b.dataset.filter;
+            update();
+        }));
     </script>
 </body>
 </html>
