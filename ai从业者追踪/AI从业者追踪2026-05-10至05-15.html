@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AI 从业者行为 vs 股票反应数据集 · 2026-05-10 至 2026-05-15</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --ink: #1a1a1a;
+    --muted: #6a6a6a;
+    --line: #e5e3dc;
+    --accent: #3a5fcd;
+    --good: #1f7a4a;
+    --bad: #b3261e;
+    --neu: #7a6a3a;
+    --chip-bg: #f0eee5;
+    --code-bg: #f5f3eb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 40px 28px 80px;
+    line-height: 1.65;
+    font-size: 15px;
+  }
+  h1 {
+    font-size: 26px;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  h2 {
+    font-size: 20px;
+    margin: 44px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: -0.005em;
+  }
+  h3 {
+    font-size: 16px;
+    margin: 28px 0 10px;
+    color: var(--ink);
+  }
+  h4 {
+    font-size: 14.5px;
+    margin: 22px 0 8px;
+    color: var(--ink);
+  }
+  .frontmatter {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    background: var(--code-bg);
+    padding: 10px 14px;
+    border-left: 3px solid var(--accent);
+    color: var(--muted);
+    margin: 12px 0 18px;
+    white-space: pre;
+  }
+  .tldr {
+    border-left: 3px solid var(--accent);
+    padding: 10px 14px;
+    background: #f4f1e8;
+    margin: 18px 0 24px;
+    font-size: 14.5px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 12px 0 6px;
+  }
+  th, td {
+    border-bottom: 1px solid var(--line);
+    padding: 9px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: var(--chip-bg);
+    font-weight: 600;
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+  }
+  td.date { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--muted); }
+  td.ticker { font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; }
+  .dir-up   { color: var(--good); font-weight: 600; }
+  .dir-down { color: var(--bad); font-weight: 600; }
+  .dir-neu  { color: var(--neu); font-weight: 600; }
+  .intensity {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .i-xstrong { background: #4a1010; color: #fff; }
+  .i-strong  { background: #b3261e; color: #fff; }
+  .i-mid     { background: #d9a300; color: #1a1a1a; }
+  .i-weak    { background: #e5e3dc; color: #6a6a6a; }
+  .event-detail {
+    border-left: 2px solid var(--line);
+    padding: 8px 16px 8px 14px;
+    margin: 14px 0;
+  }
+  .event-detail.xstrong { border-left-color: #4a1010; }
+  .event-detail.strong  { border-left-color: #b3261e; }
+  .event-detail.mid     { border-left-color: #d9a300; }
+  .event-detail.weak    { border-left-color: #b8b6ad; }
+  .event-detail h4 { margin: 0 0 6px; font-size: 14px; }
+  .event-detail .meta {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin: 0 0 8px;
+    font-family: ui-monospace, Menlo, monospace;
+  }
+  .event-detail p { margin: 4px 0; font-size: 13.5px; line-height: 1.6; }
+  .event-detail .label {
+    display: inline-block;
+    min-width: 64px;
+    color: var(--muted);
+    font-size: 12.5px;
+  }
+  .thesis {
+    background: #f8f5ea;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px 18px;
+    margin: 14px 0;
+  }
+  .thesis h4 { margin-top: 0; }
+  .thesis .long  { color: var(--good); font-weight: 600; }
+  .thesis .short { color: var(--bad); font-weight: 600; }
+  .thesis ul { margin: 6px 0; padding-left: 22px; }
+  .thesis li { margin: 3px 0; font-size: 13.5px; }
+  footer {
+    margin-top: 60px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .caveat {
+    background: #fdf6e3;
+    border-left: 3px solid #d9a300;
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 13px;
+    color: #5a4a10;
+  }
+  .toc {
+    background: var(--code-bg);
+    padding: 12px 18px;
+    border-radius: 4px;
+    margin: 20px 0 32px;
+    font-size: 13.5px;
+  }
+  .toc a { color: var(--accent); text-decoration: none; margin-right: 14px; display: inline-block; padding: 2px 0; }
+  .toc a:hover { text-decoration: underline; }
+  .followup {
+    background: #eef2fa;
+    border-left: 3px solid var(--accent);
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+<nav id="auto-nav" style="padding: 15px 20px; background: #fff; border-bottom: 1px solid #e2e8f0; margin: -8px -8px 20px -8px; font-family: -apple-system, sans-serif; display: flex; align-items: center; position: sticky; top: 0; z-index: 999;">
+    <a href="../index.html" style="text-decoration: none; color: #2563eb; font-weight: 600; display: flex; align-items: center; gap: 5px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        返回档案库主页
+    </a>
+</nav>
+
+
+<h1>AI 从业者行为 vs 股票反应数据集 · 2026-05-10 → 05-15</h1>
+<div class="frontmatter">title: AI 从业者行为 vs 股票反应数据集（5/10-5/15 单周追踪）
+window: 2026-05-10 → 2026-05-15 (6 天)
+generated: 2026-05-15
+tags:
+  - 研究框架
+  - AI
+  - 事件驱动
+  - 数据集
+  - 单周快报</div>
+
+<div class="tldr">
+<strong>一句话</strong>：本周是 Anthropic-OpenAI "渠道战争" 全面铺开周——Anthropic 用 PwC 30K 员工 + Gates Foundation $200M + Akamai $1.8B 算力 + Claude for SMB 把渠道往三个方向同时拉，OpenAI 用 Accenture Federal 反向收编联邦市场把 ACN narrative 部分修复；GOOGL 用 SpaceX 轨道数据中心 + Android Gemini Intelligence 抢在 Apple iOS 27 之前抢镜；网络武器化的最大叙事点 = Google 确认<strong>第一例 AI 构建并在野部署的 zero-day</strong>。
+</div>
+
+<div class="toc">
+<strong>导航：</strong>
+<a href="#timeline">日历</a>
+<a href="#dataset">数据集</a>
+<a href="#details">事件详注</a>
+<a href="#followup">前期事件后续</a>
+<a href="#sector">板块交易思路</a>
+<a href="#caveats">数据警示</a>
+</div>
+
+<h2 id="timeline">6 天日历速览</h2>
+<table>
+<thead><tr><th>日期</th><th>主线</th><th>关键事件</th><th>主要标的</th></tr></thead>
+<tbody>
+<tr><td class="date">5/11 一</td><td>OpenAI 反击 + Anthropic 监管摩擦</td><td>Tomoro 收购正式 close · GPT-5.5-Cyber 给 EU · Anthropic 拒交 Mythos 给 EU · NVDA $40B 股权押注披露</td><td>ACN/CTSH/INFY/NVDA</td></tr>
+<tr><td class="date">5/11 一</td><td>武器化坐实</td><td>Google TIG 披露：第一例 AI-built zero-day（2FA bypass）在野</td><td>CRWD/NET/HACK</td></tr>
+<tr><td class="date">5/11 一</td><td>Thinking Machines 首秀</td><td>Interaction Models 研究预览（0.40s 延迟）</td><td>GOOGL/MSFT/AAPL</td></tr>
+<tr><td class="date">5/12 二</td><td>Musk v Altman 进入收官</td><td>Altman 4 小时作证；Musk 律师道歉（Musk 在华）</td><td>OpenAI/TSLA</td></tr>
+<tr><td class="date">5/12 二</td><td>Android 抢跑</td><td>Google 把"Gemini Intelligence"塞进 Android 17，赶在 iOS 27 之前</td><td>GOOGL/AAPL</td></tr>
+<tr><td class="date">5/13 三</td><td>电商 AI 一统</td><td>Amazon Alexa for Shopping 上线，废弃 Rufus · AMZN +1.62% → $270.13</td><td>AMZN/W/SHOP</td></tr>
+<tr><td class="date">5/13 三</td><td>轨道算力</td><td>GOOGL + SpaceX 谈轨道数据中心（Project Suncatcher）</td><td>GOOGL/SpaceX(DXYZ)</td></tr>
+<tr><td class="date">5/13 三</td><td>渠道下沉</td><td>Anthropic Claude for Small Business + 10 城市免费培训巡讲</td><td>INTU/HUBS/DDOG/CRM</td></tr>
+<tr><td class="date">5/13 三</td><td>独立逆风</td><td>ACN -7.15%（DOGE 联邦合同削减 + 风险偏好下降，<u>非 AI narrative 独立因素</u>）</td><td>ACN</td></tr>
+<tr><td class="date">5/14 四</td><td>Anthropic 渠道再扩</td><td>PwC 同盟扩大：30K 美国员工部署 Claude Code/Cowork · Gates Foundation $200M / 4 年</td><td>ACN/IBM/PwC 一级</td></tr>
+<tr><td class="date">5/14 四</td><td>OpenAI 反向收编</td><td>Accenture Federal Services + OpenAI 联邦 AI 合作 · ACN +3.55% 收复部分跌幅</td><td>ACN</td></tr>
+<tr><td class="date">5/14 四</td><td>OpenAI 庭审收尾</td><td>Musk v Altman 双方结案陈词；陪审团下周一开始评议</td><td>OpenAI/MSFT</td></tr>
+<tr><td class="date">5/15 五</td><td>AI 监管州层立法</td><td>Colorado 4 个 AI 法案进州长桌 · GA AI Chatbot 安全法签字</td><td>前沿模型公司</td></tr>
+</tbody>
+</table>
+
+<h2 id="dataset">数据集</h2>
+<p style="color: var(--muted); font-size: 13px; margin-top: -6px;">按事件类型分组，组内按时间倒序。</p>
+
+<h3>产品发布</h3>
+<table>
+<thead><tr><th>日期</th><th>主体</th><th>事件</th><th>标的</th><th>反应</th><th>方向</th><th>强度</th></tr></thead>
+<tbody>
+<tr>
+  <td class="date">2026-05-13</td>
+  <td>Anthropic</td>
+  <td>Claude for Small Business 上线 + 10 城市 1,000 人免费 AI fluency 培训巡讲；内嵌 QuickBooks / PayPal / HubSpot / Canva / Docusign / GWS / MS365；15 个 SMB workflow 模板</td>
+  <td class="ticker">INTU / HUBS / ZEN / 一级 SMB SaaS</td>
+  <td>无单日剧烈反应；中长期 narrative = SMB SaaS 也进入 AI 替代区</td>
+  <td class="dir-down">利空</td>
+  <td><span class="intensity i-mid">中</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-13</td>
+  <td>Amazon</td>
+  <td>Alexa for Shopping 上线，整合 Rufus + Alexa+，进入 Amazon 全站搜索栏</td>
+  <td class="ticker">AMZN / W / SHOP / EBAY</td>
+  <td>AMZN +1.62% 收 $270.13；YTD +19.26%；Wayfair/Shopify 间接承压</td>
+  <td class="dir-up">利好</td>
+  <td><span class="intensity i-strong">强</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-13</td>
+  <td>Higgsfield AI</td>
+  <td>Higgsfield Supercomputer：跨模型路由 agentic AI（Claude Opus 4.7 / GPT-5.5 Pro / Gemini 3.1 Pro / Kling 3.0 / Seedance），40+ tools</td>
+  <td class="ticker">一级；间接 NVDA / 推理基础设施</td>
+  <td>narrative 利好"模型不重要、orchestrator 才是入口"</td>
+  <td class="dir-neu">中性</td>
+  <td><span class="intensity i-weak">弱</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-12</td>
+  <td>Google</td>
+  <td>Android Show I/O Edition：Gemini Intelligence 横跨 Android/Chrome/Cars/Wearables；Android 17 抢在 iOS 27 之前预览</td>
+  <td class="ticker">GOOGL / AAPL / 三星</td>
+  <td>GOOGL 当周强势；AAPL 中长期 narrative 进一步被边缘化（且 Siri 已外包给 Gemini）</td>
+  <td class="dir-up">利好</td>
+  <td><span class="intensity i-strong">强</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-11</td>
+  <td>OpenAI</td>
+  <td>GPT-5.5-Cyber 提供 EU 委员会评估接口；Anthropic 拒交 Mythos（EU AI Office 8 月才有执法权）</td>
+  <td class="ticker">前沿模型公司 / EU AI 合规</td>
+  <td>narrative 上为 OpenAI 加分（"安全合作"）vs Anthropic（"自我克制"）；监管风险溢价两面性</td>
+  <td class="dir-neu">中性</td>
+  <td><span class="intensity i-mid">中</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-11</td>
+  <td>Thinking Machines / Mira Murati</td>
+  <td>Interaction Models 研究预览：实时多模态 micro-turn，0.40s 转换延迟</td>
+  <td class="ticker">GOOGL / MSFT / AAPL 间接</td>
+  <td>无单日明显反应；narrative 上压 Gemini Live / OpenAI Realtime；为 Siri 重启增加竞争压力</td>
+  <td class="dir-down">利空</td>
+  <td><span class="intensity i-weak">弱</span></td>
+</tr>
+</tbody>
+</table>
+
+<h3>公开点评</h3>
+<table>
+<thead><tr><th>日期</th><th>主体</th><th>事件</th><th>标的</th><th>反应</th><th>方向</th><th>强度</th></tr></thead>
+<tbody>
+<tr>
+  <td class="date">2026-05-12</td>
+  <td>Sam Altman / Greg Brockman</td>
+  <td>Musk v Altman 出庭：4 小时作证，否认承诺 nonprofit，"Musk leaves OpenAI for dead"；Brockman 透露 Tesla 内部 AI 工作</td>
+  <td class="ticker">OpenAI 一级 / MSFT / TSLA</td>
+  <td>MSFT 内部曾担忧"过度依赖 OpenAI"被披露；TSLA 无显著反应（已 priced）</td>
+  <td class="dir-neu">中性</td>
+  <td><span class="intensity i-mid">中</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-11</td>
+  <td>Google Threat Intelligence Group</td>
+  <td>披露：第一例确认 AI-built zero-day（2FA bypass for popular OSS admin tool）在野；计划用于 mass exploitation；Python exploit 含 hallucinated CVSS score</td>
+  <td class="ticker">CRWD / NET / PANW / S</td>
+  <td>"AI 武器化"narrative 三连击（5/5 Amodei Mythos → 5/6 WH EO → 5/11 实战确认）；CRWD 反弹叙事变弱</td>
+  <td class="dir-down">利空</td>
+  <td><span class="intensity i-strong">强</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-11</td>
+  <td>Pentagon 副官员</td>
+  <td>公开称"将永远不会再依赖单一 AI 供应商"；Anthropic 因拒解除限制被 Pete Hegseth 三月供应链风险标签锁定</td>
+  <td class="ticker">Anthropic 一级 / GOOGL / MSFT / ORCL / NVDA / Reflection</td>
+  <td>Anthropic 国防市场被冻结；其他 7 家受益于"多供应商"原则</td>
+  <td class="dir-down">利空（对 Anthropic）</td>
+  <td><span class="intensity i-mid">中</span></td>
+</tr>
+</tbody>
+</table>
+
+<h3>投资行为</h3>
+<table>
+<thead><tr><th>日期</th><th>主体</th><th>事件</th><th>标的</th><th>反应</th><th>方向</th><th>强度</th></tr></thead>
+<tbody>
+<tr>
+  <td class="date">2026-05-14</td>
+  <td>Anthropic + Gates Foundation</td>
+  <td>$200M 4 年合作（grant + Claude credits + 技术）：全球健康（4.6B 人医疗）+ 教育（K-12）+ 农业（2B 小农户）</td>
+  <td class="ticker">间接：医疗 AI / EdTech</td>
+  <td>narrative 利好 = "AI for good"PR 资产；间接为 GOOGL/AMZN Anthropic 估值锚加分</td>
+  <td class="dir-up">利好</td>
+  <td><span class="intensity i-mid">中</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-14</td>
+  <td>Tiger Global / a16z / 等</td>
+  <td>多笔中型 AI 融资同日 close：Nectar Social $34M / Stitch (a16z 首入 GCC) $26M / Iceotope (液冷) $30M / Sereact $110M / Profluent + Lilly $2.25B 基因疗法</td>
+  <td class="ticker">一级；间接 NVDA / 液冷供应链 / LLY</td>
+  <td>LLY 受益于 Profluent 基因疗法叙事；液冷链条（VRT/IRM）持续受益</td>
+  <td class="dir-up">利好</td>
+  <td><span class="intensity i-mid">中</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-09</td>
+  <td>Nvidia</td>
+  <td>披露 2026 AI 股权押注总额 >$40B，OpenAI $30B 居首；新增 Corning ($GLW)、GSAM 等</td>
+  <td class="ticker">NVDA / OpenAI 一级</td>
+  <td>NVDA 持稳；circular investment 批评持续，但 narrative 上"AI 主权基金"形成</td>
+  <td class="dir-up">利好</td>
+  <td><span class="intensity i-mid">中</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-09</td>
+  <td>Anthropic × Akamai</td>
+  <td>Bloomberg 披露 $1.8B / 7 年云算力合同（Anthropic 历来最大宗对 CDN 类公司订单）</td>
+  <td class="ticker">AKAM</td>
+  <td>AKAM +27% 单日收 $148.38（公司历史最大订单）；CDN narrative 切换为"AI cloud"</td>
+  <td class="dir-up">利好</td>
+  <td><span class="intensity i-xstrong">极强</span></td>
+</tr>
+</tbody>
+</table>
+
+<h3>人事 / 收购 / 战略</h3>
+<table>
+<thead><tr><th>日期</th><th>主体</th><th>事件</th><th>标的</th><th>反应</th><th>方向</th><th>强度</th></tr></thead>
+<tbody>
+<tr>
+  <td class="date">2026-05-14</td>
+  <td>OpenAI × Accenture Federal Services</td>
+  <td>战略合作：AFS 15,000 名员工拿到 OpenAI 模型授权；建立 Agentic Lab + OpenAI-trained Solution Architects；3,000 + AFS 加 Codex</td>
+  <td class="ticker">ACN</td>
+  <td>ACN +3.55%（5/14）；部分修复 5/13 -7.15%；narrative 反转 = "ACN 也可以加入而不是被绕开"</td>
+  <td class="dir-up">利好</td>
+  <td><span class="intensity i-strong">强</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-14</td>
+  <td>PwC × Anthropic</td>
+  <td>扩大合作：30,000 美国员工部署 Claude Code/Cowork；建立 Claude-native Office of the CFO group；全球目标 364,000 员工</td>
+  <td class="ticker">ACN / IBM / Big 4 同业</td>
+  <td>ACN 5/14 反弹 = OpenAI 反制部分对冲；narrative：Big 4 选边站</td>
+  <td class="dir-down">利空（对 ACN/IBM）</td>
+  <td><span class="intensity i-strong">强</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-13</td>
+  <td>GOOGL × SpaceX</td>
+  <td>WSJ 报：双方谈轨道数据中心，含 GOOGL Project Suncatcher（TPU + 太阳能卫星，2027 原型）</td>
+  <td class="ticker">GOOGL / SpaceX(DXYZ) / IRM / VRT</td>
+  <td>GOOGL 当日盘中下挫（capex 担忧）；DXYZ premarket 拉升；地面数据中心 narrative 出现长期质疑点</td>
+  <td class="dir-neu">中性</td>
+  <td><span class="intensity i-strong">强</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-13</td>
+  <td>ACN 独立逆风</td>
+  <td>受 DOGE 联邦合同削减传闻 + 整体 risk-off 拖累，<u>非主要 AI narrative 驱动</u></td>
+  <td class="ticker">ACN</td>
+  <td>ACN -7.15%（单日，5/14 部分修复）</td>
+  <td class="dir-down">利空</td>
+  <td><span class="intensity i-strong">强</span></td>
+</tr>
+<tr>
+  <td class="date">2026-05-11</td>
+  <td>OpenAI</td>
+  <td>Tomoro 收购正式 close：~150 FDE 上岗 Deployment Co.；Indian IT 板块共振（Nifty IT -3.59%）</td>
+  <td class="ticker">ACN / CTSH / INFY / WIT</td>
+  <td>ACN -3%（5/11，独立于 5/13 -7.15%）；CTSH -5% / INFY -4% / Nifty IT -3.59%</td>
+  <td class="dir-down">利空</td>
+  <td><span class="intensity i-strong">强</span></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="details">事件详注（加深版：全事件）</h2>
+
+<!-- 极强 -->
+
+<div class="event-detail xstrong">
+<h4>2026-05-09 · Anthropic × Akamai · $1.8B / 7 年云算力合同（5/10-5/11 周一被市场充分定价）</h4>
+<p class="meta">标的：AKAM &nbsp;|&nbsp; 强度：极强 &nbsp;|&nbsp; 滞后：T+0</p>
+<p><span class="label">反应</span>AKAM 周四 +29.62%（late session）→ 周五 +27% 收 $148.38；公司史上最大订单</p>
+<p><span class="label">注解</span>这是本周量级最大的"二级标的"事件——AKAM 单日涨幅压过 2025-09 ORCL +43% 之外的所有 AI 相关单日跳涨。结构性意义 = CDN 类公司（边缘计算、低延迟、全球节点）开始被认定为"AI inference cloud"的潜在赢家；与 5/13 GOOGL × SpaceX 轨道数据中心 narrative 同周形成"AI compute 边界扩张"双信号。Anthropic 5/8 已自报"80x 增长"，所以这笔合同也是 80x narrative 的供给端再次确认——继 5/6 租 SpaceXAI Colossus 之后第二次"Anthropic 找一切可用 GPU"。</p>
+<p><span class="label">交易锚点</span>AKAM 估值短期被重定价，但 27% 单日涨幅意味着 multiple 大幅扩张，下次财报必须给出收入增量证据，否则会回吐。延伸标的：FSLY、CDN-77 类、爱奇艺 CDN 业务（间接）。</p>
+</div>
+
+<!-- 强 -->
+
+<div class="event-detail strong">
+<h4>2026-05-14 · OpenAI × Accenture Federal Services · 联邦市场战略合作 + ACN 当日 +3.55%</h4>
+<p class="meta">标的：ACN &nbsp;|&nbsp; 强度：强 &nbsp;|&nbsp; 滞后：T+0</p>
+<p><span class="label">反应</span>ACN +3.55%（部分修复 5/13 -7.15%）；Codex + 多模型授权给 AFS 15,000 名员工 + 3,000 + 用 Codex</p>
+<p><span class="label">注解</span>这是过去两周 narrative 的第一次反转。前序剧本：5/4 Anthropic-Goldman/Blackstone JV → 5/11 OpenAI Tomoro 收购 → ACN 双重承压。但 5/14 OpenAI 选择"与 ACN 联邦子公司合作而非绕开"，给出三个新信号：(1) OpenAI 在联邦市场短期内需要 ACN 的安全/合规执行能力；(2) "AI 原生 SI 完全替代"narrative 被部分软化为"AI lab + 传统 SI 双层架构"；(3) ACN 改变定位为"OpenAI 授权派遣 SI"，FY26 bookings 风险下修。同期 5/14 PwC 选边 Anthropic = Big 4 / 大 SI 进入"选边站"阶段。</p>
+<p><span class="label">交易锚点</span>ACN 是过去两周最复杂的标的：5/4 -6.6% / 5/11 -3% / 5/13 -7.15%（含独立 DOGE 因素）/ 5/14 +3.55%。下次催化在 FY26 Q3 财报（6 月底）—— bookings 是否反映 OpenAI 合作贡献。</p>
+</div>
+
+<div class="event-detail strong">
+<h4>2026-05-14 · PwC × Anthropic · 30K 美国员工部署 Claude；全球 364K 长期目标</h4>
+<p class="meta">标的：ACN / IBM / 一级 PwC &nbsp;|&nbsp; 强度：强 &nbsp;|&nbsp; 滞后：持续</p>
+<p><span class="label">反应</span>narrative 已被市场吸收；与 OpenAI 5/14 AFS 合作同日落地形成对照</p>
+<p><span class="label">注解</span>结构亮点：(1) 30K 是首批，最终目标 364K（PwC 全球）；(2) 建立 Center of Excellence + "Claude-native finance" group 嵌入 CFO Office；(3) 三大业务方向 = 工程师 build agentic + dealmaking + workflow 再造。商业逻辑：PwC 把"过去卖给客户的咨询时间"换成"AI 增强的咨询时间"，毛利不变但产出 leverage 抬升。与 5/4 Anthropic-Goldman/Blackstone JV 形成纵深 = Anthropic 现在拥有 GS/Blackstone PE LP 网络 + PwC 全球客户 + Gates Foundation NGO 渠道三条独立分发路径。</p>
+<p><span class="label">交易锚点</span>对 ACN 是结构性威胁但短期数据不会立刻出；下季度财报 ACN 是否提及"AI 业务 bookings 受 PwC/Anthropic 同盟挤压"是关键。</p>
+</div>
+
+<div class="event-detail strong">
+<h4>2026-05-13 · Amazon · Alexa for Shopping 上线，废弃 Rufus</h4>
+<p class="meta">标的：AMZN / W / SHOP &nbsp;|&nbsp; 强度：强 &nbsp;|&nbsp; 滞后：T+0</p>
+<p><span class="label">反应</span>AMZN +1.62% 收 $270.13；YTD +19.26%；Rufus 即将关闭，shopping history 迁移到 Alexa</p>
+<p><span class="label">注解</span>结构上是 AI 与零售在同一公司内的整合：把内部双轨（Rufus 一年前推出，Alexa+ 几个月前推出）合并成一个面向 US 用户的 search-bar 入口。意义 = AMZN 把 AI 搜索从"chatbot 弹窗"提升为"主搜索入口"，与 GOOGL Search 直接竞争。次级影响：(1) ChatGPT Shopping (OpenAI 5/7 同期推出) narrative 受挤压；(2) Wayfair / Shopify 等中型电商需要回应；(3) Amazon Ads 长期受益于"对话式搜索的转化"。</p>
+<p><span class="label">交易锚点</span>AMZN 是过去两周最干净的 AI 多押标的：AWS（OpenAI 5/4 上 Bedrock + Anthropic Rainier）+ Alexa（5/13 shopping）+ Anthropic 持股账面（5/8 80x 增速）三层叠加。</p>
+</div>
+
+<div class="event-detail strong">
+<h4>2026-05-13 · GOOGL × SpaceX · 轨道数据中心谈判（Project Suncatcher）</h4>
+<p class="meta">标的：GOOGL / SpaceX 一级 / DXYZ / IRM / VRT &nbsp;|&nbsp; 强度：强 &nbsp;|&nbsp; 滞后：T+0</p>
+<p><span class="label">反应</span>GOOGL 5/13 盘中下挫（capex 担忧）；DXYZ premarket 拉升（SpaceX IPO 押注溢价）</p>
+<p><span class="label">注解</span>"Project Suncatcher" = GOOGL TPU + 太阳能卫星 constellation；2027 部署原型；GOOGL 已持有 SpaceX 6.1% (2015 年 $900M 投资)。市场反应分裂：(1) 短期看是 capex 再次扩张（GOOGL 已 2026 capex $180-190B），multiple 短期受压；(2) 长期看是 GOOGL 在地球能源/水/土地约束下找新算力增量。结构上挑战所有地面数据中心运营商（IRM、VRT、DLR）的长期 TAM——虽然短期内不影响 5 年内的需求。</p>
+<p><span class="label">交易锚点</span>SpaceX 估值传闻 $1.75T-2T；DXYZ 是唯一可参与的二级。GOOGL narrative 复杂——5/12 Android Gemini Intelligence 是利好，5/13 轨道算力 capex 担忧短期对冲。</p>
+</div>
+
+<div class="event-detail strong">
+<h4>2026-05-13 · ACN · 独立 -7.15%（DOGE 联邦合同削减传闻 + 风险偏好）</h4>
+<p class="meta">标的：ACN &nbsp;|&nbsp; 强度：强 &nbsp;|&nbsp; 滞后：T+0</p>
+<p><span class="label">反应</span>ACN 单日 -7.15%；5/14 反弹 +3.55%</p>
+<p><span class="label">注解</span>关键警示：5/13 -7.15% 的<u>主驱动并非 AI narrative</u>，而是 DOGE 联邦合同削减 + 整体 risk-off + 部分分析师下修。这与 5/11 -3%（OpenAI Tomoro）和 5/4 -6.6%（Anthropic JV）是不同性质的事件。市场容易把所有 ACN 跌幅都归因于 AI 颠覆，但 5/13 -7.15% 其实证明 ACN 还有第二条空头线索（联邦预算）。</p>
+<p><span class="label">交易锚点</span>剥离 AI narrative 影响后，纯"AI 颠覆"对 ACN 的净累计跌幅约 5/4 -6.6% + 5/11 -3% ≈ -10%；5/14 +3.55% 修复一部分。"双重 narrative"使 ACN 成为最复杂的空头标的，干净的空头应该寻找单一驱动的标的（如 FDS、INFY、CTSH）。</p>
+</div>
+
+<div class="event-detail strong">
+<h4>2026-05-12 · Google · Android Gemini Intelligence 抢在 iOS 27 之前</h4>
+<p class="meta">标的：GOOGL / AAPL / 三星 &nbsp;|&nbsp; 强度：强 &nbsp;|&nbsp; 滞后：T+0</p>
+<p><span class="label">反应</span>GOOGL 近一年 +146%（vs AAPL +40%）；Android 17 与 iOS 27 6 月对决</p>
+<p><span class="label">注解</span>Android Show I/O Edition 把"Gemini 升级为操作层"，覆盖 Android/Chrome/Cars/Wearables。关键能力：跨 app 操作、屏幕理解、自动下单、上下文记忆。结构意义：(1) 把"AI 助手"从应用层下沉到 OS 层，对 AAPL Siri（即使外包给 Gemini 也是被动）形成压力；(2) GOOGL 同时是 Apple Siri 的供应商 + Android 直接竞争者 = "替代品 + 互补品"双重身份。Apple 6 月 WWDC + iOS 27 reveal 是直接对手。</p>
+<p><span class="label">交易锚点</span>GOOGL 短期已经反映；AAPL 7 月 iPhone 17 预热 + 9 月发售是关键窗口——如果 iOS 27 AI 体验大幅落后 Android，可能触发 AAPL 估值重定价（参考 2023-2024 AAPL AI narrative 落后期）。</p>
+</div>
+
+<div class="event-detail strong">
+<h4>2026-05-11 · Google TIG · 第一例 AI-built zero-day 在野（2FA bypass）</h4>
+<p class="meta">标的：CRWD / NET / PANW / S &nbsp;|&nbsp; 强度：强 &nbsp;|&nbsp; 滞后：T+0~T+5</p>
+<p><span class="label">反应</span>"AI 武器化"narrative 进入"已发生"阶段；CRWD/NET 周一/周二承压</p>
+<p><span class="label">注解</span>Google Threat Intelligence Group 披露：犯罪团伙用 AI 模型发现并武器化了一个开源 web admin 工具中的 2FA bypass 零日漏洞，准备用于 mass exploitation。证据链有意思 = Python exploit 含 hallucinated CVSS score（AI 写代码留下的 fingerprint）。叠加 5/5 Amodei + Dimon 披露 Mythos 在 Firefox 找 300+ vuln + 5/6 White House EO 研究，三连击把"AI 网络武器"从假设变成现实。</p>
+<p><span class="label">交易锚点</span>对 CRWD/PANW/S 是矛盾叙事——既是利空（既有产品被绕过）也是利好（预算需求扩张）。多空哪边占上风看下季度 net new ARR 数据。NET 5/8 已独立 -15%（裁员 + 利润压力），AI narrative 进一步压制。</p>
+</div>
+
+<div class="event-detail strong">
+<h4>2026-05-11 · OpenAI · Tomoro 收购正式 close + Indian IT 共振</h4>
+<p class="meta">标的：ACN / CTSH / INFY / WIT &nbsp;|&nbsp; 强度：强 &nbsp;|&nbsp; 滞后：T+0</p>
+<p><span class="label">反应</span>ACN -3%（独立于 5/13 -7.15%）；CTSH -5% / INFY -4% / Nifty IT -3.59%</p>
+<p><span class="label">注解</span>5/4 公告 → 5/11 正式 close 的窗口里，Indian IT 反应比美国 ACN 更剧烈，因为 Tomoro 客户名单（Tesco/Virgin Atlantic/Supercell）正是 Indian IT 出口的英语市场核心客户。CTSH/INFY/WIT 长期空头叙事 = "AI 让 offshore 廉价工程师产能贬值"——Tomoro 收购给这条线提供具体证据。Anthropic-PwC 5/14 协议进一步把这条 narrative 推到 Big 4 + 全球 SI 全战场。</p>
+<p><span class="label">交易锚点</span>INFY/WIT/HCL/TCS 是干净的"Indian IT AI 颠覆"空头标的（无 ACN 那种"联邦合同"独立逆风干扰）；下季度 deal pipeline 数据是关键。</p>
+</div>
+
+<!-- 中 -->
+
+<div class="event-detail mid">
+<h4>2026-05-14 · Anthropic + Gates Foundation · $200M / 4 年合作</h4>
+<p class="meta">标的：Anthropic 一级 / GOOGL / AMZN 间接 &nbsp;|&nbsp; 强度：中 &nbsp;|&nbsp; 滞后：N/A</p>
+<p><span class="label">注解</span>$200M = $50M / 年；规模小但 PR 效应大。覆盖：(1) Global Health（4.6B 人医疗，疫苗/疗法加速）；(2) Education（K-12 evidence-based tutoring + 南亚/非洲扫盲）；(3) 农业（2B 小农户）。结构意义：Anthropic 拿到"AI for good"PR 护城河——与 Pentagon 拒交 Mythos 的"AI safety stance"形成 narrative 一致性。OpenAI 没有相当量级的 NGO 合作，这是 Anthropic 的差异化。</p>
+</div>
+
+<div class="event-detail mid">
+<h4>2026-05-13 · Anthropic · Claude for Small Business + 10 城巡讲</h4>
+<p class="meta">标的：INTU / HUBS / ADP / 一级 SMB SaaS &nbsp;|&nbsp; 强度：中 &nbsp;|&nbsp; 滞后：持续</p>
+<p><span class="label">注解</span>整合：QuickBooks / PayPal / HubSpot / Canva / Docusign / GWS / MS365 + 15 个 SMB workflow。10 城（Chicago/Tulsa/Dallas/NJ/Baton Rouge/Birmingham/SLC/Baltimore/San Jose/Indianapolis）= 故意避开 NYC/SF 一线，瞄准被 VC SaaS 忽略的中部 SMB。商业逻辑：SMB 是 SaaS 公司 ARPU 最低但客户数最多的 segment；Anthropic 在这里建立"AI 助手 = OS"心智，下游 INTU/HUBS 等可能被 commodity 化。</p>
+</div>
+
+<div class="event-detail mid">
+<h4>2026-05-12 · Sam Altman 庭审 + MSFT 内部 OpenAI 依赖披露</h4>
+<p class="meta">标的：OpenAI 一级 / MSFT / TSLA &nbsp;|&nbsp; 强度：中 &nbsp;|&nbsp; 滞后：陪审团 5/18 开始评议</p>
+<p><span class="label">注解</span>Altman 4 小时作证；否认承诺保持 nonprofit；Musk lawyer 用"是否完全 trustworthy"开场。新信息：MSFT 内部文件披露"曾担忧过度依赖 OpenAI"——为 5/14 PwC + Anthropic 协议的市场叙事提供脚注。陪审团裁决是<u>advisory only</u>，最终由 Judge Rogers 决定。</p>
+</div>
+
+<div class="event-detail mid">
+<h4>2026-05-11 · OpenAI · GPT-5.5-Cyber 给 EU；Anthropic 拒交 Mythos</h4>
+<p class="meta">标的：前沿模型公司 / EU 合规 &nbsp;|&nbsp; 强度：中 &nbsp;|&nbsp; 滞后：持续</p>
+<p><span class="label">注解</span>OpenAI 主动配合 EU 委员会评估，Anthropic 引用 "Mythos 不在欧洲推出，因此 EU AI Office 8 月执法权不适用"。EU 发言人 Thomas Regnier 公开表态会"如有需要确保获得 Mythos 访问"。商业含义：(1) Anthropic 把 Mythos 当成谈判筹码（与 Pentagon 同思路）；(2) OpenAI 用"合作"赢 EU 合规 narrative。短期对 Anthropic 是边际利空（欧洲合作客户犹豫），但与 5/14 Gates Foundation/AI for Good narrative 形成内部矛盾。</p>
+</div>
+
+<div class="event-detail mid">
+<h4>2026-05-11 · NVDA · 2026 AI 股权押注 $40B+ 披露</h4>
+<p class="meta">标的：NVDA / OpenAI 一级 &nbsp;|&nbsp; 强度：中 &nbsp;|&nbsp; 滞后：T+0</p>
+<p><span class="label">注解</span>$30B OpenAI 居首 + Corning + GSAM 等新增。Huang 此前已说"$100B 不在 menu 上"，所以 $30B 是 IPO 前最后一笔。circular investment 批评再起，但 NVDA 把自己定位为"AI 主权基金"= 用资产负债表锁定生态。</p>
+</div>
+
+<div class="event-detail mid">
+<h4>2026-05-14 · 中型 AI 融资集体 close · LLY 间接受益</h4>
+<p class="meta">标的：LLY / 液冷链条 &nbsp;|&nbsp; 强度：中 &nbsp;|&nbsp; 滞后：N/A</p>
+<p><span class="label">注解</span>Profluent + Lilly $2.25B（基因疗法 + 大基因插入 CAR-T）是 LLY 在 AI biotech 的最大签约；Sereact $110M Series B；Iceotope $30M Series A（液冷）；Nectar Social $34M（AI marketing）；Stitch $26M（a16z 首入 GCC）。对二级影响：LLY 长期受益 + 液冷链条（VRT/IRM）narrative 持续。</p>
+</div>
+
+<!-- 弱 -->
+
+<div class="event-detail weak">
+<h4>2026-05-13 · Higgsfield · Supercomputer agentic AI 平台</h4>
+<p class="meta">标的：一级 &nbsp;|&nbsp; 强度：弱 &nbsp;|&nbsp; 滞后：N/A</p>
+<p><span class="label">注解</span>跨模型 router 路线（Claude Opus 4.7 / GPT-5.5 Pro / Gemini 3.1 Pro / Kling / Seedance），40+ tools。narrative 利好"模型不重要、orchestrator 是入口"——对 Cursor、Devin 等 agentic 工具叙事补强。无显著二级映射。</p>
+</div>
+
+<div class="event-detail weak">
+<h4>2026-05-11 · Thinking Machines · Interaction Models 研究预览</h4>
+<p class="meta">标的：GOOGL / MSFT / AAPL &nbsp;|&nbsp; 强度：弱 &nbsp;|&nbsp; 滞后：N/A</p>
+<p><span class="label">注解</span>0.40s 转换延迟；多流多模态 micro-turn。对 Gemini Live / OpenAI Realtime / Siri+Gemini 是叙事压力但非产品级。重要 = Murati 在 3/10 NVDA gigawatt 之后的下一个"显存的存在感"动作。</p>
+</div>
+
+<h2 id="followup">前期事件后续</h2>
+
+<div class="followup">
+<strong>OpenAI Tomoro 收购（5/11 公告 → 本周 close）</strong>：除 ACN -3% 外，<u>Indian IT 反应更剧烈</u>，CTSH -5% / INFY -4% / Nifty IT -3.59%。空头叙事重心从"美国大咨询"扩散到"印度 offshore 廉价工程师产能贬值"。
+</div>
+
+<div class="followup">
+<strong>Thinking Machines Interaction Models（5/11 首发 → 本周）</strong>：无后续显著事件；Mira Murati 接下来的重要看点 = Murati 个人对"AI for science"narrative 的发言（参考 Karpathy AI Ascent 模板）；与 5/12 Google Android 实时助手 narrative 同周形成对照。
+</div>
+
+<div class="followup">
+<strong>Anthropic 80x 增速（5/8 → 5/9 Akamai $1.8B 算力）</strong>：供给端坐实——80x narrative 的"算力获取强度"已直接转化为 AKAM 等 CDN 类公司的合同。下一个观察点：Anthropic 是否会与更多"边缘计算/CDN"类公司签约（FSLY、CDNetworks 等）。
+</div>
+
+<div class="followup">
+<strong>White House AI EO 研究中（5/6 → 5/11-12）</strong>：进展不明朗；5/11 WaPo 报道情报机构 vs 商务部内部分歧加剧；5/12 庭审 Altman 作证可能延后 EO 时间表。监管 overhang 持续。
+</div>
+
+<h2 id="sector">板块交易思路（更新于 5/15）</h2>
+
+<div class="thesis">
+<h4>1. IT 咨询 / 系统集成 · ACN · IBM · CTSH / INFY / WIT</h4>
+<p><strong>本周变化</strong>：5/14 OpenAI 选择与 Accenture Federal 合作 = narrative 第一次反转，ACN 路径从"被绕开"切换为"AI lab + 大 SI 双层架构"。但 PwC + Anthropic 30K 员工部署 = Big 4 选边站完成。</p>
+<p><span class="short">最干净空头</span>：<strong>INFY / WIT / CTSH / TCS</strong>（Indian IT 无 ACN 那种"federal contract + DOGE"独立逆风干扰，但 Tomoro narrative 直接命中其英语市场客户基础）</p>
+<p><span class="long">观望/可能见底</span>：<strong>ACN</strong>（5/14 OpenAI 合作 + AFS 路径修复部分空头叙事；下次 FY26 Q3 财报 6 月底是关键）</p>
+<p><strong>触发器</strong>：Indian IT 公司下季度 deal pipeline 数据；ACN 6 月底财报的 AI 业务 bookings；Big 4 是否完成全部选边。</p>
+</div>
+
+<div class="thesis">
+<h4>2. AI Infrastructure 边缘 / CDN · AKAM · FSLY · NET</h4>
+<p><strong>本周变化</strong>：AKAM $1.8B Anthropic 合同 + 27% 单日跳涨 = CDN 类公司被认定为"AI inference 第二战场"；GOOGL × SpaceX 轨道算力 = 长期 narrative 扩张。</p>
+<p><span class="long">多头候选</span>：<strong>AKAM</strong>（已大幅重估值；下次财报需收入兑现）、<strong>FSLY</strong>（类似定位但规模更小，可能下一个被签约）</p>
+<p><span class="short">独立空头</span>：<strong>NET</strong>（5/8 财报 -15% + 裁员 20% 后基本面问题独立，AI narrative 帮不上忙）</p>
+<p><strong>触发器</strong>：FSLY 是否被签约；AKAM 下季度收入是否反映 7 年 $1.8B 分摊（约 $250M/年）；其他 CDN 类（NET/CDNS）的"AI 收入"披露。</p>
+</div>
+
+<div class="thesis">
+<h4>3. 电商 / 零售 AI · AMZN · W · SHOP · EBAY</h4>
+<p><strong>本周变化</strong>：5/13 AMZN Alexa for Shopping = 把 AI 搜索做成默认入口；与 ChatGPT Shopping（5/7）正面对决；Wayfair/Shopify 中型电商被夹击。</p>
+<p><span class="long">多头候选</span>：<strong>AMZN</strong>（最干净的多押：AWS + Alexa Shopping + Anthropic 持股；YTD +19%）</p>
+<p><span class="short">空头候选</span>：<strong>W / SHOP 长尾</strong>（被两端挤压：上端被 Alexa+ChatGPT 抢搜索；下端被 Amazon Marketplace 抢交易）</p>
+<p><strong>触发器</strong>：Alexa for Shopping 用户采纳率（Amazon 不会公开但可从 AWS Alexa 接口数据推测）；ChatGPT Ads Manager 商品类广告主增长。</p>
+</div>
+
+<div class="thesis">
+<h4>4. AI 安全 · CRWD · PANW · S · NET</h4>
+<p><strong>本周变化</strong>：5/11 Google 披露首例 AI-built zero-day 在野 = "武器化"叙事进入"已发生"阶段，三连击（5/5 Mythos → 5/6 WH EO → 5/11 在野）完整成型。</p>
+<p><span class="long">复杂多头</span>：<strong>CRWD / PANW / S</strong>（被双重 narrative 拉扯：产品被绕过利空 vs 预算需求扩张利好；下季度 net new ARR 是裁决数据）</p>
+<p><span class="short">独立空头</span>：<strong>NET</strong>（基本面 + narrative 双杀）</p>
+<p><strong>触发器</strong>：第二例公开的 AI zero-day；WH EO 是否签字；CRWD 6 月初财报。</p>
+</div>
+
+<div class="thesis">
+<h4>5. 操作系统 / 设备 AI · GOOGL · AAPL</h4>
+<p><strong>本周变化</strong>：5/12 Android Gemini Intelligence 抢在 iOS 27 之前；5/13 GOOGL × SpaceX 轨道算力（capex 担忧短期对冲）；GOOGL 近一年 +146% vs AAPL +40%。</p>
+<p><span class="long">多头候选</span>：<strong>GOOGL</strong>（OS + 模型 + 算力三层垂直整合优势已形成；Apple Siri 外包给 Gemini = Google 拿走部分 iPhone AI 价值）</p>
+<p><span class="short">中期空头</span>：<strong>AAPL</strong>（6 月 WWDC iOS 27 是 narrative window；若 AI 体验落后，是 2023-24 落后期的重演）</p>
+<p><strong>触发器</strong>：6 月 WWDC 26 / iOS 27 AI 功能；Android 17 用户采纳；Project Suncatcher 2027 原型卫星 timeline 落实。</p>
+</div>
+
+<div class="thesis">
+<h4>6. SMB SaaS · INTU · HUBS · ADP · CRM</h4>
+<p><strong>本周变化</strong>：5/13 Anthropic Claude for Small Business + 10 城巡讲 = AI 颠覆 narrative 从大企业（前两周 Anthropic Wall Street / OpenAI Deployment）延伸到 SMB。</p>
+<p><span class="short">长期空头</span>：<strong>INTU</strong>（QuickBooks 是 Anthropic 集成的第一个，replacement narrative 最强）、<strong>HUBS</strong>（CRM SMB 段被 Sierra + Anthropic 双夹击）</p>
+<p><strong>触发器</strong>：Anthropic SMB 客户数 6 个月披露；INTU TurboTax 季度财报的 AI 影响评估。</p>
+</div>
+
+<div class="thesis">
+<h4>7. Anthropic 估值锚 · GOOGL · AMZN · NVDA</h4>
+<p><strong>本周变化</strong>：5/9 Akamai $1.8B + 5/14 PwC 30K + 5/14 Gates Foundation $200M = Anthropic 渠道、算力、PR 三个方向同时扩张；维持 80x 增速 narrative。</p>
+<p><span class="long">多头候选</span>：<strong>GOOGL</strong>（持股最大 + 1GW TPU 合同 + Android narrative；最干净三重逻辑）、<strong>AMZN</strong>（AWS 加速 + Alexa Shopping + Anthropic 持股）</p>
+<p><strong>触发器</strong>：Anthropic 是否在 Q3 2026 完成下一轮融资把估值推上 $500B+；GOOGL TPU 合同 ramp。</p>
+</div>
+
+<h2 id="caveats">数据警示与未决项</h2>
+<div class="caveat">
+<strong>1. ACN 5/13 -7.15% 不是纯 AI 事件</strong>：主驱动是 DOGE 联邦合同削减传闻 + 整体 risk-off；5/14 +3.55% 是 OpenAI AFS 合作。本数据集已分开列示，但媒体常合并叙述。
+</div>
+<div class="caveat">
+<strong>2. AKAM $1.8B 合同披露时点</strong>：Akamai 5/8 财报披露七年云协议但未点名买方；Bloomberg 5/9 报道身份为 Anthropic。本数据集按"5/8 财报披露 + 5/9 确认"处理。
+</div>
+<div class="caveat">
+<strong>3. AI-built zero-day 细节有限</strong>：Google TIG 未披露完整 IOC 与漏洞 CVE；exploit 中"hallucinated CVSS score"是 AI fingerprint 关键证据但需独立 corroboration。
+</div>
+<div class="caveat">
+<strong>4. Musk v Altman 陪审团裁决是 advisory</strong>：5/18 评议开始，但最终由 Judge Gonzalez Rogers 决定；下周可能产生 narrative 余波。
+</div>
+<div class="caveat">
+<strong>5. Anthropic 拒交 Mythos 给 EU 与 Pentagon 是同源策略</strong>：理论上有内部矛盾（既要 AI for good，又拒交安全模型给民主国家）；可能在 6-8 月成为媒体追问焦点。
+</div>
+<div class="caveat">
+<strong>6. 4 家中国开源模型（DeepSeek V4 / Kimi K2.6 / GLM-5.1 / MiniMax M2.7）</strong>实际发布在 4/24 - 5/4 区间，本数据集未单独列入"5/10-5/15"事件——但作为"推理成本战"背景叙事在 5/15 持续放大。
+</div>
+
+<footer>
+<strong>主要来源</strong>（按出现顺序）<br>
+· 5/13 Amazon Alexa for Shopping：<a href="https://www.cnbc.com/2026/05/13/amazon-ditches-rufus-ai-chatbot-in-favor-of-alexa-shopping-agent.html" target="_blank">CNBC</a>·<a href="https://www.benzinga.com/news/retail-sales/26/05/52552425/amazon-kills-rufus-chatbot-rolls-out-ai-powered-alexa-shopping-assistant-heres-what-to-know" target="_blank">Benzinga (AMZN +1.62%)</a><br>
+· 5/13 GOOGL × SpaceX 轨道：<a href="https://techcrunch.com/2026/05/12/report-google-and-spacex-in-talks-to-put-data-centers-into-orbit/" target="_blank">TechCrunch</a>·<a href="https://www.tradingkey.com/analysis/stocks/us-stocks/261889686-spacex-ipo-google-goog-googl-space-ai-data-center-tradingkey" target="_blank">TradingKey</a><br>
+· 5/13 Anthropic Claude for Small Business：<a href="https://www.anthropic.com/news/claude-for-small-business" target="_blank">Anthropic 官方</a>·<a href="https://techcrunch.com/2026/05/13/anthropic-courts-a-new-kind-of-customer-small-business-owners/" target="_blank">TechCrunch</a><br>
+· 5/14 PwC × Anthropic：<a href="https://www.prnewswire.com/news-releases/anthropic-and-pwc-expand-alliance-driving-impact-across-client-work-and-the-firm-302772321.html" target="_blank">PRNewswire</a>·<a href="https://siliconangle.com/2026/05/14/pwc-expands-anthropic-alliance-will-train-30000-staff-claude/" target="_blank">SiliconANGLE</a><br>
+· 5/14 OpenAI × Accenture Federal Services：<a href="https://newsroom.accenture.com/news/2026/accenture-federal-services-and-openai-partner-to-accelerate-secure-ai-adoption-across-the-federal-government" target="_blank">Accenture Newsroom</a>·<a href="https://www.tradingkey.com/news/market-movers/261896106-market-movers-acn-20260514" target="_blank">ACN +3.55%</a><br>
+· 5/14 Anthropic + Gates Foundation：<a href="https://www.anthropic.com/news/gates-foundation-partnership" target="_blank">Anthropic 官方</a>·<a href="https://www.gatesfoundation.org/ideas/media-center/press-releases/2026/05/ai-anthropic-partnership" target="_blank">Gates Foundation</a><br>
+· 5/12 Android Gemini Intelligence：<a href="https://blog.google/products-and-platforms/platforms/android/gemini-intelligence/" target="_blank">Google Blog</a>·<a href="https://www.cnbc.com/2026/05/12/google-races-put-gemini-at-center-of-android-before-apples-ai-reboot.html" target="_blank">CNBC</a><br>
+· 5/12 Musk v Altman 庭审：<a href="https://www.cnbc.com/2026/05/13/altman-musk-trial-testimony-takeaways.html" target="_blank">CNBC takeaways</a>·<a href="https://www.cnbc.com/2026/05/14/closing-arguments-jury-openai-musk-altman.html" target="_blank">Closing arguments</a><br>
+· 5/11 AI Zero-Day in the wild：<a href="https://www.cnbc.com/2026/05/11/google-thwarts-effort-hacker-group-use-ai-mass-exploitation-event.html" target="_blank">CNBC</a>·<a href="https://www.bloomberg.com/news/articles/2026-05-11/hackers-used-ai-to-build-zero-day-attack-google-researchers-say" target="_blank">Bloomberg</a><br>
+· 5/11 OpenAI Tomoro close + Indian IT：<a href="https://www.business-standard.com/markets/capital-market-news/it-stocks-tumble-after-openai-launches-ai-deployment-venture-126051200384_1.html" target="_blank">Business Standard</a><br>
+· 5/11 GPT-5.5-Cyber EU / Anthropic Mythos：<a href="https://www.cnbc.com/2026/05/11/openai-eu-cyber-model-anthropic-mythos-gpt.html" target="_blank">CNBC</a>·<a href="https://iapp.org/news/a/openai-grants-european-commission-access-to-new-model-as-eu-considers-frontier-ai-cybersecurity-risks" target="_blank">IAPP</a><br>
+· 5/11 Thinking Machines Interaction Models：<a href="https://venturebeat.com/technology/thinking-machines-shows-off-preview-of-near-realtime-ai-voice-and-video-conversation-with-new-interaction-models" target="_blank">VentureBeat</a><br>
+· 5/9 AKAM $1.8B：<a href="https://www.bloomberg.com/news/articles/2026-05-08/anthropic-inks-1-8-billion-computing-deal-with-akamai" target="_blank">Bloomberg</a>·<a href="https://www.bostonglobe.com/2026/05/08/business/akamai-stock-price-anthropic-ai/" target="_blank">Boston Globe (+27%)</a>
+</footer>
+
+</body>
+</html>
