@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>硅光/AI光通信产业链 Watchlist · Doris</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #0a0e1a;
+    color: #e4e8f0;
+    line-height: 1.5;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .header {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #1f2937;
+  }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin-bottom: 6px;
+  }
+  .header .subtitle {
+    font-size: 13px;
+    color: #6b7280;
+  }
+  .header .updated { color: #9ca3af; font-size: 12px; margin-top: 8px; }
+
+  /* Filter bar */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-right: 4px;
+  }
+  .filter-btn {
+    background: #1f2937;
+    color: #d1d5db;
+    border: 1px solid #374151;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { background: #374151; }
+  .filter-btn.active {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+  }
+  .search-input {
+    background: #1f2937;
+    color: #f3f4f6;
+    border: 1px solid #374151;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    width: 200px;
+    margin-left: auto;
+  }
+
+  /* Pipeline view */
+  .pipeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .stage {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .stage-header {
+    font-size: 11px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .stage-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin-bottom: 8px;
+  }
+  .stage-desc {
+    font-size: 11px;
+    color: #6b7280;
+    margin-bottom: 12px;
+    min-height: 28px;
+  }
+  .stage-companies {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .mini-card {
+    background: #0f172a;
+    border-left: 3px solid #374151;
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .mini-card:hover {
+    background: #1e293b;
+    transform: translateX(2px);
+  }
+  .mini-card .name {
+    color: #e5e7eb;
+    font-weight: 500;
+  }
+  .mini-card .code {
+    color: #6b7280;
+    font-size: 10px;
+    margin-left: 4px;
+  }
+  .mini-card .meta {
+    color: #9ca3af;
+    font-size: 10px;
+    margin-top: 2px;
+  }
+
+  /* Tier color coding */
+  .tier-1b { border-left-color: #10b981; }
+  .tier-mid { border-left-color: #3b82f6; }
+  .tier-small { border-left-color: #f59e0b; }
+  .tier-unlisted { border-left-color: #6b7280; }
+
+  /* Detailed table */
+  .table-section {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .count {
+    background: #1f2937;
+    color: #9ca3af;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 400;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  th {
+    text-align: left;
+    padding: 10px 8px;
+    background: #0f172a;
+    color: #9ca3af;
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid #1f2937;
+  }
+  th:hover { color: #e5e7eb; }
+  th.sortable::after {
+    content: " ⇅";
+    color: #4b5563;
+    font-size: 10px;
+  }
+  td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #1f2937;
+    color: #d1d5db;
+  }
+  tr:hover td { background: #0f172a; }
+  .company-name {
+    color: #f3f4f6;
+    font-weight: 500;
+  }
+  .code-cell {
+    font-family: 'SF Mono', Monaco, monospace;
+    color: #60a5fa;
+    font-size: 11px;
+  }
+  .tag {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 500;
+  }
+  .tag-上游 { background: #5b21b6; color: #ddd6fe; }
+  .tag-中游 { background: #1e40af; color: #bfdbfe; }
+  .tag-下游 { background: #064e3b; color: #a7f3d0; }
+  .tag-代工 { background: #78350f; color: #fde68a; }
+  .tag-光纤 { background: #831843; color: #fbcfe8; }
+
+  .num { font-family: 'SF Mono', Monaco, monospace; text-align: right; }
+  .positive { color: #10b981; }
+  .negative { color: #ef4444; }
+  .warning { color: #f59e0b; }
+  .pe-high { color: #ef4444; font-weight: 500; }
+  .pe-mid { color: #f59e0b; }
+  .pe-low { color: #10b981; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 16px;
+    font-size: 11px;
+    color: #9ca3af;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  /* Disclaimers */
+  .notes {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 12px;
+    color: #9ca3af;
+    line-height: 1.7;
+  }
+  .notes h4 {
+    color: #e5e7eb;
+    font-size: 13px;
+    margin-bottom: 8px;
+    margin-top: 12px;
+  }
+  .notes h4:first-child { margin-top: 0; }
+  .notes ul { margin-left: 18px; margin-top: 4px; }
+  .notes strong { color: #d1d5db; }
+
+  /* Stage flow arrows */
+  .pipeline-wrapper {
+    position: relative;
+  }
+  
+  @media (max-width: 1100px) {
+    .pipeline { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .pipeline { grid-template-columns: 1fr; }
+    body { padding: 12px; }
+    .search-input { width: 100%; margin-top: 8px; }
+  }
+</style>
+</head>
+<body>
+<nav id="auto-nav" style="padding: 15px 20px; background: #fff; border-bottom: 1px solid #e2e8f0; margin: -8px -8px 20px -8px; font-family: -apple-system, sans-serif; display: flex; align-items: center; position: sticky; top: 0; z-index: 999;">
+    <a href="../index.html" style="text-decoration: none; color: #2563eb; font-weight: 600; display: flex; align-items: center; gap: 5px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        返回档案库主页
+    </a>
+</nav>
+
+
+<div class="header">
+  <h1>硅光 / AI 光通信产业链 Watchlist</h1>
+  <div class="subtitle">五段式产业链梳理 · 全球40+上市标的 · 营收/估值/分位一站式跟踪</div>
+  <div class="updated">数据截止：2026年5月 · 数据来源：公司年报、券商研报、LightCounting</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot" style="background:#10b981"></span>营收 ≥ $1B</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#3b82f6"></span>营收 $200M-$1B</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span>营收 &lt; $200M（叙事溢价标的）</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#6b7280"></span>未上市/不可直接投资</div>
+</div>
+
+<div class="pipeline-wrapper">
+<div class="pipeline">
+
+  <div class="stage">
+    <div class="stage-header">Stage 1</div>
+    <div class="stage-title">上游 · 光芯片/电芯片</div>
+    <div class="stage-desc">EML/DFB激光器、CW光源、DSP电芯片</div>
+    <div class="stage-companies">
+      <div class="mini-card tier-1b">
+        <div class="name">Lumentum<span class="code">LITE US</span></div>
+        <div class="meta">EML+CW · FY25 $17亿 · 200G EML独家</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">Coherent<span class="code">COHR US</span></div>
+        <div class="meta">EML+器件 · FY25 $58亿 · InP产线</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">博通<span class="code">AVGO US</span></div>
+        <div class="meta">DSP+VCSEL · 含CPO芯片</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">Marvell<span class="code">MRVL US</span></div>
+        <div class="meta">PAM4 DSP · FY26前9月$48亿</div>
+      </div>
+      <div class="mini-card tier-mid">
+        <div class="name">Credo<span class="code">CRDO US</span></div>
+        <div class="meta">AEC+DSP · FY26 Q2 $2.68亿/+272%</div>
+      </div>
+      <div class="mini-card tier-mid">
+        <div class="name">光迅科技<span class="code">002281 SZ</span></div>
+        <div class="meta">芯片-器件-模块全链路 · 25年119亿</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">源杰科技<span class="code">688498 SH</span></div>
+        <div class="meta">25/100G EML · 25年6亿 · PE 650x</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">仕佳光子<span class="code">688313 SH</span></div>
+        <div class="meta">AWG+PLC+CW · 25H1 9.9亿/+121%</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">长光华芯<span class="code">688048 SH</span></div>
+        <div class="meta">激光器芯片 · 25年4.77亿/+75%</div>
+      </div>
+      <div class="mini-card tier-unlisted">
+        <div class="name">华为海思<span class="code">未上市</span></div>
+        <div class="meta">DSP+光芯片 · 内部供应</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-header">Stage 2</div>
+    <div class="stage-title">上游 · 光器件/光引擎</div>
+    <div class="stage-desc">TOSA/ROSA、光引擎、FA阵列、调制器</div>
+    <div class="stage-companies">
+      <div class="mini-card tier-mid">
+        <div class="name">天孚通信<span class="code">300394 SZ</span></div>
+        <div class="meta">光引擎+无源 · 25年净利18.8-21.5亿</div>
+      </div>
+      <div class="mini-card tier-mid">
+        <div class="name">太辰光<span class="code">300570 SZ</span></div>
+        <div class="meta">MPO+MT插芯 · 25年净利2.5-2.8亿</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">光库科技<span class="code">300620 SZ</span></div>
+        <div class="meta">铌酸锂调制器 · TFLN方向</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">腾景科技<span class="code">688195 SH</span></div>
+        <div class="meta">精密光学元件 · 微光器件</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">博创科技<span class="code">300548 SZ</span></div>
+        <div class="meta">PLC+光收发组件</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">POET Tech<span class="code">POET US</span></div>
+        <div class="meta">Optical Interposer · Q3订单$560万</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-header">Stage 3</div>
+    <div class="stage-title">中游 · 光模块</div>
+    <div class="stage-desc">100G/400G/800G/1.6T 收发器</div>
+    <div class="stage-companies">
+      <div class="mini-card tier-1b">
+        <div class="name">中际旭创<span class="code">300308 SZ</span></div>
+        <div class="meta">25年382亿 · 全球No.1 · PE 60-80x</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">新易盛<span class="code">300502 SZ</span></div>
+        <div class="meta">25年净利94-99亿 · LPO龙头</div>
+      </div>
+      <div class="mini-card tier-mid">
+        <div class="name">华工科技<span class="code">000988 SZ</span></div>
+        <div class="meta">联接业务25年61亿/+53%</div>
+      </div>
+      <div class="mini-card tier-mid">
+        <div class="name">东山精密<span class="code">002384 SZ</span></div>
+        <div class="meta">收购索尔思 · 整合中</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">AAOI<span class="code">AAOI US</span></div>
+        <div class="meta">25年$455M · 26年指引$1B</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">剑桥科技<span class="code">603083 SH</span></div>
+        <div class="meta">25年净利2.52-2.78亿/+51-67%</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">联特科技<span class="code">301205 SZ</span></div>
+        <div class="meta">24年8.9亿/+47%</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">德科立<span class="code">688205 SH</span></div>
+        <div class="meta">DCI相干模块</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">铭普光磁<span class="code">002902 SZ</span></div>
+        <div class="meta">磁性元件+光模块</div>
+      </div>
+      <div class="mini-card tier-unlisted">
+        <div class="name">华为<span class="code">未上市</span></div>
+        <div class="meta">LC榜全球第4</div>
+      </div>
+      <div class="mini-card tier-unlisted">
+        <div class="name">海信宽带<span class="code">未上市</span></div>
+        <div class="meta">海信集团内部 · LC榜全球第7</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-header">Stage 4</div>
+    <div class="stage-title">光纤+互联+代工</div>
+    <div class="stage-desc">光纤光缆、MPO连接、模块代工</div>
+    <div class="stage-companies">
+      <div class="mini-card tier-1b">
+        <div class="name">康宁<span class="code">GLW US</span></div>
+        <div class="meta">光通信FY25 $63亿/+35%</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">Fabrinet<span class="code">FN US</span></div>
+        <div class="meta">光通信代工 · 季度$832M</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">长飞光纤<span class="code">601869 SH / 06869 HK</span></div>
+        <div class="meta">A+H · 25H1 64亿/+19% · 空芯光纤</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">中天科技<span class="code">600522 SH</span></div>
+        <div class="meta">光纤光缆+海缆</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">亨通光电<span class="code">600487 SH</span></div>
+        <div class="meta">光纤光缆+海缆</div>
+      </div>
+      <div class="mini-card tier-small">
+        <div class="name">烽火通信<span class="code">600498 SH</span></div>
+        <div class="meta">光通信设备+光纤</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-header">Stage 5</div>
+    <div class="stage-title">下游 · 设备/服务器/云</div>
+    <div class="stage-desc">交换机、AI服务器、超大规模云</div>
+    <div class="stage-companies">
+      <div class="mini-card tier-1b">
+        <div class="name">Arista<span class="code">ANET US</span></div>
+        <div class="meta">数据中心交换机龙头</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">Cisco<span class="code">CSCO US</span></div>
+        <div class="meta">交换机+收购Acacia</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">英伟达<span class="code">NVDA US</span></div>
+        <div class="meta">GPU+InfiniBand+Spectrum-X</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">工业富联<span class="code">601138 SH</span></div>
+        <div class="meta">25年净利350亿+ · AI机柜代工</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">微软<span class="code">MSFT US</span></div>
+        <div class="meta">Azure · 2026 Capex >$100B</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">谷歌<span class="code">GOOGL US</span></div>
+        <div class="meta">GCP · 中际旭创核心客户</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">亚马逊<span class="code">AMZN US</span></div>
+        <div class="meta">AWS · Trainium加速器</div>
+      </div>
+      <div class="mini-card tier-1b">
+        <div class="name">Meta<span class="code">META US</span></div>
+        <div class="meta">康宁$6B长协 · MTIA加速器</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div class="table-section">
+  <div class="section-title">
+    详细标的清单
+    <span class="count" id="visible-count">40+</span>
+    <input type="text" class="search-input" id="search" placeholder="搜索公司名/代码..." style="margin-left:auto">
+  </div>
+  
+  <div class="filters">
+    <span class="filter-label">环节：</span>
+    <button class="filter-btn active" data-stage="all">全部</button>
+    <button class="filter-btn" data-stage="光芯片">光芯片/电芯片</button>
+    <button class="filter-btn" data-stage="光器件">光器件/光引擎</button>
+    <button class="filter-btn" data-stage="光模块">光模块</button>
+    <button class="filter-btn" data-stage="光纤代工">光纤/代工</button>
+    <button class="filter-btn" data-stage="下游">下游/云厂</button>
+    
+    <span class="filter-label" style="margin-left:16px">规模：</span>
+    <button class="filter-btn active" data-size="all">全部</button>
+    <button class="filter-btn" data-size="1b">≥$1B</button>
+    <button class="filter-btn" data-size="mid">$200M-$1B</button>
+    <button class="filter-btn" data-size="small">&lt;$200M</button>
+  </div>
+
+  <table id="watchlist">
+    <thead>
+      <tr>
+        <th>公司</th>
+        <th>代码</th>
+        <th>环节</th>
+        <th>核心定位</th>
+        <th class="sortable" data-sort="revenue">2025营收(亿)</th>
+        <th class="sortable" data-sort="growth">增速</th>
+        <th class="sortable" data-sort="pe">动态PE</th>
+        <th>估值分位</th>
+        <th>跟踪要点</th>
+      </tr>
+    </thead>
+    <tbody id="tbody">
+    </tbody>
+  </table>
+</div>
+
+<div class="notes">
+  <h4>关于估值分位的判断标准</h4>
+  <ul>
+    <li><strong style="color:#10b981">合理</strong>：动态PE &lt; 30x，或PEG &lt; 0.5</li>
+    <li><strong style="color:#f59e0b">偏高</strong>：动态PE 30-60x，需要业绩持续兑现</li>
+    <li><strong style="color:#ef4444">极端</strong>：动态PE &gt; 60x 或TTM &gt; 100x，估值进入"梦想定价"区间</li>
+  </ul>
+
+  <h4>关于这个板块"低估"框架的诚实判断</h4>
+  <ul>
+    <li>截至2026年5月，AAOI YTD +420%、Lumentum +184%、中际旭创自2022年低点四年38倍、长飞光纤H股YTD +185%</li>
+    <li>板块整体处于历史极高估值分位，<strong>传统DCF/PE/PB框架已不适用于多数标的</strong></li>
+    <li>相对价值差异仍存在：新易盛vs中际旭创、Coherent业务多元化拖累估值、康宁有hyperscaler长协兜底</li>
+    <li>"卡脖子"叙事（源杰、仕佳）和"空芯光纤"叙事（长飞）是A股小盘标的的主要溢价来源，业绩兑现风险高</li>
+  </ul>
+
+  <h4>跟踪关键指标（建议每月/每季度更新）</h4>
+  <ul>
+    <li><strong>需求侧</strong>：北美五大CSP（MSFT/GOOGL/AMZN/META/ORCL）季度Capex指引</li>
+    <li><strong>技术里程碑</strong>：英伟达GTC/OFC大会CPO路线图、1.6T/3.2T量产时点</li>
+    <li><strong>产能扩张</strong>：光芯片供需缺口（野村估算2026年仍紧5-15%）</li>
+    <li><strong>客户集中度</strong>：中际旭创前五大75.98%、源杰第一大53%、天孚Fabrinet占61.69%</li>
+    <li><strong>技术路线分歧</strong>：CPO vs LPO vs NPO vs 可插拔在scale-up的最终占比</li>
+  </ul>
+
+  <h4>主要风险（FCX式情景测算的参考维度）</h4>
+  <ul>
+    <li><strong>Capex拐点风险</strong>：任一hyperscaler放缓2027年Capex指引 → 估值瞬间杀30-50%</li>
+    <li><strong>CPO替代风险</strong>：若scale-up走CPO而非可插拔，光模块品牌商被压缩到scale-out</li>
+    <li><strong>地缘风险</strong>：A股龙头海外营收占比80-90%，关税或出口管制影响交付</li>
+    <li><strong>技术路线证伪</strong>：新易盛LPO、华工CPO、长飞空芯光纤的产业化进度</li>
+    <li><strong>下游自研</strong>：海信宽带、光迅自研EML芯片对源杰构成长期挤压</li>
+  </ul>
+
+  <h4>数据说明</h4>
+  <ul>
+    <li>A股/港股数据为人民币亿元，美股数据为美元亿元，已在表格中标注</li>
+    <li>非自然年公司（Coherent、Lumentum、Fabrinet等）使用财年口径</li>
+    <li>动态PE基于2026E一致预期；估值因股价快速变动，建议结合最新行情核实</li>
+  </ul>
+</div>
+
+<script>
+// 完整标的数据
+const companies = [
+  // 上游·光芯片/电芯片
+  {name: "Lumentum", code: "LITE US", stage: "光芯片", subStage: "上游", desc: "EML+CW激光器，200G EML独家供应商", revenue: "17 (FY25, $)", revenueNum: 1700, growth: "+58%", growthNum: 58, pe: "50-60x", peNum: 55, valuation: "极端", note: "200G EML 2026年涨价预期; NVIDIA $2B投资", currency: "$"},
+  {name: "Coherent", code: "COHR US", stage: "光芯片", subStage: "上游", desc: "EML+器件+激光器，全球transceiver No.1", revenue: "58 (FY25, $)", revenueNum: 5800, growth: "+23%", growthNum: 23, pe: "35-40x", peNum: 37, valuation: "偏高", note: "业务多元化稀释AI纯度; InP产线优势", currency: "$"},
+  {name: "Broadcom", code: "AVGO US", stage: "光芯片", subStage: "上游", desc: "DSP+VCSEL+CPO芯片", revenue: "560+ (FY25, $)", revenueNum: 56000, growth: "+44%", growthNum: 44, pe: "35x", peNum: 35, valuation: "偏高", note: "CPO主推方; 单独光通信占比小但增速快", currency: "$"},
+  {name: "Marvell", code: "MRVL US", stage: "光芯片", subStage: "上游", desc: "PAM4 DSP+光DSP+定制ASIC", revenue: "78 (FY26E前9月, $)", revenueNum: 7800, growth: "+40%", growthNum: 40, pe: "40-50x", peNum: 45, valuation: "极端", note: "收购Celestial AI布局CPO; FY28起贡献收入", currency: "$"},
+  {name: "Credo", code: "CRDO US", stage: "光芯片", subStage: "上游", desc: "AEC+光DSP，scale-out网络龙头", revenue: "10+ (FY26E, $)", revenueNum: 1000, growth: "+170%", growthNum: 170, pe: "60-80x", peNum: 70, valuation: "极端", note: "客户集中度高(前1占61%); 800G DSP北美客户导入", currency: "$"},
+  {name: "光迅科技", code: "002281 SZ", stage: "光芯片", subStage: "上游/中游", desc: "中国唯一光芯片-器件-模块-子系统全链", revenue: "119 (¥)", revenueNum: 11900, growth: "+44%", growthNum: 44, pe: "40-50x", peNum: 45, valuation: "偏高", note: "央企背景; 国内云厂商份额高; OFC 2026首推3.2T NPO", currency: "¥"},
+  {name: "源杰科技", code: "688498 SH", stage: "光芯片", subStage: "上游", desc: "25/100G EML+CW硅光光源, IDM全流程", revenue: "6.01 (¥)", revenueNum: 601, growth: "+138.5%", growthNum: 138.5, pe: "650x (TTM)", peNum: 650, valuation: "极端", note: "国产替代纯叙事标的; 客户集中度极高(第1占53%)", currency: "¥"},
+  {name: "仕佳光子", code: "688313 SH", stage: "光芯片", subStage: "上游", desc: "AWG+PLC+CW光源", revenue: "15.6 (¥前9月)", revenueNum: 1560, growth: "+114%", growthNum: 114, pe: "100x+", peNum: 110, valuation: "极端", note: "1.6T AWG领先; CW激光器送样验证", currency: "¥"},
+  {name: "长光华芯", code: "688048 SH", stage: "光芯片", subStage: "上游", desc: "激光器芯片+VCSEL+光通信芯片", revenue: "4.77 (¥)", revenueNum: 477, growth: "+75%", growthNum: 75, pe: "扭亏", peNum: 300, valuation: "极端", note: "工业激光+光通信+激光雷达平台; 25年扭亏", currency: "¥"},
+
+  // 上游·光器件/光引擎
+  {name: "天孚通信", code: "300394 SZ", stage: "光器件", subStage: "上游", desc: "光引擎+无源器件，毛利率近40%", revenue: "32.5 (24)/55+(25E, ¥)", revenueNum: 5500, growth: "+70%", growthNum: 70, pe: "55-63x", peNum: 59, valuation: "极端", note: "第一大客户Fabrinet占62%; CPO无源连接卡位", currency: "¥"},
+  {name: "太辰光", code: "300570 SZ", stage: "光器件", subStage: "上游", desc: "MPO连接+MT插芯全球领先", revenue: "13.78 (24)/19+(25E, ¥)", revenueNum: 1900, growth: "+40%", growthNum: 40, pe: "60-70x", peNum: 65, valuation: "极端", note: "MT插芯紧缺受益; ShuffleBox方案CPO配套", currency: "¥"},
+  {name: "光库科技", code: "300620 SZ", stage: "光器件", subStage: "上游", desc: "铌酸锂调制器+光纤激光器件", revenue: "11+ (25E, ¥)", revenueNum: 1100, growth: "+30%", growthNum: 30, pe: "80-100x", peNum: 90, valuation: "极端", note: "TFLN薄膜铌酸锂方向; 800G/1.6T调制器", currency: "¥"},
+  {name: "腾景科技", code: "688195 SH", stage: "光器件", subStage: "上游", desc: "精密光学+微光器件+无源器件", revenue: "8+ (25E, ¥)", revenueNum: 800, growth: "+40%", growthNum: 40, pe: "70-90x", peNum: 80, valuation: "极端", note: "光纤激光器+量子通信元件", currency: "¥"},
+  {name: "博创科技", code: "300548 SZ", stage: "光器件", subStage: "上游", desc: "PLC+光收发组件+SiP芯片", revenue: "10+ (25E, ¥)", revenueNum: 1000, growth: "+50%", growthNum: 50, pe: "60-80x", peNum: 70, valuation: "极端", note: "硅光集成方案; 长芯博创母公司", currency: "¥"},
+  {name: "POET Tech", code: "POET US", stage: "光器件", subStage: "上游", desc: "Optical Interposer硅光集成平台", revenue: "0.06 (25Q3, $)", revenueNum: 6, growth: "—", growthNum: 0, pe: "亏损", peNum: 999, valuation: "极端", note: "富士康合作; 仍处早期商业化阶段", currency: "$"},
+
+  // 中游·光模块
+  {name: "中际旭创", code: "300308 SZ", stage: "光模块", subStage: "中游", desc: "全球光模块No.1，海外90.58%", revenue: "382.4 (¥)", revenueNum: 38240, growth: "+60.25%", growthNum: 60.25, pe: "60-80x", peNum: 70, valuation: "极端", note: "前5大客户76%; 1.6T 25Q3起量产; 港股IPO在推进", currency: "¥"},
+  {name: "新易盛", code: "300502 SZ", stage: "光模块", subStage: "中游", desc: "LPO龙头，800G LPO份额75%", revenue: "250+ (25E, ¥)", revenueNum: 25000, growth: "+180%+", growthNum: 180, pe: "40-50x", peNum: 45, valuation: "偏高", note: "毛利率47%(同业最高); 海外78%; 估值相对旭创折价", currency: "¥"},
+  {name: "光迅科技", code: "002281 SZ", stage: "光模块", subStage: "中游", desc: "见上游同列(全链路)", revenue: "119 (¥)", revenueNum: 11900, growth: "+44%", growthNum: 44, pe: "40-50x", peNum: 45, valuation: "偏高", note: "数据通信业务25年增速183%", currency: "¥"},
+  {name: "华工科技", code: "000988 SZ", stage: "光模块", subStage: "中游", desc: "联接+激光智能制造+传感器", revenue: "143.55 (¥, 联接占43%)", revenueNum: 14355, growth: "+22.59%", growthNum: 22.59, pe: "50x", peNum: 50, valuation: "偏高", note: "联接业务61亿/+53%; 毛利率仅10.9%是隐患", currency: "¥"},
+  {name: "东山精密", code: "002384 SZ", stage: "光模块", subStage: "中游", desc: "PCB+光通信(收购索尔思)", revenue: "350+ (25E, ¥)", revenueNum: 35000, growth: "+30%", growthNum: 30, pe: "30-40x", peNum: 35, valuation: "合理", note: "索尔思整合中; 是A股光模块标的中估值相对最克制", currency: "¥"},
+  {name: "AAOI", code: "AAOI US", stage: "光模块", subStage: "中游", desc: "美国本土光模块+CATV", revenue: "4.557 (25, $)", revenueNum: 455.7, growth: "+50%", growthNum: 50, pe: "120x+", peNum: 130, valuation: "极端", note: "26年指引$10亿; 美国本土制造是地缘对冲", currency: "$"},
+  {name: "剑桥科技", code: "603083 SH", stage: "光模块", subStage: "中游", desc: "宽带接入+5G+高速光模块", revenue: "40+ (25E, ¥)", revenueNum: 4000, growth: "+30%", growthNum: 30, pe: "60-80x", peNum: 70, valuation: "极端", note: "1.6T推迟到26年; 北美营收占比38%", currency: "¥"},
+  {name: "联特科技", code: "301205 SZ", stage: "光模块", subStage: "中游", desc: "10G+电信+数通光模块", revenue: "13+ (25E, ¥)", revenueNum: 1300, growth: "+45%", growthNum: 45, pe: "60-80x", peNum: 70, valuation: "极端", note: "马来西亚产能; 海外占比提升", currency: "¥"},
+  {name: "德科立", code: "688205 SH", stage: "光模块", subStage: "中游", desc: "相干光模块+DCI", revenue: "6+ (25E, ¥)", revenueNum: 600, growth: "+30%", growthNum: 30, pe: "70-90x", peNum: 80, valuation: "极端", note: "相干技术储备; DCI市场弹性大", currency: "¥"},
+  {name: "铭普光磁", code: "002902 SZ", stage: "光模块", subStage: "中游", desc: "磁性元件+光模块业务", revenue: "30+ (25E, ¥)", revenueNum: 3000, growth: "+25%", growthNum: 25, pe: "50-70x", peNum: 60, valuation: "偏高", note: "兼具AI算力磁性元件需求", currency: "¥"},
+
+  // 光纤+互联+代工
+  {name: "康宁", code: "GLW US", stage: "光纤代工", subStage: "光纤/连接", desc: "光纤+连接器件全球龙头", revenue: "164整体/63光通信(FY25, $)", revenueNum: 6300, growth: "+35%(光通信)", growthNum: 35, pe: "41x", peNum: 41, valuation: "偏高", note: "Meta $6B长协+2家类似规模hyperscaler; 估值相对克制", currency: "$"},
+  {name: "Fabrinet", code: "FN US", stage: "光纤代工", subStage: "代工", desc: "光通信精密代工，COHR/LITE主供应商", revenue: "~33 (年化, $)", revenueNum: 3300, growth: "+30%", growthNum: 30, pe: "30-35x", peNum: 32, valuation: "偏高", note: "客户集中(Cisco/Coherent/Lumentum); 中立第三方代工", currency: "$"},
+  {name: "长飞光纤", code: "601869 / 06869", stage: "光纤代工", subStage: "光纤", desc: "A+H双上市，光纤光缆+空芯光纤", revenue: "63.84 (25H1, ¥)", revenueNum: 6384, growth: "+19.38%", growthNum: 19.38, pe: "A:322x/H:170x", peNum: 250, valuation: "极端", note: "A股YTD+91%/H股+185%; 主业仍量价齐跌; 空芯光纤纯叙事", currency: "¥"},
+  {name: "中天科技", code: "600522 SH", stage: "光纤代工", subStage: "光纤", desc: "光纤光缆+海缆+特种线缆", revenue: "460+ (25E, ¥)", revenueNum: 46000, growth: "+15%", growthNum: 15, pe: "20-25x", peNum: 22, valuation: "合理", note: "光纤价格回暖; 海缆业务弹性大", currency: "¥"},
+  {name: "亨通光电", code: "600487 SH", stage: "光纤代工", subStage: "光纤", desc: "光纤光缆+海洋+电力", revenue: "550+ (25E, ¥)", revenueNum: 55000, growth: "+15%", growthNum: 15, pe: "18-22x", peNum: 20, valuation: "合理", note: "海缆订单充足; 估值相对克制", currency: "¥"},
+  {name: "烽火通信", code: "600498 SH", stage: "光纤代工", subStage: "光纤/设备", desc: "光通信设备+光纤+ICT", revenue: "350+ (25E, ¥)", revenueNum: 35000, growth: "+10%", growthNum: 10, pe: "30-40x", peNum: 35, valuation: "偏高", note: "国资背景; 光迅母公司中国信科兄弟单位", currency: "¥"},
+
+  // 下游
+  {name: "工业富联", code: "601138 SH", stage: "下游", subStage: "服务器代工", desc: "英伟达GB200/GB300核心代工", revenue: "9000+ (25E, ¥)", revenueNum: 900000, growth: "+50%+", growthNum: 50, pe: "33-48x", peNum: 40, valuation: "偏高", note: "800G交换机Q3+27倍; AI机柜规模交付", currency: "¥"},
+  {name: "Arista", code: "ANET US", stage: "下游", subStage: "交换机", desc: "数据中心交换机龙头", revenue: "80+ (25E, $)", revenueNum: 8000, growth: "+25%", growthNum: 25, pe: "40-50x", peNum: 45, valuation: "偏高", note: "Meta/Microsoft大客户; AI数据中心受益", currency: "$"},
+  {name: "Cisco", code: "CSCO US", stage: "下游", subStage: "交换机", desc: "传统网络+Acacia相干模块", revenue: "560+ (FY25, $)", revenueNum: 56000, growth: "+8%", growthNum: 8, pe: "18-22x", peNum: 20, valuation: "合理", note: "AI订单加速; 估值在大盘网络股中最便宜", currency: "$"},
+  {name: "英伟达", code: "NVDA US", stage: "下游", subStage: "GPU/网络", desc: "GPU+InfiniBand+Spectrum-X+NVLink", revenue: "1300+ (FY26E, $)", revenueNum: 130000, growth: "+60%", growthNum: 60, pe: "35-40x", peNum: 38, valuation: "偏高", note: "光通信链条最终客户; CPO主推方", currency: "$"},
+  {name: "微软", code: "MSFT US", stage: "下游", subStage: "云厂商", desc: "Azure，Capex 2026 >$1000亿", revenue: "—", revenueNum: 0, growth: "—", growthNum: 0, pe: "30-35x", peNum: 32, valuation: "偏高", note: "Azure capex引领光模块需求", currency: "$"},
+  {name: "谷歌", code: "GOOGL US", stage: "下游", subStage: "云厂商", desc: "GCP+TPU自研", revenue: "—", revenueNum: 0, growth: "—", growthNum: 0, pe: "20-25x", peNum: 22, valuation: "合理", note: "中际旭创最大客户; TPU自研拉动光模块", currency: "$"},
+  {name: "亚马逊", code: "AMZN US", stage: "下游", subStage: "云厂商", desc: "AWS+Trainium加速器", revenue: "—", revenueNum: 0, growth: "—", growthNum: 0, pe: "30-35x", peNum: 32, valuation: "偏高", note: "Trainium拉动定制光模块需求", currency: "$"},
+  {name: "Meta", code: "META US", stage: "下游", subStage: "云厂商", desc: "MTIA加速器+康宁$6B光纤长协", revenue: "—", revenueNum: 0, growth: "—", growthNum: 0, pe: "25-28x", peNum: 26, valuation: "偏高", note: "公开签$6B光纤长协; CPO早期采用者", currency: "$"},
+  {name: "Oracle", code: "ORCL US", stage: "下游", subStage: "云厂商", desc: "OCI云+AI算力暴增", revenue: "—", revenueNum: 0, growth: "—", growthNum: 0, pe: "35-40x", peNum: 37, valuation: "偏高", note: "25年Capex+233%最大变量; 拉动800G需求", currency: "$"},
+];
+
+const tbody = document.getElementById('tbody');
+const visibleCount = document.getElementById('visible-count');
+
+function renderTable(filtered) {
+  tbody.innerHTML = filtered.map(c => {
+    const peClass = c.peNum > 80 ? 'pe-high' : c.peNum > 35 ? 'pe-mid' : 'pe-low';
+    const valClass = c.valuation === '极端' ? 'pe-high' : c.valuation === '偏高' ? 'pe-mid' : 'pe-low';
+    return `
+      <tr data-stage="${c.stage}" data-size="${c.revenueNum > 1000 ? '1b' : c.revenueNum > 200 ? 'mid' : 'small'}">
+        <td class="company-name">${c.name}</td>
+        <td class="code-cell">${c.code}</td>
+        <td><span class="tag tag-${c.subStage.split('/')[0]}">${c.subStage}</span></td>
+        <td>${c.desc}</td>
+        <td class="num">${c.revenue}</td>
+        <td class="num positive">${c.growth}</td>
+        <td class="num ${peClass}">${c.pe}</td>
+        <td class="${valClass}">${c.valuation}</td>
+        <td style="font-size:11px;color:#9ca3af">${c.note}</td>
+      </tr>
+    `;
+  }).join('');
+  visibleCount.textContent = filtered.length + " 家";
+}
+
+renderTable(companies);
+
+// Filtering
+let stageFilter = 'all';
+let sizeFilter = 'all';
+let searchTerm = '';
+let sortField = null;
+let sortAsc = false;
+
+function applyFilters() {
+  let filtered = companies.filter(c => {
+    if (stageFilter !== 'all' && c.stage !== stageFilter) return false;
+    if (sizeFilter !== 'all') {
+      const size = c.revenueNum > 1000 ? '1b' : c.revenueNum > 200 ? 'mid' : 'small';
+      if (size !== sizeFilter) return false;
+    }
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      if (!c.name.toLowerCase().includes(term) && !c.code.toLowerCase().includes(term)) return false;
+    }
+    return true;
+  });
+  if (sortField) {
+    const key = sortField === 'revenue' ? 'revenueNum' : sortField === 'growth' ? 'growthNum' : 'peNum';
+    filtered.sort((a, b) => sortAsc ? a[key] - b[key] : b[key] - a[key]);
+  }
+  renderTable(filtered);
+}
+
+document.querySelectorAll('.filter-btn[data-stage]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn[data-stage]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    stageFilter = btn.dataset.stage;
+    applyFilters();
+  });
+});
+document.querySelectorAll('.filter-btn[data-size]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn[data-size]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    sizeFilter = btn.dataset.size;
+    applyFilters();
+  });
+});
+document.getElementById('search').addEventListener('input', e => {
+  searchTerm = e.target.value;
+  applyFilters();
+});
+document.querySelectorAll('th.sortable').forEach(th => {
+  th.addEventListener('click', () => {
+    const field = th.dataset.sort;
+    if (sortField === field) sortAsc = !sortAsc;
+    else { sortField = field; sortAsc = false; }
+    applyFilters();
+  });
+});
+
+// Mini-card click to scroll to row
+document.querySelectorAll('.mini-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const name = card.querySelector('.name').childNodes[0].textContent.trim();
+    document.getElementById('search').value = name;
+    searchTerm = name;
+    applyFilters();
+    document.querySelector('.table-section').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+</script>
+
+</body>
+</html>

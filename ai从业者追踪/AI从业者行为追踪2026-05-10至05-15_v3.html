@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AI 从业者一周观察 · 2026-05-10 至 05-15</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --ink: #1a1a1a;
+    --ink-soft: #2d2d2d;
+    --muted: #6a6a6a;
+    --line: #e5e3dc;
+    --accent: #3a5fcd;
+    --accent-soft: #eef2fa;
+    --good: #1f7a4a;
+    --bad: #b3261e;
+    --neu: #7a6a3a;
+    --chip-bg: #f0eee5;
+    --quote-bg: #f4f1e8;
+    --side-bg: #f5f3eb;
+    --tab-inactive: #888;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Helvetica Neue", -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+    line-height: 1.78;
+    font-size: 16px;
+  }
+  h1 {
+    font-size: 28px;
+    margin: 0 0 6px;
+    letter-spacing: -0.012em;
+    font-weight: 700;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 14.5px;
+    margin: 0 0 30px;
+    font-style: italic;
+  }
+  h2 {
+    font-size: 21px;
+    margin: 44px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: -0.005em;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 18px;
+    margin: 36px 0 8px;
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: -0.003em;
+  }
+  h3 .who {
+    color: var(--accent);
+  }
+  h3 .when {
+    color: var(--muted);
+    font-weight: 400;
+    font-size: 13.5px;
+    margin-left: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+  p { margin: 12px 0; }
+
+  .lede {
+    font-size: 16.5px;
+    line-height: 1.7;
+    background: var(--quote-bg);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 20px 0 28px;
+  }
+  .lede strong { color: var(--accent); }
+
+  /* TABS */
+  .tabs { margin: 28px 0; }
+  .tabs input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .tab-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    border-bottom: 2px solid var(--line);
+    padding: 0;
+    margin: 0 0 24px;
+  }
+  .tab-labels label {
+    padding: 11px 18px;
+    cursor: pointer;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--tab-inactive);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .tab-labels label:hover {
+    color: var(--ink-soft);
+    background: var(--side-bg);
+  }
+  .tab-labels label .count {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 4px;
+  }
+  .tab-panels .panel { display: none; }
+
+  #t1:checked ~ .tab-labels label[for="t1"],
+  #t2:checked ~ .tab-labels label[for="t2"],
+  #t3:checked ~ .tab-labels label[for="t3"],
+  #t4:checked ~ .tab-labels label[for="t4"] {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  #t1:checked ~ .tab-panels .panel-1,
+  #t2:checked ~ .tab-panels .panel-2,
+  #t3:checked ~ .tab-panels .panel-3,
+  #t4:checked ~ .tab-panels .panel-4 { display: block; animation: fadein 0.2s ease; }
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .panel-intro {
+    color: var(--muted);
+    font-size: 14px;
+    font-style: italic;
+    margin: 0 0 22px;
+    padding: 10px 14px;
+    background: var(--side-bg);
+    border-radius: 4px;
+  }
+
+  .event {
+    margin: 32px 0 0;
+    padding-bottom: 28px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .event:last-child { border-bottom: none; }
+  .event h3 { margin-top: 0; }
+
+  .reaction {
+    background: var(--side-bg);
+    border-left: 3px solid var(--line);
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .reaction .label {
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .reaction.bad   { border-left-color: var(--bad); }
+  .reaction.good  { border-left-color: var(--good); }
+  .reaction.mix   { border-left-color: var(--neu); }
+
+  .up   { color: var(--good); font-weight: 600; }
+  .down { color: var(--bad); font-weight: 600; }
+  .ticker {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 13px;
+    background: var(--chip-bg);
+    padding: 0 5px;
+    border-radius: 2px;
+  }
+
+  blockquote {
+    margin: 16px 0;
+    padding: 6px 16px;
+    border-left: 2px solid var(--accent);
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 15px;
+  }
+
+  .takeaway-block {
+    background: var(--accent-soft);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin: 18px 0;
+  }
+  .takeaway-block h3 { margin-top: 0; }
+  .takeaway-block ul { padding-left: 22px; margin: 8px 0; }
+  .takeaway-block li { margin: 6px 0; line-height: 1.6; }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  .caveat-list {
+    background: #fdf6e3;
+    border-left: 3px solid #d9a300;
+    padding: 14px 18px 14px 22px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: #5a4a10;
+  }
+  .caveat-list p { margin: 6px 0; }
+  em { color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<nav id="auto-nav" style="padding: 15px 20px; background: #fff; border-bottom: 1px solid #e2e8f0; margin: -8px -8px 20px -8px; font-family: -apple-system, sans-serif; display: flex; align-items: center; position: sticky; top: 0; z-index: 999;">
+    <a href="../index.html" style="text-decoration: none; color: #2563eb; font-weight: 600; display: flex; align-items: center; gap: 5px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        返回档案库主页
+    </a>
+</nav>
+
+
+<h1>AI 从业者一周观察</h1>
+<p class="subtitle">2026 年 5 月 10 日 — 5 月 15 日 · 按事件类别归档，仍以人物为叙事中心</p>
+
+<div class="lede">
+这是 AI 实验室创始人们集体走出实验室、走进客户办公室与法庭的一周。Dario Amodei 在咨询、NGO、算力三个方向同时下棋；Sam Altman 一边出庭作证一边让 OpenAI 跟 Accenture 联邦子公司握手；Mira Murati 端出 10 个月磨一剑的实时模型；Google 的一份匿名公告让"AI 武器化零日"从假设变成历史第一例。<strong>这份报告按事件类别分了 4 个 tab——产品发布、公开点评、投资行为、人事/战略——切换 tab 阅读，每个事件仍由当事人引出。</strong>
+</div>
+
+<div class="tabs">
+  <input type="radio" name="tabs" id="t1" checked>
+  <input type="radio" name="tabs" id="t2">
+  <input type="radio" name="tabs" id="t3">
+  <input type="radio" name="tabs" id="t4">
+
+  <div class="tab-labels">
+    <label for="t1">产品发布<span class="count">· 5</span></label>
+    <label for="t2">公开点评<span class="count">· 3</span></label>
+    <label for="t3">投资行为<span class="count">· 3</span></label>
+    <label for="t4">人事/战略<span class="count">· 5</span></label>
+  </div>
+
+  <div class="tab-panels">
+
+    <!-- ===== TAB 1: 产品发布 ===== -->
+    <div class="panel panel-1">
+      <div class="panel-intro">
+        本周的产品发布有一个共同主题——AI 助手在抢"入口"。Murati 抢实时交互入口，Pichai 抢操作系统入口，Jassy 抢电商搜索入口，Amodei 抢中小企业 SaaS 入口。每个人都在赌"我这一边的入口未来会成为用户接触 AI 的第一站"。
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Mira Murati</span> 在 0.40 秒的"打断"里证明独立路线 <span class="when">5/11</span></h3>
+        <p>Murati 从 OpenAI CTO 任上出走是 2024 年的事。2025 年 7 月用 \$20 亿 seed（历史最大种子轮）成立 Thinking Machines，估值 \$120 亿，然后整整 10 个月没产品。市场已经开始怀疑——她能做出真正"非 OpenAI 路线"的东西吗？</p>
+        <p>5 月 11 日她终于出手，但不是 ChatGPT 替代品，而是一个叫 Interaction Models 的研究预览。看起来像语音助手，本质上却不同：现在所有大模型（OpenAI Realtime、Gemini Live 在内）都是"轮流说话"——你说完它才能想，它说时不接收新输入。Murati 把这个机制砸了，多路流并行处理音视频文本，能"边听边说边想"。turn-taking latency 0.40 秒，接近人类。</p>
+        <p>选这条路是有人物意图的。Altman 的 Realtime API 一直被吐槽延迟高、打断不自然——Murati 直接攻在前老板的最弱点上。这不是模型规模战，是体验维度战，她有意避开了 ChatGPT 和 Claude 的直接对撞。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          没有立刻的二级反应——研究预览不开放企业、没有 ARR。但对 <span class="ticker">AAPL</span> 是中期叙事压力：今年下半年 Siri 重启用的是 Gemini，Murati 把 Siri 体验天花板又抬高了一截。6 月 WWDC 是 Apple 兑现压力测试点。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sundar Pichai</span> 把 Gemini 从聊天框降级为操作层 <span class="when">5/12</span></h3>
+        <p>Pichai 一直在做一件事——把 Gemini 从"app 里的助手"提升到"OS 层的智能"。5 月 12 日的 Android Show I/O Edition 是这套思路的完整呈现：Android 17 的"Gemini Intelligence"横跨手机、浏览器、车载、可穿戴；能跨 app 操作、能理解屏幕、能自主下单。</p>
+        <p>抢跑动机也明确——Apple 的 iOS 27 6 月 WWDC 才发布，Pichai 故意把 Android 17 预览提前一个月扔出来。过去一年 <span class="ticker">GOOGL</span> 股价 +146%（同期 <span class="ticker">AAPL</span> 才 +40%），Pichai 不想给 Apple 任何重新设定 AI narrative 的空间。</p>
+        <p>这件事还有个有趣的反差——Apple 今年下半年的 Siri 重启用的就是 Gemini。也就是说 Pichai 一手做 Android Gemini Intelligence 抢 iPhone 用户，一手又给 Siri 提供动力赚 Apple 的钱。"既是竞争者又是供应商"的双重身份，是过去两年 Pichai 个人定位最有趣的一个变化。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">GOOGL</span> 整周强势。对 <span class="ticker">AAPL</span> 是中期空头叙事——如果 iOS 27 AI 体验明显落后，2023-24 的"Apple AI 落后期"可能重演。6 月 WWDC 是关键 narrative window。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Andy Jassy</span> 一夜废掉自己一年前刚做的 AI 助手 <span class="when">5/13</span></h3>
+        <p>5 月 13 日，Amazon 把过去一年里推出的两个 AI 助手——Rufus 和 Alexa+——合并成 Alexa for Shopping。Rufus 被完全废弃。新产品直接占据 Amazon 全站搜索栏，能问答、比价、设触发器。免费用，不用 Prime。</p>
+        <p>这是 Jassy 接班 Bezos 以来最干脆的一次"杀子"动作。Rufus 才一岁多，内部投了大量资源；Alexa+ 半年前才公测。一夜合并意味着 Amazon 把"AI 搜索 = Amazon 流量第一入口"提上了战略最高优先级。背景是 5 月 7 日 ChatGPT Ads Manager 公测——Altman 开始抢 Google 的搜索广告 TAM，Amazon 是潜在被夹击对象。</p>
+        <p>Jassy 这一年的整体战略呈现"内外双押"结构。对外：AWS 同时托管 OpenAI 和 Anthropic，不站队。对内：Alexa for Shopping 主打"我的搜索我自己掌控"。这是个职业经理人式的稳健打法，跟 Bezos 时代的"all-in 一个大赌注"风格不同。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">AMZN</span> 当日 <span class="up">+1.62%</span> 到 \$270.13，年初至今 +19.26%。AMZN 是过去两周最干净的 AI 多押标的——AWS + Alexa Shopping + Anthropic 持股，三层叠加。<span class="ticker">W</span>（Wayfair）和 <span class="ticker">SHOP</span>（Shopify）的中型电商承压。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Dario Amodei</span> 把 Claude 推到 15 人的 HVAC 公司 <span class="when">5/13</span></h3>
+        <p>5 月 13 日，Anthropic 上线 Claude for Small Business，并启动一个 10 城市的免费 AI 培训巡讲。城市名单值得看一眼：Chicago、Tulsa、Dallas、新泽西、Baton Rouge、Birmingham、Salt Lake City、Baltimore、San Jose、Indianapolis——故意避开 NYC 和 SF 一线，瞄准被 VC SaaS 长期忽略的中部 SMB。</p>
+        <p>Anthropic SMB 负责人 Lina Ochman 在 Axios 的访谈里说了一句很直白的话："过去软件行业是为企业、VC 支持的 startup 和消费者建的，但不是为 15 人的 HVAC 公司、30 人的园艺公司、50 人的房产中介建的。"产品形态是个 toggle install——接入 QuickBooks、PayPal、HubSpot、Canva、Docusign、Google Workspace、Microsoft 365，15 个开箱即用的 workflow。</p>
+        <p>Amodei 这步棋跟同周的 PwC 协议、Gates Foundation 协议加在一起看，是一个明确的"渠道无差别覆盖"策略——大企业用 PwC 渠道、超大企业用 GS/Blackstone JV、NGO 用 Gates、SMB 直接下沉。同一个模型，四种分发方式。</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          没有单日剧烈反应，但中长期对 SMB SaaS 是利空。<span class="ticker">INTU</span>（QuickBooks 母公司）是第一个被 Claude 集成的对象——Anthropic 在帮你用 QuickBooks，也是在替代部分 QuickBooks 用户体验。<span class="ticker">HUBS</span>（HubSpot）面临类似处境。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Alex Mashrabov</span> 让 AI 自己选模型——多模型路由的新形态 <span class="when">5/13</span></h3>
+        <p>5 月 13 日，Higgsfield AI 创始人 Alex Mashrabov 上线"Higgsfield Supercomputer"——一个能跨模型路由的 agentic 平台。你说"给我做一周的 Instagram 广告 + 竞品分析"，它自己决定哪些任务用 Claude Opus 4.7、哪些用 GPT-5.5 Pro、哪些用 Gemini 3.1 Pro，哪些用 Kling 3.0 出视频，哪些用 Seedance。40+ 内置工具，三层记忆。</p>
+        <p>这件事单独看不大，但它代表了一个真正在涌现的产品形态——orchestrator 优先于 model。Mashrabov 这类创业者赌的是："未来用户不需要知道、也不在乎背后是哪个模型；模型层会变成 commodity，编排层会变成新入口。"如果这套逻辑成立，Anthropic、OpenAI、Google 的"端到端用户体验"护城河会变薄，而 Cursor、Devin、Higgsfield 这些 orchestrator 公司会赢。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          无显著二级映射。但 narrative 对 <span class="ticker">NVDA</span> 是间接利好——orchestrator 多模型调度意味着更多推理调用、更碎片化的 GPU 使用模式。
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 2: 公开点评 ===== -->
+    <div class="panel panel-2">
+      <div class="panel-intro">
+        本周的"公开点评"以一种特别的方式展开——Altman 在法庭里被律师逐句追问，Google 威胁情报组用一份匿名公告把"AI 武器化"从理论变成历史第一例，Amodei 用"拒绝合作"做出了一次最响亮的点评。
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sam Altman</span> 在加州奥克兰联邦法庭坐了四个小时 <span class="when">5/12</span></h3>
+        <p>5 月 12 日，Altman 穿着蓝西装走进加州奥克兰联邦法院。这是 Musk 起诉 OpenAI"偷走慈善机构"案件的第三周，他是被告方的关键证人。Musk 的律师 Steven Molo 的开场问题简短：<em>"你认为自己完全值得信任吗？"</em></p>
+        <p>Altman 的应对方式很有他个人风格——不正面回答，而讲故事。他说当年没有人答应过 Musk 一定要保持非营利；说创始人当时一致认为"AGI 不应由单人控制"；说"Musk 离开后把 OpenAI 当成已死之人"。四个小时后他走下证人席，跟着 Greg Brockman 一起离开。</p>
+        <p>这一天最有意义的细节不是 Altman 自己说了什么，而是律师交叉盘问中暴露的 MSFT 内部文件——MSFT 曾多次担忧"过度依赖 OpenAI"。这条信息为 MSFT 过去半年频繁加码 Anthropic、xAI、Mistral 等多模型策略提供了背景脚注。Nadella 不是 OpenAI 的"忠实大客户"那么简单，他一直在为 OpenAI 失控做准备。</p>
+        <p>到了 5 月 14 日双方完成结案陈词。9 人陪审团下周一开始评议。但注意——陪审团裁决在这个案子里只是 advisory（咨询性），最终由法官 Yvonne Gonzalez Rogers 决定。Musk 本人当天因陪 Trump 在中国未出席，他的律师向陪审团道歉了。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">TSLA</span> 无显著反应（Musk 注意力分散早已 priced in）。<span class="ticker">MSFT</span> 短期持稳，但"过度依赖 OpenAI"的内部担忧被披露，反而给 Nadella 接下来扩大 Anthropic 合作提供合法性。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3>谷歌威胁情报组的那位匿名研究员让"AI 武器化"成为历史 <span class="when">5/11</span></h3>
+        <p>5 月 11 日，Google Threat Intelligence Group（TIG）在博客上挂出一份措辞冷静的公告——他们发现并阻止了一个犯罪团伙：这个团伙用 AI 模型发现并武器化了一个开源 Web 管理工具里的两步验证（2FA）旁路零日漏洞，原本准备发起 mass exploitation。</p>
+        <p>这份公告短到不能再短，但有一个让 TIG 研究员能确认"这是 AI 干的"的关键证据：那段 Python exploit 代码里包含一个"幻觉出来"的 CVSS 评分。CVSS 是国际通用的漏洞严重程度评分，每个真实漏洞只有一个真实 CVSS——AI 写代码时随手编一个出来，这恰恰是模型的指纹。</p>
+        <p>这件事的意义在时间线里：</p>
+        <blockquote>
+          5 月 5 日：Amodei 在 JPMorgan 同台说 Mythos 在 Firefox 找到 300+ 漏洞。<br>
+          5 月 6 日：白宫 NEC 主任 Hassett 确认研究 FDA 式 AI 模型审查 EO。<br>
+          5 月 11 日：第一例 AI 制造的零日在野部署被记录在案。
+        </blockquote>
+        <p>三件事在一周内闭环——"AI 武器化"从理论概念，到实验室证据，到监管反应，到野外实战。Amodei 4 月以来铺设的整套监管叙事，得到了来自竞争对手（Google）的间接背书。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">CRWD</span>、<span class="ticker">PANW</span> 面对矛盾叙事——既有产品被绕过是利空，但企业网安预算扩大是利好。多空对决要看下季度 net new ARR。<span class="ticker">NET</span>（Cloudflare）相对干净——5/8 财报已独立 <span class="down">-15%</span>，AI narrative 只是雪上加霜。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Dario Amodei</span> 用"拒绝合作"完成了一次点评 <span class="when">5/11</span></h3>
+        <p>5 月 11 日有两件相关的事同时发生：OpenAI 主动把 GPT-5.5-Cyber 模型交给欧盟委员会评估；Anthropic 拒绝把 Mythos 交给同样的流程。欧盟委员会发言人 Thomas Regnier 公开表态——"等 AI Office 8 月开始有执法权时，我们会确保获得 Mythos 的访问。"</p>
+        <p>Amodei 这步看似冒险的拒绝，其实跟他 3 月起被五角大楼供应链风险标签锁定是同一个剧本——把 Mythos 当谈判筹码。他不想做军方的自主武器接口，也不想做欧盟的合规白盒。两端都拒绝，反而强化了 Anthropic 的人物定位——"我们的 AI 不是工具，是有立场的"。</p>
+        <p>对比来看，Altman 选择主动配合 EU 一方面是为 OpenAI 在欧洲的商业落地铺路，另一方面也是给 5/12 庭审"OpenAI 是可信任合作伙伴"叙事增加分量。两位 CEO 在同一周面对同一个监管者，做出完全相反的选择，背后是两种截然不同的公司性格。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          短期对 Anthropic 是边际利空——欧洲合作客户会犹豫。但中长期是 narrative 利好——配合同周的 Gates Foundation \$2 亿合作，Anthropic 完成了"有立场的 AI 公司"画像构建。
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 3: 投资行为 ===== -->
+    <div class="panel panel-3">
+      <div class="panel-intro">
+        本周的投资行为有一条贯穿主线——AI 上游和下游同时在重构。Huang 用 \$400 亿股权押注把 Nvidia 变成"AI 主权基金"；Gates 用 \$2 亿把 Anthropic 推上"AI for good"的位置；中型 AI 融资集体在 5/14 close，背后是液冷、基因疗法、社交营销三条新主线在浮现。
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Jensen Huang</span> 完成了从"卖芯片"到"管理 AI 主权基金"的转身 <span class="when">5/9</span></h3>
+        <p>5 月 9 日 Nvidia 披露了 2026 年至今的 AI 股权押注总额——超过 \$400 亿，其中 \$300 亿给了 OpenAI。新增的还有 Corning（\$GLW）、Goldman Sachs Asset Management 等。Huang 3 月已公开表态"\$1000 亿不在 menu 上"，所以这 \$300 亿很可能是 OpenAI IPO 前最后一笔。</p>
+        <p>Huang 这一年完成了一个奇怪的身份转换——从"做最好 AI 芯片的 CEO"变成了"AI 生态主权基金管理人"。Nvidia 用资产负债表把整个生态绑在自己身上：买它芯片的公司同时是它的股东标的，每笔投资都强化护城河，也回流成芯片订单。"循环投资"这个不太好听的标签在分析师圈里反复出现。</p>
+        <p>但这周也出现了对这套打法的第一次裂缝——5/11 OpenAI CFO 公开承认 OpenAI 跟 Broadcom 6GW、AMD 10GW、NVDA 10GW 的合同存在融资缺口；如果 OpenAI 收入跟不上节奏，这些芯片订单可能没法全部兑现。<span class="ticker">AVGO</span> 当周已经 -6%。如果"主权基金"叙事将来出现真正裂缝，第一个受冲击的反而不是 NVDA 自己，而是 AVGO 和 AMD。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">NVDA</span> 持稳。短期最值得关注的不是 NVDA 而是 <span class="ticker">AVGO</span>——它在 ChatGPT 收入兑现节奏放慢时，会是最先受冲击的二阶标的。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Bill Gates</span> 用 \$2 亿给 Anthropic 一张通行证 <span class="when">5/14</span></h3>
+        <p>5 月 14 日 Gates 基金会和 Anthropic 公布 4 年 \$2 亿合作。Gates 本人 70 岁了，基金会的执行已经交给 CEO Mark Suzman。这是 Gates 这一代科技领袖把"AI 留给世界"的姿态——通过基金会、NGO 渠道、政府合作、低收入国家试点，把 AI 推到 46 亿没有医疗服务的人身上。</p>
+        <p>对 Anthropic 来说 \$2 亿（分摊每年 \$5,000 万）相对于 \$1T 估值传闻几乎是零。但战略价值在于：Amodei 拿到了 OpenAI 没有的 narrative 资产——"AI for good"PR 护城河。配合同周拒交 Mythos 给五角大楼和欧盟，整个公司画像变成"我们是一家在科学家、医生、农技员中间工作的 AI 公司"。</p>
+        <p>这条路线如果走通，对 Anthropic 长期 IPO 估值的影响远大于这 \$2 亿本身——尤其在 ESG 投资基金占机构资金权重越来越大的环境里，这层护城河会变成实在的估值差。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          一级标的；二级映射间接影响 <span class="ticker">GOOGL</span>、<span class="ticker">AMZN</span> 的 Anthropic 持股账面价值。Anthropic 估值锚继续强化。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3>5 月 14 日同日 close 的几笔中型融资勾出三条新主线 <span class="when">5/14</span></h3>
+        <p>同一天还有几笔中型 AI 融资集体落地——量级不大但勾出了三条接下来值得跟踪的新主线：</p>
+        <p><strong>Profluent + Lilly \$2.25B</strong>——Lilly 投给 Profluent 做大基因插入治疗（AI 设计的 CAR-T）。这是 Lilly 在 AI biotech 的最大一笔签约，把 AI 制药从"加速研发"推进到"设计治疗"。</p>
+        <p><strong>Iceotope \$30M Series A</strong>——液冷数据中心。GOOGL × SpaceX 5/13 谈轨道数据中心的另一面是：地面数据中心仍要解决散热瓶颈。液冷链条（<span class="ticker">VRT</span>、<span class="ticker">IRM</span>）持续受益。</p>
+        <p><strong>Sereact \$110M Series B / Nectar Social \$34M / Stitch \$26M（a16z 首入海湾地区）</strong>——AI marketing 自动化、跨境支付 AI、企业自动化这三条线持续吸金。Stitch 那笔尤其值得注意——a16z 第一次进海湾合作委员会（GCC）地区的 AI 投资。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">LLY</span> 长期受益于 Profluent 基因疗法叙事；液冷链条 <span class="ticker">VRT</span>、<span class="ticker">IRM</span> 持续受益于"AI 散热瓶颈"narrative。这些都是二阶受益标的，催化点是各自的下次财报。
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 4: 人事/收购/战略 ===== -->
+    <div class="panel panel-4">
+      <div class="panel-intro">
+        本周战略层的事最密集——Amodei 和 Altman 几乎在每个有意义的渠道上都做了动作。最大的反 narrative 一次：Altman 没有继续"绕开传统咨询公司"，而是选择跟 ACN 联邦子公司合作。Big 4 和大 SI 正式被推到"选边站"的位置。
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Dario Amodei</span> 让普华永道 30 万员工的工位上都装上 Claude <span class="when">5/14</span></h3>
+        <p>5 月 14 日上午 Anthropic 和 PwC 同时挂出公告：PwC 把 Claude Code 和 Claude Cowork 同时铺给美国 30,000 名员工，并在 CFO 办公室部门里专门设了一个"Claude 原生金融业务组"。最终目标是 PwC 全球 364,000 人。</p>
+        <p>这件事最有意思的部分不是"又一个企业部署"，而是 Amodei 这两周一直在做的同一动作。5/4 他和 Goldman、Blackstone 合伙做了 \$15 亿"企业 AI 服务公司"，目标是直接绕开传统咨询、把 Anthropic 工程师派进 PE 持股企业的办公室。10 天后他选择不绕开 PwC——而是让 PwC 选边站到自己这边。两个看起来矛盾的策略，其实是同一个剧本：把 Anthropic 从一个 API 供应商变成"咨询业的水电气"。</p>
+        <p>对 Amodei 这一年的变化也是个标尺。一年前他还在公开访谈里担心"AI 会带来白领大屠杀"。两周前的 JPMorgan 大会上他把调子换成了 Jevons Paradox——"自动化掉 90%，剩下 10% 的需求会被放大十倍"。从悲剧叙事换到经济学叙事，配合上 PwC 这种合作伙伴，这是给监管者和大企业 HR 看的：放心，我们和你站一边。</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          PwC 不上市，所以二级影响要从对手身上找。最直接对手是 <span class="ticker">ACN</span>——但 ACN 当天反而 <span class="up">+3.55%</span>，因为 OpenAI 选了同一天和 ACN 联邦子公司握手（下一条）。这反映了一个新现实：Big 4 和大 SI 已被推到"选边站"，而二级市场要给"输家"打折，要看到具体丢单数据。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sam Altman</span> 反 narrative 地选择"借道"而不是"绕开" <span class="when">5/14</span></h3>
+        <p>就在庭审进入最后阶段的同一天，OpenAI 选择了一个反 narrative 的动作——跟 Accenture 联邦服务子公司（AFS）签战略合作，给 AFS 15,000 名员工授权使用 OpenAI 模型，3,000 多个 AFS 员工拿到 Codex 权限，建立一个"模拟联邦机构 Agentic 实验室"。</p>
+        <p>这步棋的精彩程度容易被低估。前一周（5/4），Anthropic 联手 Goldman 和 Blackstone 做了 \$15 亿咨询替代品 JV；OpenAI 同日宣布自己的 \$40 亿"Deployment Company"；5/11 OpenAI 收购 Tomoro 拿下 150 个 Forward Deployed Engineer。所有这些动作的叙事都是"AI 实验室要替代大咨询公司"。然后 Altman 在 5/14 突然改路：跟 ACN 在联邦市场合作。</p>
+        <p>原因很现实——美国联邦政府的采购流程不会给一个 5 月才成立的 OpenAI Deployment Co. 直接发合同，必须走 prime contractor 通道，而 ACN Federal 是这条通道上最熟门熟路的玩家之一。Altman 选择"短期合作长期竞争"——先用 ACN 的执行能力把 OpenAI 模型铺进联邦机构，竞争留到后面再说。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">ACN</span> 当日 <span class="up">+3.55%</span>，部分修复前一天 <span class="down">-7.15%</span>。但注意——5/13 那次大跌主因不是 AI narrative 而是 DOGE 联邦合同削减传闻 + 风险偏好下降。两天的涨跌讲两件不同的事。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sam Altman</span> 用 150 个英国工程师完成 OpenAI 史上第一笔咨询并购 <span class="when">5/11</span></h3>
+        <p>5 月 11 日 OpenAI 正式 close 跟 Tomoro 的收购——一家爱丁堡的应用 AI 咨询公司，约 150 名 Forward Deployed Engineer，客户名单含 Tesco、Virgin Atlantic、Supercell、Mattel、Red Bull。Tomoro 团队 2023 年由前 OpenAI 工程师在英国创立，意识形态上一直是 OpenAI 的"亲卫队"。</p>
+        <p>这笔收购对 Altman 个人有两层意义。一是给 \$40 亿 Deployment Company 配上了第一批可立即派出的工程师——之前更像 PPT，5/11 之后变成"我们有 150 个能落地的人"。二是把"OpenAI 不只做模型也做交付"的姿态做实，回应了 5/4 Anthropic + Goldman/Blackstone JV 的同周动作。</p>
+        <p>Tomoro 客户名单全部是消费品/航空/零售/游戏——这恰好是 ACN、IBM、Cognizant、Infosys 的核心客群。</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">ACN</span> <span class="down">-3%</span>（独立于 5/13 的 -7.15%）。但更剧烈的反应在印度：<span class="ticker">CTSH</span> <span class="down">-5%</span>、<span class="ticker">INFY</span> <span class="down">-4%</span>、Nifty IT 指数 <span class="down">-3.59%</span>。<strong>这周最干净的空头标的是 Indian IT，因为它们没有 ACN 那种"DOGE 联邦合同"的独立逆风干扰。</strong>
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Dario Amodei</span> 跟一家做 CDN 的公司签了 7 年的算力大单 <span class="when">5/9</span></h3>
+        <p>就在本周开始前的周五，彭博披露 Anthropic 跟 Akamai 签了一份 7 年 \$18 亿的云算力合同。这是 Akamai 公司历史上最大的单笔订单，也是 Amodei 5/8 自报"80 倍年化增速"在供给端的第一次具象化——你 80 倍长，得先有 80 倍的 GPU 可用。</p>
+        <p>选 Akamai 而不是再去叠 AWS/Azure/GCP 本身就是一个信号：单一超大规模云厂已经无法满足 Anthropic 的"任何能拿到的 GPU 都要"的需求。前一周 Amodei 还在 Fortune 公开承认要租用 Musk 的 Colossus 数据中心。CDN 类公司（边缘计算、低延迟、全球节点）开始被认定为"AI inference cloud"的潜在赢家。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">AKAM</span> 单日 <span class="up">+27%</span> 收 \$148.38，盘后曾一度 <span class="up">+29.62%</span>。这是过去半年所有 AI 相关二级反应里幅度最大的一次。但 7 年摊薄到每年 ~\$2.5 亿——下次财报必须给出"AI 收入"实际数字，否则会回吐。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sundar Pichai</span> 跟 Elon Musk 这对旧敌签了一个 2027 才落地的项目 <span class="when">5/13</span></h3>
+        <p>5 月 13 日 WSJ 披露，Google 在跟 SpaceX 谈一个叫"Project Suncatcher"的计划——把 Google 自研 TPU 装在太阳能卫星上，2027 年部署原型，做轨道数据中心。Pichai 和 Musk 在地缘政治和 AI 安全上几乎所有重大问题立场对立，第一次在工程层面对接。</p>
+        <p>逻辑也很简单——地球上的数据中心需求已经到了"找不到那么多电、水、土地"的程度。Google 已持有 SpaceX 6.1%（2015 年 \$9 亿投资），用现成股东关系把 TPU 送上轨道是合理下一步。这件事的真正含义不是 2027 的卫星，而是"地面数据中心 TAM 增长曲线"被打了个长期问号。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">GOOGL</span> 5/13 盘中下挫（capex 担忧）；<span class="ticker">DXYZ</span> premarket 拉升。<span class="ticker">IRM</span>、<span class="ticker">VRT</span> 短期不受影响（轨道方案最早 2027），但 narrative 上"地面数据中心 TAM"被埋了个隐患。
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<h2>这周的几条尾灯</h2>
+
+<div class="takeaway-block">
+<ul>
+<li><strong>Amodei 的剧本完整了。</strong>PwC（咨询渗透）+ Gates Foundation（NGO/PR）+ Akamai \$1.8B（算力供给）+ Claude for SMB（中小下沉）= 同一周三个方向同时拉。Amodei 不再满足于"卖 API"，他想把 Claude 装进每一种规模的客户里。</li>
+<li><strong>Altman 这周做了一件他过去不太做的事——主动合作。</strong>OpenAI × AFS 是过去 6 个月里 OpenAI 第一次不"绕开"传统玩家、而是"借道"。这不是认怂，是认识到联邦市场短期内绕不开 prime contractor 通道。</li>
+<li><strong>Murati 选了一条对的窄路。</strong>不做 ChatGPT/Claude 替代，攻击 OpenAI Realtime 和 Gemini Live 的用户体验弱点。这套打法如果继续，Thinking Machines 很可能成为"语音/视频实时 AI"赛道里被收购或独立做大的赢家。</li>
+<li><strong>Google 威胁情报组那份匿名公告值得反复读。</strong>它在技术层面证明：AI 武器化已经在野部署。这条 narrative 接下来会持续催化 <span class="ticker">CRWD</span>、<span class="ticker">PANW</span>、<span class="ticker">S</span> 的预算扩张叙事，也会持续给白宫监管 EO 加压。</li>
+<li><strong>最干净的二级标的——AKAM 多头、印度 IT 空头。</strong>AKAM 单日 +27% 后需要财报兑现；干净空头是 <span class="ticker">INFY</span>、<span class="ticker">CTSH</span>、<span class="ticker">WIT</span>，因为没有 ACN 那种"DOGE 联邦合同"独立逆风干扰。</li>
+</ul>
+</div>
+
+<h2>数据警示</h2>
+<div class="caveat-list">
+<p><strong>ACN 5/13 -7.15% 不是纯 AI 事件。</strong>主驱动是 DOGE 联邦合同削减传闻；5/14 +3.55% 是 OpenAI AFS 合作。两个跌幅讲两件事，不要混读。</p>
+<p><strong>AKAM \$1.8B 合同披露时点有两个版本。</strong>Akamai 5/8 财报里只提到"一个领先前沿模型公司"未点名；Bloomberg 5/9 报道身份为 Anthropic。</p>
+<p><strong>第一例 AI-built zero-day 细节有限。</strong>Google TIG 未披露完整 IOC 和漏洞 CVE；"hallucinated CVSS score"是关键证据但需独立 corroboration。</p>
+<p><strong>Musk v Altman 陪审团裁决仅 advisory。</strong>5/18 评议开始，最终由法官 Gonzalez Rogers 决定；下周可能产生 narrative 余波。</p>
+<p><strong>4 家中国开源模型</strong>（DeepSeek V4 / Kimi K2.6 / GLM-5.1 / MiniMax M2.7）实际发布在 4/24-5/4 区间，本文未单独列入"5/10-5/15"事件，但"推理成本战"叙事这周持续放大。</p>
+</div>
+
+<footer>
+<strong>主要来源</strong><br>
+Amodei × PwC：<a href="https://www.prnewswire.com/news-releases/anthropic-and-pwc-expand-alliance-driving-impact-across-client-work-and-the-firm-302772321.html" target="_blank">PR Newswire</a> · <a href="https://siliconangle.com/2026/05/14/pwc-expands-anthropic-alliance-will-train-30000-staff-claude/" target="_blank">SiliconANGLE</a><br>
+Amodei × Akamai：<a href="https://www.bloomberg.com/news/articles/2026-05-08/anthropic-inks-1-8-billion-computing-deal-with-akamai" target="_blank">Bloomberg</a> · <a href="https://www.bostonglobe.com/2026/05/08/business/akamai-stock-price-anthropic-ai/" target="_blank">Boston Globe (AKAM +27%)</a><br>
+Amodei × Gates Foundation：<a href="https://www.anthropic.com/news/gates-foundation-partnership" target="_blank">Anthropic 官方</a> · <a href="https://www.gatesfoundation.org/ideas/media-center/press-releases/2026/05/ai-anthropic-partnership" target="_blank">盖茨基金会</a><br>
+Amodei × Claude for SMB：<a href="https://www.anthropic.com/news/claude-for-small-business" target="_blank">Anthropic 官方</a> · <a href="https://techcrunch.com/2026/05/13/anthropic-courts-a-new-kind-of-customer-small-business-owners/" target="_blank">TechCrunch</a><br>
+Altman 庭审：<a href="https://www.cnbc.com/2026/05/13/altman-musk-trial-testimony-takeaways.html" target="_blank">CNBC 庭审纪要</a> · <a href="https://www.cnbc.com/2026/05/14/closing-arguments-jury-openai-musk-altman.html" target="_blank">CNBC 结案陈词</a> · <a href="https://www.cnbc.com/2026/05/13/microsoft-feared-openai-reliance-musk-altman-trial-testimony-reveals.html" target="_blank">MSFT 内部担忧</a><br>
+Altman × AFS：<a href="https://newsroom.accenture.com/news/2026/accenture-federal-services-and-openai-partner-to-accelerate-secure-ai-adoption-across-the-federal-government" target="_blank">Accenture Newsroom</a> · <a href="https://www.tradingkey.com/news/market-movers/261896106-market-movers-acn-20260514" target="_blank">ACN +3.55%</a><br>
+Altman × Tomoro：<a href="https://www.bloomberg.com/news/articles/2026-05-11/openai-to-buy-consulting-firm-for-private-equity-joint-venture" target="_blank">Bloomberg</a> · <a href="https://www.business-standard.com/markets/capital-market-news/it-stocks-tumble-after-openai-launches-ai-deployment-venture-126051200384_1.html" target="_blank">印度 IT 共振 -3.59%</a><br>
+Google TIG 零日漏洞：<a href="https://www.cnbc.com/2026/05/11/google-thwarts-effort-hacker-group-use-ai-mass-exploitation-event.html" target="_blank">CNBC</a> · <a href="https://www.bloomberg.com/news/articles/2026-05-11/hackers-used-ai-to-build-zero-day-attack-google-researchers-say" target="_blank">Bloomberg</a><br>
+Murati Interaction Models：<a href="https://venturebeat.com/technology/thinking-machines-shows-off-preview-of-near-realtime-ai-voice-and-video-conversation-with-new-interaction-models" target="_blank">VentureBeat</a> · <a href="https://siliconangle.com/2026/05/11/thinking-machines-drops-new-highly-responsive-model-designed-humanlike-interactions-real-time/" target="_blank">SiliconANGLE</a><br>
+Pichai × Android：<a href="https://blog.google/products-and-platforms/platforms/android/gemini-intelligence/" target="_blank">Google 官方</a><br>
+Pichai × Musk Project Suncatcher：<a href="https://techcrunch.com/2026/05/12/report-google-and-spacex-in-talks-to-put-data-centers-into-orbit/" target="_blank">TechCrunch</a><br>
+Jassy × Alexa Shopping：<a href="https://www.cnbc.com/2026/05/13/amazon-ditches-rufus-ai-chatbot-in-favor-of-alexa-shopping-agent.html" target="_blank">CNBC</a> · <a href="https://www.benzinga.com/news/retail-sales/26/05/52552425/amazon-kills-rufus-chatbot-rolls-out-ai-powered-alexa-shopping-assistant-heres-what-to-know" target="_blank">Benzinga (AMZN +1.62%)</a><br>
+Huang × NVDA \$40B：<a href="https://www.cnbc.com/2026/05/09/nvidia-embraces-ai-investor-topping-40-billion-in-equity-bets-2026.html" target="_blank">CNBC</a><br>
+Amodei × EU Mythos：<a href="https://www.cnbc.com/2026/05/11/openai-eu-cyber-model-anthropic-mythos-gpt.html" target="_blank">CNBC</a>
+</footer>
+
+</body>
+</html>
