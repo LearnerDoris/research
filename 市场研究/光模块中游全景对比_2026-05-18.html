@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光模块中游全景对比 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --c1:  #0891b2;
+  --c1l: #cffafe;
+  --c1d: #0e7490;
+  --c2:  #7c3aed;
+  --c2l: #ede9fe;
+  --c3:  #059669;
+  --c3l: #d1fae5;
+  --warn: #dc2626;
+  --caution: #d97706;
+  --ok:   #059669;
+  --t1:  #0891b2;
+  --t2:  #7c3aed;
+  --t3:  #64748b;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f0f9ff; color:#0f172a; line-height:1.65; }
+.wrap { max-width:1200px; margin:0 auto; padding:28px 24px; }
+
+/* ── Hero ── */
+.hero { background:linear-gradient(135deg,#0f172a 0%,#0c4a6e 60%,#0891b2 100%);
+        color:#fff; padding:40px 40px 32px; border-radius:20px; margin-bottom:24px; }
+.hero h1 { font-size:24px; font-weight:700; margin-bottom:8px; }
+.hero .meta { display:flex; gap:18px; flex-wrap:wrap; font-size:13px; opacity:0.75; margin-bottom:18px; }
+.hero .liner { background:rgba(255,255,255,0.1); padding:12px 16px; border-radius:10px;
+               border-left:4px solid #22d3ee; font-size:13.5px; line-height:1.75; }
+.hero-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-top:18px; }
+.hero-stat { background:rgba(255,255,255,0.1); border-radius:10px; padding:12px; text-align:center; }
+.hero-stat .sv { font-size:20px; font-weight:800; font-family:monospace; color:#22d3ee; }
+.hero-stat .sl { font-size:11px; opacity:0.7; margin-top:3px; }
+
+/* ── Tab Nav ── */
+.tab-nav { display:flex; gap:0; background:#fff; border-radius:14px; padding:6px;
+           box-shadow:0 1px 4px rgba(0,0,0,0.08); margin-bottom:20px; overflow-x:auto; }
+.tab-btn { flex:1; min-width:100px; padding:10px 8px; border:none; background:none; cursor:pointer;
+           font-size:13px; font-weight:600; color:#64748b; border-radius:10px; transition:all 0.2s;
+           white-space:nowrap; }
+.tab-btn:hover { background:#f0f9ff; color:var(--c1); }
+.tab-btn.active { background:linear-gradient(135deg,#0c4a6e,#0891b2); color:#fff; }
+
+/* ── Tab Panels ── */
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
+/* ── Card shell ── */
+.card { background:#fff; border-radius:16px; padding:28px 32px; margin-bottom:20px;
+        box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+.card h2 { font-size:20px; font-weight:700; margin-bottom:6px; }
+.card .sub { color:#64748b; font-size:13.5px; margin-bottom:22px; }
+.sh3 { font-size:15px; font-weight:700; margin:22px 0 12px; color:#0f172a; }
+
+/* ── Tier badges ── */
+.tier-badge { display:inline-block; padding:3px 10px; border-radius:99px; font-size:11px; font-weight:700; }
+.tier-1 { background:#0891b222; color:var(--t1); border:1px solid #0891b255; }
+.tier-2 { background:#7c3aed22; color:var(--t2); border:1px solid #7c3aed55; }
+.tier-3 { background:#64748b22; color:var(--t3); border:1px solid #64748b55; }
+.tier-u { background:#d9770622; color:var(--caution); border:1px solid #d9770655; }
+
+/* ── General badge ── */
+.badge { display:inline-block; padding:3px 10px; border-radius:99px; font-size:11px; font-weight:600; }
+
+/* ── Charts ── */
+.chart-wrap { background:#f8fafc; padding:20px; border-radius:12px; margin:14px 0; position:relative; }
+.chart-wrap canvas { display:block; }
+
+/* ── Tables ── */
+table { width:100%; border-collapse:collapse; font-size:13px; margin:10px 0; }
+table th { background:#0f172a; color:#fff; padding:10px 14px; text-align:left;
+           font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; }
+table td { padding:10px 14px; border-bottom:1px solid #f1f5f9; vertical-align:top; }
+table tr:last-child td { border-bottom:none; }
+table tr:hover td { background:#f8fafc; }
+table tr.hl td { background:#f0f9ff; font-weight:600; }
+.lbl { font-weight:700; }
+.num { font-family:"JetBrains Mono",monospace; font-weight:500; }
+.pill { display:inline-block; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:600; }
+.pill.ok     { background:#dcfce7; color:var(--ok); }
+.pill.warn   { background:#fee2e2; color:var(--warn); }
+.pill.caution{ background:#fef3c7; color:var(--caution); }
+.pill.blue   { background:#dbeafe; color:#1e40af; }
+
+/* ── Info boxes ── */
+.sbox { padding:14px 18px; border-radius:10px; margin:10px 0; border-left:4px solid; }
+.sbox .stitle { font-weight:700; margin-bottom:5px; font-size:14px; }
+.sbox .stext  { font-size:13.5px; line-height:1.75; }
+.sbox.ok      { background:#dcfce7; border-left-color:var(--ok); }
+.sbox.warn    { background:#fee2e2; border-left-color:var(--warn); }
+.sbox.info    { background:#cffafe; border-left-color:var(--c1); }
+.sbox.caution { background:#fef3c7; border-left-color:var(--caution); }
+.sbox.purple  { background:#ede9fe; border-left-color:var(--c2); }
+
+/* ── Tier overview grid ── */
+.tier-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; margin-bottom:24px; }
+
+/* ── Tech cards ── */
+.tech-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; margin:16px 0; }
+.tech-card { border-radius:12px; padding:18px; border:1px solid; }
+.tech-card h4 { font-size:14px; font-weight:700; margin-bottom:8px; }
+.tech-card p  { font-size:12.5px; line-height:1.7; color:#475569; }
+.tech-card .tc-badge { display:inline-block; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:600; margin-bottom:8px; }
+.tech-lpo  { border-color:#22d3ee; background:#f0fdfe; }
+.tech-lpo .tc-badge  { background:#cffafe; color:#0e7490; }
+.tech-dsp  { border-color:#93c5fd; background:#eff6ff; }
+.tech-dsp .tc-badge  { background:#dbeafe; color:#1e40af; }
+.tech-sip  { border-color:#c4b5fd; background:#f5f3ff; }
+.tech-sip .tc-badge  { background:#ede9fe; color:#5b21b6; }
+.tech-coh  { border-color:#6ee7b7; background:#f0fdf4; }
+.tech-coh .tc-badge  { background:#d1fae5; color:#065f46; }
+.tech-cpo  { border-color:#fcd34d; background:#fffbeb; }
+.tech-cpo .tc-badge  { background:#fef3c7; color:#92400e; }
+
+/* ── Timeline / evolution ── */
+.timeline { display:flex; align-items:stretch; gap:0; margin:20px 0; overflow-x:auto; padding-bottom:6px; }
+.tl-item { flex:1; min-width:130px; padding:16px 14px; border-radius:10px; margin:0 5px; text-align:center; }
+.tl-item .tl-year { font-size:12px; font-weight:700; opacity:0.7; margin-bottom:4px; }
+.tl-item .tl-speed { font-size:18px; font-weight:800; font-family:monospace; }
+.tl-item .tl-note { font-size:11px; margin-top:6px; line-height:1.5; }
+.tl-arrow { display:flex; align-items:center; color:#94a3b8; font-size:22px; flex-shrink:0; padding:0 4px; }
+
+/* ── Tech matrix table ── */
+.tech-matrix { overflow-x:auto; margin:16px 0; }
+.tech-matrix table th { font-size:11px; }
+.tech-matrix table td { font-size:12px; }
+
+/* ── Chain diagram ── */
+.chain { display:flex; gap:0; margin:20px 0; overflow-x:auto; padding-bottom:8px; }
+.chain-box { flex:1; min-width:160px; padding:16px; border-radius:10px; margin:0 6px; }
+.chain-box h4 { font-size:13px; font-weight:700; margin-bottom:8px; }
+.chain-box ul { font-size:12px; padding-left:14px; color:#475569; line-height:1.8; }
+.chain-arrow { display:flex; align-items:center; color:#94a3b8; font-size:22px; flex-shrink:0; }
+
+/* ── Five forces ── */
+.forces-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:16px 0; }
+.force-card { background:#f8fafc; border-radius:10px; padding:16px; border:1px solid #e2e8f0; }
+.force-card h4 { font-size:13px; font-weight:700; margin-bottom:6px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.force-score { display:inline-block; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:700; }
+.force-card p { font-size:12.5px; color:#475569; line-height:1.7; }
+
+/* ── Company cards ── */
+.co-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; margin-top:16px; }
+.co-card { border:1px solid #e2e8f0; border-radius:12px; padding:20px; transition:all 0.2s; position:relative; overflow:hidden; }
+.co-card:hover { border-color:#93c5fd; box-shadow:0 4px 12px rgba(0,0,0,0.07); }
+.co-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; }
+.co-card.t1::before { background:var(--t1); }
+.co-card.t2::before { background:var(--t2); }
+.co-card.t3::before { background:var(--t3); }
+.co-card.tu::before { background:var(--caution); }
+.co-card .cn { font-size:16px; font-weight:700; margin-bottom:4px; }
+.co-card .ct { font-size:12px; color:#64748b; margin-bottom:12px; font-family:monospace; }
+.co-card .cm { font-size:13px; color:#334155; line-height:1.7; }
+.co-card .tag-row { margin-top:12px; display:flex; gap:6px; flex-wrap:wrap; }
+.tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+.tag.lpo  { background:#cffafe; color:#0e7490; }
+.tag.dsp  { background:#dbeafe; color:#1e40af; }
+.tag.sip  { background:#ede9fe; color:#5b21b6; }
+.tag.coh  { background:#d1fae5; color:#065f46; }
+.tag.cpo  { background:#fef3c7; color:#92400e; }
+.tag.alm  { background:#fee2e2; color:#991b1b; }
+.tag.pcb  { background:#f1f5f9; color:#475569; }
+.tag.mag  { background:#fdf4ff; color:#7c2d92; }
+
+/* ── Conclusion dark ── */
+.conclusion-dark { background:#0f172a; color:#fff; border-radius:14px; padding:26px 30px; margin-top:20px; }
+.conclusion-dark h3 { font-size:17px; margin-bottom:14px; color:#22d3ee; }
+.conclusion-dark .row { display:flex; gap:14px; margin-bottom:12px; font-size:13.5px; line-height:1.75; opacity:0.9; }
+.conclusion-dark .idx { font-family:monospace; font-weight:700; color:#22d3ee; min-width:24px; flex-shrink:0; }
+
+.foot { text-align:center; padding:24px; color:#94a3b8; font-size:12px; }
+
+@media (max-width:640px) {
+  .wrap { padding:14px 10px; }
+  .hero { padding:22px 18px; }
+  .card { padding:20px 18px; }
+  .co-grid { grid-template-columns:1fr; }
+  .chain { flex-direction:column; }
+  .tab-btn { font-size:11px; padding:9px 6px; }
+}
+</style>
+</head>
+<body>
+<nav id="auto-nav" style="padding: 15px 20px; background: #fff; border-bottom: 1px solid #e2e8f0; margin: -8px -8px 20px -8px; font-family: -apple-system, sans-serif; display: flex; align-items: center; position: sticky; top: 0; z-index: 999;">
+    <a href="../index.html" style="text-decoration: none; color: #2563eb; font-weight: 600; display: flex; align-items: center; gap: 5px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        返回档案库主页
+    </a>
+</nav>
+
+<div class="wrap">
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <h1>🔭 光模块中游全景对比报告</h1>
+  <div class="meta">
+    <span>📅 2026-05-18</span>
+    <span>🏭 覆盖 11 家上市 / 未上市企业</span>
+    <span>🌐 市场：中国A股 + 美股</span>
+  </div>
+  <div class="liner">
+    💡 AI算力爆炸推动光模块行业进入史上最强景气周期。全球1.6T光模块采购计划从1,000万只上调至2,000万只；中国厂商已占全球AI光模块40%+市场份额，"易中天"（新易盛+中际旭创）双雄合计占AI数据中心光模块供应60-70%。核心矛盾从"需求不足"变成"供给能否跟上"——当前瓶颈在产能爬坡速度和芯片供应。
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="sv">$200亿+</div>
+      <div class="sl">2026E全球AI光模块市场</div>
+    </div>
+    <div class="hero-stat">
+      <div class="sv">+58%</div>
+      <div class="sl">TrendForce AI光模块增速预测</div>
+    </div>
+    <div class="hero-stat">
+      <div class="sv">1.6T</div>
+      <div class="sl">下一代速率 商业化前夜</div>
+    </div>
+    <div class="hero-stat">
+      <div class="sv">2026</div>
+      <div class="sl">CPO商用元年（英伟达宣布）</div>
+    </div>
+    <div class="hero-stat">
+      <div class="sv">30%+</div>
+      <div class="sl">硅光模块2025年市场占比</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TAB NAV ═══ -->
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="t1">🏆 竞争梯队</button>
+  <button class="tab-btn" data-tab="t2">🔬 技术路线</button>
+  <button class="tab-btn" data-tab="t3">📊 财务对比</button>
+  <button class="tab-btn" data-tab="t4">🔗 产业链分析</button>
+  <button class="tab-btn" data-tab="t5">🃏 公司画像</button>
+  <button class="tab-btn" data-tab="t6">🎯 投资结论</button>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     TAB 1 · 竞争梯队总览
+══════════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-t1">
+  <div class="card">
+    <h2>🏆 竞争梯队总览</h2>
+    <p class="sub">按规模、技术、市场地位分层——所处梯队决定估值逻辑和风险特征</p>
+
+    <div class="tier-grid">
+      <!-- Tier 1 -->
+      <div style="border:2px solid var(--t1);border-radius:14px;padding:20px;background:linear-gradient(135deg,#f0fdfe,#cffafe)">
+        <div style="font-size:12px;font-weight:700;color:var(--c1d);margin-bottom:14px;letter-spacing:1px">
+          ▲ TIER 1 · 全球头部 · 定价权在手
+        </div>
+        <div style="margin-bottom:12px">
+          <span style="font-size:15px;font-weight:700">中际旭创</span>
+          <span class="badge" style="background:#0891b222;color:#0891b2;font-size:11px;margin-left:6px">300308 SZ</span>
+          <div style="font-size:12px;color:#0e7490;margin-top:4px">25年营收382亿 · 800G全球第一 · 1.6T份额50%+</div>
+        </div>
+        <div>
+          <span style="font-size:15px;font-weight:700">新易盛</span>
+          <span class="badge" style="background:#0891b222;color:#0891b2;font-size:11px;margin-left:6px">300502 SZ</span>
+          <div style="font-size:12px;color:#0e7490;margin-top:4px">25年营收248亿（+187%）· LPO龙头 · 净利94-99亿</div>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:#0e7490;background:rgba(8,145,178,0.1);padding:8px 12px;border-radius:8px">
+          💡 两者合计占AI光模块全球供应 <strong>60-70%</strong>，形成双寡头格局
+        </div>
+      </div>
+
+      <!-- Tier 2 -->
+      <div style="border:2px solid var(--t2);border-radius:14px;padding:20px;background:linear-gradient(135deg,#faf5ff,#ede9fe)">
+        <div style="font-size:12px;font-weight:700;color:#5b21b6;margin-bottom:14px;letter-spacing:1px">
+          ● TIER 2 · 成长追赶 · 规模快速扩张中
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13px">
+          <div>🇨🇳 <strong>华工科技</strong> <span style="color:#64748b;font-size:11px">000988 SZ</span> — 联接业务61亿/+53%，激光器+光模块综合型</div>
+          <div>🇨🇳 <strong>东山精密</strong> <span style="color:#64748b;font-size:11px">002384 SZ</span> — 收购索尔思，FPC+光模块整合</div>
+          <div>🇺🇸 <strong>AAOI</strong> <span style="color:#64748b;font-size:11px">AAOI US</span> — 25年$455M，26年指引$1B（+120%）</div>
+          <div>🔒 <strong>华为（未上市）</strong> — LC全球排名第4，生态系闭环</div>
+          <div>🔒 <strong>海信宽带（未上市）</strong> — LC全球排名第7，海信集团背书</div>
+        </div>
+      </div>
+
+      <!-- Tier 3 -->
+      <div style="border:2px solid #cbd5e1;border-radius:14px;padding:20px;background:#f8fafc">
+        <div style="font-size:12px;font-weight:700;color:#475569;margin-bottom:14px;letter-spacing:1px">
+          ◆ TIER 3 · 专精细分 / 弹性成长
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13px">
+          <div>🇨🇳 <strong>剑桥科技</strong> <span style="color:#64748b;font-size:11px">603083 SH</span> — 25年净利2.52-2.78亿/+51-67%</div>
+          <div>🇨🇳 <strong>联特科技</strong> <span style="color:#64748b;font-size:11px">301205 SZ</span> — 24年营收8.9亿/+47%，工业+数据中心</div>
+          <div>🇨🇳 <strong>德科立</strong> <span style="color:#64748b;font-size:11px">688205 SH</span> — DCI相干模块专精，科创板</div>
+          <div>🇨🇳 <strong>铭普光磁</strong> <span style="color:#64748b;font-size:11px">002902 SZ</span> — 磁性元件切入光模块，跨界新入场</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="sh3">📊 已上市企业营收规模对比（2025年，人民币亿）</p>
+    <div class="chart-wrap">
+      <canvas id="revChart" height="280"></canvas>
+    </div>
+
+    <!-- 梯队关键指标对比 -->
+    <p class="sh3">⚡ 梯队关键差异对比</p>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>维度</th>
+          <th style="color:#22d3ee">Tier 1（中际旭创/新易盛）</th>
+          <th style="color:#c4b5fd">Tier 2（华工/AAOI等）</th>
+          <th style="color:#94a3b8">Tier 3（剑桥/德科立等）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="lbl">营收体量</td>
+          <td>100亿+（最大382亿）</td>
+          <td>10-100亿</td>
+          <td>&lt;20亿</td>
+        </tr>
+        <tr>
+          <td class="lbl">超级大厂认证</td>
+          <td><span class="pill ok">Meta/Google/MS/AWS 全认证</span></td>
+          <td><span class="pill caution">部分认证中</span></td>
+          <td><span class="pill warn">主要服务二线厂商</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">技术路线覆盖</td>
+          <td>LPO / 硅光 / DSP / CPO布局</td>
+          <td>1-2条路线为主</td>
+          <td>单一路线专精</td>
+        </tr>
+        <tr>
+          <td class="lbl">净利率水平</td>
+          <td>21-40%（新易盛40%为行业奇迹）</td>
+          <td>10-20%</td>
+          <td>10-15%（相干除外50%+）</td>
+        </tr>
+        <tr>
+          <td class="lbl">估值（PE）</td>
+          <td>60-80x（高预期溢价）</td>
+          <td>30-50x</td>
+          <td>20-40x（弹性更大）</td>
+        </tr>
+        <tr>
+          <td class="lbl">产能定价权</td>
+          <td><span class="pill ok">采购优先权 + 成本优势</span></td>
+          <td><span class="pill caution">随行就市</span></td>
+          <td><span class="pill caution">接受大厂压价</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     TAB 2 · 技术路线图谱
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-t2">
+  <div class="card">
+    <h2>🔬 技术路线图谱</h2>
+    <p class="sub">光模块行业的命运由技术路线押注决定——抓对赛道可逆袭，押错可能出局</p>
+
+    <!-- 速率升级时间轴 -->
+    <p class="sh3">📅 速率升级演进时间轴</p>
+    <div class="timeline">
+      <div class="tl-item" style="background:#f1f5f9;color:#475569">
+        <div class="tl-year">2018-2020</div>
+        <div class="tl-speed">100G</div>
+        <div class="tl-note">DSP主流<br>单波25G</div>
+      </div>
+      <div class="tl-arrow">→</div>
+      <div class="tl-item" style="background:#dbeafe;color:#1e40af">
+        <div class="tl-year">2021-2023</div>
+        <div class="tl-speed">400G</div>
+        <div class="tl-note">DSP成熟期<br>LPO开始试水</div>
+      </div>
+      <div class="tl-arrow">→</div>
+      <div class="tl-item" style="background:#cffafe;color:#0e7490">
+        <div class="tl-year">2024-2025 ★</div>
+        <div class="tl-speed">800G</div>
+        <div class="tl-note">LPO爆发<br>硅光量产</div>
+      </div>
+      <div class="tl-arrow">→</div>
+      <div class="tl-item" style="background:#ede9fe;color:#5b21b6">
+        <div class="tl-year">2026-2027 🔥</div>
+        <div class="tl-speed">1.6T</div>
+        <div class="tl-note">硅光主流<br>LPO仍竞争</div>
+      </div>
+      <div class="tl-arrow">→</div>
+      <div class="tl-item" style="background:#fef3c7;color:#92400e">
+        <div class="tl-year">2028+</div>
+        <div class="tl-speed">3.2T / CPO</div>
+        <div class="tl-note">CPO商用<br>结构重塑</div>
+      </div>
+    </div>
+
+    <!-- 五大技术路线 -->
+    <p class="sh3">🧬 五大技术路线全解析</p>
+    <div class="tech-grid">
+      <div class="tech-card tech-lpo">
+        <div class="tc-badge">🏆 当红 · LPO</div>
+        <h4>LPO 线性驱动可插拔</h4>
+        <p>省去DSP信号处理芯片，直接用线性驱动器驱动激光器，成本比传统DSP方案降低<strong>30-40%</strong>，功耗更低。对光器件线性度要求极高，良率管控是核心壁垒。Meta是主要推动方。</p>
+        <div style="margin-top:10px;font-size:12px;font-weight:600;color:#0e7490">代表：新易盛（全球No.1）· 中际旭创（布局中）</div>
+      </div>
+      <div class="tech-card tech-dsp">
+        <div class="tc-badge">🏛 传统主流 · DSP</div>
+        <h4>DSP 数字信号处理</h4>
+        <p>内置高速DSP芯片做信号均衡/FEC纠错，技术成熟、适应性强，但成本高（DSP ASIC占BOM 30-40%）、功耗大。400G时代主流，800G开始被LPO蚕食。DSP芯片主要来自博通/迈威尔。</p>
+        <div style="margin-top:10px;font-size:12px;font-weight:600;color:#1e40af">代表：华工科技 · 剑桥科技 · 联特科技 · AAOI</div>
+      </div>
+      <div class="tech-card tech-sip">
+        <div class="tc-badge">🚀 长期主流 · 硅光</div>
+        <h4>Silicon Photonics 硅光子</h4>
+        <p>用CMOS工艺在硅片上集成光学元件，低功耗、高集成度、适合大规模制造。2025年市场占比突破30%，预计2030年达60%。CPO时代的核心技术底座。中际旭创已完成800G小批量交付。</p>
+        <div style="margin-top:10px;font-size:12px;font-weight:600;color:#5b21b6">代表：中际旭创（领先）· 华为 · 新易盛（布局中）</div>
+      </div>
+      <div class="tech-card tech-coh">
+        <div class="tc-badge">🌐 长距专用 · 相干</div>
+        <h4>Coherent 相干光</h4>
+        <p>城域/骨干网和DCI数据中心互联首选，传输距离80km到数千km。成本是短距模块10-20倍，但对高速长距传输不可替代，毛利率极高（50%+），技术门槛最高，市场规模有限。</p>
+        <div style="margin-top:10px;font-size:12px;font-weight:600;color:#065f46">代表：德科立（专精DCI）· 华工科技（覆盖）</div>
+      </div>
+      <div class="tech-card tech-cpo">
+        <div class="tc-badge">🔮 未来方向 · CPO</div>
+        <h4>CPO 共封装光学</h4>
+        <p>将光学引擎与交换机芯片封装在同一封装体内，彻底解决铜缆互联能耗瓶颈。英伟达宣布2026年为CPO商用元年，大规模商用预计2027-2028年。对可插拔光模块是结构性替代风险。</p>
+        <div style="margin-top:10px;font-size:12px;font-weight:600;color:#92400e">代表：无中游纯CPO上市标的（英伟达主导生态）</div>
+      </div>
+    </div>
+
+    <!-- 技术路线×公司矩阵 -->
+    <p class="sh3">🗺️ 技术路线 × 公司覆盖矩阵</p>
+    <div class="tech-matrix">
+    <table>
+      <thead>
+        <tr>
+          <th>公司</th>
+          <th>LPO</th>
+          <th>DSP</th>
+          <th>硅光(SiP)</th>
+          <th>相干</th>
+          <th>CPO</th>
+          <th>路线判断</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="hl">
+          <td class="lbl">中际旭创</td>
+          <td><span class="pill caution">布局中</span></td>
+          <td><span class="pill ok">✓ 成熟</span></td>
+          <td><span class="pill ok">✓ 量产</span></td>
+          <td>—</td>
+          <td><span class="pill caution">研发中</span></td>
+          <td style="font-size:12px">🌟 全面覆盖，最强护城河</td>
+        </tr>
+        <tr class="hl">
+          <td class="lbl">新易盛</td>
+          <td><span class="pill ok">✓ 全球No.1</span></td>
+          <td>—</td>
+          <td><span class="pill caution">布局中</span></td>
+          <td>—</td>
+          <td>—</td>
+          <td style="font-size:12px">⚡ LPO极致，路线集中赌注</td>
+        </tr>
+        <tr>
+          <td class="lbl">华工科技</td>
+          <td><span class="pill caution">布局</span></td>
+          <td><span class="pill ok">✓</span></td>
+          <td>—</td>
+          <td><span class="pill ok">✓</span></td>
+          <td>—</td>
+          <td style="font-size:12px">多品类覆盖</td>
+        </tr>
+        <tr>
+          <td class="lbl">东山精密</td>
+          <td>—</td>
+          <td><span class="pill ok">✓</span></td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="font-size:12px">整合中</td>
+        </tr>
+        <tr>
+          <td class="lbl">AAOI</td>
+          <td><span class="pill caution">布局</span></td>
+          <td><span class="pill ok">✓</span></td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="font-size:12px">数据中心短距为主</td>
+        </tr>
+        <tr>
+          <td class="lbl">华为（未上市）</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill ok">✓ 领先</span></td>
+          <td><span class="pill ok">✓</span></td>
+          <td><span class="pill ok">✓ 研发中</span></td>
+          <td style="font-size:12px">技术储备最全面</td>
+        </tr>
+        <tr>
+          <td class="lbl">剑桥科技</td>
+          <td>—</td>
+          <td><span class="pill ok">✓</span></td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="font-size:12px">DSP专精</td>
+        </tr>
+        <tr>
+          <td class="lbl">联特科技</td>
+          <td>—</td>
+          <td><span class="pill ok">✓</span></td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="font-size:12px">工业+DC双线</td>
+        </tr>
+        <tr>
+          <td class="lbl">德科立</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pill caution">集成</span></td>
+          <td><span class="pill ok">✓ 专精</span></td>
+          <td>—</td>
+          <td style="font-size:12px">DCI相干差异化</td>
+        </tr>
+        <tr>
+          <td class="lbl">铭普光磁</td>
+          <td>—</td>
+          <td><span class="pill caution">新入</span></td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="font-size:12px">跨界起步</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="sbox caution" style="margin-top:16px">
+      <div class="stitle">⚙️ 技术路线的核心判断</div>
+      <div class="stext">
+        <strong>短期（2026-2027）：</strong>LPO + 硅光是AI数据中心400-800m互联的绝对主流，新易盛、中际旭创持续受益。<br>
+        <strong>中期（2027-2028）：</strong>1.6T大规模放量，硅光比例提升至50%+，中际旭创的技术储备优势开始体现。<br>
+        <strong>长期（2028+）：</strong>CPO从根本上重塑产业链，可插拔光模块市场天花板逼近，具备CPO能力的玩家才能穿越周期。<br>
+        <strong>最大变量：</strong>DSP芯片（博通/迈威尔）的断供风险——一旦出现，国内所有DSP路线厂商将受到重大冲击。
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     TAB 3 · 财务对比
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-t3">
+  <div class="card">
+    <h2>📊 关键财务数据对比</h2>
+    <p class="sub">各公司规模、增速、盈利能力横向对比（A股人民币，AAOI美元）</p>
+
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>公司</th>
+          <th>代码</th>
+          <th>梯队</th>
+          <th>25年营收</th>
+          <th>营收增速</th>
+          <th>25年净利</th>
+          <th>净利率</th>
+          <th>核心看点</th>
+          <th>主要风险</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="hl">
+          <td class="lbl">中际旭创</td>
+          <td class="num" style="font-size:12px">300308 SZ</td>
+          <td><span class="tier-badge tier-1">T1</span></td>
+          <td class="num">382亿</td>
+          <td class="num" style="color:var(--ok)">+60%</td>
+          <td class="num">~80亿</td>
+          <td class="num">~21%</td>
+          <td style="font-size:12px">800G/1.6T全球第一<br>硅光量产先行者</td>
+          <td style="font-size:12px"><span class="pill caution">PE 60-80x</span></td>
+        </tr>
+        <tr class="hl">
+          <td class="lbl">新易盛</td>
+          <td class="num" style="font-size:12px">300502 SZ</td>
+          <td><span class="tier-badge tier-1">T1</span></td>
+          <td class="num">248亿</td>
+          <td class="num" style="color:var(--ok)"><strong>+187%</strong></td>
+          <td class="num">94-99亿</td>
+          <td class="num" style="color:var(--ok)"><strong>~40%</strong></td>
+          <td style="font-size:12px">LPO龙头 · 利润率惊人<br>垂直整合极致成本</td>
+          <td style="font-size:12px"><span class="pill caution">LPO技术路线集中</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">华工科技</td>
+          <td class="num" style="font-size:12px">000988 SZ</td>
+          <td><span class="tier-badge tier-2">T2</span></td>
+          <td class="num">61亿¹</td>
+          <td class="num" style="color:var(--ok)">+53%</td>
+          <td class="num">~8亿¹</td>
+          <td class="num">~13%</td>
+          <td style="font-size:12px">激光器+光模块协同<br>多品类覆盖</td>
+          <td style="font-size:12px"><span class="pill warn">集团多元化摊薄焦点</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">东山精密</td>
+          <td class="num" style="font-size:12px">002384 SZ</td>
+          <td><span class="tier-badge tier-2">T2</span></td>
+          <td class="num">整合中</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td style="font-size:12px">收购索尔思<br>FPC+光模块协同</td>
+          <td style="font-size:12px"><span class="pill warn">整合风险·跨界融合</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">AAOI</td>
+          <td class="num" style="font-size:12px">AAOI US</td>
+          <td><span class="tier-badge tier-2">T2</span></td>
+          <td class="num">$455M</td>
+          <td class="num" style="color:var(--ok)">大幅增长</td>
+          <td class="num">微盈利</td>
+          <td class="num">—</td>
+          <td style="font-size:12px">26年指引$1B (+120%)<br>美股稀缺性</td>
+          <td style="font-size:12px"><span class="pill warn">亏损历史·执行风险</span></td>
+        </tr>
+        <tr style="background:#fffbeb">
+          <td class="lbl">华为（未上市）</td>
+          <td class="num" style="font-size:12px">未上市</td>
+          <td><span class="tier-badge tier-u">未上市</span></td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td style="font-size:12px">LC全球第4<br>硅光/CPO积累</td>
+          <td style="font-size:12px"><span class="pill warn">无投资渠道</span></td>
+        </tr>
+        <tr style="background:#fffbeb">
+          <td class="lbl">海信宽带（未上市）</td>
+          <td class="num" style="font-size:12px">未上市</td>
+          <td><span class="tier-badge tier-u">未上市</span></td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td style="font-size:12px">LC全球第7<br>海信集团背书</td>
+          <td style="font-size:12px"><span class="pill warn">集团内·战略依赖</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">剑桥科技</td>
+          <td class="num" style="font-size:12px">603083 SH</td>
+          <td><span class="tier-badge tier-3">T3</span></td>
+          <td class="num">~20亿²</td>
+          <td class="num" style="color:var(--ok)">~+55%</td>
+          <td class="num">2.5-2.8亿</td>
+          <td class="num">~13%</td>
+          <td style="font-size:12px">净利高速增长<br>中小市值弹性大</td>
+          <td style="font-size:12px"><span class="pill caution">规模偏小·客户集中</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">联特科技</td>
+          <td class="num" style="font-size:12px">301205 SZ</td>
+          <td><span class="tier-badge tier-3">T3</span></td>
+          <td class="num">8.9亿³</td>
+          <td class="num" style="color:var(--ok)">+47%</td>
+          <td class="num">~1亿³</td>
+          <td class="num">~11%</td>
+          <td style="font-size:12px">工业+数据中心双线<br>受益AI需求扩散</td>
+          <td style="font-size:12px"><span class="pill warn">规模较小·竞争加剧</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">德科立</td>
+          <td class="num" style="font-size:12px">688205 SH</td>
+          <td><span class="tier-badge tier-3">T3</span></td>
+          <td class="num">~5亿²</td>
+          <td class="num">成长中</td>
+          <td class="num">较小</td>
+          <td class="num" style="color:var(--ok)">高毛利50%+</td>
+          <td style="font-size:12px">DCI相干高毛利赛道<br>差异化竞争</td>
+          <td style="font-size:12px"><span class="pill caution">市场体量有限</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">铭普光磁</td>
+          <td class="num" style="font-size:12px">002902 SZ</td>
+          <td><span class="tier-badge tier-3">T3</span></td>
+          <td class="num">~20亿²</td>
+          <td class="num">新进入</td>
+          <td class="num">磁性为主</td>
+          <td class="num">—</td>
+          <td style="font-size:12px">磁性元件壁垒+跨界<br>光模块新增弹性</td>
+          <td style="font-size:12px"><span class="pill warn">光模块资质尚浅</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;margin-top:8px">¹华工科技联接业务分部数据　²估算　³为FY2024数据　净利率为估算，仅供参考</p>
+
+    <!-- 盈利能力图 -->
+    <p class="sh3">📈 净利润增速对比（2025年，估算）</p>
+    <div class="chart-wrap">
+      <canvas id="profitChart" height="260"></canvas>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     TAB 4 · 产业链分析
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-t4">
+  <div class="card">
+    <h2>🔗 产业链结构与特性分析</h2>
+    <p class="sub">理解光模块行业的竞争逻辑，必须从产业链位置开始</p>
+
+    <!-- 产业链图 -->
+    <p class="sh3">🏗️ 产业链价值分布</p>
+    <div class="chain">
+      <div class="chain-box" style="background:#fee2e2;border:1px solid #fca5a5">
+        <h4 style="color:#991b1b">⬆ 上游 · 光芯片</h4>
+        <ul>
+          <li>InP/GaAs激光器芯片</li>
+          <li>硅光芯片（台积电等）</li>
+          <li>高速DSP ASIC（博通/迈威尔）</li>
+          <li>驱动/TIA芯片</li>
+        </ul>
+        <div style="margin-top:10px;font-size:11px;color:#991b1b;font-weight:600">⚠ 国产化率低，是卡脖子环节</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-box" style="background:#cffafe;border:2px solid #22d3ee">
+        <h4 style="color:#0e7490">★ 中游 · 光模块封装【本报告】</h4>
+        <ul>
+          <li>光模块设计与封装</li>
+          <li>测试与品控</li>
+          <li>垂直整合（芯片→模块）</li>
+          <li>LPO/DSP/相干多路线</li>
+        </ul>
+        <div style="margin-top:10px;font-size:11px;color:#0e7490;font-weight:600">✓ 中国厂商全球占40%+</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-box" style="background:#d1fae5;border:1px solid #6ee7b7">
+        <h4 style="color:#065f46">⬇ 下游 · AI超级大厂</h4>
+        <ul>
+          <li>Meta / Google / Microsoft</li>
+          <li>Amazon AWS / 英伟达</li>
+          <li>国内：字节/阿里/腾讯/百度</li>
+          <li>电信运营商（5G/宽带）</li>
+        </ul>
+        <div style="margin-top:10px;font-size:11px;color:#065f46;font-weight:600">★ Top5占80%+采购量</div>
+      </div>
+    </div>
+
+    <!-- 五大行业特性 -->
+    <p class="sh3">⚙️ 光模块中游的五大行业特性</p>
+    <div class="forces-grid">
+      <div class="force-card" style="border-left:4px solid #dc2626">
+        <h4>🔄 技术迭代速度极快
+          <span class="force-score" style="background:#fee2e2;color:#dc2626">风险：极高</span>
+        </h4>
+        <p>速率升级周期约每2-3年（100G→400G→800G→1.6T→3.2T），每次迭代都会重排座次。落后一代意味着产品积压和价格暴跌。企业必须在上一代产品放量的同时完成下一代研发。新易盛在LPO时代的逆袭，正是押对了技术路线切换。</p>
+      </div>
+      <div class="force-card" style="border-left:4px solid #d97706">
+        <h4>👑 大客户话语权极强
+          <span class="force-score" style="background:#fef3c7;color:#d97706">议价：偏弱</span>
+        </h4>
+        <p>Meta、Google、Microsoft、Amazon五大超级大厂合计占光模块需求80%+。下游集中度远高于上游，大厂可随时切换供应商打压价格，也可单方面要求技术路线转变（如Meta力推LPO）。中国厂商依靠技术和成本优势获取份额，但长期定价权始终受制于大厂。</p>
+      </div>
+      <div class="force-card" style="border-left:4px solid #7c3aed">
+        <h4>🧮 芯片依赖是隐藏地雷
+          <span class="force-score" style="background:#ede9fe;color:#7c3aed">地缘：高风险</span>
+        </h4>
+        <p>高速DSP芯片高度依赖博通（Broadcom）和迈威尔（Marvell）——两家均为美国公司。一旦出现类似华为的断供风险，所有DSP路线厂商将陷入断粮危机。这也是LPO技术路线被中国厂商积极拥抱的深层原因——省去DSP芯片 = 减少对美系芯片的依赖。</p>
+      </div>
+      <div class="force-card" style="border-left:4px solid #0891b2">
+        <h4>🏗️ 资本密集 + 产能决定命运
+          <span class="force-score" style="background:#cffafe;color:#0e7490">壁垒：高</span>
+        </h4>
+        <p>当前瓶颈不在需求，在供给——工厂产线满载、测试设备交期拉长、优质工程师抢人大战。封装和测试设备采购周期长达6-12个月，一旦判断失误过度扩产，需求放缓时将面临资产减值。Tier 1厂商的规模优势在产能紧张期转化为采购优先权和更低的单位成本。</p>
+      </div>
+      <div class="force-card" style="border-left:4px solid #059669">
+        <h4>📈 超高景气周期 + CPO长期替代
+          <span class="force-score" style="background:#d1fae5;color:#065f46">短期：极好</span>
+        </h4>
+        <p>AI算力建设是史上最强的光模块需求驱动力，全球1.6T采购计划上调至2,000万只。短期（2026-2028）确定性极高。但长期来看，CPO从根本上削减了可插拔光模块的需求空间，英伟达已宣布2026年为CPO商用元年。CPO不会立即杀死光模块，但会压制其长期天花板。</p>
+      </div>
+    </div>
+
+    <div class="sbox purple" style="margin-top:16px">
+      <div class="stitle">🎯 行业最重要的结构性判断</div>
+      <div class="stext">
+        光模块中游是<strong>技术驱动的制造业</strong>，而非平台型商业。护城河的本质是：<br>
+        ① <strong>供应链深度整合</strong>（芯片→封装→测试全链条控制）<br>
+        ② <strong>超级大厂认证壁垒</strong>（进入Meta/Google/MS的供应商名单需要1-2年验证，一旦进入很难被踢出）<br>
+        ③ <strong>技术迭代的领先窗口</strong>（率先量产新速率产品的企业享有6-12个月超额利润窗口）<br>
+        护城河不来自品牌，不来自网络效应，而来自<strong>工程积累+客户锁定+垂直整合</strong>的组合。
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     TAB 5 · 公司画像
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-t5">
+  <div class="card">
+    <h2>🃏 各公司核心特征快速画像</h2>
+    <p class="sub">11家标的的差异化定位、核心优势与主要风险</p>
+
+    <div class="co-grid">
+
+      <div class="co-card t1">
+        <div class="cn">中际旭创</div>
+        <div class="ct">300308 SZ · Tier 1 · 全球No.1</div>
+        <div class="cm">
+          <strong>核心定位：</strong>全球出货量第一的光模块综合龙头，800G占40%市场份额，1.6T占50%+，硅光模块量产先行者。是Meta、Google、Microsoft、AWS的核心供应商。<br><br>
+          <strong>护城河：</strong>规模→成本→良率的正循环；硅光技术储备全球领先；超级大厂深度认证壁垒。<br><br>
+          <strong>主要风险：</strong>PE 60-80x估值已price in很高预期；LPO时代被新易盛抢份额；CPO长期替代。
+        </div>
+        <div class="tag-row">
+          <span class="tag lpo">LPO</span><span class="tag sip">硅光</span><span class="tag dsp">DSP</span><span class="tag cpo">CPO布局中</span>
+        </div>
+      </div>
+
+      <div class="co-card t1">
+        <div class="cn">新易盛</div>
+        <div class="ct">300502 SZ · Tier 1 · LPO龙头</div>
+        <div class="cm">
+          <strong>核心定位：</strong>LPO技术路线的全球第一大厂，垂直整合能力极强（自制大部分核心光器件），25年净利率高达40%（光模块行业奇迹）。25年营收248亿（+187%），是史上最快的增速之一。<br><br>
+          <strong>护城河：</strong>LPO垂直整合→极低成本→定价降维打击；与Meta深度绑定（Meta是LPO最大推动方）。<br><br>
+          <strong>主要风险：</strong>技术路线集中赌注LPO——若1.6T时代硅光全面替代LPO，成本优势消失；单一客户依赖（Meta）。
+        </div>
+        <div class="tag-row">
+          <span class="tag lpo">LPO核心</span><span class="tag sip">硅光布局</span>
+        </div>
+      </div>
+
+      <div class="co-card t2">
+        <div class="cn">华工科技</div>
+        <div class="ct">000988 SZ · Tier 2 · 激光器+光模块综合型</div>
+        <div class="cm">
+          <strong>核心定位：</strong>华工正威旗下，"激光器+光模块+激光设备"多品类覆盖。联接业务25年收入61亿（+53%）。是国内少数自有激光芯片产能的厂商，上下游一体化程度较高。<br><br>
+          <strong>主要风险：</strong>集团内部多元化导致战略焦点分散；光模块业务占集团比例有限，AI弹性不如纯光模块标的。
+        </div>
+        <div class="tag-row">
+          <span class="tag dsp">DSP</span><span class="tag coh">相干</span><span class="tag lpo">LPO布局</span>
+        </div>
+      </div>
+
+      <div class="co-card t2">
+        <div class="cn">东山精密</div>
+        <div class="ct">002384 SZ · Tier 2 · FPC+光模块整合</div>
+        <div class="cm">
+          <strong>核心定位：</strong>主业为FPC（柔性电路板），通过收购美国光模块厂商索尔思（Source Photonics）跨界进入光模块赛道。两者协同逻辑：FPC是光模块内部结构件，一体化降本。当前处于整合消化期。<br><br>
+          <strong>主要风险：</strong>跨界整合文化磨合；光模块与FPC的协同效应需要时间验证；FPC主业周期性较强，会分散管理注意力。
+        </div>
+        <div class="tag-row">
+          <span class="tag dsp">DSP</span><span class="tag pcb">FPC协同</span>
+        </div>
+      </div>
+
+      <div class="co-card t2">
+        <div class="cn">AAOI（Applied Optoelectronics）</div>
+        <div class="ct">AAOI US · Tier 2 · 美股稀缺性</div>
+        <div class="cm">
+          <strong>核心定位：</strong>美国数据中心+有线宽带光模块厂商，是美股中少有的纯光模块标的。2025年营收$455M，2026年指引$1B（+120%），是最激进的增速指引之一。<br><br>
+          <strong>主要风险：</strong>历史盈利记录较差（多次亏损）；$1B指引能否兑现是最大考验；竞争对手主要是中国Tier 1厂商。
+        </div>
+        <div class="tag-row">
+          <span class="tag dsp">DSP</span><span class="tag lpo">LPO布局</span>
+        </div>
+      </div>
+
+      <div class="co-card tu">
+        <div class="cn">华为（未上市）</div>
+        <div class="ct">未上市 · LC全球排名第4</div>
+        <div class="cm">
+          <strong>核心定位：</strong>LC全球光模块厂商排名第4，技术能力在硅光和CPO方向储备深厚。光模块主要用于自有网络设备和部分外售。<br><br>
+          <strong>无直接投资渠道。</strong>但其技术路线选择（如拥抱CPO）会对整个行业形成指引性影响。
+        </div>
+        <div class="tag-row">
+          <span class="tag sip">硅光</span><span class="tag cpo">CPO</span><span class="tag coh">相干</span>
+        </div>
+      </div>
+
+      <div class="co-card tu">
+        <div class="cn">海信宽带（未上市）</div>
+        <div class="ct">未上市 · 海信集团 · LC全球排名第7</div>
+        <div class="cm">
+          <strong>核心定位：</strong>海信集团旗下，专注数据中心光模块，LC全球排名第7，拥有完整的800G产品线。依托海信集团的品牌背书和制造能力。<br><br>
+          <strong>无直接投资渠道。</strong>若未来独立上市，将是一个较为稀缺的成长标的。
+        </div>
+        <div class="tag-row">
+          <span class="tag dsp">DSP</span><span class="tag lpo">LPO</span>
+        </div>
+      </div>
+
+      <div class="co-card t3">
+        <div class="cn">剑桥科技</div>
+        <div class="ct">603083 SH · Tier 3 · 中小市值弹性</div>
+        <div class="cm">
+          <strong>核心定位：</strong>中型光模块厂商，以100G/400G/800G数据中心光模块为主，2025年净利润2.52-2.78亿（+51-67%），高增速验证AI需求渗透到Tier 3厂商。<br><br>
+          <strong>主要优势：</strong>中小市值、业绩弹性大、估值相对合理。<br>
+          <strong>主要风险：</strong>规模偏小，超级大厂认证难度大，主要服务二线云厂和代理渠道。
+        </div>
+        <div class="tag-row">
+          <span class="tag dsp">DSP</span>
+        </div>
+      </div>
+
+      <div class="co-card t3">
+        <div class="cn">联特科技</div>
+        <div class="ct">301205 SZ · Tier 3 · 工业+数据中心双线</div>
+        <div class="cm">
+          <strong>核心定位：</strong>工业光模块+数据中心光模块双线布局，2024年营收8.9亿（+47%），受益于AI需求渗透。工业光模块为基础盘（稳定但增速低），数据中心是增长弹性来源。<br><br>
+          <strong>主要风险：</strong>规模较小，与Tier 1差距悬殊；大客户进入壁垒高；竞争强度持续加大。
+        </div>
+        <div class="tag-row">
+          <span class="tag dsp">DSP</span>
+        </div>
+      </div>
+
+      <div class="co-card t3">
+        <div class="cn">德科立</div>
+        <div class="ct">688205 SH · Tier 3 · DCI相干专精</div>
+        <div class="cm">
+          <strong>核心定位：</strong>专注DCI（数据中心互联）相干光模块，是国内少数有相干模块量产能力的厂商之一（科创板上市）。相干模块毛利率50%+，远高于短距模块，市场容量有限但护城河深。<br><br>
+          <strong>主要优势：</strong>差异化赛道，竞争烈度低，毛利率优异，进入障碍高。<br>
+          <strong>主要风险：</strong>市场天花板有限；客户群窄。
+        </div>
+        <div class="tag-row">
+          <span class="tag coh">相干DCI</span><span class="tag sip">硅光集成</span>
+        </div>
+      </div>
+
+      <div class="co-card t3">
+        <div class="cn">铭普光磁</div>
+        <div class="ct">002902 SZ · Tier 3 · 跨界新入场</div>
+        <div class="cm">
+          <strong>核心定位：</strong>主业为磁性元件（变压器、电感、共模电感），光模块是新增业务方向。逻辑是：磁性元件是光模块内部必需的无源器件，从原材料供应商升级为模块系统供应商。<br><br>
+          <strong>主要优势：</strong>磁性元件壁垒提供稳定基础盘；跨界逻辑清晰，非盲目入场。<br>
+          <strong>主要风险：</strong>光模块经验积累浅，缺乏超级大厂认证，短期内难以与专业厂商竞争。建议持观望态度。
+        </div>
+        <div class="tag-row">
+          <span class="tag mag">磁性元件</span><span class="tag dsp">光模块新入</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     TAB 6 · 投资结论
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-t6">
+  <div class="card">
+    <h2>🎯 投资结论与配置框架</h2>
+    <p class="sub">基于行业特性和各公司定位的综合判断</p>
+
+    <div class="sbox info">
+      <div class="stitle">🏆 双雄格局已定，但技术路线仍是最大变量</div>
+      <div class="stext">中际旭创+新易盛的双寡头格局在2026-2027年内很难被撼动，两者合计占AI光模块供应链60-70%，且与下游超级大厂深度绑定。核心问题不是"这个市场是否存在"，而是"哪家公司在下一次技术迭代中保持领先"。技术路线分歧（中际旭创布局全面、新易盛LPO为核心）决定了两家各自的弹性来源和风险点不同。</div>
+    </div>
+
+    <div class="conclusion-dark">
+      <h3>📋 各梯队配置逻辑</h3>
+      <div class="row">
+        <span class="idx">T1</span>
+        <span><strong>中际旭创 · 新易盛</strong>——行业景气直接受益者，业绩确定性最高。中际旭创适合"全面押注AI基础设施"逻辑，新易盛适合"LPO技术革命"逻辑。PE 60-80x不便宜，适合高确定性+高成长的投资者，但需承受高估值带来的回调风险。两者可作为组合核心持仓，比重按技术路线偏好调配。</span>
+      </div>
+      <div class="row">
+        <span class="idx">T2</span>
+        <span><strong>华工科技 · AAOI</strong>——有弹性但逻辑更复杂。华工科技适合看好"综合型光网络供应商"且能接受集团化折价的投资者；AAOI是美股中少有的纯光模块弹性标的，适合看好中美AI竞争中美国厂商份额回升逻辑，但执行风险高。东山精密的整合逻辑需要时间验证，建议等待整合里程碑后再评估。</span>
+      </div>
+      <div class="row">
+        <span class="idx">T3</span>
+        <span><strong>剑桥科技 · 德科立 · 联特科技</strong>——小市值弹性仓位，适合行业景气高峰期的超额收益来源。德科立的差异化护城河（相干）值得重视，是T3中战略价值最高的标的。铭普光磁光模块资质尚浅，建议继续观察而非现在入场。</span>
+      </div>
+      <div class="row">
+        <span class="idx">⚠</span>
+        <span><strong>全行业共同风险——CPO冲击时间窗口：</strong>英伟达宣布2026年CPO商用元年，若CPO渗透速度快于预期（2027年超预期放量），短距可插拔光模块市场天花板将被提前压制。这是所有T1-T3标的都面临的系统性风险，当前估值并未充分反映这一长期威胁。</span>
+      </div>
+      <div class="row">
+        <span class="idx">★</span>
+        <span><strong>最值得关注的不对称机会：</strong>若1.6T大规模放量（2026年下半年开始），新易盛的LPO成本优势将形成最强定价权——1.6T对线性度要求更高，LPO在高速率时代的竞争优势不减反增。这是新易盛相对中际旭创的潜在超额回报来源，也是当前市场分歧最大的押注。</span>
+      </div>
+    </div>
+
+    <!-- 风险矩阵 -->
+    <p class="sh3">⚡ 全行业关键风险清单</p>
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>风险类型</th><th>风险描述</th><th>影响范围</th><th>当前概率</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="lbl">DSP芯片断供</td>
+          <td style="font-size:13px">博通/迈威尔被美国政府限制出口到中国光模块厂商</td>
+          <td><span class="pill warn">所有DSP路线厂商</span></td>
+          <td><span class="pill caution">中等（1-2年内）</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">CPO渗透超预期</td>
+          <td style="font-size:13px">英伟达/博通加速推动CPO，可插拔光模块市场天花板提前压制</td>
+          <td><span class="pill warn">所有中游厂商</span></td>
+          <td><span class="pill caution">中等（3年内）</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">超级大厂Capex放缓</td>
+          <td style="font-size:13px">AI投资热潮降温，大厂光模块采购量低于预期</td>
+          <td><span class="pill warn">全行业</span></td>
+          <td><span class="pill ok">低（2026-2027）</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">产能过度扩张</td>
+          <td style="font-size:13px">行业集体扩产后需求不及预期，价格暴跌 + 产能利用率下降</td>
+          <td><span class="pill warn">重资产厂商</span></td>
+          <td><span class="pill caution">中等（2027+）</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">LPO技术路线风险</td>
+          <td style="font-size:13px">硅光在1.6T时代全面替代LPO，LPO厂商份额急剧萎缩</td>
+          <td><span class="pill warn">新易盛为主</span></td>
+          <td><span class="pill caution">中等（2-4年内）</span></td>
+        </tr>
+        <tr>
+          <td class="lbl">台积电供应风险</td>
+          <td style="font-size:13px">硅光芯片依赖台积电先进工艺，台海局势变化影响供应</td>
+          <td><span class="pill warn">硅光路线厂商</span></td>
+          <td><span class="pill ok">低（当前）</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- 综合评级图 -->
+    <p class="sh3">🌟 各标的综合评分（可投资性 · 满分5分）</p>
+    <div class="chart-wrap">
+      <canvas id="ratingChart" height="280"></canvas>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;margin-top:6px">综合评分维度：业绩确定性 · 成长空间 · 估值合理性 · 技术路线 · 流动性。仅供参考，不构成投资建议。</p>
+  </div>
+</div>
+
+
+<div class="foot">
+  光模块中游全景对比报告 · 2026-05-18 · 覆盖11家上市/未上市企业<br>
+  本报告基于公开信息综合分析，仅供研究参考，不构成投资建议
+</div>
+
+</div><!-- /.wrap -->
+
+<script>
+/* ═══ Tab switching ═══ */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const t = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + t).classList.add('active');
+    // lazy init charts
+    if (t === 't1' && !window._rev)    { buildRevChart();    window._rev = 1; }
+    if (t === 't3' && !window._profit) { buildProfitChart(); window._profit = 1; }
+    if (t === 't6' && !window._rating) { buildRatingChart(); window._rating = 1; }
+  });
+});
+
+/* ═══ Build Revenue Chart (Tab 1) ═══ */
+function buildRevChart() {
+  const ctx = document.getElementById('revChart');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['中际旭创\n25年', '新易盛\n25年', '华工联接\n25年', 'AAOI\n25年($)', '剑桥科技\n25年估', '联特科技\n24年', '德科立\n估'],
+      datasets: [
+        { label: 'Tier 1', data: [382, 248, 0, 0, 0, 0, 0],
+          backgroundColor: 'rgba(8,145,178,0.85)', borderRadius: 6, borderSkipped: false },
+        { label: 'Tier 2', data: [0, 0, 61, 33, 0, 0, 0],
+          backgroundColor: 'rgba(124,58,237,0.75)', borderRadius: 6, borderSkipped: false },
+        { label: 'Tier 3', data: [0, 0, 0, 0, 20, 8.9, 5],
+          backgroundColor: 'rgba(100,116,139,0.7)', borderRadius: 6, borderSkipped: false }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 12 }, padding: 14 } },
+        title: { display: true, text: '营收规模（亿人民币，AAOI按汇率7.25换算）', font: { size: 13, weight: '600' }, padding: { bottom: 10 } }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: '#f1f5f9' }, ticks: { callback: v => v > 0 ? v + '亿' : '' } }
+      }
+    }
+  });
+}
+
+/* ═══ Build Profit Chart (Tab 3) ═══ */
+function buildProfitChart() {
+  const ctx = document.getElementById('profitChart');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['中际旭创', '新易盛', '华工联接', '剑桥科技', '联特科技'],
+      datasets: [
+        {
+          label: '净利润增速 (%)',
+          data: [65, 190, 60, 59, 40],
+          backgroundColor: ['rgba(8,145,178,0.85)','rgba(8,145,178,0.85)','rgba(124,58,237,0.7)','rgba(100,116,139,0.7)','rgba(100,116,139,0.7)'],
+          borderRadius: 8, borderSkipped: false
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: '净利润增速对比（2025年，估算）', font: { size: 13, weight: '600' }, padding: { bottom: 10 } }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: '#f1f5f9' }, ticks: { callback: v => v + '%' } }
+      }
+    }
+  });
+}
+
+/* ═══ Build Rating Chart (Tab 6) ═══ */
+function buildRatingChart() {
+  const ctx = document.getElementById('ratingChart');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['中际旭创', '新易盛', '华工科技', 'AAOI', '东山精密', '剑桥科技', '德科立', '联特科技', '铭普光磁'],
+      datasets: [
+        {
+          label: '综合评分',
+          data: [4.5, 4.3, 3.5, 3.2, 2.8, 3.3, 3.6, 2.9, 2.2],
+          backgroundColor: [
+            'rgba(8,145,178,0.9)', 'rgba(8,145,178,0.9)',
+            'rgba(124,58,237,0.75)', 'rgba(124,58,237,0.75)', 'rgba(124,58,237,0.75)',
+            'rgba(100,116,139,0.7)', 'rgba(100,116,139,0.7)', 'rgba(100,116,139,0.7)', 'rgba(100,116,139,0.7)'
+          ],
+          borderRadius: 8, borderSkipped: false
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: '可投资性综合评分（满分5分，估算）', font: { size: 13, weight: '600' }, padding: { bottom: 10 } }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { min: 0, max: 5, grid: { color: '#f1f5f9' }, ticks: { callback: v => v + '分' } }
+      }
+    }
+  });
+}
+
+/* ═══ Init first tab chart on load ═══ */
+window.addEventListener('DOMContentLoaded', () => {
+  buildRevChart();
+  window._rev = 1;
+});
+</script>
+</body>
+</html>
