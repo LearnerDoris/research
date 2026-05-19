@@ -1,0 +1,36 @@
+name: 🤖 自动更新投研档案库
+
+# 触发条件：只要代码有推入（且不是仅仅改了主页），就立刻运行
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'index.html'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 赋予机器人修改代码的权限
+
+    steps:
+    - name: 📥 拉取最新代码
+      uses: actions/checkout@v4
+
+    - name: 🐍 配置 Python 环境
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: ⚙️ 运行你的专属更新脚本
+      run: python3 build_index.py
+
+    - name: 📤 自动保存并发布新页面
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add .
+        # 如果有变动就提交，没有变动就跳过，防止报错
+        git commit -m "🤖 GitHub Actions 自动更新主页及导航栏" || echo "没有需要更新的内容"
+        git push
