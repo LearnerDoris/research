@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI算力四层投资框架 Watchlist · Doris</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #0a0e1a;
+    color: #e4e8f0;
+    line-height: 1.5;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .header {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #1f2937;
+  }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin-bottom: 6px;
+  }
+  .header .subtitle {
+    font-size: 13px;
+    color: #9ca3af;
+    margin-bottom: 4px;
+  }
+  .header .source {
+    font-size: 11px;
+    color: #6b7280;
+    font-style: italic;
+  }
+
+  /* Framework cards */
+  .framework {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .layer-card {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-top: 3px solid var(--layer-color);
+  }
+  .layer-card:hover { transform: translateY(-2px); background: #131a2a; }
+  .layer-card.active {
+    background: #131a2a;
+    box-shadow: 0 0 0 1px var(--layer-color);
+  }
+  .layer-num {
+    font-size: 10px;
+    color: var(--layer-color);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .layer-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin-bottom: 8px;
+  }
+  .layer-logic {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-bottom: 10px;
+    line-height: 1.55;
+    min-height: 50px;
+  }
+  .layer-risk {
+    font-size: 10.5px;
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.07);
+    padding: 6px 8px;
+    border-radius: 4px;
+    border-left: 2px solid #ef4444;
+  }
+  .layer-count {
+    font-size: 10px;
+    color: #6b7280;
+    margin-top: 10px;
+    text-align: right;
+  }
+  .layer-1 { --layer-color: #a78bfa; }
+  .layer-2 { --layer-color: #34d399; }
+  .layer-3 { --layer-color: #60a5fa; }
+  .layer-4 { --layer-color: #fbbf24; }
+
+  /* Sub-sections within each layer */
+  .layer-section {
+    background: #0f172a;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+    border-left: 3px solid var(--section-color);
+  }
+  .layer-section h2 {
+    font-size: 16px;
+    color: #f3f4f6;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .layer-section h2 .num-pill {
+    font-size: 10px;
+    background: var(--section-color);
+    color: #0a0e1a;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+  .layer-section .layer-tagline {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 14px;
+  }
+  .subsection {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #1f2937;
+  }
+  .subsection:first-of-type {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
+  }
+  .subsection h3 {
+    font-size: 13px;
+    color: #d1d5db;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .subsection-desc {
+    font-size: 11px;
+    color: #6b7280;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  .companies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  .company-card {
+    background: #0a0e1a;
+    border: 1px solid #1f2937;
+    border-radius: 6px;
+    padding: 9px 11px;
+    border-left: 3px solid var(--tier-color);
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .company-card:hover {
+    background: #131a2a;
+    transform: translateX(2px);
+  }
+  .company-card .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .company-card .name {
+    color: #e5e7eb;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .company-card .code {
+    color: #60a5fa;
+    font-size: 10px;
+    font-family: 'SF Mono', monospace;
+  }
+  .company-card .desc {
+    color: #9ca3af;
+    font-size: 10.5px;
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+  /* badges removed */
+
+  /* Tier colors based on certainty */
+  .tier-core { --tier-color: #10b981; }    /* 核心标的 */
+  .tier-strong { --tier-color: #3b82f6; }   /* 强β */
+  .tier-watch { --tier-color: #f59e0b; }    /* 观察 */
+  .tier-option { --tier-color: #a78bfa; }   /* 期权 */
+
+  /* Detail table */
+  .table-wrap {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 32px;
+    overflow-x: auto;
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+  .filter-btn {
+    background: #1f2937;
+    color: #d1d5db;
+    border: 1px solid #374151;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { background: #374151; }
+  .filter-btn.active {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+  }
+  .filter-label {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-right: 2px;
+  }
+  .search-input {
+    background: #1f2937;
+    color: #f3f4f6;
+    border: 1px solid #374151;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    width: 200px;
+    margin-left: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  th {
+    text-align: left;
+    padding: 10px 8px;
+    background: #0f172a;
+    color: #9ca3af;
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid #1f2937;
+    position: sticky;
+    top: 0;
+  }
+  td {
+    padding: 9px 8px;
+    border-bottom: 1px solid #1f2937;
+    color: #d1d5db;
+  }
+  tr:hover td { background: #0f172a; }
+  .layer-tag {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 500;
+  }
+  .l1 { background: #5b21b6; color: #ddd6fe; }
+  .l2 { background: #064e3b; color: #a7f3d0; }
+  .l3 { background: #1e40af; color: #bfdbfe; }
+  .l4 { background: #78350f; color: #fde68a; }
+
+  /* Notes section */
+  .notes {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 18px 22px;
+    font-size: 12.5px;
+    color: #9ca3af;
+    line-height: 1.7;
+    margin-top: 24px;
+  }
+  .notes h3 {
+    color: #e5e7eb;
+    font-size: 14px;
+    margin-bottom: 10px;
+    margin-top: 18px;
+  }
+  .notes h3:first-child { margin-top: 0; }
+  .notes ul { margin-left: 18px; margin-top: 4px; }
+  .notes strong { color: #d1d5db; }
+  .notes .highlight-add { color: #fbbf24; }
+
+  @media (max-width: 1100px) {
+    .framework { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .framework { grid-template-columns: 1fr; }
+    body { padding: 12px; }
+    .companies-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<nav id="auto-nav" style="padding: 15px 20px; background: #fff; border-bottom: 1px solid #e2e8f0; margin: -8px -8px 20px -8px; font-family: -apple-system, sans-serif; display: flex; align-items: center; position: sticky; top: 0; z-index: 999;">
+    <a href="../index.html" style="text-decoration: none; color: #2563eb; font-weight: 600; display: flex; align-items: center; gap: 5px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        返回档案库主页
+    </a>
+</nav>
+
+
+<div class="header">
+  <h1>AI算力四层投资框架 Watchlist</h1>
+  <div class="subtitle">平台架构 · 光学确定性 · 材料基板 · 期权层 · 全球 70+ 标的</div>
+  <div class="source">数据截止 2026年5月</div>
+</div>
+
+<!-- Framework cards -->
+<div class="framework">
+  <div class="layer-card layer-1">
+    <div class="layer-num">Layer 1</div>
+    <div class="layer-name">平台架构层</div>
+    <div class="layer-logic">NVIDIA、Broadcom 等控制网络架构和芯片平台的玩家。是整个产业链的"指挥棒"，所有下游标的的需求节奏由它们决定。</div>
+    <div class="layer-risk">⚠ 估值高，市场预期充分</div>
+    <div class="layer-count">6 个标的</div>
+  </div>
+  
+  <div class="layer-card layer-2">
+    <div class="layer-num">Layer 2</div>
+    <div class="layer-name">光学确定性层</div>
+    <div class="layer-logic">800G/1.6T、LPO/NPO、激光器、FAU、光源。CPO大规模部署前（2028前）云厂商仍大量采购可插拔光模块的主战场。</div>
+    <div class="layer-risk">⚠ 价格竞争、客户集中</div>
+    <div class="layer-count">18 个标的</div>
+  </div>
+  
+  <div class="layer-card layer-3">
+    <div class="layer-num">Layer 3</div>
+    <div class="layer-name">材料/基板层</div>
+    <div class="layer-logic">PCB、ABF、CCL、低损耗材料。算力板卡升级带来的物理层材料量价齐升，不依赖技术路线博弈，确定性最强。</div>
+    <div class="layer-risk">⚠ 扩产后周期反转</div>
+    <div class="layer-count">22 个标的</div>
+  </div>
+  
+  <div class="layer-card layer-4">
+    <div class="layer-num">Layer 4</div>
+    <div class="layer-name">期权层</div>
+    <div class="layer-logic">CPO、OCS、光 I/O、先进测试。良率和稳定性是痛点，只要大厂开始试产打样，早期订单先落到测试设备、ELS光源、先进封装。</div>
+    <div class="layer-risk">⚠ 时间不确定，估值波动大</div>
+    <div class="layer-count">24 个标的</div>
+  </div>
+</div>
+
+<!-- LAYER 1 -->
+<div class="layer-section" style="--section-color:#a78bfa">
+  <h2><span class="num-pill">L1</span>平台架构层 · 控制网络架构与芯片平台</h2>
+  <div class="layer-tagline">逻辑：决定整个产业链节奏的"指挥棒"。估值已充分反映预期，但是其他三层标的的需求leading indicator。</div>
+  
+  <div class="subsection">
+    <h3>GPU / ASIC / 网络芯片平台</h3>
+    <div class="companies-grid">
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">NVIDIA</span><span class="code">NVDA</span></div>
+        <div class="desc">GPU+InfiniBand+Spectrum-X+NVLink，CPO主推方</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">Broadcom</span><span class="code">AVGO</span></div>
+        <div class="desc">DSP+VCSEL+CPO芯片+ASIC定制(Google TPU)</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">AMD</span><span class="code">AMD</span></div>
+        <div class="desc">MI系列GPU; ZT Systems收购扩展系统方案</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">Marvell</span><span class="code">MRVL</span></div>
+        <div class="desc">PAM4 DSP+定制ASIC; 收购Celestial AI布局CPO</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">Astera Labs</span><span class="code">ALAB</span></div>
+        <div class="desc">PCIe/CXL连接芯片; AI scale-up直接受益者</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">台积电</span><span class="code">TSM / 2330</span></div>
+        <div class="desc">CoUPE混合键合是CPO的基石; 整条链的隐形枢纽</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAYER 2 -->
+<div class="layer-section" style="--section-color:#34d399">
+  <h2><span class="num-pill">L2</span>光学确定性层 · 1.6T光模块 / LPO / NPO / 核心光器件</h2>
+  <div class="layer-tagline">逻辑：2026-2028年的核心订单池。CPO大规模部署前云厂商为了维护便利性仍以可插拔模块为主。</div>
+  
+  <div class="subsection">
+    <h3>光模块 / 代工（1.6T &amp; LPO/NPO）</h3>
+    <div class="subsection-desc">中游成品厂商，全球营收>1B美元的核心标的</div>
+    <div class="companies-grid">
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">中际旭创</span><span class="code">300308 SZ</span></div>
+        <div class="desc">25年382亿/+60% · 全球No.1 · 海外90.58%</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">新易盛</span><span class="code">300502 SZ</span></div>
+        <div class="desc">25年净利94-99亿 · LPO 800G份额75%</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">Fabrinet</span><span class="code">FN</span></div>
+        <div class="desc">光通信代工 · 季度$832M · COHR/LITE/Cisco</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">光迅科技</span><span class="code">002281 SZ</span></div>
+        <div class="desc">25年119亿/+44% · 国内唯一全链路</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">立讯精密</span><span class="code">002475 SZ</span></div>
+        <div class="desc">铜连接+光互连; AEC/AOC配套</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">华工科技</span><span class="code">000988 SZ</span></div>
+        <div class="desc">联接业务61亿/+53%; 二线但增速快</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">剑桥科技</span><span class="code">603083 SH</span></div>
+        <div class="desc">早期LPO概念玩家 · 25E净利2.5-2.8亿</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">AAOI</span><span class="code">AAOI</span></div>
+        <div class="desc">美国本土制造 · 26年指引$10亿 · YTD+420%</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">Credo</span><span class="code">CRDO</span></div>
+        <div class="desc">AEC+光DSP · FY26Q2 $2.68亿/+272%</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">东山精密</span><span class="code">002384 SZ</span></div>
+        <div class="desc">收购索尔思整合中; PCB+光通信</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="subsection">
+    <h3>核心光芯片 / 激光器 / 光源</h3>
+    <div class="subsection-desc">上游EML/CW/DFB芯片，国产替代主线</div>
+    <div class="companies-grid">
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">Coherent</span><span class="code">COHR</span></div>
+        <div class="desc">EML+器件+激光器 · FY25 $58亿</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">Lumentum</span><span class="code">LITE</span></div>
+        <div class="desc">EML+CW · FY25 $17亿 · 200G EML独家</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">源杰科技</span><span class="code">688498 SH</span></div>
+        <div class="desc">25/100G EML · 25年6亿 · TTM PE 650x</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">仕佳光子</span><span class="code">688313 SH</span></div>
+        <div class="desc">AWG+PLC+CW · 前9月15.6亿/+114%</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">长光华芯</span><span class="code">688048 SH</span></div>
+        <div class="desc">激光器芯片+VCSEL · 25年4.77亿/+75%</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="subsection">
+    <h3>核心无源器件 / 光引擎 / 连接</h3>
+    <div class="subsection-desc">FAU、MPO、调制器——无论走插拔还是CPO都难以绕开</div>
+    <div class="companies-grid">
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">天孚通信</span><span class="code">300394 SZ</span></div>
+        <div class="desc">光引擎+无源 · 第一大客户Fabrinet 62%</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">太辰光</span><span class="code">300570 SZ</span></div>
+        <div class="desc">MPO+MT插芯全球领先 · CPO配套</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">光库科技</span><span class="code">300620 SZ</span></div>
+        <div class="desc">铌酸锂调制器(TFLN) · 800G/1.6T调制</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">腾景科技</span><span class="code">688195 SH</span></div>
+        <div class="desc">精密光学元件 · 钒酸钇晶体</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">福晶科技</span><span class="code">002222 SZ</span></div>
+        <div class="desc">YVO₄钒酸钇晶体 · WSS/OCS核心材料</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAYER 3 -->
+<div class="layer-section" style="--section-color:#60a5fa">
+  <h2><span class="num-pill">L3</span>材料/基板层 · PCB / ABF / CCL / 低损耗材料</h2>
+  <div class="layer-tagline">逻辑：当期确定性最高(2025-2026业绩兑现)。算力板卡升级和功耗增加带来的物理材料量价齐升，不依赖光互连路线博弈。</div>
+  
+  <div class="subsection">
+    <h3>PCB · 印制电路板</h3>
+    <div class="subsection-desc">高多层 HDI、800G交换机背板、AI服务器主板</div>
+    <div class="companies-grid">
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">胜宏科技</span><span class="code">300476 SZ</span></div>
+        <div class="desc">25前9月141亿/净利32亿+324% · A+H · NVDA核心</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">沪电股份</span><span class="code">002463 SZ</span></div>
+        <div class="desc">25年189亿/+42% · GB300 MPCB · 单季净利10亿</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">生益电子</span><span class="code">688183 SH</span></div>
+        <div class="desc">25Q3 30.6亿/+154% · 净利5.84亿/+546%</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">深南电路</span><span class="code">002916 SZ</span></div>
+        <div class="desc">高多层板核心 · 南通四期+泰国基地</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">景旺电子</span><span class="code">603228 SH</span></div>
+        <div class="desc">Rubin 78层正交背板潜在供应商</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">广合科技</span><span class="code">001389 SZ</span></div>
+        <div class="desc">服务器PCB · AWS等北美CSP供应</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">金像电</span><span class="code">2368 TW</span></div>
+        <div class="desc">AWS核心PCB供应商</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">方正科技</span><span class="code">600601 SH</span></div>
+        <div class="desc">Switch Tray PCB潜在供应商</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">臻鼎科技</span><span class="code">4958 TW</span></div>
+        <div class="desc">全球PCB份额7% · AI占比超70%(2025)</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="subsection">
+    <h3>ABF 载板</h3>
+    <div class="subsection-desc">CPU/GPU/ASIC芯片承载平台，AI算力直接驱动</div>
+    <div class="companies-grid">
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">欣兴电子 Unimicron</span><span class="code">3037 TW</span></div>
+        <div class="desc">美系GPU市场30-40%份额 · 顶级ABF/BT</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">揖斐电 Ibiden</span><span class="code">4062 JP</span></div>
+        <div class="desc">NVIDIA核心ABF供应商 · 日厂技术壁垒最高</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">南电 Nan Ya PCB</span><span class="code">8046 TW</span></div>
+        <div class="desc">ABF+BT垂直整合 · YTD表现强</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">景硕科技 Kinsus</span><span class="code">3189 TW</span></div>
+        <div class="desc">ABF载板大厂 · 与三大并称</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="subsection">
+    <h3>CCL 覆铜板 &amp; 核心材料</h3>
+    <div class="subsection-desc">M7→M8→M9→M10材料升级是AI算力的决定性瓶颈</div>
+    <div class="companies-grid">
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">台光电子 EMC</span><span class="code">2383 TW</span></div>
+        <div class="desc">M8/M9龙头 · 1年涨幅139% · 高端无卤龙头</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">生益科技</span><span class="code">600183 SH</span></div>
+        <div class="desc">M9 CCL切入NVDA Rubin供应链 · Q布一供</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">味之素 Ajinomoto</span><span class="code">2802 JP</span></div>
+        <div class="desc">ABF绝缘材料绝对垄断 · 极高毛利</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">联茂 ITEQ</span><span class="code">6213 TW</span></div>
+        <div class="desc">高频高速CCL · M7/M8主力</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">建滔积层板</span><span class="code">01888 HK</span></div>
+        <div class="desc">25年204亿港元/+10% 净利+83.6% · A股H股</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">松下 Panasonic</span><span class="code">6752 JP</span></div>
+        <div class="desc">MEGTRON系列扩产 · 高端CCL定价权</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">斗山 Doosan</span><span class="code">000150 KR</span></div>
+        <div class="desc">M8/M9 CCL · Compute Tray供应</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">南亚新材</span><span class="code">688519 SH</span></div>
+        <div class="desc">冲刺M10认证 · 国产替代潜力</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">华正新材</span><span class="code">603186 SH</span></div>
+        <div class="desc">高频高速CCL · 国产二线</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAYER 4 -->
+<div class="layer-section" style="--section-color:#fbbf24">
+  <h2><span class="num-pill">L4</span>期权层 · CPO / OCS / 光 I/O / 先进测试</h2>
+  <div class="layer-tagline">逻辑：CPO量产极难，良率和稳定性是痛点。只要大厂开始试产打样，早期订单先落到测试设备/ELS光源/先进封装代工。</div>
+  
+  <div class="subsection">
+    <h3>CPO &amp; 光 I/O · 新架构核心</h3>
+    <div class="subsection-desc">"光替铜"在scale-up中的最终方案；时点和路线尚未定调</div>
+    <div class="companies-grid">
+      <div class="company-card tier-option">
+        <div class="top"><span class="name">Lightmatter</span><span class="code">未上市</span></div>
+        <div class="desc">3D CPO/Passage平台 · vClick FAU · ELS光源</div>
+      </div>
+      <div class="company-card tier-option">
+        <div class="top"><span class="name">Ayar Labs</span><span class="code">未上市</span></div>
+        <div class="desc">TeraPHY光I/O · Intel/NVDA合作</div>
+      </div>
+      <div class="company-card tier-option">
+        <div class="top"><span class="name">Celestial AI</span><span class="code">被Marvell收购</span></div>
+        <div class="desc">Photonic Fabric · 已被MRVL收购</div>
+      </div>
+      <div class="company-card tier-option">
+        <div class="top"><span class="name">POET Tech</span><span class="code">POET</span></div>
+        <div class="desc">Optical Interposer硅光集成平台</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="subsection">
+    <h3>OCS · 全光交换</h3>
+    <div class="subsection-desc">Google Apollo+NVDA Spectrum-XGS采用 · 国产替代加速</div>
+    <div class="companies-grid">
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">Lumentum</span><span class="code">LITE</span></div>
+        <div class="desc">MEMS OCS · OCP OCS Subproject共同领导</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">Coherent</span><span class="code">COHR</span></div>
+        <div class="desc">LCoS OCS技术最成熟 · 10年寿命</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">HUBER+SUHNER</span><span class="code">HUBN SW</span></div>
+        <div class="desc">Polatis压电陶瓷OCS · 与凌云光合作</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">凌云光</span><span class="code">688400 SH</span></div>
+        <div class="desc">代理Polatis OCS · DLBS方案中国市场</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">赛微电子</span><span class="code">300456 SZ</span></div>
+        <div class="desc">持有瑞典Silex 45% · Google OCS MEMS核心</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">德科立</span><span class="code">688205 SH</span></div>
+        <div class="desc">32x32 SiPh OCS原型 · 国产快速追赶</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">华懋科技</span><span class="code">603306 SH</span></div>
+        <div class="desc">拟收购光开关业务 · OCS国产标的</div>
+      </div>
+      <div class="company-card tier-watch">
+        <div class="top"><span class="name">英唐智控</span><span class="code">300131 SZ</span></div>
+        <div class="desc">光隆集成持续布局光开关</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="subsection">
+    <h3>先进测试 · CPO良率瓶颈最直接受益</h3>
+    <div class="subsection-desc">CPO试产爆发优先反映在测试设备订单上 · 2026-2027关键</div>
+    <div class="companies-grid">
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">Keysight</span><span class="code">KEYS</span></div>
+        <div class="desc">PIC晶圆测试全套方案 · 与FormFactor集成</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">Advantest</span><span class="code">6857 JP</span></div>
+        <div class="desc">台积电CPO光学测试核心盟友 · SoC测试龙头</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">Teradyne</span><span class="code">TER</span></div>
+        <div class="desc">半导体测试双雄之一 · CPO拓展</div>
+      </div>
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">致茂电子 Chroma</span><span class="code">2360 TW</span></div>
+        <div class="desc">CPO高通道烧录测试+3D AOI · TSMC盟友</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">旺矽 MPI</span><span class="code">6223 TW</span></div>
+        <div class="desc">探针卡 · 25年101亿台币 · 卡位NVDA CPO</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">FormFactor</span><span class="code">FORM</span></div>
+        <div class="desc">PIC晶圆探针 · 与Keysight集成方案</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">EXFO</span><span class="code">已私有化</span></div>
+        <div class="desc">PIC主被动测试 · 已被Sole Source私有化</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="subsection">
+    <h3>先进封装 / 系统集成 / 外部光源</h3>
+    <div class="subsection-desc">CPO量产能力的瓶颈在封装代工与外部稳定光源</div>
+    <div class="companies-grid">
+      <div class="company-card tier-core">
+        <div class="top"><span class="name">日月光 ASE</span><span class="code">3711 TW</span></div>
+        <div class="desc">CPO产线投资 · 封装代工龙头</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">Amkor</span><span class="code">AMKR</span></div>
+        <div class="desc">CPO封装+系统级测试一站式</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">康宁 Corning</span><span class="code">GLW</span></div>
+        <div class="desc">光通信FY25 $63亿/+35% · Meta $6B长协</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">住友电工</span><span class="code">5802 JP</span></div>
+        <div class="desc">特种光纤+光器件 · 日厂技术深度</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">长飞光纤</span><span class="code">601869 / 06869</span></div>
+        <div class="desc">A+H · 空芯光纤龙头 · 长芯博创母公司</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">SENKO Advanced</span><span class="code">未上市</span></div>
+        <div class="desc">扇口工业 · 光连接器巨头</div>
+      </div>
+      <div class="company-card tier-strong">
+        <div class="top"><span class="name">鸿海/工业富联</span><span class="code">2317 TW / 601138 SH</span></div>
+        <div class="desc">系统级组装+互连验证 · GB200/GB300代工</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL TABLE -->
+<div class="table-wrap">
+  <div class="section-title">
+    完整标的表 · 可筛选可搜索 <span id="visible-count" style="font-size:11px;color:#9ca3af;font-weight:400">(70+)</span>
+    <input type="text" class="search-input" id="search" placeholder="搜索名称/代码...">
+  </div>
+  
+  <div class="filters">
+    <span class="filter-label">层级：</span>
+    <button class="filter-btn active" data-layer="all">全部</button>
+    <button class="filter-btn" data-layer="L1">L1 平台</button>
+    <button class="filter-btn" data-layer="L2">L2 光学</button>
+    <button class="filter-btn" data-layer="L3">L3 材料</button>
+    <button class="filter-btn" data-layer="L4">L4 期权</button>
+    
+    <span class="filter-label" style="margin-left:16px">市场：</span>
+    <button class="filter-btn active" data-mkt="all">全部</button>
+    <button class="filter-btn" data-mkt="A">A股</button>
+    <button class="filter-btn" data-mkt="HK">港股</button>
+    <button class="filter-btn" data-mkt="US">美股</button>
+    <button class="filter-btn" data-mkt="TW">台股</button>
+    <button class="filter-btn" data-mkt="JP">日韩</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>层</th>
+        <th>公司</th>
+        <th>代码</th>
+        <th>细分</th>
+        <th>定位 / 业务</th>
+        <th>2025关键数据</th>
+        <th>跟踪要点</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<script>
+const companies = [
+  // L1
+  {layer:"L1", mkt:"US", name:"NVIDIA", code:"NVDA US", sub:"GPU/网络", desc:"GPU+InfiniBand+Spectrum-X+NVLink", data:"FY26E营收$1300亿+", note:"CPO主推方; 光通信最终客户"},
+  {layer:"L1", mkt:"US", name:"Broadcom", code:"AVGO US", sub:"DSP/ASIC", desc:"DSP+VCSEL+CPO芯片+Google TPU定制", data:"FY25营收$560亿/+44%", note:"CPO主推方; 定制ASIC业务"},
+  {layer:"L1", mkt:"US", name:"AMD", code:"AMD US", sub:"GPU", desc:"MI系列GPU + ZT Systems系统方案", data:"FY25营收$280亿+", note:"MI400架构2026年; OpenAI合作"},
+  {layer:"L1", mkt:"US", name:"Marvell", code:"MRVL US", sub:"ASIC/DSP/CPO", desc:"PAM4 DSP + 定制ASIC + 收购Celestial AI", data:"FY26前9月$48亿/+40%", note:"Celestial AI整合; FY28起CPO贡献"},
+  {layer:"L1", mkt:"US", name:"Astera Labs", code:"ALAB US", sub:"PCIe/CXL", desc:"AI scale-up连接芯片", data:"FY25营收$10亿+", note:"AEC市场补强; AMD/NVDA合作"},
+  {layer:"L1", mkt:"TW/US", name:"台积电 TSMC", code:"TSM US / 2330 TW", sub:"CPO封装", desc:"CoUPE混合键合是CPO基石", data:"FY25营收$1000亿+", note:"COUPE 2025量产; CPO最终代工厂"},
+
+  // L2 光模块
+  {layer:"L2", mkt:"A", name:"中际旭创", code:"300308 SZ", sub:"光模块", desc:"全球No.1光模块 · 海外90.58%", data:"25年382亿/+60%", note:"前五大客户76%; 1.6T量产"},
+  {layer:"L2", mkt:"A", name:"新易盛", code:"300502 SZ", sub:"光模块/LPO", desc:"LPO 800G份额75% · 毛利率47%", data:"25年净利94-99亿", note:"海外78%; 估值相对旭创折价"},
+  {layer:"L2", mkt:"US", name:"Fabrinet", code:"FN US", sub:"光通信代工", desc:"COHR/LITE/Cisco主供应商", data:"季度光通信$832M", note:"中立第三方代工"},
+  {layer:"L2", mkt:"A", name:"光迅科技", code:"002281 SZ", sub:"全链路", desc:"国内唯一芯片-器件-模块-子系统全链", data:"25年119亿/+44%", note:"央企背景; OFC2026推3.2T NPO"},
+  {layer:"L2", mkt:"A", name:"立讯精密", code:"002475 SZ", sub:"铜+光互连", desc:"铜AEC/AOC配套 · 苹果供应商", data:"25E营收2700亿+", note:"NVDA铜连接生态"},
+  {layer:"L2", mkt:"A", name:"华工科技", code:"000988 SZ", sub:"光模块", desc:"联接业务43%占比 · 二线龙头", data:"25年143亿/联接61亿+53%", note:"毛利率仅10.9%是隐患"},
+  {layer:"L2", mkt:"A", name:"剑桥科技", code:"603083 SH", sub:"光模块/LPO", desc:"早期LPO概念玩家 · 北美营收38%", data:"25E净利2.5-2.8亿", note:"1.6T推迟到26年"},
+  {layer:"L2", mkt:"US", name:"AAOI", code:"AAOI US", sub:"光模块", desc:"美国本土制造 · CATV+数通", data:"25年$4.56亿 · 26指引$10亿", note:"YTD+420% · 地缘对冲价值"},
+  {layer:"L2", mkt:"US", name:"Credo", code:"CRDO US", sub:"AEC+光DSP", desc:"AEC龙头+光DSP", data:"FY26Q2 $2.68亿/+272%", note:"客户集中(前1占61%); 800G DSP北美导入"},
+  {layer:"L2", mkt:"A", name:"东山精密", code:"002384 SZ", sub:"PCB+光", desc:"PCB+收购索尔思 · 光模块整合中", data:"25E营收350亿+", note:"A股光模块估值最克制"},
+  // L2 光芯片
+  {layer:"L2", mkt:"US", name:"Coherent", code:"COHR US", sub:"EML+器件", desc:"EML芯片+激光器+光器件全产品", data:"FY25 $58亿/+23%", note:"业务多元化稀释AI纯度"},
+  {layer:"L2", mkt:"US", name:"Lumentum", code:"LITE US", sub:"EML+CW", desc:"200G EML独家 · NVDA $2B投资", data:"FY25 $17亿/+58%", note:"FY26季度跑率年化$28亿"},
+  {layer:"L2", mkt:"A", name:"源杰科技", code:"688498 SH", sub:"EML芯片", desc:"25/100G EML+CW · IDM全流程", data:"25年6.01亿/+138%", note:"TTM PE 650x · 极端估值"},
+  {layer:"L2", mkt:"A", name:"仕佳光子", code:"688313 SH", sub:"AWG+PLC+CW", desc:"AWG+PLC+CW激光器 · 1.6T AWG领先", data:"前9月15.6亿/+114%", note:"CW激光器送样验证"},
+  {layer:"L2", mkt:"A", name:"长光华芯", code:"688048 SH", sub:"激光器", desc:"激光器芯片+VCSEL+光通信", data:"25年4.77亿/+75% 扭亏", note:"工业激光+光通信+激光雷达平台"},
+  // L2 无源器件
+  {layer:"L2", mkt:"A", name:"天孚通信", code:"300394 SZ", sub:"光引擎/无源", desc:"光引擎+无源 · NVDA CPO供应商", data:"25年净利18.8-21.5亿", note:"第一大客户Fabrinet 62%"},
+  {layer:"L2", mkt:"A", name:"太辰光", code:"300570 SZ", sub:"MPO/MT插芯", desc:"MPO+MT插芯全球领先", data:"25E净利2.5-2.8亿", note:"MT插芯紧缺受益 · ShuffleBox方案"},
+  {layer:"L2", mkt:"A", name:"光库科技", code:"300620 SZ", sub:"调制器", desc:"铌酸锂调制器(TFLN) · 800G/1.6T", data:"25E营收11亿+", note:"TFLN薄膜铌酸锂方向"},
+  {layer:"L2", mkt:"A", name:"腾景科技", code:"688195 SH", sub:"光学元件", desc:"精密光学+钒酸钇晶体", data:"25E营收8亿+", note:"WSS/OCS用核心晶体"},
+  {layer:"L2", mkt:"A", name:"福晶科技", code:"002222 SZ", sub:"晶体材料", desc:"YVO₄钒酸钇晶体 · 国产唯一", data:"25E营收10亿+", note:"WSS/OCS核心光学材料"},
+
+  // L3 PCB
+  {layer:"L3", mkt:"A", name:"胜宏科技", code:"300476 SZ", sub:"HDI PCB", desc:"全球AI PCB市占率13.8%第一", data:"前9月141亿 净利32亿/+324%", note:"A+H · NVDA核心 · 前五大客户50.8%"},
+  {layer:"L3", mkt:"A", name:"沪电股份", code:"002463 SZ", sub:"高多层PCB", desc:"GB300 MPCB供应商 · 高速交换机", data:"25年189亿/+42% · 单季净利10亿", note:"投资43亿扩产2026Q3试产"},
+  {layer:"L3", mkt:"A", name:"生益电子", code:"688183 SH", sub:"高多层PCB", desc:"高速运算服务器PCB", data:"Q3 30.6亿/+154% 净利+546%", note:"业绩弹性最大"},
+  {layer:"L3", mkt:"A", name:"深南电路", code:"002916 SZ", sub:"高多层/ABF", desc:"高多层板核心 · ABF载板", data:"25E营收200亿+", note:"南通四期+泰国基地"},
+  {layer:"L3", mkt:"A", name:"景旺电子", code:"603228 SH", sub:"PCB", desc:"Rubin 78层背板潜在供应商", data:"25E营收150亿+", note:"扩产积极"},
+  {layer:"L3", mkt:"A", name:"广合科技", code:"001389 SZ", sub:"PCB", desc:"AWS核心PCB供应商", data:"25E营收50亿+", note:"北美CSP直供"},
+  {layer:"L3", mkt:"TW", name:"金像电", code:"2368 TW", sub:"PCB", desc:"AWS核心PCB供应商(台股)", data:"25年营收高速增长", note:"AWS GPU/ASIC PCB"},
+  {layer:"L3", mkt:"A", name:"方正科技", code:"600601 SH", sub:"PCB", desc:"Switch Tray PCB潜在", data:"——", note:"潜在GB300供应"},
+  {layer:"L3", mkt:"TW", name:"臻鼎科技", code:"4958 TW", sub:"PCB/HDI", desc:"全球PCB份额7% · AI占比超70%(25年)", data:"FY25营收高位", note:"FCC软板AI业务"},
+  // L3 ABF
+  {layer:"L3", mkt:"TW", name:"欣兴电子", code:"3037 TW", sub:"ABF载板", desc:"美系GPU市场30-40%份额", data:"FY25营收强劲", note:"NVDA/AMD GPU载板"},
+  {layer:"L3", mkt:"JP", name:"揖斐电 Ibiden", code:"4062 JP", sub:"ABF载板", desc:"NVDA核心ABF供应商", data:"FY25表现优异", note:"日厂技术壁垒最高"},
+  {layer:"L3", mkt:"TW", name:"南电", code:"8046 TW", sub:"ABF+BT", desc:"ABF+BT垂直整合 · 议价权强", data:"近1年表现强", note:"双载板线产能"},
+  {layer:"L3", mkt:"TW", name:"景硕科技", code:"3189 TW", sub:"ABF载板", desc:"ABF载板大厂", data:"FY25增长", note:"与三大并称ABF四强"},
+  // L3 CCL
+  {layer:"L3", mkt:"TW", name:"台光电子", code:"2383 TW", sub:"CCL", desc:"M8/M9高端CCL龙头", data:"1年涨幅139%", note:"AI server M8/M9核心"},
+  {layer:"L3", mkt:"A", name:"生益科技", code:"600183 SH", sub:"CCL", desc:"M9 CCL通过认证切入Rubin · Q布一供", data:"25E营收238亿/+17%", note:"国产替代标杆"},
+  {layer:"L3", mkt:"JP", name:"味之素", code:"2802 JP", sub:"ABF绝缘", desc:"ABF绝缘材料绝对垄断", data:"FY25稳定", note:"极高毛利 · 独家技术"},
+  {layer:"L3", mkt:"TW", name:"联茂", code:"6213 TW", sub:"CCL", desc:"高频高速CCL · M7/M8主力", data:"FY25增长强劲", note:"AI server VLL/ULL"},
+  {layer:"L3", mkt:"HK", name:"建滔积层板", code:"01888 HK", sub:"CCL/玻纤", desc:"上游玻纤布+基础CCL", data:"25年204亿港元/+10% 净利+83.6%", note:"涨价持续传导"},
+  {layer:"L3", mkt:"JP", name:"松下", code:"6752 JP", sub:"高端CCL", desc:"MEGTRON系列扩产", data:"FY25 AI业务高增", note:"高端CCL定价权"},
+  {layer:"L3", mkt:"JP", name:"斗山", code:"000150 KR", sub:"CCL", desc:"M8/M9 CCL · Compute Tray", data:"24年涨幅123%", note:"GB300供应商"},
+  {layer:"L3", mkt:"A", name:"南亚新材", code:"688519 SH", sub:"CCL", desc:"冲刺M10认证", data:"25E营收增长", note:"国产替代潜力"},
+  {layer:"L3", mkt:"A", name:"华正新材", code:"603186 SH", sub:"CCL", desc:"高频高速CCL", data:"25E营收20亿+", note:"国产二线"},
+
+  // L4 CPO/光I/O
+  {layer:"L4", mkt:"US/未上市", name:"Lightmatter", code:"未上市", sub:"CPO/光I/O", desc:"3D CPO Passage平台 · vClick FAU · ELS光源", data:"已融资$8.5亿", note:"primary market机会"},
+  {layer:"L4", mkt:"US/未上市", name:"Ayar Labs", code:"未上市", sub:"光I/O", desc:"TeraPHY光I/O · Intel/NVDA合作", data:"已融资$3亿+", note:"primary market机会"},
+  {layer:"L4", mkt:"US", name:"POET Tech", code:"POET US", sub:"硅光集成", desc:"Optical Interposer平台", data:"25Q3 $0.06亿", note:"富士康合作 · 早期商业化"},
+  {layer:"L4", mkt:"US", name:"Celestial AI", code:"被MRVL收购", sub:"CPO Fabric", desc:"Photonic Fabric · 被Marvell收购", data:"FY28起贡献", note:"FY29Q4预期$10亿运营率"},
+  // L4 OCS
+  {layer:"L4", mkt:"US", name:"Lumentum OCS", code:"LITE US", sub:"OCS", desc:"MEMS OCS · OCP OCS共同领导", data:"——", note:"Google主供应商"},
+  {layer:"L4", mkt:"US", name:"Coherent OCS", code:"COHR US", sub:"OCS", desc:"LCoS OCS技术最成熟 · 10年寿命", data:"——", note:"TCO优势70%"},
+  {layer:"L4", mkt:"EU", name:"HUBER+SUHNER", code:"HUBN SW", sub:"OCS", desc:"Polatis压电陶瓷OCS", data:"FY25稳定", note:"与凌云光合作"},
+  {layer:"L4", mkt:"A", name:"凌云光", code:"688400 SH", sub:"OCS代理", desc:"代理Polatis · DLBS方案中国市场", data:"25E营收30亿+", note:"A股OCS最直接标的"},
+  {layer:"L4", mkt:"A", name:"赛微电子", code:"300456 SZ", sub:"MEMS代工", desc:"持Silex 45% · Google OCS MEMS 70%", data:"25E营收20亿+", note:"A股Google OCS最直接映射"},
+  {layer:"L4", mkt:"A", name:"德科立", code:"688205 SH", sub:"OCS+DCI", desc:"32x32 SiPh OCS原型 · 相干模块", data:"25E营收6亿+", note:"国产OCS快速追赶"},
+  {layer:"L4", mkt:"A", name:"华懋科技", code:"603306 SH", sub:"OCS收购", desc:"拟收购光开关业务", data:"——", note:"OCS国产标的"},
+  {layer:"L4", mkt:"A", name:"英唐智控", code:"300131 SZ", sub:"OCS光开关", desc:"光隆集成布局光开关", data:"——", note:"机械/MEMS/磁光/电光"},
+  // L4 测试
+  {layer:"L4", mkt:"US", name:"Keysight", code:"KEYS US", sub:"PIC测试", desc:"PIC晶圆测试全套 · 与FormFactor集成", data:"FY25营收$50亿+", note:"TSMC COUPE盟友"},
+  {layer:"L4", mkt:"JP", name:"Advantest", code:"6857 JP", sub:"SoC/光测试", desc:"台积电CPO光学测试盟友", data:"FY25营收强劲", note:"SoC测试双雄之一"},
+  {layer:"L4", mkt:"US", name:"Teradyne", code:"TER US", sub:"半导体测试", desc:"半导体测试双雄 · CPO拓展", data:"FY25营收$30亿+", note:"AI测试受益"},
+  {layer:"L4", mkt:"TW", name:"致茂电子", code:"2360 TW", sub:"CPO测试", desc:"高通道烧录测试+3D AOI", data:"FY24+16% · 4Q毛利率61%", note:"TSMC COUPE盟友"},
+  {layer:"L4", mkt:"TW", name:"旺矽 MPI", code:"6223 TW", sub:"探针卡", desc:"探针卡前5强 · 卡位NVDA CPO", data:"25年101亿台币", note:"与Keysight策略联盟"},
+  {layer:"L4", mkt:"US", name:"FormFactor", code:"FORM US", sub:"探针卡", desc:"PIC晶圆探针 · 与KEYS集成", data:"FY25稳定", note:"半导体探针卡龙头"},
+  {layer:"L4", mkt:"已私有化", name:"EXFO", code:"已私有化", sub:"PIC测试", desc:"PIC主被动测试", data:"——", note:"Sole Source私有化"},
+  // L4 封装/光源
+  {layer:"L4", mkt:"TW", name:"日月光 ASE", code:"3711 TW", sub:"封装代工", desc:"CPO产线投资 · 封测龙头", data:"FY25增长", note:"硅品(SPIL)母公司"},
+  {layer:"L4", mkt:"US", name:"Amkor", code:"AMKR US", sub:"封装代工", desc:"CPO封装+系统级测试", data:"FY25 $60亿+", note:"封装+测试一站式"},
+  {layer:"L4", mkt:"US", name:"康宁 Corning", code:"GLW US", sub:"光纤", desc:"光通信$63亿/+35% · Meta $6B长协", data:"FY25 $164亿", note:"AI光通信链最克制估值"},
+  {layer:"L4", mkt:"JP", name:"住友电工", code:"5802 JP", sub:"光纤/器件", desc:"特种光纤+光器件", data:"FY25稳定", note:"日厂技术深度"},
+  {layer:"L4", mkt:"A/HK", name:"长飞光纤", code:"601869 / 06869", sub:"光纤/连接", desc:"A+H · 空芯光纤 · 长芯博创母公司", data:"25H1 64亿/+19%", note:"AH价差大 · H股折价"},
+  {layer:"L4", mkt:"未上市", name:"SENKO", code:"未上市", sub:"光连接器", desc:"扇口工业 · 光连接器", data:"——", note:"日本未上市企业"},
+  {layer:"L4", mkt:"TW/A", name:"鸿海/工业富联", code:"2317 TW / 601138 SH", sub:"系统集成", desc:"GB200/GB300代工 · AI机柜", data:"25年9000亿+/+50%", note:"800G交换机Q3+27倍"},
+];
+
+const tbody = document.getElementById('tbody');
+const visibleCount = document.getElementById('visible-count');
+
+function render(filtered) {
+  tbody.innerHTML = filtered.map(c => {
+    return `<tr data-layer="${c.layer}" data-mkt="${c.mkt}">
+      <td><span class="layer-tag ${c.layer.toLowerCase().replace('l','l')}">${c.layer}</span></td>
+      <td style="color:#f3f4f6;font-weight:500">${c.name}</td>
+      <td style="font-family:monospace;color:#60a5fa;font-size:11px">${c.code}</td>
+      <td style="font-size:11px;color:#9ca3af">${c.sub}</td>
+      <td>${c.desc}</td>
+      <td style="font-family:monospace;font-size:11px">${c.data}</td>
+      <td style="font-size:11px;color:#9ca3af">${c.note}</td>
+    </tr>`;
+  }).join('');
+  visibleCount.textContent = `(${filtered.length}家)`;
+}
+render(companies);
+
+let layerF='all', mktF='all', q='';
+function apply() {
+  const filtered = companies.filter(c => {
+    if (layerF!=='all' && c.layer!==layerF) return false;
+    if (mktF!=='all') {
+      const m = c.mkt;
+      if (mktF==='A' && !m.includes('A')) return false;
+      if (mktF==='HK' && !m.includes('HK')) return false;
+      if (mktF==='US' && !m.includes('US')) return false;
+      if (mktF==='TW' && !m.includes('TW')) return false;
+      if (mktF==='JP' && !m.includes('JP') && !m.includes('KR') && !m.includes('EU')) return false;
+    }
+    if (q && !c.name.toLowerCase().includes(q.toLowerCase()) && !c.code.toLowerCase().includes(q.toLowerCase())) return false;
+    return true;
+  });
+  render(filtered);
+}
+
+document.querySelectorAll('.filter-btn[data-layer]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.filter-btn[data-layer]').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); layerF=b.dataset.layer; apply();
+}));
+document.querySelectorAll('.filter-btn[data-mkt]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.filter-btn[data-mkt]').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); mktF=b.dataset.mkt; apply();
+}));
+document.getElementById('search').addEventListener('input', e=>{ q=e.target.value; apply(); });
+
+// Card clicking
+document.querySelectorAll('.company-card').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    const name = card.querySelector('.name').textContent.trim();
+    document.getElementById('search').value = name; q = name; apply();
+    document.querySelector('.table-wrap').scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+
+</body>
+</html>
