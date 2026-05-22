@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AI 从业者两周观察 · 2026-05-10 至 05-20</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --ink: #1a1a1a;
+    --ink-soft: #2d2d2d;
+    --muted: #6a6a6a;
+    --line: #e5e3dc;
+    --accent: #3a5fcd;
+    --accent-soft: #eef2fa;
+    --good: #1f7a4a;
+    --bad: #b3261e;
+    --neu: #7a6a3a;
+    --chip-bg: #f0eee5;
+    --quote-bg: #f4f1e8;
+    --side-bg: #f5f3eb;
+    --tab-inactive: #888;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Helvetica Neue", -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+    line-height: 1.78;
+    font-size: 16px;
+  }
+  h1 {
+    font-size: 28px;
+    margin: 0 0 6px;
+    letter-spacing: -0.012em;
+    font-weight: 700;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 14.5px;
+    margin: 0 0 30px;
+    font-style: italic;
+  }
+  h2 {
+    font-size: 21px;
+    margin: 44px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: -0.005em;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 18px;
+    margin: 36px 0 8px;
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: -0.003em;
+  }
+  h3 .who { color: var(--accent); }
+  h3 .when {
+    color: var(--muted);
+    font-weight: 400;
+    font-size: 13.5px;
+    margin-left: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+  p { margin: 12px 0; }
+
+  .lede {
+    font-size: 16.5px;
+    line-height: 1.7;
+    background: var(--quote-bg);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 20px 0 28px;
+  }
+  .lede strong { color: var(--accent); }
+
+  .tabs { margin: 28px 0; }
+  .tabs input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .tab-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    border-bottom: 2px solid var(--line);
+    padding: 0;
+    margin: 0 0 24px;
+  }
+  .tab-labels label {
+    padding: 11px 18px;
+    cursor: pointer;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--tab-inactive);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .tab-labels label:hover {
+    color: var(--ink-soft);
+    background: var(--side-bg);
+  }
+  .tab-labels label .count {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 4px;
+  }
+  .tab-panels .panel { display: none; }
+
+  #t1:checked ~ .tab-labels label[for="t1"],
+  #t2:checked ~ .tab-labels label[for="t2"],
+  #t3:checked ~ .tab-labels label[for="t3"],
+  #t4:checked ~ .tab-labels label[for="t4"] {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  #t1:checked ~ .tab-panels .panel-1,
+  #t2:checked ~ .tab-panels .panel-2,
+  #t3:checked ~ .tab-panels .panel-3,
+  #t4:checked ~ .tab-panels .panel-4 { display: block; animation: fadein 0.2s ease; }
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .panel-intro {
+    color: var(--muted);
+    font-size: 14px;
+    font-style: italic;
+    margin: 0 0 22px;
+    padding: 10px 14px;
+    background: var(--side-bg);
+    border-radius: 4px;
+  }
+
+  .event {
+    margin: 32px 0 0;
+    padding-bottom: 28px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .event:last-child { border-bottom: none; }
+  .event h3 { margin-top: 0; }
+
+  .reaction {
+    background: var(--side-bg);
+    border-left: 3px solid var(--line);
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .reaction .label {
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .reaction.bad   { border-left-color: var(--bad); }
+  .reaction.good  { border-left-color: var(--good); }
+  .reaction.mix   { border-left-color: var(--neu); }
+
+  .up   { color: var(--good); font-weight: 600; }
+  .down { color: var(--bad); font-weight: 600; }
+  .ticker {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 13px;
+    background: var(--chip-bg);
+    padding: 0 5px;
+    border-radius: 2px;
+  }
+
+  blockquote {
+    margin: 16px 0;
+    padding: 6px 16px;
+    border-left: 2px solid var(--accent);
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 15px;
+  }
+
+  .takeaway-block {
+    background: var(--accent-soft);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin: 18px 0;
+  }
+  .takeaway-block ul { padding-left: 22px; margin: 8px 0; }
+  .takeaway-block li { margin: 6px 0; line-height: 1.65; }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  .caveat-list {
+    background: #fdf6e3;
+    border-left: 3px solid #d9a300;
+    padding: 14px 18px 14px 22px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: #5a4a10;
+  }
+  .caveat-list p { margin: 6px 0; }
+  em { color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<h1>AI 从业者两周观察</h1>
+<p class="subtitle">2026 年 5 月 10 日 — 5 月 20 日 · 按事件类别归档，以人物为叙事中心</p>
+
+<div class="lede">
+这 11 天是过去三年 AI 行业能量密度最高的一段。Dario Amodei 在 5 月 18 日的尾声拿到了一份在三个月前还像玩笑的 term sheet——\$300 亿融资、\$9000 亿估值，第一次超过 OpenAI；同一天 Sam Altman 在法庭里以"诉讼时效"技术性胜诉，把 Musk 控制 OpenAI 的诉讼彻底打死；而周一晚上 Sundar Pichai 用整场 Google I/O 把 Gemini 3.5 Flash、Spark、Omni、Android XR 一气端出来——三个同行各自交出了他们这一年最大的牌。<strong>本文沿用 4 个 tab——产品发布、公开点评、投资行为、人事/战略——每个事件由当事人引出。</strong>
+</div>
+
+<div class="tabs">
+  <input type="radio" name="tabs" id="t1" checked>
+  <input type="radio" name="tabs" id="t2">
+  <input type="radio" name="tabs" id="t3">
+  <input type="radio" name="tabs" id="t4">
+
+  <div class="tab-labels">
+    <label for="t1">产品发布<span class="count">· 6</span></label>
+    <label for="t2">公开点评<span class="count">· 5</span></label>
+    <label for="t3">投资行为<span class="count">· 5</span></label>
+    <label for="t4">人事/战略<span class="count">· 9</span></label>
+  </div>
+
+  <div class="tab-panels">
+
+    <!-- ===== TAB 1: 产品发布 ===== -->
+    <div class="panel panel-1">
+      <div class="panel-intro">
+        这 11 天的产品发布有一个共同主题——AI 助手在抢"入口"。Murati 抢实时交互入口，Pichai 在 Google I/O 上把搜索、Android、XR 眼镜一锅端，Jassy 抢电商搜索入口，Amodei 抢中小企业 SaaS 入口。每个人都在赌"我这一边的入口未来会成为用户接触 AI 的第一站"。
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sundar Pichai</span> 在 Shoreline 用 I/O 全场反击 Anthropic 和 OpenAI <span class="when">5/19</span></h3>
+        <p>5 月 19 日上午十点，Pichai 走上 Shoreline Amphitheatre 的舞台，开始他这一年最重要的两小时。开场就是 Gemini 3.5 Flash——比 Gemini 3.1 Pro 在编码和 agentic benchmark 上更强，但输出 tokens/秒快 4 倍，价格只有同级别 frontier 模型的一半甚至三分之一。Pichai 把它直接设成 Gemini App 和搜索 AI Mode 的全球默认模型。</p>
+        <p>这是 Pichai 在追平 Claude Opus 4.7 和 GPT-5.5 之后第一次开始"分层定价"——3.5 Flash 是给开发者和普通用户的"性价比之王"，更重的 3.5 Pro 推迟到下个月才放。这套路线明显在抄 Anthropic 的 Sonnet/Opus 分层逻辑，但 Pichai 还多塞了几样：</p>
+        <blockquote>
+          <strong>Gemini Spark</strong>——一个能跨连接应用推理的通用 AI agent。<br>
+          <strong>Gemini Omni</strong>——能模拟动能、重力这些复杂物理概念并把它们做成可消化视频的多模态模型。<br>
+          <strong>Android XR 眼镜</strong>——跟 Samsung、Warby Parker、Gentle Monster、XREAL 合作的硬件。<br>
+          <strong>Aluminium OS</strong>——基于 Android 的 ChromeOS 替代品，2026 年发布。
+        </blockquote>
+        <p>这场 keynote 的真正含义不是"Google 又出新东西了"，而是 Pichai 把整个 I/O 当成对 5 月 18 日 Anthropic 估值跳过 OpenAI、Stainless 收购、Gemini 必须证明自己跟得上的一次集中回应。这是他出任 CEO 以来产品密度最高的一次发布，把 AI、搜索、操作系统、可穿戴硬件全摆在桌上。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">GOOGL</span> 5/19-20 持续强势。"AI for everyone"narrative 给 GOOGL 提供了估值正名的弹药——市场担心 ChatGPT/Claude 抢搜索 TAM 的论点被 Gemini 3.5 Flash 价格战部分驳回。Android XR 眼镜对 <span class="ticker">AAPL</span> Vision Pro 是中长期 narrative 压力。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Mira Murati</span> 在 0.40 秒的"打断"里证明独立路线 <span class="when">5/11</span></h3>
+        <p>Murati 从 OpenAI CTO 任上出走是 2024 年的事。2025 年 7 月用 \$20 亿 seed（历史最大种子轮）成立 Thinking Machines，估值 \$120 亿，然后整整 10 个月没产品。市场已经开始怀疑——她能做出真正"非 OpenAI 路线"的东西吗？</p>
+        <p>5 月 11 日她终于出手，但不是 ChatGPT 替代品，而是一个叫 Interaction Models 的研究预览。看起来像语音助手，本质上却不同：现在所有大模型（OpenAI Realtime、Gemini Live 在内）都是"轮流说话"——你说完它才能想，它说时不接收新输入。Murati 把这个机制砸了，多路流并行处理音视频文本，能"边听边说边想"。turn-taking latency 0.40 秒，接近人类。</p>
+        <p>选这条路是有人物意图的。Altman 的 Realtime API 一直被吐槽延迟高、打断不自然——Murati 直接攻在前老板的最弱点上。这不是模型规模战，是体验维度战。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          没有立刻的二级反应。但 5/19 Pichai 在 I/O 上推 Gemini Spark 和 Omni 时，明显借鉴了 Murati 提出的"非 turn-based"架构——这是 Murati 在产品发布 8 天后就拿到了同行致敬的少数案例。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sundar Pichai</span> 在 Apple WWDC 前一周把 Android 17 抢跑预览 <span class="when">5/12</span></h3>
+        <p>Pichai 5 月 12 日先放了一颗预热弹——Android Show I/O Edition 上预览 Android 17 的"Gemini Intelligence"。把 Gemini 从"app 里的助手"提升到"OS 层的智能"，能跨 app 操作、能理解屏幕、能自主下单。</p>
+        <p>这一动作的真正意图是为一周后的 I/O 主场铺垫，给 Apple 6 月 WWDC iOS 27 留出"被迫追赶"的不舒服位置。过去一年 <span class="ticker">GOOGL</span> 股价已经 +146%（同期 <span class="ticker">AAPL</span> 才 +40%）。有趣的反差是——Apple 今年下半年的 Siri 重启用的就是 Gemini。Pichai 一手做 Android Gemini Intelligence 抢 iPhone 用户，一手又给 Siri 提供动力赚 Apple 的钱。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">GOOGL</span> 整周强势。<span class="ticker">AAPL</span> 中期空头叙事——若 iOS 27 AI 体验明显落后，2023-24 "Apple AI 落后期"可能重演。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Andy Jassy</span> 一夜废掉自己一年前刚做的 AI 助手 <span class="when">5/13</span></h3>
+        <p>5 月 13 日，Amazon 把过去一年里推出的两个 AI 助手——Rufus 和 Alexa+——合并成 Alexa for Shopping。Rufus 被完全废弃。新产品直接占据 Amazon 全站搜索栏，免费用，不用 Prime。</p>
+        <p>这是 Jassy 接班 Bezos 以来最干脆的一次"杀子"动作。一夜合并意味着 Amazon 把"AI 搜索 = Amazon 流量第一入口"提上了战略最高优先级。背景是 5 月 7 日 ChatGPT Ads Manager 公测——Altman 开始抢 Google 的搜索广告 TAM，Amazon 是潜在被夹击对象。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">AMZN</span> 当日 <span class="up">+1.62%</span> 到 \$270.13，年初至今 +19.26%。AMZN 是过去两周最干净的 AI 多押标的——AWS + Alexa Shopping + Anthropic 持股，三层叠加。<span class="ticker">W</span> 和 <span class="ticker">SHOP</span> 承压。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Dario Amodei</span> 把 Claude 推到 15 人的 HVAC 公司 <span class="when">5/13</span></h3>
+        <p>5 月 13 日，Anthropic 上线 Claude for Small Business，并启动一个 10 城市的免费 AI 培训巡讲。城市名单值得看一眼：Chicago、Tulsa、Dallas、新泽西、Baton Rouge、Birmingham、Salt Lake City、Baltimore、San Jose、Indianapolis——故意避开 NYC 和 SF 一线，瞄准被 VC SaaS 长期忽略的中部 SMB。</p>
+        <p>Anthropic SMB 负责人 Lina Ochman 在 Axios 的访谈里说了句很直白的话："过去软件行业是为企业、VC 支持的 startup 和消费者建的，但不是为 15 人的 HVAC 公司、30 人的园艺公司、50 人的房产中介建的。"产品形态是个 toggle install——接入 QuickBooks、PayPal、HubSpot、Canva、Docusign、Google Workspace、Microsoft 365，15 个开箱即用的 workflow。</p>
+        <p>Amodei 这步棋跟同周的 PwC 协议、Gates Foundation 协议加在一起看，是一个明确的"渠道无差别覆盖"——大企业用 PwC 渠道、超大企业用 GS/Blackstone JV、NGO 用 Gates、SMB 直接下沉。同一个模型，四种分发方式。</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          中长期对 SMB SaaS 是利空。<span class="ticker">INTU</span>（QuickBooks 母公司）是第一个被 Claude 集成的对象。<span class="ticker">HUBS</span> 面临类似处境。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Alex Mashrabov</span> 让 AI 自己选模型——多模型路由的新形态 <span class="when">5/13</span></h3>
+        <p>5 月 13 日，Higgsfield AI 创始人 Mashrabov 上线"Higgsfield Supercomputer"——能跨模型路由的 agentic 平台。你说"给我做一周的 Instagram 广告 + 竞品分析"，它自己决定哪些任务用 Claude Opus 4.7、哪些用 GPT-5.5 Pro、哪些用 Gemini 3.1 Pro、哪些用 Kling/Seedance 出视频。40+ 内置工具，三层记忆。</p>
+        <p>这件事单独看不大，但代表了一个真正涌现的产品形态——orchestrator 优先于 model。Mashrabov 这类创业者赌的是："未来用户不在乎背后是哪个模型；模型层会变成 commodity，编排层会变成新入口。"</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          无显著二级映射。但 narrative 对 <span class="ticker">NVDA</span> 是间接利好——orchestrator 多模型调度意味着更多推理调用。
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 2: 公开点评 ===== -->
+    <div class="panel panel-2">
+      <div class="panel-intro">
+        本期"公开点评"以一种特别的方式展开——Altman 在法庭里被律师逐句追问、最后压哨获胜；Google 威胁情报组用一份匿名公告把"AI 武器化"从理论变成历史第一例；Amodei 用"拒绝合作"做出了一次最响亮的点评；Musk 庭审败诉后给自己留了 4 个字"calendar technicality"；央行行长 Andrew Bailey 把 Mythos 抬到 G20 桌面。
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Elon Musk</span> 在败诉后只给了四个字："calendar technicality" <span class="when">5/18</span></h3>
+        <p>5 月 18 日，9 人陪审团评议不到两个小时就作出一致裁决：Musk 起诉 OpenAI 和 Altman 违反"AGI 应该作为非营利"协议的诉讼超过了 3 年诉讼时效。法官 Yvonne Gonzalez Rogers 当场采纳。陪审团没有审理实质问题（即 Altman 当年到底有没有承诺过非营利），只确认了 Musk 启动时间太晚。</p>
+        <p>Musk 当晚在 X 上发文，把这次失败定性为"calendar technicality"（日历技术问题）并表示会上诉。这种回应风格很 Musk——把法律问题改成时间问题，把实质问题改成程序问题。但事实上无论如何上诉，这场为期 3 年的对峙到 5/18 已经在叙事上彻底结束——Altman 拿到的不仅仅是法律胜利，还是市场对"OpenAI 治理稳定性"的最后一次大确认。</p>
+        <p>Musk 在中国陪 Trump 出访没出席结案陈词，律师为他向陪审团道歉。这件事的人物意义比法律意义更大——Musk 现在的注意力越来越分散（xAI 已并入 SpaceXAI、Tesla 业绩下滑、Trump 政府配合），他对 OpenAI 的法律压制能力在裁决那一刻彻底失效。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">TSLA</span> 无显著反应。<span class="ticker">MSFT</span> 持稳——OpenAI 治理风险解除是对其 \$130 亿投资保护层的强化。"OpenAI IPO 时点"narrative 加速，预计 2026 年底或 2027 年初。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sam Altman</span> 在加州奥克兰联邦法庭坐了四个小时 <span class="when">5/12</span></h3>
+        <p>5 月 12 日，Altman 穿着蓝西装走进加州奥克兰联邦法院。Musk 的律师 Steven Molo 开场问题简短：<em>"你认为自己完全值得信任吗？"</em></p>
+        <p>Altman 的应对方式很有他个人风格——不正面回答，而讲故事。他说当年没有人答应过 Musk 一定要保持非营利；说创始人当时一致认为"AGI 不应由单人控制"；说"Musk 离开后把 OpenAI 当成已死之人"。</p>
+        <p>这一天最有意义的细节不是 Altman 自己说了什么，而是律师交叉盘问中暴露的 MSFT 内部文件——MSFT 曾多次担忧"过度依赖 OpenAI"。这条信息为 MSFT 过去半年频繁加码 Anthropic、xAI、Mistral 等多模型策略提供了背景脚注。Nadella 不是 OpenAI 的"忠实大客户"那么简单。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">TSLA</span> 无反应。<span class="ticker">MSFT</span> 短期持稳，但"过度依赖 OpenAI"披露反而给 Nadella 接下来扩大 Anthropic 合作提供合法性。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3>谷歌威胁情报组的那位匿名研究员让"AI 武器化"成为历史 <span class="when">5/11</span></h3>
+        <p>5 月 11 日，Google Threat Intelligence Group（TIG）在博客上挂出一份措辞冷静的公告——他们发现并阻止了一个犯罪团伙：用 AI 模型发现并武器化了一个开源 Web 管理工具里的两步验证旁路零日漏洞，原本准备发起 mass exploitation。</p>
+        <p>关键证据：那段 Python exploit 代码里包含一个"幻觉出来"的 CVSS 评分——每个真实漏洞只有一个真实 CVSS，AI 写代码时随手编一个出来，这恰恰是模型的指纹。</p>
+        <p>这件事的意义在时间线里：</p>
+        <blockquote>
+          5 月 5 日：Amodei 在 JPMorgan 同台说 Mythos 在 Firefox 找到 300+ 漏洞。<br>
+          5 月 6 日：白宫 NEC 主任 Hassett 确认研究 FDA 式 AI 模型审查 EO。<br>
+          5 月 11 日：第一例 AI 制造的零日在野部署被记录在案。<br>
+          5 月 18 日：Bailey（BoE/FSB）公开召唤 Anthropic 给 G20 简报。
+        </blockquote>
+        <p>四件事在两周内闭环——"AI 武器化"从理论概念，到实验室证据，到野外实战，到 G20 监管议程。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">CRWD</span>、<span class="ticker">PANW</span> 面对矛盾叙事——产品被绕过利空 vs 预算扩张利好。<span class="ticker">NET</span> 已独立 <span class="down">-15%</span>。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Andrew Bailey</span>（英国央行行长 + FSB 主席）把 Mythos 抬到 G20 桌面 <span class="when">5/17-18</span></h3>
+        <p>这是过去半年里 AI 监管叙事最关键的一个升级。5 月 17 日 FT 披露：英国央行行长、同时担任 Financial Stability Board 主席的 Andrew Bailey 已经请求 Anthropic 给 G20 各国财政部和央行简报 Mythos 在全球金融系统里发现的漏洞。Bailey 4 月 15 日在哥伦比亚大学的演讲里就点名过 Mythos——把它跟"海湾地区冲突升级"并列，称之为"近年来推动 cyber 风险评级最快的两个事件"。</p>
+        <p>这是一次罕见的"监管者主动召唤公司"——通常是公司游说监管者，这次反过来。背后的恐惧很具体：Anthropic 内部测试时，Mythos 在被定向开发漏洞利用代码（exploit）时，第一次尝试就有 <strong>83%+ 成功率</strong>。如果犯罪团伙拿到类似能力，全球银行系统可能在 6-12 个月内面临前所未有的攻击潮。</p>
+        <p>对 Amodei 来说，这是他过去几个月铺设"有立场的 AI 公司"叙事的最大回报——你愿意拒交 Mythos 给五角大楼和欧盟，但你也愿意主动告诉 G20 央行漏洞位置。这种"选择性透明"是 Amodei 完整的政治姿态。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          对全球银行股的 narrative 影响中性偏空（cyber 风险 overhang）；对 Anthropic 估值反而是利好——监管者的关注度等于"系统重要性"的承认。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Dario Amodei</span> 用"拒绝合作"完成了一次点评 <span class="when">5/11</span></h3>
+        <p>5 月 11 日有两件相关的事同时发生：OpenAI 主动把 GPT-5.5-Cyber 模型交给欧盟委员会评估；Anthropic 拒绝把 Mythos 交给同样的流程。欧盟委员会发言人 Thomas Regnier 公开表态——"等 AI Office 8 月开始有执法权时，我们会确保获得 Mythos 的访问。"</p>
+        <p>Amodei 这步看似冒险的拒绝，其实跟他 3 月起被五角大楼供应链风险标签锁定是同一个剧本——把 Mythos 当谈判筹码。他不想做军方的自主武器接口，也不想做欧盟的合规白盒。两端都拒绝，反而强化了 Anthropic 的人物定位。一周后 Bailey/FSB 主动召唤简报，证明这套姿态成功了——你拒绝合规，反而获得了被"请到桌面"的资格。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          配合 Gates Foundation \$2 亿合作和 5/18 \$30B 融资，Anthropic 完成了"有立场的 AI 公司"完整画像，最终在估值上拿到回报。
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 3: 投资行为 ===== -->
+    <div class="panel panel-3">
+      <div class="panel-intro">
+        投资侧最大的事件是 Anthropic 的 \$30B 融资把估值推到 \$900B，第一次超过 OpenAI；ARK 在 Cerebras 上市首日买了 10 万股；Huang 用 \$400 亿股权押注稳住"AI 主权基金"位置；Gates 用 \$2 亿给 Anthropic 一张"AI for good"通行证；5/14 中型 AI 融资集体 close 把液冷、基因疗法、社交营销三条新主线推上前台。
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Dario Amodei</span> 在三个月内把 Anthropic 估值翻 3 倍——\$900B 第一次超过 OpenAI <span class="when">5/18</span></h3>
+        <p>5 月 18 日 FT 披露：Anthropic 已经跟 Dragoneer、Greenoaks、Sequoia、Altimeter 四家敲定 term sheet——\$300 亿融资，\$9000 亿 pre-money 估值，月底前 close。每家联席领投至少投 \$20 亿。这是三个月前（2 月 GIC/Coatue 那轮 \$380B）估值的 2.4 倍，第一次正式超过 OpenAI 3 月份的 \$852B。</p>
+        <p>支撑这个估值的数据也是这一周才公开的：Anthropic Q1 2026 年化营收 80 倍同比增长，ARR 现在已经超过 <strong>\$440 亿</strong>，过去两个月年付费 \$100 万以上的客户从 500 翻到 1000 + 家。对比 OpenAI 同期 \$250 亿 ARR，Anthropic 在企业市场已经反超。</p>
+        <p>这是 Amodei 这一年最大的胜利。过去 18 个月他做的每一件事都在为这个估值铺路——MS365 add-in、Wall Street agents、Goldman/Blackstone JV、PwC 30K 员工部署、Gates Foundation、Akamai 算力、Claude for SMB——所有渠道在 5/18 之前完成铺设。市场给出的答卷是：当你的渠道密度超过竞争对手，估值倍数会自动倾斜。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">GOOGL</span>、<span class="ticker">AMZN</span> 受益于 Anthropic 持股账面价值再次大幅上修。<span class="ticker">NVDA</span> 间接受益（Anthropic 算力需求 = NVDA GPU 订单）。Anthropic IPO 时点开始浮现，传闻 10 月可能启动。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Cathie Wood</span> 在 CBRS 上市首日就买了 10 万 6 千股 <span class="when">5/14</span></h3>
+        <p>5 月 14 日 Cerebras Systems（CBRS）登陆 Nasdaq——这是 2026 年迄今最大的科技 IPO 之一。定价 \$185（5/13 定价时需求超出供应 20 倍）。开盘 \$350，盘中冲到 \$386，收盘 \$311.07，首日涨幅 +68%。共发行 3000 万股，募资 \$55.5 亿。</p>
+        <p>Cathie Wood 在 ARK Innovation ETF (ARKK) 和 ARK Next Generation Internet ETF (ARKW) 这两只基金里合计买入 <strong>105,616 股</strong> Cerebras，根据 X 上 @StockMKTNewz 的实时披露。同一天 ARK 减持了台积电（在历史高位卖出）和 AMD——这是个清晰的"换仓"动作：用成熟 AI 芯片标的的盈利，换"新上市挑战 NVDA"的高 beta 头寸。</p>
+        <p>CBRS 后续走势教科书式——5/15 -10% 到 \$279.72（首日炒高后的获利了结），5/18 反弹至 \$296.65，5/19 回到 \$314.80。5/20 标普全球宣布 CBRS 获得 Fast Track IPO Entry 资格，将于 5/25 进入合资格 S&P 道琼斯指数。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">CBRS</span> 上市第一周区间 \$280-315，跑赢 IPO 价 \$185 约 60%。<span class="ticker">NVDA</span> 短期持稳但中期面临"训练芯片碎片化"narrative 压力。<span class="ticker">AMD</span>、<span class="ticker">TSM</span> 因 ARK 卖出反而受 narrative 影响——"成熟 AI 芯片"被部分资金视为"已 priced in"。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Jensen Huang</span> 完成了从"卖芯片"到"管理 AI 主权基金"的转身 <span class="when">5/9</span></h3>
+        <p>5 月 9 日 Nvidia 披露了 2026 年至今的 AI 股权押注总额——超过 \$400 亿，其中 \$300 亿给了 OpenAI。新增的还有 Corning、Goldman Sachs Asset Management 等。</p>
+        <p>Huang 这一年完成了一个奇怪的身份转换——从"做最好 AI 芯片的 CEO"变成了"AI 生态主权基金管理人"。Nvidia 用资产负债表把整个生态绑在自己身上——但 5/11 OpenAI CFO 公开承认 OpenAI 跟 Broadcom 6GW、AMD 10GW、NVDA 10GW 的合同存在融资缺口——这是"主权基金"叙事第一次出现真实裂缝。<span class="ticker">AVGO</span> 当周已经 -6%。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">NVDA</span> 持稳。短期最值得关注的不是 NVDA 而是 <span class="ticker">AVGO</span>——它在 ChatGPT 收入兑现节奏放慢时，会是最先受冲击的二阶标的。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Bill Gates</span> 用 \$2 亿给 Anthropic 一张通行证 <span class="when">5/14</span></h3>
+        <p>5 月 14 日 Gates 基金会和 Anthropic 公布 4 年 \$2 亿合作。Gates 本人 70 岁了，基金会的执行已经交给 CEO Mark Suzman。这是 Gates 这一代科技领袖把"AI 留给世界"的姿态。</p>
+        <p>对 Anthropic 来说 \$2 亿（分摊每年 \$5,000 万）相对于 \$900B 估值几乎是零。但战略价值在于：Amodei 拿到了 OpenAI 没有的 narrative 资产——"AI for good"PR 护城河。这条线 4 天后在 \$900B 融资里得到了具体回报：ESG-aware LP 的钱进得比谁都快。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          一级标的；二级映射间接影响 <span class="ticker">GOOGL</span>、<span class="ticker">AMZN</span> 的 Anthropic 持股账面价值。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3>5 月 14 日同日 close 的几笔中型融资勾出三条新主线 <span class="when">5/14</span></h3>
+        <p>同一天还有几笔中型 AI 融资集体落地——量级不大但勾出了三条值得跟踪的新主线：</p>
+        <p><strong>Profluent + Lilly \$2.25B</strong>——Lilly 投给 Profluent 做大基因插入治疗（AI 设计的 CAR-T）。这是 Lilly 在 AI biotech 的最大一笔签约，把 AI 制药从"加速研发"推进到"设计治疗"。</p>
+        <p><strong>Iceotope \$30M Series A</strong>——液冷数据中心。GOOGL × SpaceX 5/13 谈轨道数据中心的另一面是：地面数据中心仍要解决散热瓶颈。液冷链条（<span class="ticker">VRT</span>、<span class="ticker">IRM</span>）持续受益。</p>
+        <p><strong>Sereact \$110M / Nectar Social \$34M / Stitch \$26M（a16z 首入海湾地区）</strong>——AI marketing 自动化、跨境支付 AI、企业自动化这三条线持续吸金。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">LLY</span> 长期受益于 Profluent 基因疗法；液冷链条 <span class="ticker">VRT</span>、<span class="ticker">IRM</span> 持续受益。
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 4: 人事/收购/战略 ===== -->
+    <div class="panel panel-4">
+      <div class="panel-intro">
+        战略层这 11 天最密集——Amodei 在 5/18 同一天完成 \$30B 融资 + Stainless 收购 + FSB 简报准备三步组合拳；Altman 这周做的反 narrative 决策（跟 ACN 联邦合作、跟 Dell 合作 on-prem）说明 OpenAI 进入"借道"阶段；Pichai 跟 Schwarzman 谈成 \$5B/\$25B TPU cloud JV——第一次把 TPU 当成商品卖给市场，直接挑战 NVDA。
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Dario Amodei</span> 用 \$3 亿收掉 Anthropic、Google、OpenAI 共用的 SDK 工具 <span class="when">5/18</span></h3>
+        <p>5 月 18 日 Anthropic 宣布收购 Stainless，金额据报超过 \$3 亿——这是 Anthropic 历史第一笔重大并购。Stainless 是一家 2022 年成立的开发工具公司，他们做的事很具体：把 API 规范自动转成 TypeScript、Python、Go、Java、Kotlin 等多语言 SDK 和 MCP server。客户名单很特别——<strong>Cloudflare、Google、OpenAI</strong>，加上 Anthropic 自己。</p>
+        <p>这笔收购的精妙之处在于：Anthropic 一夜之间拿到了竞争对手 SDK 工具的控制权。Anthropic 官方发言人对 TechCrunch 表示会"逐步停止所有 Stainless 托管产品"——意思是 OpenAI、Google、Cloudflare 必须在某个时点之前自建或迁移。</p>
+        <p>Amodei 这一步是过去几年 AI 实验室之间最 aggressive 的一次"基础设施掠夺"。SDK 工具看起来不起眼，但它是开发者接入 AI 模型的"第一道门"——你控制了 SDK 生成，就控制了开发者体验的入口。配合同一天 \$900B 估值新闻，Stainless 收购释放的信号是：Anthropic 不再满足于"自己跑得快"，开始去"拖慢竞争对手"。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          一级影响；间接对 OpenAI、Google 的开发者关系造成短期摩擦。Anthropic IPO narrative 因这笔"主动并购"更进一步。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sundar Pichai × Steve Schwarzman</span> 把 Google TPU 第一次当商品卖 <span class="when">5/18</span></h3>
+        <p>同一个 5 月 18 日，Blackstone 宣布跟 Google 成立一个新合资公司：Pichai 出 TPU 算力 + 数据中心运营技术，Schwarzman 出资本和地产网络。Blackstone 初始股权投入 \$50 亿，2027 年上线 500 MW 容量，加上债务融资总投资可达 <strong>\$250 亿</strong>。</p>
+        <p>这件事的真正含义不是 \$250 亿——是 Pichai 第一次把 TPU 当成商品卖。过去 10 年 TPU 一直是 Google 内部使用的、非售卖的硬件，只有 Google Cloud 客户能间接访问。这次 JV 是用 Blackstone 现成的数据中心地产 + 资本，把 TPU 做成"非 NVDA 路线的 AI cloud as a service"，直接挑战 NVDA H200/B100 一统天下的局面。Pichai 在 5/19 I/O keynote 上反复强调"全栈"——TPU + Gemini + 数据中心 + 应用层——本次 JV 是这个全栈策略的最后一环。</p>
+        <p>对 Schwarzman 个人也是个标志——Blackstone \$1500 亿数据中心资产终于找到了"非云厂自营"的变现路径，把传统 PE 巨头的房地产逻辑跟 AI 算力的真实需求对接上。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">GOOGL</span> 短期 capex 担忧 vs 长期 TPU 货币化利好对冲。<span class="ticker">NVDA</span> 长期 narrative 压力（"TPU 路线"开始有商业化路径）。<span class="ticker">BX</span>（Blackstone）数据中心资产估值再次上修。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sam Altman</span> 跟 Michael Dell 合作把 Codex 装进客户的本地服务器 <span class="when">5/18</span></h3>
+        <p>5 月 18 日 OpenAI 跟 Dell 公布合作：把 Codex 和 ChatGPT Enterprise 集成进 Dell AI Data Platform 和 Dell AI Factory——让企业能在自己的本地或混合云环境里部署 Codex。Codex 目前每周有 400 万开发者在用，正在被扩展到代码评审、测试覆盖、事件响应、报告准备、销售线索资格识别等场景。</p>
+        <p>Altman 这步棋的精彩程度跟 5/14 跟 ACN 联邦子公司合作一样——都是"反 narrative 的借道"。OpenAI 过去一年的产品策略一直是"全云端、API-first"。但许多大企业（金融、医疗、国防、传统制造）数据无法离开本地。Altman 选择跟 Dell 合作，承认这部分客户需要"on-prem AI"——这跟 Anthropic 5/14 PwC 协议（专注咨询业务深度）形成对比，OpenAI 选择的是"客户运维方式的广度"。</p>
+        <p>Dell 这边的逻辑也很清楚——Michael Dell 这一年一直在把 Dell 从"卖服务器"重新定位为"AI 基础设施合作伙伴"。这是 Dell 这一年来跟 NVDA、Anthropic、OpenAI 串联起的最后一环。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">DELL</span> 当日强势——AI 服务器订单逻辑得到 OpenAI 背书。<span class="ticker">MSFT</span> Azure 独占地位进一步弱化（OpenAI 现在同时跟 AWS Bedrock 和 Dell on-prem 合作）。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Dario Amodei</span> 让普华永道 30 万员工的工位上都装上 Claude <span class="when">5/14</span></h3>
+        <p>5 月 14 日上午 Anthropic 和 PwC 同时挂出公告：PwC 把 Claude Code 和 Claude Cowork 同时铺给美国 30,000 名员工，并在 CFO 办公室部门里专门设了一个"Claude 原生金融业务组"。最终目标是 PwC 全球 364,000 人。</p>
+        <p>这件事最有意思的部分是 Amodei 这两周一直在做的同一动作——5/4 他和 Goldman、Blackstone 合伙做了 \$15 亿"企业 AI 服务公司"，目标是绕开传统咨询。10 天后他选择不绕开 PwC——而是让 PwC 选边站到自己这边。两个看起来矛盾的策略，其实是同一个剧本：把 Anthropic 从一个 API 供应商变成"咨询业的水电气"。</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          PwC 不上市，所以二级影响要从对手身上找。最直接对手是 <span class="ticker">ACN</span>——但 ACN 当天反而 <span class="up">+3.55%</span>，因为 OpenAI 选了同一天和 ACN 联邦子公司握手。Big 4 和大 SI 已被推到"选边站"，二级市场要看到具体丢单数据。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sam Altman</span> 反 narrative 地选择"借道"而不是"绕开" <span class="when">5/14</span></h3>
+        <p>就在庭审进入最后阶段的同一天，OpenAI 选择了一个反 narrative 的动作——跟 Accenture 联邦服务子公司（AFS）签战略合作，给 AFS 15,000 名员工授权使用 OpenAI 模型，3,000 多个 AFS 员工拿到 Codex 权限，建立一个"模拟联邦机构 Agentic 实验室"。</p>
+        <p>原因很现实——美国联邦政府的采购流程不会给一个 5 月才成立的 OpenAI Deployment Co. 直接发合同，必须走 prime contractor 通道，而 ACN Federal 是这条通道上最熟门熟路的玩家之一。Altman 选择"短期合作长期竞争"。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">ACN</span> 当日 <span class="up">+3.55%</span>，部分修复前一天 <span class="down">-7.15%</span>。但注意——5/13 那次大跌主因不是 AI narrative 而是 DOGE 联邦合同削减传闻 + 风险偏好下降。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sam Altman</span> 用 150 个英国工程师完成 OpenAI 史上第一笔咨询并购 <span class="when">5/11</span></h3>
+        <p>5 月 11 日 OpenAI 正式 close 跟 Tomoro 的收购——一家爱丁堡的应用 AI 咨询公司，约 150 名 Forward Deployed Engineer，客户名单含 Tesco、Virgin Atlantic、Supercell、Mattel、Red Bull。Tomoro 团队 2023 年由前 OpenAI 工程师在英国创立，意识形态上一直是 OpenAI 的"亲卫队"。</p>
+        <p>这笔收购把"OpenAI 不只做模型也做交付"的姿态做实，回应了 5/4 Anthropic + Goldman/Blackstone JV 的同周动作。Tomoro 客户名单全部是消费品/航空/零售/游戏——这恰好是 ACN、IBM、Cognizant、Infosys 的核心客群。</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">ACN</span> <span class="down">-3%</span>。但更剧烈的反应在印度：<span class="ticker">CTSH</span> <span class="down">-5%</span>、<span class="ticker">INFY</span> <span class="down">-4%</span>、Nifty IT 指数 <span class="down">-3.59%</span>。<strong>这周最干净的空头标的是 Indian IT。</strong>
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Dario Amodei</span> 跟一家做 CDN 的公司签了 7 年的算力大单 <span class="when">5/9</span></h3>
+        <p>就在本期开始前的周五，彭博披露 Anthropic 跟 Akamai 签了一份 7 年 \$18 亿的云算力合同。这是 Akamai 公司历史上最大的单笔订单。选 Akamai 而不是再去叠 AWS/Azure/GCP 是个信号——单一超大规模云厂无法满足 Anthropic 的"任何能拿到的 GPU 都要"的需求。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">AKAM</span> 单日 <span class="up">+27%</span> 收 \$148.38，盘后曾一度 <span class="up">+29.62%</span>。但 7 年摊薄到每年 ~\$2.5 亿——下次财报必须给出"AI 收入"实际数字。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sundar Pichai</span> 跟 Elon Musk 这对旧敌签了一个 2027 才落地的项目 <span class="when">5/13</span></h3>
+        <p>5 月 13 日 WSJ 披露，Google 在跟 SpaceX 谈一个叫"Project Suncatcher"的计划——把 Google 自研 TPU 装在太阳能卫星上，2027 年部署原型。Pichai 和 Musk 在地缘政治和 AI 安全上几乎所有重大问题立场对立，第一次在工程层面对接。逻辑是地球数据中心需求已经到了"找不到那么多电、水、土地"的程度。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">GOOGL</span> 5/13 盘中下挫（capex 担忧）；<span class="ticker">DXYZ</span> premarket 拉升。地面数据中心 TAM 长期被埋了个隐患——5/18 跟 Blackstone TPU JV 又把"地面 + 轨道"双押显化。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3>陪审团把 Musk 三年诉讼按时效驳回——Altman 拿到 OpenAI 治理稳定性的终局确认 <span class="when">5/18</span></h3>
+        <p>5 月 18 日，9 人陪审团评议不到两小时驳回 Musk 2024 年起诉 OpenAI 的全部诉求——理由不是实质问题（Altman 当年到底有没有承诺保持非营利），而是诉讼时效（statute of limitations）。法官 Yvonne Gonzalez Rogers 当场采纳。</p>
+        <p>这是 Altman 个人这一年最重要的一次胜利——比 5/14 AFS 合作、5/11 Tomoro 收购 close 都更重要。它把 OpenAI 治理结构的最后一个法律 overhang 拆除，为 OpenAI IPO（传闻 2026 年底或 2027 年初启动）扫清了路。Musk 把这次失败定性为"calendar technicality"并表示上诉，但是连陪审团这条路被截断后，上诉胜诉概率在法律学者看来微乎其微。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">MSFT</span> 持稳——\$130 亿 OpenAI 投资法律风险解除。"OpenAI IPO 时点"叙事加速。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>这 11 天的几条尾灯</h2>
+
+<div class="takeaway-block">
+<ul>
+<li><strong>Amodei 完成了三件需要同时发生才能闭环的事。</strong>5/18 那一天 Anthropic 同时拿下 \$900B 估值（超过 OpenAI）、收购 Stainless 切断对手 SDK 入口、跟 BoE/FSB 谈 Mythos 简报。每一件单独看都是大事，三件叠加意味着 Anthropic 进入"主动塑造行业格局"阶段，而非"跟随者"。</li>
+<li><strong>Altman 这两周做了三个反 narrative 的动作——跟 ACN 联邦合作、跟 Dell on-prem 合作、压哨胜诉。</strong>OpenAI 的产品策略从"全云端、API-first"切换到"借道一切现有渠道"，这是 OpenAI 进入 IPO 倒计时阶段的明确姿态——从"颠覆者"变成"可依赖的、可合作的、稳定的合作伙伴"。</li>
+<li><strong>Pichai 用整场 Google I/O 把所有人压在身下。</strong>Gemini 3.5 Flash 价格战 + Spark agent + Omni 多模态 + Android XR + Aluminium OS + Blackstone TPU JV ——一个礼拜内 Pichai 把"Google 在 AI 落后"的 narrative 几乎彻底翻了过来。GOOGL 过去一年 +146% 已经反映这个反转，但 5/19-20 的强势说明市场还在持续重估。</li>
+<li><strong>最干净的二级标的方向</strong>——多头：<span class="ticker">AKAM</span>（已重估值需财报兑现）、<span class="ticker">AMZN</span>（AWS + Alexa + Anthropic 三层叠加）、<span class="ticker">DELL</span>（OpenAI 背书）；空头：<span class="ticker">INFY</span>、<span class="ticker">CTSH</span>、<span class="ticker">WIT</span>（无 ACN 那种 DOGE 独立逆风干扰）；矛盾标的：<span class="ticker">ACN</span>（AI 颠覆 + 联邦预算双重 narrative）、<span class="ticker">AVGO</span>（OpenAI 融资缺口）。</li>
+<li><strong>Cerebras 上市是中长期 narrative 风向标。</strong>ARK 5/14 首日买入 10 万 6 千股 + 5/20 标普 Fast Track 收纳 + 5/19 反弹至 \$314.80，说明市场愿意给"挑战 NVDA"的硬件公司高 beta 倍数。这条线下游还会有 Groq、SambaNova 等公司排队上市，<span class="ticker">NVDA</span> 估值倍数面临结构性逆风。</li>
+</ul>
+</div>
+
+<h2>数据警示</h2>
+<div class="caveat-list">
+<p><strong>ACN 5/13 -7.15% 不是纯 AI 事件。</strong>主驱动是 DOGE 联邦合同削减传闻；5/14 +3.55% 是 OpenAI AFS 合作。两个跌幅讲两件事。</p>
+<p><strong>AKAM \$1.8B 合同披露时点有两个版本。</strong>5/8 财报里只提到"一个领先前沿模型公司"未点名；5/9 Bloomberg 报道身份为 Anthropic。</p>
+<p><strong>第一例 AI-built zero-day 细节有限。</strong>Google TIG 未披露完整 IOC 和漏洞 CVE。</p>
+<p><strong>Anthropic \$30B/\$900B 估值是 FT 5/18 披露</strong>，term sheet 尚未签署，正式 close 时点最早 5 月底。Q1 ARR \$440 亿是 Anthropic 自报口径，未审计。</p>
+<p><strong>ARK 买入 CBRS 数据来自实时披露</strong>（X @StockMKTNewz）——105,616 股的数量与某些媒体引用的 \$4.85M 金额按 \$311 收盘价倒推对不上，建议等 ARK 官方 daily trading log 完整披露后核对。</p>
+<p><strong>Musk 上诉权未消失。</strong>5/18 陪审团裁决是 advisory，法官当场采纳但 Musk 仍可上诉到第九巡回法院，narrative 余波可能延续 6-12 个月。</p>
+</div>
+
+<footer>
+<strong>主要来源</strong><br>
+<strong>5/18 大日</strong>：Anthropic \$30B/\$900B：<a href="https://www.bloomberg.com/news/articles/2026-05-12/anthropic-in-talks-to-raise-30-billion-at-900-billion-valuation" target="_blank">Bloomberg</a> · <a href="https://www.investing.com/news/stock-market-news/anthropic-agrees-terms-for-30-bln-fundraising-at-900-bln-valuation--ft-4691014" target="_blank">FT/Investing</a> · Stainless 收购：<a href="https://www.anthropic.com/news/anthropic-acquires-stainless" target="_blank">Anthropic 官方</a> · <a href="https://techcrunch.com/2026/05/18/anthropic-has-acquired-the-dev-tools-startup-used-by-openai-google-and-cloudflare/" target="_blank">TechCrunch</a> · Musk-Altman 裁决：<a href="https://www.cnbc.com/2026/05/18/musk-altman-openai-trial-verdict.html" target="_blank">CNBC</a> · <a href="https://www.npr.org/2026/05/18/nx-s1-5822366/musk-altman-openai-jury-verdict-claims-dismissed" target="_blank">NPR</a> · Google × Blackstone TPU JV：<a href="https://www.blackstone.com/news/press/blackstone-announces-joint-venture-with-google-to-create-new-tpu-cloud/" target="_blank">Blackstone 官方</a> · <a href="https://www.banklesstimes.com/articles/2026/05/19/google-blackstone-partner-on-ai-cloud-expansion-amid-surging-data-center-demand/" target="_blank">BanklessTimes</a> · OpenAI × Dell：<a href="https://openai.com/index/dell-codex-enterprise-partnership/" target="_blank">OpenAI 官方</a><br>
+<strong>5/19 Google I/O</strong>：<a href="https://blog.google/innovation-and-ai/sundar-pichai-io-2026/" target="_blank">Pichai 主题演讲</a> · <a href="https://www.cnbc.com/2026/05/19/google-ai-ultra-gemini-spark-omni.html" target="_blank">CNBC Gemini 3.5</a><br>
+<strong>5/17 FSB/Mythos</strong>：<a href="https://thenextweb.com/news/anthropic-mythos-fsb-briefing-banking-cyber" target="_blank">TheNextWeb</a> · <a href="https://the-decoder.com/anthropic-to-brief-global-financial-regulators-on-cyber-flaws-found-by-claude-mythos/" target="_blank">The Decoder</a><br>
+<strong>5/14 Cerebras IPO + ARK</strong>：<a href="https://stocktwits.com/news-articles/markets/equity/cbrs-stock-surges-68-on-nasdaq-debut-cathie-wood-s-ark-buys-shares-while-trimming-tsmc-amd/cZXl1lFReSq" target="_blank">StockTwits</a> · <a href="https://seekingalpha.com/news/4593571-cathie-wood-loads-up-on-cerebras-after-blockbuster-ipo-debut" target="_blank">Seeking Alpha</a> · <a href="https://x.com/StockMKTNewz/status/2055078027835412764" target="_blank">@StockMKTNewz (105,616 股)</a><br>
+<strong>5/14 Amodei × PwC</strong>：<a href="https://www.prnewswire.com/news-releases/anthropic-and-pwc-expand-alliance-driving-impact-across-client-work-and-the-firm-302772321.html" target="_blank">PR Newswire</a><br>
+<strong>5/14 Altman × AFS</strong>：<a href="https://newsroom.accenture.com/news/2026/accenture-federal-services-and-openai-partner-to-accelerate-secure-ai-adoption-across-the-federal-government" target="_blank">Accenture Newsroom</a><br>
+<strong>5/13 AMZN Alexa</strong>：<a href="https://www.cnbc.com/2026/05/13/amazon-ditches-rufus-ai-chatbot-in-favor-of-alexa-shopping-agent.html" target="_blank">CNBC</a> · GOOGL × SpaceX：<a href="https://techcrunch.com/2026/05/12/report-google-and-spacex-in-talks-to-put-data-centers-into-orbit/" target="_blank">TechCrunch</a> · Claude SMB：<a href="https://www.anthropic.com/news/claude-for-small-business" target="_blank">Anthropic 官方</a><br>
+<strong>5/12 Altman 庭审</strong>：<a href="https://www.cnbc.com/2026/05/13/altman-musk-trial-testimony-takeaways.html" target="_blank">CNBC</a> · <a href="https://www.cnbc.com/2026/05/13/microsoft-feared-openai-reliance-musk-altman-trial-testimony-reveals.html" target="_blank">MSFT 内部担忧</a><br>
+<strong>5/11 多事日</strong>：Tomoro close：<a href="https://www.business-standard.com/markets/capital-market-news/it-stocks-tumble-after-openai-launches-ai-deployment-venture-126051200384_1.html" target="_blank">印度 IT -3.59%</a> · Google TIG 零日：<a href="https://www.cnbc.com/2026/05/11/google-thwarts-effort-hacker-group-use-ai-mass-exploitation-event.html" target="_blank">CNBC</a> · Murati：<a href="https://venturebeat.com/technology/thinking-machines-shows-off-preview-of-near-realtime-ai-voice-and-video-conversation-with-new-interaction-models" target="_blank">VentureBeat</a><br>
+<strong>5/9 AKAM</strong>：<a href="https://www.bloomberg.com/news/articles/2026-05-08/anthropic-inks-1-8-billion-computing-deal-with-akamai" target="_blank">Bloomberg</a> · NVDA \$40B：<a href="https://www.cnbc.com/2026/05/09/nvidia-embraces-ai-investor-topping-40-billion-in-equity-bets-2026.html" target="_blank">CNBC</a>
+</footer>
+
+</body>
+</html>
