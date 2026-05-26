@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corning Inc. 商业模式分析报告</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; background:#f8fafc; color:#0f172a; line-height:1.65; }
+.wrap { max-width:1100px; margin:0 auto; padding:32px 24px; }
+.hero { background:linear-gradient(135deg,#1a3a5c 0%,#0f2840 100%); color:#fff; padding:40px 36px; border-radius:16px; margin-bottom:24px; }
+.hero h1 { font-size:30px; font-weight:700; margin-bottom:8px; }
+.hero .meta { display:flex; gap:24px; flex-wrap:wrap; font-size:14px; opacity:0.85; margin-bottom:20px; }
+.hero .one-liner { background:rgba(255,255,255,0.08); padding:16px 20px; border-radius:10px; border-left:4px solid #38bdf8; font-size:15px; }
+.tabs { display:flex; gap:4px; background:#fff; padding:6px; border-radius:12px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.05); overflow-x:auto; }
+.tab { flex:1; min-width:120px; padding:12px 16px; border:none; background:transparent; font-size:14px; font-weight:600; color:#64748b; cursor:pointer; border-radius:8px; transition:all 0.2s; white-space:nowrap; }
+.tab:hover { color:#0f172a; }
+.tab.active { background:#0f172a; color:#fff; }
+.section { background:#fff; border-radius:16px; padding:32px; margin-bottom:20px; box-shadow:0 1px 3px rgba(0,0,0,0.05); display:none; }
+.section.active { display:block; animation:fadeIn 0.3s; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
+.section h2 { font-size:22px; font-weight:700; margin-bottom:8px; color:#0f172a; }
+.section .subtitle { color:#64748b; font-size:14px; margin-bottom:24px; }
+.badge { display:inline-block; padding:6px 14px; border-radius:99px; font-size:13px; font-weight:600; margin-right:8px; margin-bottom:8px;}
+.kv-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-bottom:24px; }
+.kv-card { background:#f8fafc; padding:18px; border-radius:10px; border:1px solid #e2e8f0; }
+.kv-card .label { font-size:12px; color:#64748b; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; }
+.kv-card .value { font-size:14px; color:#0f172a; line-height:1.7; }
+.dim-card { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:18px 20px; margin-bottom:12px; transition:all 0.2s; }
+.dim-card:hover { border-color:#cbd5e1; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.dim-header { display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap; }
+.dim-name { font-size:15px; font-weight:600; color:#0f172a; min-width:100px; }
+.dim-bar-wrap { flex:1; min-width:120px; height:8px; background:#e2e8f0; border-radius:99px; overflow:hidden; }
+.dim-bar { height:100%; background:linear-gradient(90deg,#0284c7,#38bdf8); border-radius:99px; transition:width 0.5s; }
+.dim-text { font-size:14px; color:#475569; line-height:1.7; }
+.chart-wrap { background:#f8fafc; padding:24px; border-radius:12px; margin:20px 0; }
+.summary-box { background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%); padding:20px 24px; border-radius:12px; margin-bottom:16px; border-left:4px solid #d97706; }
+.summary-box.danger { background:linear-gradient(135deg,#fee2e2 0%,#fecaca 100%); border-left-color:#dc2626; }
+.summary-box.success { background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%); border-left-color:#059669; }
+.summary-box.info { background:linear-gradient(135deg,#dbeafe 0%,#bfdbfe 100%); border-left-color:#2563eb; }
+.summary-box .title { font-weight:700; margin-bottom:6px; font-size:14px; }
+.summary-box .text { font-size:14px; line-height:1.7; }
+.star-rating { font-size:36px; color:#fbbf24; letter-spacing:4px; margin:12px 0; }
+.conclusion { background:#0f172a; color:#fff; padding:32px; border-radius:16px; margin-top:24px; }
+.conclusion h3 { font-size:18px; margin-bottom:12px; }
+.conclusion p { font-size:14px; line-height:1.8; opacity:0.9; margin-bottom:12px; white-space:pre-line; }
+.next-step { background:#fff; border:2px dashed #0284c7; padding:20px 24px; border-radius:12px; margin-top:16px; }
+.next-step .title { color:#0284c7; font-weight:700; margin-bottom:8px; }
+.foot { text-align:center; padding:24px; color:#94a3b8; font-size:12px; }
+table { width:100%; border-collapse:collapse; font-size:14px; margin:16px 0; }
+table th { background:#0f172a; color:#fff; padding:12px 14px; text-align:left; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; }
+table td { padding:10px 14px; border-bottom:1px solid #e2e8f0; }
+table tr:last-child td { border-bottom:none; }
+table .label { font-weight:600; color:#0f172a; }
+table .num { font-family:'JetBrains Mono', monospace; font-weight:500; }
+.fair-value { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0; }
+.fv-card { background:#f8fafc; padding:18px; border-radius:10px; border:1px solid #e2e8f0; text-align:center; }
+.fv-card .label { font-size:11px; color:#64748b; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px; }
+.fv-card .value { font-size:28px; font-weight:800; font-family:'JetBrains Mono', monospace; }
+.fv-card.bear { border-color:#dc2626; }
+.fv-card.bear .value { color:#dc2626; }
+.fv-card.base { border-color:#2563eb; }
+.fv-card.base .value { color:#2563eb; }
+.fv-card.bull { border-color:#059669; }
+.fv-card.bull .value { color:#059669; }
+.seg-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:16px 0; }
+.seg-card { padding:16px; border-radius:10px; border:1px solid #e2e8f0; text-align:center; }
+.seg-card .seg-name { font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase; margin-bottom:8px; }
+.seg-card .seg-rev { font-size:22px; font-weight:800; color:#0f172a; }
+.seg-card .seg-pct { font-size:12px; margin-top:4px; }
+@media (max-width:640px) {
+  .wrap { padding:16px 12px; }
+  .hero { padding:24px 20px; }
+  .hero h1 { font-size:22px; }
+  .section { padding:20px; }
+  .fair-value { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>Corning Incorporated 商业模式分析报告</h1>
+    <div class="meta">
+      <div>📊 代码：GLW</div>
+      <div>🏛️ 交易所：NYSE</div>
+      <div>🏷️ 行业：材料科学 / 特种玻璃 / AI光纤基础设施</div>
+      <div>📅 分析日期：2026-05-26</div>
+    </div>
+    <div class="one-liner">💡 康宁是一家有175年历史的材料科学公司，通过对玻璃、陶瓷和光纤的深度研发积累，主导光纤、显示玻璃和大猩猩玻璃三大垄断级市场——并凭借AI数据中心爆发在2025年将光纤业务增长35%，股价在过去一年暴涨约300%</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab" data-tab="m0">💡 小白版</button>
+    <button class="tab active" data-tab="m1">商业模式</button>
+    <button class="tab" data-tab="m2">护城河</button>
+    <button class="tab" data-tab="m3">估值研究</button>
+    <button class="tab" data-tab="m4">管理层</button>
+    <button class="tab" data-tab="conclusion">结论</button>
+  </div>
+
+  <!-- 模块零：小白版 -->
+  <div class="section" id="m0">
+    <h2>💡 模块零：金融小白友好版商业模式拆解</h2>
+    <p class="subtitle">把这家175岁的材料科学公司用日常语言"翻译"清楚</p>
+
+    <div style="background:linear-gradient(135deg,#dbeafe 0%,#bfdbfe 100%);padding:24px 28px;border-radius:12px;margin-bottom:20px;border-left:4px solid #2563eb;">
+      <div style="font-weight:700;color:#1e40af;margin-bottom:12px;font-size:15px;">🎯 核心比喻</div>
+      <div style="font-size:15px;color:#0f172a;line-height:1.8;">
+        想象一下城市里的三件事：①城市之间的高速公路（光纤电缆——数据的"高速公路"）；②手机屏幕的防护膜（大猩猩玻璃——全球每4部智能手机就有3部用康宁的玻璃）；③电视机的"心脏"玻璃基板（LCD显示玻璃）。康宁就是这三条赛道的技术垄断者。<br><br>
+        <strong>最新剧情</strong>：AI时代来了，ChatGPT、Google、Meta要建超级数据中心，数据中心之间需要海量光纤连接。康宁作为全球最大光纤生产商（生产了人类历史上1/3的光纤，共10亿公里！），直接成了"AI时代的基础设施供应商"——于是股价在过去一年从约$40暴涨到$194，市值膨胀到$1670亿美元。
+      </div>
+    </div>
+
+    <h3 style="font-size:17px; font-weight:700; margin:24px 0 12px;">📦 商业模式三问</h3>
+    <div class="kv-grid">
+      <div class="kv-card" style="border-left:3px solid #2563eb;">
+        <div class="label" style="color:#2563eb;">① 卖什么？</div>
+        <div class="value">六大业务：<br>
+          <strong>①光通信（38%收入）</strong>——光纤、光缆、连接器，AI数据中心爆发的直接受益者，2025年增长35%；<br>
+          <strong>②显示玻璃（24%收入）</strong>——电视LCD玻璃基板，市场份额超过50%，稳定现金牛；<br>
+          <strong>③特种材料/大猩猩玻璃（14%收入）</strong>——iPhone、三星手机的防摔玻璃，垄断高端市场；<br>
+          <strong>④汽车（12%收入）</strong>——汽车尾气催化载体、汽车玻璃解决方案；<br>
+          <strong>⑤生命科学（6%收入）</strong>——实验室器皿、药品包装玻璃；<br>
+          <strong>⑥Hemlock/新兴业务（9%收入）</strong>——半导体多晶硅、太阳能多晶硅。
+        </div>
+      </div>
+      <div class="kv-card" style="border-left:3px solid #059669;">
+        <div class="label" style="color:#059669;">② 怎么收费？</div>
+        <div class="value">
+          <strong>工业品销售模式</strong>（不是SaaS订阅）：按产品卖给下游大客户。<br><br>
+          <strong>关键大客户</strong>：Apple（大猩猩玻璃独家供应商）、三星（显示玻璃）、Meta（刚签60亿美元多年协议买光纤）、Nvidia（32亿美元战略投资+采购协议）、Google、Amazon、微软（均为光纤数据中心客户）。<br><br>
+          FY2025 GAAP收入 $156亿，Core收入 $164亿（+13%），调整后自由现金流 $17.2亿，利润率持续扩张。
+        </div>
+      </div>
+      <div class="kv-card" style="border-left:3px solid #0284c7;">
+        <div class="label" style="color:#0284c7;">③ 为什么客户必须买康宁？</div>
+        <div class="value">
+          <strong>三条护城河相互叠加</strong>：<br>
+          ①<strong>技术壁垒</strong>：康宁的光纤配方、大猩猩玻璃成分、显示玻璃熔融工艺都是175年积累的专有Know-how，竞争对手即使想复制，也需要10-20年的材料科学研发。<br>
+          ②<strong>规模壁垒</strong>：康宁是全球最低成本光纤生产商，规模远超对手，这让其定价更灵活。<br>
+          ③<strong>深度整合</strong>：Apple和康宁合作超过15年，iPhone的玻璃规格是两家共同研发的，不能随意换供应商。Meta刚刚签下了60亿美元的多年合同——说明超大客户正在将康宁锁定为AI基础设施核心供应商。
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:17px; font-weight:700; margin:24px 0 12px;">🤔 为什么最近股价涨这么多？</h3>
+    <div class="summary-box info">
+      <div class="title">AI数据中心爆发 × 光纤需求暴增 = 康宁的历史性机会</div>
+      <div class="text">
+        AI大模型需要超级计算机（GPU集群），GPU集群之间需要超高速光纤连接。2025年Meta、Google、微软、Amazon宣布合计投入超过$5000亿建设AI数据中心。这些数据中心里每台服务器需要大量光纤连接，而康宁是全球最大光纤供应商，直接享受了这波爆发：光通信业务从2024年的$47亿增长到2025年的$63亿（+35%），企业光纤端增长高达106%！<br><br>
+        <strong>Springboard计划</strong>：CEO Wendell Weeks宣布"升级版跳板计划"——目标2026年底实现$200亿年化收入运行速率（现在$164亿），2028年底将在Q4 2023基础上新增$110亿年化收入。这是一个雄心勃勃的增长承诺，市场目前完全相信它。
+      </div>
+    </div>
+
+    <div style="background:#f8fafc;border:1px dashed #cbd5e1;padding:14px 18px;border-radius:8px;margin-top:20px;font-size:13px;color:#64748b;line-height:1.6;">
+      📌 <strong>使用提示</strong>：本模块是读后续专业分析的基础。但有一个关键警示：康宁是一家优质公司，但股价在过去一年已涨约300%，当前估值（Forward PE约53倍）远高于历史水平——这是理解后续估值分析的关键背景。
+    </div>
+  </div>
+
+  <!-- 模块一：商业模式 -->
+  <div class="section active" id="m1">
+    <h2>📦 模块一：商业模式</h2>
+    <p class="subtitle">这家公司到底做什么生意？六大业务部门全拆解</p>
+    <div style="margin-bottom:20px">
+      <span class="badge" style="background:#dbeafe;color:#1e40af">商业模式类型：工业品销售（材料科学 + 制造业）</span>
+      <span class="badge" style="background:#dcfce7;color:#059669">核心驱动：AI数据中心光纤爆发 + 175年材料科学壁垒</span>
+    </div>
+
+    <h3 style="font-size:17px; font-weight:700; margin:20px 0 12px;">📊 FY2025六大业务营收拆解</h3>
+    <div class="seg-grid">
+      <div class="seg-card" style="background:#eff6ff;border-color:#2563eb;">
+        <div class="seg-name" style="color:#2563eb;">光通信</div>
+        <div class="seg-rev">$62.7亿</div>
+        <div class="seg-pct" style="color:#059669;">+35% YoY ▲</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px;">净利润 $10.5亿 (+71%)</div>
+      </div>
+      <div class="seg-card" style="background:#f0fdf4;border-color:#059669;">
+        <div class="seg-name" style="color:#059669;">显示技术</div>
+        <div class="seg-rev">$37.0亿</div>
+        <div class="seg-pct" style="color:#dc2626;">-5% YoY ▼</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px;">净利润 $9.9亿 (-1%)</div>
+      </div>
+      <div class="seg-card" style="background:#fef9c3;border-color:#ca8a04;">
+        <div class="seg-name" style="color:#ca8a04;">特种材料</div>
+        <div class="seg-rev">$22.1亿</div>
+        <div class="seg-pct" style="color:#059669;">+10% YoY ▲</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px;">净利润 $3.7亿 (+41%)</div>
+      </div>
+      <div class="seg-card" style="background:#fef2f2;border-color:#dc2626;">
+        <div class="seg-name" style="color:#dc2626;">汽车</div>
+        <div class="seg-rev">$17.9亿</div>
+        <div class="seg-pct" style="color:#dc2626;">-3% YoY ▼</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px;">净利润 $2.8亿 (+7%)</div>
+      </div>
+      <div class="seg-card" style="background:#f8fafc;border-color:#94a3b8;">
+        <div class="seg-name" style="color:#64748b;">生命科学</div>
+        <div class="seg-rev">$9.7亿</div>
+        <div class="seg-pct" style="color:#dc2626;">-1% YoY ▼</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px;">净利润 $0.6亿 (-3%)</div>
+      </div>
+      <div class="seg-card" style="background:#fdf4ff;border-color:#9333ea;">
+        <div class="seg-name" style="color:#9333ea;">Hemlock/新兴</div>
+        <div class="seg-rev">$14.6亿</div>
+        <div class="seg-pct" style="color:#059669;">+33% YoY ▲</div>
+        <div style="font-size:11px;color:#dc2626;margin-top:4px;">净亏损 -$2600万</div>
+      </div>
+    </div>
+
+    <div class="kv-grid">
+      <div class="kv-card">
+        <div class="label">核心产品/技术</div>
+        <div class="value">
+          <strong>光通信</strong>：单模、多模光纤，预端接光缆，数据中心内部连接解决方案，2025年Contour AI光纤新品（每根光缆可塞入2倍密度纤芯）；<br>
+          <strong>显示玻璃</strong>：LCD电视、显示器的薄玻璃基板（EAGLE XG等品牌），全球市场份额>50%；<br>
+          <strong>大猩猩玻璃</strong>（Gorilla Glass）：智能手机/平板/笔记本屏幕保护玻璃，代表性客户Apple、三星、小米；<br>
+          <strong>汽车</strong>：DPF/GPF尾气催化载体（近100%市场份额），汽车玻璃解决方案；<br>
+          <strong>Valor玻璃</strong>：医药级玻璃瓶（替代传统硅硼玻璃，疫苗存储）。
+        </div>
+      </div>
+      <div class="kv-card">
+        <div class="label">客户结构</div>
+        <div class="value">
+          <strong>顶级战略客户</strong>：Apple（大猩猩玻璃最大单一客户，合作20+年）、Meta（2026年宣布最高$60亿多年光纤协议）、Nvidia（$32亿战略投资+采购协议）、Google、Amazon、微软、AT&T、Verizon；<br>
+          <strong>显示玻璃客户</strong>：三星Display、LG Display、BOE京东方、AUO等全球主要面板厂；<br>
+          <strong>汽车客户</strong>：丰田、大众、通用、福特等主流车厂；<br>
+          客户集中度较高，Apple历史上占收入约10-15%，AI超大规模数据中心客户正成为新的增长极。
+        </div>
+      </div>
+      <div class="kv-card">
+        <div class="label">收入结构与趋势</div>
+        <div class="value">
+          FY2025 GAAP销售额 $156亿 / Core销售额 $164亿（+13% YoY）；<br>
+          GAAP EPS $1.83 / Core EPS $2.52（+29% YoY）；<br>
+          调整后FCF $17.2亿（vs. FY2023 $8.8亿，两年近乎翻倍）；<br>
+          Core营业利润率 19.3%（FY2025），Core ROIC 14.2%；<br>
+          <strong>结构亮点</strong>：光通信已占总营收38%，从AI受益最直接；显示玻璃仍是最大利润池之一但增长停滞；Hemlock/太阳能虽增长但仍亏损（爬坡期）。
+        </div>
+      </div>
+      <div class="kv-card">
+        <div class="label">Springboard升级计划（最重要故事）</div>
+        <div class="value">
+          <strong>原计划（2024年）</strong>：2026年底新增$60亿年化收入；<br>
+          <strong>升级计划（2026年1月）</strong>：<br>
+          · 内部计划：2026年底新增$65亿，2028年底新增$110亿<br>
+          · 高置信度计划：2026年底新增$57.5亿<br>
+          · 目标：2026年底实现$200亿年化运行速率（核心驱动：AI光纤、Valor医药玻璃、汽车玻璃）<br>
+          <strong>Q1 2026实际</strong>：Core销售额$43亿（+18% YoY），Core EPS $0.70（+30% YoY）——全面超预期，增速正在加速。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 模块二：护城河 -->
+  <div class="section" id="m2">
+    <h2>🏰 模块二：护城河分析</h2>
+    <p class="subtitle">175年的材料科学积累能建起多宽的护城河？</p>
+    <div style="margin-bottom:20px">
+      <span class="badge" style="background:#05966922;color:#059669;border:1px solid #05966944">综合评级：宽护城河（材料科学领域罕见）</span>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="moatChart" style="max-height:280px;"></canvas>
+    </div>
+
+    <div class="dim-card">
+      <div class="dim-header">
+        <span class="dim-name">成本优势</span>
+        <div class="dim-bar-wrap"><div class="dim-bar" style="width:100%"></div></div>
+        <span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;background:#05966922;color:#059669;border:1px solid #05966944">3/3</span>
+      </div>
+      <p class="dim-text"><strong>成本优势-极强</strong>。康宁是全球光纤的最低成本生产商——规模效应极为显著，康宁一家公司生产了人类历史上1/3的光纤（累计10亿公里），没有任何竞争对手能在成本上接近它。在显示玻璃领域同样如此，其超薄玻璃熔融工艺（Fusion Process）的良率和稳定性远超竞争对手，是行业技术标准的制定者。大猩猩玻璃在智能手机高端护护玻璃市场几乎是垄断，与Apple的长期合作让其规模进一步固化。这种成本领先地位在制造业中极为罕见，是一般SaaS公司不具备的护城河维度。</p>
+    </div>
+
+    <div class="dim-card">
+      <div class="dim-header">
+        <span class="dim-name">无形资产</span>
+        <div class="dim-bar-wrap"><div class="dim-bar" style="width:100%"></div></div>
+        <span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;background:#05966922;color:#059669;border:1px solid #05966944">3/3</span>
+      </div>
+      <p class="dim-text"><strong>无形资产-极强</strong>。康宁拥有超过10,000项专利，覆盖玻璃配方、光纤制造、显示基板熔融工艺等核心领域。更重要的是，其核心知识产权不仅仅是专利，更是175年积累的材料科学Know-how和工程师团队——这些无法被复制。"大猩猩玻璃"（Gorilla Glass）作为品牌在消费电子领域几乎等于"钢化玻璃"的代名词，Apple发布会专门提及。在光纤领域，Corning的"Contour"AI光纤是专门为超大规模AI数据中心设计的新一代产品，于OFC 2026展会推出——技术领先地位持续巩固。</p>
+    </div>
+
+    <div class="dim-card">
+      <div class="dim-header">
+        <span class="dim-name">转换成本</span>
+        <div class="dim-bar-wrap"><div class="dim-bar" style="width:66.67%"></div></div>
+        <span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;background:#d9770622;color:#d97706;border:1px solid #d9770644">2/3</span>
+      </div>
+      <p class="dim-text"><strong>转换成本-中（偏强）</strong>。客户方面：Apple和康宁合作超过20年，双方联合研发定制玻璃配方，iPhone每一代的屏幕玻璃都是与康宁共同设计的，更换供应商意味着整个产品开发流程重来；Meta、Nvidia等AI超大客户正在签署多年长期协议（Meta $60亿协议、Nvidia $32亿投资）——这意味着客户主动将自己锁定在康宁生态。但转换成本的弱点在于：大宗商品属性的产品（如标准光纤、显示玻璃）相对容易切换，不像银行核心系统那样绑定度极高。整体而言转换成本是"中等偏强"——高端定制产品强，标准化产品中等。</p>
+    </div>
+
+    <div class="dim-card">
+      <div class="dim-header">
+        <span class="dim-name">网络效应</span>
+        <div class="dim-bar-wrap"><div class="dim-bar" style="width:0%"></div></div>
+        <span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;background:#dc262622;color:#dc2626;border:1px solid #dc262644">0/3</span>
+      </div>
+      <p class="dim-text"><strong>网络效应-无</strong>。康宁是一家材料科学/制造业公司，不是平台公司。Apple用康宁玻璃不会让三星买玻璃更便宜，Meta买光纤不会让Google买光纤更容易——客户之间没有相互连接产生的价值增益。这是制造业公司天然的劣势，也是它无法像Visa或微软那样享有极高估值倍数的根本原因。在护城河框架里，康宁的优势完全来自"成本+无形资产+规模"而非平台效应。</p>
+    </div>
+
+    <div class="dim-card">
+      <div class="dim-header">
+        <span class="dim-name">规模效应</span>
+        <div class="dim-bar-wrap"><div class="dim-bar" style="width:100%"></div></div>
+        <span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;background:#05966922;color:#059669;border:1px solid #05966944">3/3</span>
+      </div>
+      <p class="dim-text"><strong>规模效应-极强</strong>。光纤制造是典型的重资产、高规模敏感型行业——工厂建设需要10亿美元级投资，而边际成本随规模急剧下降。康宁的光纤产能规模是行业第一，这使其在价格竞争中可以接受更低毛利而仍有利润，竞争对手无力跟进。显示玻璃的Fusion工艺同样有极高规模壁垒——康宁持续投资使其工艺精度和良率比竞争对手高一代，新进入者需要10年+时间才能赶上当前水平（但届时康宁已经迭代到下一代）。FY2025 Adjusted FCF从FY2023的$8.8亿近乎翻倍到$17.2亿，印证了规模效益正在实现。</p>
+    </div>
+
+    <div class="summary-box success" style="margin-top:20px">
+      <div class="title">✓ 护城河核心优势总结</div>
+      <div class="text">康宁的护城河是制造业中少见的"宽护城河"——三个维度同时达到最高分（成本优势、无形资产、规模效应），与软件公司依赖转换成本或网络效应的逻辑不同，这是一种"工厂护城河"：<strong>你要复制康宁，需要建造同等规模的光纤工厂（数十亿美元），招募相同水平的材料科学团队（无法从市场直接购买），并等待10-20年的技术积累</strong>。这个进入壁垒让康宁在各自的细分市场形成了接近垄断的地位（光纤全球前2名、显示玻璃>50%、大猩猩玻璃>70%高端市场）。</div>
+    </div>
+    <div class="summary-box danger">
+      <div class="title">⚠ 护城河主要弱点</div>
+      <div class="text">①<strong>周期性风险</strong>：显示玻璃和光纤都有明显的资本支出周期——面板厂过剩时砍订单，科技资本支出收缩时光纤需求暴跌（2022-2023年正经历过一次）；②<strong>中国制造竞争</strong>：显示玻璃领域中国本土竞争者（彩虹集团等）持续投资追赶，长期有侵蚀低端市场的风险；③<strong>Hemlock太阳能亏损</strong>：新能源多晶硅业务仍在爬坡亏损，投资回报验证需要时间；④<strong>苹果集中度</strong>：大猩猩玻璃过度依赖Apple，若Apple转向折叠屏或其他材料是重大风险。</div>
+    </div>
+  </div>
+
+  <!-- 模块三：估值研究 -->
+  <div class="section" id="m3">
+    <h2>💰 模块三：估值研究</h2>
+    <p class="subtitle">行业适配估值框架 + 当前估值定位</p>
+
+    <div style="margin-bottom:20px;">
+      <span class="badge" style="background:#dbeafe;color:#1e40af">行业：特种材料 / 光纤基础设施 / AI概念</span>
+      <span class="badge" style="background:#fee2e222;color:#dc2626;border:1px solid #dc262644">估值结论：严重溢价（已反映AI超级周期预期）</span>
+    </div>
+
+    <div class="summary-box danger">
+      <div class="title">🛠️ 适用估值框架：EV/EBITDA + PE + FCF Yield + 周期调整EPS</div>
+      <div class="text">康宁是工业/材料科学公司，不是SaaS。正确估值框架：①对于稳定业务（显示玻璃、大猩猩玻璃）用EV/EBITDA；②对于高增长光纤业务用PE乘以增长调整（PEG ratio）；③FCF Yield是检验"贵不贵"的最直接指标——当前仅~1%（正常工业公司应该>4-5%）；④<strong>最大的估值挑战是：公司本质上是一家制造业公司，但市场正在用科技股估值倍数给它定价</strong>——这在历史上几乎从未可持续。股价在过去12个月涨约300%，很多好消息已经反映在价格里。</div>
+    </div>
+
+    <h3 style="font-size:17px; font-weight:700; margin:24px 0 12px;">📊 核心估值指标</h3>
+    <table>
+      <thead><tr><th>指标</th><th>当前值</th><th>行业基准</th><th>评级</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="label">市值 / 股价</td>
+          <td class="num">~$1670亿 / ~$194</td>
+          <td class="num" style="color:#64748b;font-size:13px;">过去12个月涨约300%</td>
+          <td><span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#dc262622;color:#dc2626;">极度拉伸</span></td>
+        </tr>
+        <tr>
+          <td class="label">EV/Revenue (FY2025)</td>
+          <td class="num">~11x</td>
+          <td class="num" style="color:#64748b;font-size:13px;">材料/工业公司正常1-3x</td>
+          <td><span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#dc262622;color:#dc2626;">严重溢价</span></td>
+        </tr>
+        <tr>
+          <td class="label">Forward PE (Core FY2026E)</td>
+          <td class="num">~53x</td>
+          <td class="num" style="color:#64748b;font-size:13px;">优质工业公司通常15-25x</td>
+          <td><span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#dc262622;color:#dc2626;">严重溢价</span></td>
+        </tr>
+        <tr>
+          <td class="label">EV/EBITDA</td>
+          <td class="num">~41x</td>
+          <td class="num" style="color:#64748b;font-size:13px;">工业领先者10-18x</td>
+          <td><span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#dc262622;color:#dc2626;">严重溢价</span></td>
+        </tr>
+        <tr>
+          <td class="label">FCF Yield</td>
+          <td class="num">~1%（$17.2亿/$1670亿）</td>
+          <td class="num" style="color:#64748b;font-size:13px;">工业公司健康水平>4%</td>
+          <td><span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#dc262622;color:#dc2626;">严重溢价</span></td>
+        </tr>
+        <tr>
+          <td class="label">股息收益率</td>
+          <td class="num">~0.58%（$1.12/$194）</td>
+          <td class="num" style="color:#64748b;font-size:13px;">稳健工业公司通常2-3%</td>
+          <td><span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#dc262622;color:#dc2626;">严重稀释</span></td>
+        </tr>
+        <tr>
+          <td class="label">Core销售增速</td>
+          <td class="num">+13%（FY2025），Q1 2026 +18%</td>
+          <td class="num" style="color:#64748b;font-size:13px;">增速优秀，AI催化明显</td>
+          <td><span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#05966922;color:#059669;">健康</span></td>
+        </tr>
+        <tr>
+          <td class="label">Core 营业利润率</td>
+          <td class="num">19.3%（FY2025），目标20%+</td>
+          <td class="num" style="color:#64748b;font-size:13px;">优质制造业>15%是优秀</td>
+          <td><span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#05966922;color:#059669;">优秀</span></td>
+        </tr>
+        <tr>
+          <td class="label">Core ROIC</td>
+          <td class="num">14.2%（Q4 2025，两年提升540bps）</td>
+          <td class="num" style="color:#64748b;font-size:13px;">>WACC(~8%)，持续扩张</td>
+          <td><span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#d9770622;color:#d97706;">偏低但改善</span></td>
+        </tr>
+        <tr>
+          <td class="label">分析师共识</td>
+          <td class="num">10 Buy / 5 Hold / 1 Sell，目标价$197</td>
+          <td class="num" style="color:#64748b;font-size:13px;">偏乐观，上行空间已收窄</td>
+          <td><span style="display:inline-block;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#d9770622;color:#d97706;">中性偏正</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size:17px; font-weight:700; margin:24px 0 12px;">🔍 行业可比公司横向对比</h3>
+    <table>
+      <thead><tr><th>公司</th><th>Ticker</th><th>市值</th><th>收入增速</th><th>EV/Sales</th><th>EV/EBITDA</th><th>FCF Yield</th><th>Forward PE</th></tr></thead>
+      <tbody>
+        <tr style="background:#fef9c3;">
+          <td class="label">康宁（本公司）</td>
+          <td class="num">GLW</td>
+          <td class="num">$1670亿</td>
+          <td class="num">+13%</td>
+          <td class="num">~11x</td>
+          <td class="num">~41x</td>
+          <td class="num">~1%</td>
+          <td class="num">~53x</td>
+        </tr>
+        <tr>
+          <td class="label">安费诺</td>
+          <td class="num">APH</td>
+          <td class="num">~$800亿</td>
+          <td class="num">+12%</td>
+          <td class="num">~7x</td>
+          <td class="num">~35x</td>
+          <td class="num">~1.5%</td>
+          <td class="num">~35x</td>
+        </tr>
+        <tr>
+          <td class="label">泰科电子</td>
+          <td class="num">TEL</td>
+          <td class="num">~$450亿</td>
+          <td class="num">+5%</td>
+          <td class="num">~3x</td>
+          <td class="num">~17x</td>
+          <td class="num">~5%</td>
+          <td class="num">~22x</td>
+        </tr>
+        <tr>
+          <td class="label">Prysmian（欧洲光纤/电缆）</td>
+          <td class="num">PRY.MI</td>
+          <td class="num">~€250亿</td>
+          <td class="num">+10%</td>
+          <td class="num">~1x</td>
+          <td class="num">~15x</td>
+          <td class="num">~5%</td>
+          <td class="num">~18x</td>
+        </tr>
+        <tr>
+          <td class="label">CommScope（竞争对手）</td>
+          <td class="num">COMM</td>
+          <td class="num">~$40亿</td>
+          <td class="num">-2%</td>
+          <td class="num">~0.7x</td>
+          <td class="num">~7x</td>
+          <td class="num">~6%</td>
+          <td class="num">~12x</td>
+        </tr>
+        <tr>
+          <td class="label">Marvell Tech（AI网络芯片）</td>
+          <td class="num">MRVL</td>
+          <td class="num">~$900亿</td>
+          <td class="num">+30%</td>
+          <td class="num">~12x</td>
+          <td class="num">~60x</td>
+          <td class="num">~0.5%</td>
+          <td class="num">~45x</td>
+        </tr>
+        <tr>
+          <td class="label">NGK Insulators（日本竞争对手）</td>
+          <td class="num">5333.T</td>
+          <td class="num">~¥7000亿</td>
+          <td class="num">+8%</td>
+          <td class="num">~1.2x</td>
+          <td class="num">~10x</td>
+          <td class="num">~6%</td>
+          <td class="num">~15x</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px; color:#64748b; margin-top:8px;">📌 高亮行为本次分析的目标公司。康宁在所有可比公司中估值最高——EV/Sales约11x，比直接竞争对手Prysmian（1x）、CommScope（0.7x）高10倍，已完全脱离"工业公司"定价体系，向科技公司估值靠拢。</p>
+
+    <h3 style="font-size:17px; font-weight:700; margin:24px 0 12px;">🎯 合理估值区间（行业框架推演）</h3>
+    <div class="fair-value">
+      <div class="fv-card bear">
+        <div class="label">悲观情景 Bear</div>
+        <div class="value">$80</div>
+        <div style="font-size:11px;color:#64748b;margin-top:8px;">AI资本支出周期回调，光纤需求放缓；PE压缩至25x，FY2027 EPS $3.20 → 目标$80</div>
+      </div>
+      <div class="fv-card base">
+        <div class="label">基准情景 Base</div>
+        <div class="value">$155</div>
+        <div style="font-size:11px;color:#64748b;margin-top:8px;">Springboard持续推进，增速放缓至8-10%；PE合理压缩至35x，FY2027 EPS $4.40 → 目标$154</div>
+      </div>
+      <div class="fv-card bull">
+        <div class="label">乐观情景 Bull</div>
+        <div class="value">$260</div>
+        <div style="font-size:11px;color:#64748b;margin-top:8px;">Springboard全面兑现，$200亿收入，EPS $5.8；市场维持45x估值 → 目标$261</div>
+      </div>
+    </div>
+
+    <div class="summary-box danger">
+      <div class="title">📍 当前估值位置：价格反映的是完美剧本</div>
+      <div class="text">$194的股价意味着：市场已经在为"Springboard计划完全兑现"买单，几乎没有任何执行失误的容错空间。<br><br>
+        对比来看：同样受益AI基础设施的Prysmian在欧洲以1x EV/Sales交易，康宁以11x EV/Sales交易。这个溢价需要通过持续超预期的增长来"消化"。<br><br>
+        <strong>历史先例警示</strong>：2020-2021年的半导体供应链热，很多材料公司享受过一段科技股估值，随后均出现60-80%的回调（如硅材料、稀土）。康宁的业务质量远优于这些案例，但估值的拉伸风险不能忽视。<br><br>
+        <strong>一个重要的相对逻辑</strong>：如果AI资本支出真的持续加速，康宁的增速可能再次超预期（Q1 2026已经+18%加速），当前估值在2-3年的时间维度内可能是合理的。但这是"必须对"才能赚钱"的论点，而不是"即使部分错了也有安全边际"的论点。</div>
+    </div>
+
+    <h3 style="font-size:17px; font-weight:700; margin:24px 0 12px;">⚠️ 估值分析常见陷阱</h3>
+
+    <div style="background:#fef2f2;border-left:4px solid #dc2626;padding:12px 16px;margin:8px 0;font-size:14px;">
+      <strong style="color:#dc2626;">陷阱1：</strong>把康宁当"科技股"估值——康宁本质是一家材料/制造公司，不是SaaS或芯片设计公司，毛利率~36%（vs SaaS 70-80%），重资产模式，估值倍数历史中枢是15-20x PE，现在53x是历史极端值。
+    </div>
+    <div style="background:#fef2f2;border-left:4px solid #dc2626;padding:12px 16px;margin:8px 0;font-size:14px;">
+      <strong style="color:#dc2626;">陷阱2：</strong>忽视显示玻璃的长期萎缩趋势——显示玻璃业务2025年收入-5%，随着OLED电视渗透率上升和中国面板厂产能过剩，这个业务长期有萎缩风险，虽然目前利润仍高，但不是成长资产。
+    </div>
+    <div style="background:#fef2f2;border-left:4px solid #dc2626;padding:12px 16px;margin:8px 0;font-size:14px;">
+      <strong style="color:#dc2626;">陷阱3：</strong>线性外推AI数据中心建设速度——超大规模数据中心的光纤需求可能在2027-2028年出现周期性回落（就像2022-2023年的光纤需求崩塌一样），历史上的光纤泡沫（2001年）造成康宁营收从$70亿跌至$30亿、股价从$100跌至$1.50。
+    </div>
+    <div style="background:#fef2f2;border-left:4px solid #dc2626;padding:12px 16px;margin:8px 0;font-size:14px;">
+      <strong style="color:#dc2626;">陷阱4：</strong>用"Core EPS"忽视GAAP差距——康宁的GAAP EPS（$1.83）vs Core EPS（$2.52）有巨大差距（$0.69/股，38%差异），主要来自货币对冲合约的公允价值变动。Core数据更反映运营，但GAAP差距也值得关注。
+    </div>
+    <div style="background:#fef2f2;border-left:4px solid #dc2626;padding:12px 16px;margin:8px 0;font-size:14px;">
+      <strong style="color:#dc2626;">陷阱5：</strong>把Nvidia $32亿投资当"无限担保"——这是商业采购协议，不是股权投资。康宁股价可以和Nvidia的数据中心资本支出周期同步波动，意味着负相关风险也会共振。
+    </div>
+  </div>
+
+  <!-- 模块四：管理层 -->
+  <div class="section" id="m4">
+    <h2>👔 模块四：管理层评估</h2>
+    <p class="subtitle">Wendell Weeks：掌舵康宁21年的材料科学传道者</p>
+    <div style="margin-bottom:20px">
+      <span class="badge" style="background:#05966922;color:#059669;border:1px solid #05966944;font-size:16px;padding:8px 18px">综合评级：A-级（行业顶级管理层之一）</span>
+    </div>
+
+    <div class="kv-grid">
+      <div class="kv-card">
+        <div class="label">💰 资本配置能力</div>
+        <div class="value">
+          <strong>资本配置纪律良好，但进入高资本支出期</strong>。<br>
+          FY2025调整后FCF $17.2亿（vs FY2023 $8.8亿，两年近乎翻倍）；年资本支出~$17亿（与FCF基本持平，说明"挣多少花多少"）；年股息约$9亿（$1.12×8.6亿股）；股票回购：FY2025 Q1回购$1亿，相对保守。<br><br>
+          ROIC从Q4 2023的约9%提升至Q4 2025的14.2%（+540bps），清晰表明资本效率在改善。Springboard计划的核心逻辑之一就是"客户共同资助"（customer-funded investment）——Meta、Nvidia等超大客户预付款或长期协议锁定，降低康宁的资本风险，这是聪明的资本配置设计。
+        </div>
+      </div>
+      <div class="kv-card">
+        <div class="label">🎯 战略执行力</div>
+        <div class="value">
+          <strong>战略执行力极强（行业顶级）</strong>。<br>
+          Weeks在2024年初提出Springboard计划时市场持怀疑态度，但两年后：①FY2025 Core销售$164亿（+13%），全年超预期；②Q4 2025 Core营业利润率20.2%，达到阶段目标；③FCF几乎翻倍；④Meta、Nvidia长期协议锁定——每一个承诺都在兑现。<br><br>
+          <strong>最令人印象深刻的决策</strong>：2022-2023年光纤需求崩塌（行业库存过剩）时，Weeks顶住压力保持产能投资，被市场质疑；2024-2025年AI浪潮来袭，康宁是最有准备的供应商——这是典型的"穿越周期的战略定力"。
+        </div>
+      </div>
+      <div class="kv-card">
+        <div class="label">🤝 诚信与透明度</div>
+        <div class="value">
+          <strong>诚信度高，披露透明</strong>。<br>
+          ①在AI光纤需求爆发期间，管理层没有过度承诺，而是把"高置信度计划"和"内部计划"分开披露（$57.5亿 vs $65亿），给投资者清晰的不同情景；②季度指引历史准确度高，连续多季度达到或超预期；③Core vs GAAP的差距说明清楚（主要是汇率对冲合约的公允价值波动，非经营性因素）；④审计师为PricewaterhouseCoopers（四大之一），无保留意见记录。
+        </div>
+      </div>
+      <div class="kv-card">
+        <div class="label">💸 股东回报机制</div>
+        <div class="value">
+          <strong>股息稳定增长，回购相对保守</strong>。<br>
+          季度股息$0.28（年化$1.12），Q2 2026继续维持，股息增长历史稳定；历史上累计回购约8亿股（公司总股本曾约15亿股，大幅缩减），但近期回购力度较小（每季度$1亿，相对$17亿FCF较低，大量用于资本支出）；FCF分配优先级：资本支出>股息>回购。<br><br>
+          这一配置反映管理层当前判断：增长投资回报率高于回购回报率——如果Springboard兑现，这个判断是正确的。
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-box success">
+      <div class="title">✨ 管理层主要亮点</div>
+      <div class="text">①<strong>超长服务年限带来的深度认知</strong>：Wendell Weeks自2005年担任CEO（21年！），是美国大型上市公司中任职最久的CEO之一。他对康宁材料科学的理解无人能及——不只是管理者，更是技术信徒；②<strong>穿越两次大周期的考验</strong>：经历了2008年金融危机（显示玻璃需求暴跌）和2022年光纤过剩（需求腰斩），两次都成功带领公司反弹并强化竞争地位；③<strong>"客户共同投资"模式创新</strong>：让Meta、Nvidia等大客户提前预付或签长期协议，将资本风险转移给客户，这是非常聪明的资本结构设计；④<strong>R&D连续高强度投入</strong>：即使在低谷期，也坚持不削减R&D，维持材料科学领先地位。</div>
+    </div>
+    <div class="summary-box">
+      <div class="title">⚠️ 管理层风险点</div>
+      <div class="text">①<strong>继任风险</strong>：Weeks已70岁，21年CEO任期中未培养清晰的接班人计划——这是一个真实的风险，他离任可能对公司文化和战略连续性有影响；②<strong>过度依赖AI超级周期叙事</strong>：Springboard计划高度依赖AI数据中心建设持续加速，若宏观经济或科技资本支出转向，计划面临大幅下调压力；③<strong>Hemlock太阳能亏损迟迟未改善</strong>：FY2025 Hemlock业务亏损$2600万，需要持续关注商业化进展；④<strong>资本支出纪律</strong>：年资本支出约$17亿（与FCF几乎相等），如果增长不及预期，自由现金流将受到显著压制。</div>
+    </div>
+  </div>
+
+  <!-- 结论 -->
+  <div class="section" id="conclusion">
+    <h2>🎯 整体结论</h2>
+    <p class="subtitle">综合评级与投资建议</p>
+    <div style="text-align:center; padding:24px 0; border-bottom:1px solid #e2e8f0; margin-bottom:24px">
+      <div style="font-size:14px; color:#64748b; margin-bottom:8px">商业质量评级</div>
+      <div class="star-rating">★★★★☆</div>
+      <div style="color:#475569; font-size:14px">4/5 星（优质宽护城河工业公司，但估值反映了最乐观预期）</div>
+    </div>
+
+    <div class="conclusion">
+      <h3>📝 综合评述</h3>
+      <p>康宁是一家商业质量极高的工业/材料科学公司，具备真正的宽护城河——在光纤、显示玻璃和大猩猩玻璃三个领域各自享有接近垄断的市场地位，护城河来源于175年积累的不可复制的材料科学Know-how、全球最低成本光纤制造能力和与苹果等客户超过20年的深度绑定。
+
+<strong>当前宏观叙事强烈支持康宁</strong>：AI数据中心建设需要海量光纤，康宁光通信业务2025年大涨35%（至$63亿），企业端光纤+106%，Q1 2026继续加速至+36%。Meta $60亿、Nvidia $32亿的长期协议为未来两年的需求能见度提供了清晰的锚点。管理层的Springboard计划执行情况超预期，CEO Weeks 21年的任期代表了罕见的战略延续性和执行可信度。
+
+<strong>但投资回报的关键问题不是"公司好不好"，而是"价格对不对"</strong>：当前$194的价格对应的Forward PE约53倍、EV/EBITDA约41倍、FCF Yield仅约1%。所有这些指标对于一家制造业公司而言都是历史极端高位。简单来说：在过去12个月约300%的涨幅中，大量未来增长已被"借支"到了当前价格。
+
+<strong>历史镜鉴不可不看</strong>：2000年互联网泡沫期间，对光纤需求的过度乐观让康宁股价从$105跌至$1.50（-98.5%）。现在的情况与彼时有根本不同——AI需求是真实的，康宁业务基本面更强——但高估值本身就是一种风险，无论基本面多好。
+
+<strong>给Doris的判断</strong>：康宁适合已经持有的长期投资者继续持有（护城河真实，Springboard若兑现上行空间仍有）；但对于当前$194位置的新入场者而言，风险/回报不对称——Base case $155（-20%）vs Bull case $260（+34%），而Bear case $80（-59%）。当AI资本支出预期任何轻微降温（如某家超大规模客户下调capex指引），53倍PE的股票可能迅速回调30-40%。<strong>建议策略</strong>：若看好AI基础设施长期趋势，可以在更具安全边际的价位（$130-$150区间）考虑入场；当前位置持有需要对Springboard执行高度有信心；若持仓较重，可考虑部分获利了结。</p>
+    </div>
+
+    <div class="next-step">
+      <div class="title">🔍 关键观察指标（未来12个月）</div>
+
+      <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed #e2e8f0;">
+        <span style="font-family:monospace;font-weight:700;color:#0284c7;min-width:24px;">1.</span>
+        <span style="font-size:14px;">光通信业务增速能否维持20%+（Meta/Nvidia协议转化为实际收入的节奏）</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed #e2e8f0;">
+        <span style="font-family:monospace;font-weight:700;color:#0284c7;min-width:24px;">2.</span>
+        <span style="font-size:14px;">Springboard 2026年底能否实现$200亿年化运行速率（最关键里程碑）</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed #e2e8f0;">
+        <span style="font-family:monospace;font-weight:700;color:#0284c7;min-width:24px;">3.</span>
+        <span style="font-size:14px;">Core营业利润率能否突破20%并维持（验证规模效益）</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed #e2e8f0;">
+        <span style="font-family:monospace;font-weight:700;color:#0284c7;min-width:24px;">4.</span>
+        <span style="font-size:14px;">超大规模云厂商（AWS、Azure、Google）的2027年资本支出指引（AI光纤需求的领先指标）</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed #e2e8f0;">
+        <span style="font-family:monospace;font-weight:700;color:#0284c7;min-width:24px;">5.</span>
+        <span style="font-size:14px;">Hemlock太阳能/多晶硅业务何时扭亏（目前FY2025亏损$2600万）</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed #e2e8f0;">
+        <span style="font-family:monospace;font-weight:700;color:#0284c7;min-width:24px;">6.</span>
+        <span style="font-size:14px;">显示玻璃业务是否进一步萎缩（若连续两年收入-5%，市场可能重新评估）</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed #e2e8f0;">
+        <span style="font-family:monospace;font-weight:700;color:#0284c7;min-width:24px;">7.</span>
+        <span style="font-size:14px;">CEO Wendell Weeks（约70岁）是否宣布继任计划（最大的人事风险）</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed #e2e8f0;">
+        <span style="font-family:monospace;font-weight:700;color:#0284c7;min-width:24px;">8.</span>
+        <span style="font-size:14px;">美中贸易政策对显示玻璃中国产能和汽车催化剂出口的实际影响</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:10px 0;">
+        <span style="font-family:monospace;font-weight:700;color:#0284c7;min-width:24px;">9.</span>
+        <span style="font-size:14px;">大猩猩玻璃在AI手机/AR/VR设备的新应用进展（下一波成长驱动）</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    Generated for Corning Incorporated (GLW) · 2026-05-26<br>
+    本报告基于公开信息分析，仅供研究参考，不构成投资建议
+  </div>
+</div>
+
+<script>
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Moat radar chart
+const ctx = document.getElementById('moatChart').getContext('2d');
+new Chart(ctx, {
+  type: 'radar',
+  data: {
+    labels: ["成本优势", "无形资产", "转换成本", "网络效应", "规模效应"],
+    datasets: [{
+      label: '护城河强度',
+      data: [3, 3, 2, 0, 3],
+      backgroundColor: 'rgba(2, 132, 199, 0.2)',
+      borderColor: '#0284c7',
+      borderWidth: 2,
+      pointBackgroundColor: '#0284c7',
+      pointRadius: 5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      r: {
+        beginAtZero: true,
+        max: 3,
+        ticks: { stepSize: 1, display: false },
+        pointLabels: { font: { size: 13, weight: '600' } }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: '五维护城河评分（0-3分）——宽护城河，网络效应为零但其余三项均满分',
+        font: { size: 13, weight: '600' }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
