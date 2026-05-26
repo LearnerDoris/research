@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI算力四层龙头基本面对比 · Doris</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #0a0e1a;
+    color: #e4e8f0;
+    line-height: 1.5;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  .header {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #1f2937;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin-bottom: 4px;
+  }
+  .header .subtitle {
+    font-size: 12px;
+    color: #9ca3af;
+  }
+  
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #1f2937;
+    padding-bottom: 0;
+    overflow-x: auto;
+  }
+  .tab {
+    background: transparent;
+    color: #9ca3af;
+    border: none;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 13px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .tab:hover { color: #d1d5db; }
+  .tab.active {
+    color: #60a5fa;
+    border-bottom-color: #60a5fa;
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  
+  /* Filters */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-right: 4px;
+  }
+  .filter-btn {
+    background: #1f2937;
+    color: #d1d5db;
+    border: 1px solid #374151;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 11.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { background: #374151; }
+  .filter-btn.active {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+  }
+  
+  /* Table */
+  .table-wrap {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
+    min-width: 1100px;
+  }
+  th {
+    text-align: left;
+    padding: 9px 6px;
+    background: #0f172a;
+    color: #9ca3af;
+    font-weight: 500;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border-bottom: 2px solid #1f2937;
+    cursor: pointer;
+    user-select: none;
+    position: sticky;
+    top: 0;
+    white-space: nowrap;
+  }
+  th:hover { color: #e5e7eb; background: #131a2a; }
+  th.sortable::after {
+    content: " ⇅";
+    color: #4b5563;
+    font-size: 9px;
+  }
+  th.sortable.sort-asc::after { content: " ↑"; color: #60a5fa; }
+  th.sortable.sort-desc::after { content: " ↓"; color: #60a5fa; }
+  td {
+    padding: 9px 6px;
+    border-bottom: 1px solid #1f2937;
+    color: #d1d5db;
+    white-space: nowrap;
+  }
+  tr:hover td { background: #0f172a; }
+  
+  .layer-tag {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 500;
+  }
+  .l1 { background: #5b21b6; color: #ddd6fe; }
+  .l2 { background: #064e3b; color: #a7f3d0; }
+  .l3 { background: #1e40af; color: #bfdbfe; }
+  .l4 { background: #78350f; color: #fde68a; }
+  
+  .company-name {
+    color: #f3f4f6;
+    font-weight: 500;
+  }
+  .code-cell {
+    color: #60a5fa;
+    font-size: 10px;
+    font-family: 'SF Mono', Monaco, monospace;
+  }
+  .num {
+    font-family: 'SF Mono', Monaco, monospace;
+    text-align: right;
+  }
+  
+  /* Color coding */
+  .pos-strong { color: #10b981; font-weight: 500; }
+  .pos { color: #34d399; }
+  .neg { color: #ef4444; }
+  .neu { color: #d1d5db; }
+  
+  .pe-cheap { color: #10b981; }
+  .pe-fair { color: #fbbf24; }
+  .pe-expensive { color: #f87171; font-weight: 500; }
+  .pe-extreme { color: #ef4444; font-weight: 600; }
+  
+  .gm-high { color: #10b981; }
+  .gm-mid { color: #fbbf24; }
+  .gm-low { color: #f87171; }
+  
+  .risk-high { color: #ef4444; }
+  .risk-mid { color: #fbbf24; }
+  .risk-low { color: #10b981; }
+  
+  /* Verdict cells */
+  .verdict {
+    font-size: 10.5px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+  .v-best { background: #064e3b; color: #6ee7b7; }
+  .v-good { background: #1e3a8a; color: #93c5fd; }
+  .v-watch { background: #78350f; color: #fde68a; }
+  .v-caution { background: #7f1d1d; color: #fca5a5; }
+  
+  /* Summary cards at bottom */
+  .insights {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-top: 24px;
+    font-size: 12.5px;
+    color: #9ca3af;
+    line-height: 1.7;
+  }
+  .insights h3 {
+    color: #e5e7eb;
+    font-size: 14px;
+    margin-bottom: 10px;
+    margin-top: 18px;
+    border-left: 3px solid #60a5fa;
+    padding-left: 10px;
+  }
+  .insights h3:first-of-type { margin-top: 0; }
+  .insights .key {
+    color: #f3f4f6;
+    font-weight: 500;
+  }
+  .insights .highlight {
+    color: #fbbf24;
+  }
+  .insights ul { margin-left: 18px; margin-top: 4px; margin-bottom: 4px; }
+  .insights li { margin-bottom: 4px; }
+  
+  /* Compare matrix for each dimension */
+  .matrix-section {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .matrix-title {
+    color: #e5e7eb;
+    font-size: 13px;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>AI算力四层龙头基本面对比</h1>
+  <div class="subtitle">18家精选龙头 · 财务+估值+择时+质地全维度 · 可排序可筛选 · 数据截止2026年5月</div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab active" data-tab="all">综合对比表</button>
+  <button class="tab" data-tab="valuation">估值+择时</button>
+  <button class="tab" data-tab="financial">财务质地</button>
+  <button class="tab" data-tab="moat">护城河+格局</button>
+  <button class="tab" data-tab="verdict">判断结论</button>
+</div>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <span class="filter-label">层级：</span>
+  <button class="filter-btn active" data-layer="all">全部</button>
+  <button class="filter-btn" data-layer="L1">L1 平台</button>
+  <button class="filter-btn" data-layer="L2">L2 光学</button>
+  <button class="filter-btn" data-layer="L3">L3 材料</button>
+  <button class="filter-btn" data-layer="L4">L4 期权</button>
+  <span class="filter-label" style="margin-left:16px">市场：</span>
+  <button class="filter-btn active" data-mkt="all">全部</button>
+  <button class="filter-btn" data-mkt="A">A股</button>
+  <button class="filter-btn" data-mkt="US">美股</button>
+  <button class="filter-btn" data-mkt="TW">台股</button>
+  <button class="filter-btn" data-mkt="JP">日股</button>
+</div>
+
+<!-- Tab 1: All comparison -->
+<div class="tab-content active" id="tab-all">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>层</th>
+          <th>公司</th>
+          <th>代码</th>
+          <th class="sortable" data-key="mcap">市值</th>
+          <th class="sortable" data-key="revenue">最新营收</th>
+          <th class="sortable" data-key="growth">营收增速</th>
+          <th class="sortable" data-key="gm">毛利率</th>
+          <th class="sortable" data-key="nm">净利率</th>
+          <th class="sortable" data-key="pe">动态PE</th>
+          <th class="sortable" data-key="ytd">YTD涨幅</th>
+          <th class="sortable" data-key="conc">客户集中度</th>
+          <th>判断</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-all"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tab 2: Valuation -->
+<div class="tab-content" id="tab-valuation">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>层</th>
+          <th>公司</th>
+          <th class="sortable" data-key="pe">动态PE</th>
+          <th class="sortable" data-key="ttmpe">TTM PE</th>
+          <th class="sortable" data-key="ytd">YTD涨幅</th>
+          <th class="sortable" data-key="y1">近1年涨幅</th>
+          <th class="sortable" data-key="mcap">市值($亿)</th>
+          <th>估值分位</th>
+          <th>择时角度</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-val"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tab 3: Financial -->
+<div class="tab-content" id="tab-financial">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>层</th>
+          <th>公司</th>
+          <th class="sortable" data-key="revenue">营收</th>
+          <th class="sortable" data-key="growth">增速</th>
+          <th class="sortable" data-key="gm">毛利率</th>
+          <th class="sortable" data-key="nm">净利率</th>
+          <th class="sortable" data-key="roe">ROE</th>
+          <th class="sortable" data-key="conc">前1/前5客户</th>
+          <th>扩产强度</th>
+          <th>财务质地</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-fin"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tab 4: Moat -->
+<div class="tab-content" id="tab-moat">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>层</th>
+          <th>公司</th>
+          <th>核心壁垒</th>
+          <th>竞争格局</th>
+          <th>替代风险</th>
+          <th>护城河评级</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-moat"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tab 5: Verdict -->
+<div class="tab-content" id="tab-verdict">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>层</th>
+          <th>公司</th>
+          <th>买点逻辑</th>
+          <th>卖点风险</th>
+          <th>适配人群</th>
+          <th>综合判断</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-verdict"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Insights -->
+<div class="insights">
+  <h3>每层最优标的快读</h3>
+  <ul>
+    <li><span class="key">L1 平台架构</span>：<span class="highlight">TSMC</span> 是估值最克制的核心标的（PE ~25x，YTD +33%），66%毛利率反映绝对议价权；NVDA基本面无可挑剔但已是$5.22T市值；AVGO估值最贵。</li>
+    <li><span class="key">L2 光学确定性</span>：<span class="highlight">新易盛</span> 是同业里相对估值最便宜的（PE ~22x vs 旭创30-43x），毛利率47.48% 超过旭创39.96%；<span class="highlight">天孚通信</span> 是质地最好的（毛利率53.96%、净利率39%），但客户集中度Fabrinet占62%是风险；Coherent和Lumentum估值已显著消化业绩，Lumentum PE 308x极端。</li>
+    <li><span class="key">L3 材料基板</span>：<span class="highlight">生益科技</span> 是最稳健的（PE仅18x，国资背景，M9认证切入Rubin）；<span class="highlight">胜宏科技</span> 是弹性最大的（PE 56x但EPS增长273%），客户集中度极高；沪电股份PE和增速较平衡。</li>
+    <li><span class="key">L4 期权层</span>：<span class="highlight">康宁</span> 是估值最克制的"卖铲人卖铲人"（PE 41x，hyperscaler长协兜底$6B+）；Credo是FY26增速最快（+200%+）但客户集中度88%；Advantest是CPO测试最大盘标的；致茂电子是台股纯AI测试beta。</li>
+  </ul>
+
+  <h3>三个值得深挖的相对价值差异</h3>
+  <ul>
+    <li><span class="key">新易盛 vs 中际旭创</span>：同样卖光模块，新易盛毛利率高7个百分点（47% vs 40%）、净利率高6个百分点，但PE却低10个点。<span class="highlight">市场把它折价是因为1.6T节奏慢半步</span>；如果LPO路线兑现，估值差会收敛。</li>
+    <li><span class="key">天孚通信的"卡环节"逻辑</span>：是中游"易中天"里盈利能力最强的（毛利率53.96% vs 旭创40%、新易盛47%），因为它<span class="highlight">不与下游竞争反而成为它们共同的核心供应商</span>。但<span class="highlight">单一客户Fabrinet占62%</span>，比旭创76%前五大集中度更恶劣。</li>
+    <li><span class="key">生益科技 vs 胜宏科技 vs 沪电股份</span>：三家都吃AI算力PCB红利，但<span class="highlight">生益估值仅18x、稳健派</span>（国资+M9切入Rubin），<span class="highlight">胜宏56x、弹性派</span>（EPS +273%但客户集中度50.8%、应收账款100天周转），<span class="highlight">沪电25x、平衡派</span>（产能Q3 2026试产+稳健成长）。</li>
+  </ul>
+
+  <h3>四个最需警惕的"高估值踩踏"风险</h3>
+  <ul>
+    <li><span class="key">Lumentum (LITE)</span>：PE 308x，YTD +186%、近12个月+1300%。Q4指引$960M-$1.01B虽然好，但<span class="highlight">任何季报小幅miss都会导致估值杀30-50%</span>。</li>
+    <li><span class="key">Credo (CRDO)</span>：前三大客户占88%，Q4毛利率指引从68.6%下调到64-66%，<span class="highlight">3月2日财报后单日跌18.55%</span>说明市场已经在price-in客户集中度风险。</li>
+    <li><span class="key">胜宏科技</span>：YTD大涨后PE 56x，前五大客户50.8%（其中NVDA占29.6%），<span class="highlight">应收账款100天周转、存货71天周转</span>均高于行业平均，扩产+集中度双风险。</li>
+    <li><span class="key">天孚通信</span>：Fabrinet单一客户占62%，<span class="highlight">财报已经承认"产品价格呈持续下降趋势"和"泰国工厂初期生产成本高于国内"</span>，毛利率下降风险已明确披露。</li>
+  </ul>
+
+  <h3>给Doris的建议组合（基于FCX-style系统性思维）</h3>
+  <ul>
+    <li><span class="key">核心仓位（确定性，60%）</span>：TSMC + 新易盛 + 生益科技 + 康宁 —— 四层各取估值最克制、护城河最深的标的，PE 20-40x范围</li>
+    <li><span class="key">弹性仓位（β放大，25%）</span>：中际旭创 + 沪电股份 + Advantest —— 业绩兑现可见度高、估值合理偏上</li>
+    <li><span class="key">期权仓位（高赔率，15%）</span>：凌云光 + 致茂电子 + 天孚通信 —— 期权层叙事+小盘弹性</li>
+    <li><span class="key">不建议持有</span>：Lumentum、Credo、胜宏科技 —— 估值已脱离基本面，等回调至少20-30%再考虑</li>
+  </ul>
+</div>
+
+<script>
+const data = [
+  // L1
+  {layer:"L1", name:"NVIDIA", code:"NVDA US", mkt:"US", 
+   mcap:52200, revenue:"$2159亿 FY26", revenueNum:21590, growth:"+65%", growthNum:65, 
+   gm:71.1, nm:55.6, roe:"~115%", pe:"31.7", peNum:32, ttmpe:"33", ttmpeNum:33, 
+   ytd:"+45%", ytdNum:45, y1:"+85%", y1Num:85, 
+   conc:"前4客户54%", concRisk:"高",
+   moat:"CUDA生态+GPU架构+NVLink", competition:"垄断地位(80%+AI GPU)", subst:"AVGO ASIC, 自研芯片",
+   moatRank:"极强",
+   capex:"加码先进制程",
+   buy:"AI算力最直接β; 业绩兑现已超预期", 
+   sell:"$5.22T市值进一步上涨空间有限; 中国市场风险", 
+   audience:"愿持有大盘核心配置者",
+   verdict:"v-good", verdictText:"基本面无可挑剔但已price-in"},
+  
+  {layer:"L1", name:"Broadcom", code:"AVGO US", mkt:"US",
+   mcap:13500, revenue:"$560亿 FY25", revenueNum:5600, growth:"+44%", growthNum:44,
+   gm:75, nm:35, roe:"~30%", pe:"38", peNum:38, ttmpe:"40", ttmpeNum:40,
+   ytd:"+25%", ytdNum:25, y1:"+90%", y1Num:90,
+   conc:"前1客户20%+ (谷歌TPU)", concRisk:"中",
+   moat:"CPO芯片+ASIC定制+VMware软件", competition:"AI ASIC双雄(与MRVL)", subst:"NVDA自研",
+   moatRank:"极强",
+   capex:"软件+硬件双轮",
+   buy:"CPO主推方+ASIC定制龙头", 
+   sell:"估值最贵; VMware整合不确定",
+   audience:"看好ASIC路线者",
+   verdict:"v-watch", verdictText:"估值偏高,关注ASIC份额进展"},
+   
+  {layer:"L1", name:"TSMC", code:"TSM US", mkt:"US",
+   mcap:20980, revenue:"$1000亿+ FY25", revenueNum:10000, growth:"+30%+", growthNum:30,
+   gm:66.2, nm:42, roe:"~32%", pe:"25", peNum:25, ttmpe:"28", ttmpeNum:28,
+   ytd:"+33%", ytdNum:33, y1:"+45%", y1Num:45,
+   conc:"前3客户~50% (Apple/NVDA/AMD)", concRisk:"中",
+   moat:"3nm/2nm独家+CoUPE封装", competition:"全球独家先进制程", subst:"无短期替代",
+   moatRank:"无敌",
+   capex:"$56B年Capex",
+   buy:"AI最确定性受益者; 估值最克制",
+   sell:"地缘黑天鹅(台海)",
+   audience:"长期价值投资者",
+   verdict:"v-best", verdictText:"L1最优,估值合理+护城河无敌"},
+
+  // L2
+  {layer:"L2", name:"中际旭创", code:"300308 SZ", mkt:"A",
+   mcap:5719, revenue:"¥382亿 25年", revenueNum:38240, growth:"+60.25%", growthNum:60,
+   gm:42.61, nm:28.2, roe:"~35%", pe:"30-43", peNum:36, ttmpe:"55", ttmpeNum:55,
+   ytd:"+319%", ytdNum:319, y1:"+428%", y1Num:428,
+   conc:"前5客户76%", concRisk:"高",
+   moat:"800G/1.6T技术领先+海外90%", competition:"全球No.1 LightCounting", subst:"新易盛逼近",
+   moatRank:"强",
+   capex:"硅光+1.6T扩产",
+   buy:"全球光模块第一",
+   sell:"客户集中度极高;海外政策风险",
+   audience:"看好AI算力中长期者",
+   verdict:"v-good", verdictText:"龙头地位稳但已大涨"},
+
+  {layer:"L2", name:"新易盛", code:"300502 SZ", mkt:"A",
+   mcap:3717, revenue:"¥250亿+ 25E", revenueNum:25000, growth:"+180%+", growthNum:180,
+   gm:47.48, nm:33, roe:"~50%", pe:"22-26", peNum:24, ttmpe:"45", ttmpeNum:45,
+   ytd:"+355%", ytdNum:355, y1:"+410%", y1Num:410,
+   conc:"前5客户85%+", concRisk:"高",
+   moat:"LPO 800G份额75%+毛利率最高", competition:"光模块全球第3", subst:"CPO替代",
+   moatRank:"强",
+   capex:"积极扩产",
+   buy:"同业最便宜+毛利率最高",
+   sell:"1.6T节奏慢半步; CPO替代",
+   audience:"相对价值投资者",
+   verdict:"v-best", verdictText:"L2相对价值最优"},
+   
+  {layer:"L2", name:"Coherent", code:"COHR US", mkt:"US",
+   mcap:5765, revenue:"$58亿 FY25/$72亿 FY26", revenueNum:7200, growth:"+23%", growthNum:23,
+   gm:39.6, nm:18, roe:"~12%", pe:"35-40", peNum:37, ttmpe:"45", ttmpeNum:45,
+   ytd:"+106%", ytdNum:106, y1:"+367%", y1Num:367,
+   conc:"分散(工业+通信)", concRisk:"低",
+   moat:"EML芯片+InP产线", competition:"与LITE双寡头", subst:"国产替代有限",
+   moatRank:"极强",
+   capex:"扩产加快",
+   buy:"业务多元化抗周期+EML龙头",
+   sell:"工业激光拖累整体增速",
+   audience:"看光通信硬科技者",
+   verdict:"v-good", verdictText:"业务分散反成优势"},
+   
+  {layer:"L2", name:"Lumentum", code:"LITE US", mkt:"US",
+   mcap:7330, revenue:"$33亿+ FY26", revenueNum:3300, growth:"+90%", growthNum:90,
+   gm:47.9, nm:25, roe:"~10%", pe:"308", peNum:308, ttmpe:"308", ttmpeNum:308,
+   ytd:"+186%", ytdNum:186, y1:"+1300%", y1Num:1300,
+   conc:"前1客户~30% (NVDA)", concRisk:"高",
+   moat:"200G EML独家+NVDA $2B战投", competition:"与COHR双寡头", subst:"无短期替代",
+   moatRank:"极强",
+   capex:"激进扩产",
+   buy:"NVDA战投绑定+200G EML独家",
+   sell:"PE 308x极端; 任何miss暴跌",
+   audience:"高风险偏好者",
+   verdict:"v-caution", verdictText:"基本面好但估值已脱离地心引力"},
+   
+  {layer:"L2", name:"天孚通信", code:"300394 SZ", mkt:"A",
+   mcap:1337, revenue:"¥51.6亿 25年", revenueNum:5163, growth:"+58.79%", growthNum:58.8,
+   gm:53.96, nm:39, roe:"~38%", pe:"50-60", peNum:55, ttmpe:"66", ttmpeNum:66,
+   ytd:"+166%", ytdNum:166, y1:"+650%", y1Num:650,
+   conc:"前1客户62% (Fabrinet)", concRisk:"极高",
+   moat:"NVDA CPO光引擎份额70%+", competition:"光引擎独家", subst:"易中天自研",
+   moatRank:"强",
+   capex:"泰国二期+港股IPO",
+   buy:"质地最优+卡CPO关键环节",
+   sell:"客户集中度极端; 拟港股IPO摊薄",
+   audience:"质量优先者",
+   verdict:"v-good", verdictText:"质地一流但客户集中度警铃"},
+
+  // L3
+  {layer:"L3", name:"胜宏科技", code:"300476 SZ", mkt:"A",
+   mcap:2500, revenue:"¥192.92亿 25年", revenueNum:19292, growth:"+79.77%", growthNum:79.8,
+   gm:35.22, nm:22.35, roe:"35.56%", pe:"45-56", peNum:50, ttmpe:"56", ttmpeNum:56,
+   ytd:"+180%", ytdNum:180, y1:"+200%+", y1Num:200,
+   conc:"前5客户50.8% (NVDA 29.6%)", concRisk:"高",
+   moat:"AI PCB全球市占率13.8%第一+HDI龙头", competition:"沪电深南竞争", subst:"国产替代成熟",
+   moatRank:"强",
+   capex:"激进+H股IPO募资",
+   buy:"AI PCB纯beta标的+EPS+273%",
+   sell:"客户集中度+应收账款100天+扩产风险",
+   audience:"高弹性投资者",
+   verdict:"v-watch", verdictText:"业绩兑现强但风险点多"},
+   
+  {layer:"L3", name:"沪电股份", code:"002463 SZ", mkt:"A",
+   mcap:1900, revenue:"¥189.45亿 25年", revenueNum:18945, growth:"+42%", growthNum:42,
+   gm:35.4, nm:20.08, roe:"~28%", pe:"23-30", peNum:26, ttmpe:"32", ttmpeNum:32,
+   ytd:"+85%", ytdNum:85, y1:"+150%", y1Num:150,
+   conc:"客户分散", concRisk:"低",
+   moat:"GB300 MPCB+高速交换机PCB", competition:"与胜宏深南三强", subst:"较低",
+   moatRank:"强",
+   capex:"43亿扩产26H2试产",
+   buy:"估值合理+客户分散+稳健增长",
+   sell:"扩产周期反转风险",
+   audience:"价值成长平衡者",
+   verdict:"v-good", verdictText:"L3里估值+质地最平衡"},
+   
+  {layer:"L3", name:"生益科技", code:"600183 SH", mkt:"A",
+   mcap:1100, revenue:"¥238亿 25E", revenueNum:23800, growth:"+17%", growthNum:17,
+   gm:27.5, nm:11, roe:"~16%", pe:"18-22", peNum:20, ttmpe:"25", ttmpeNum:25,
+   ytd:"+50%", ytdNum:50, y1:"+90%", y1Num:90,
+   conc:"客户分散", concRisk:"低",
+   moat:"M9 CCL切入Rubin+国内CCL龙头", competition:"全球CCL前3", subst:"日台厂垄断高端",
+   moatRank:"强",
+   capex:"泰国基地稳步推进",
+   buy:"估值最克制+国产替代标杆+国资背景",
+   sell:"主业增速慢于光模块板块",
+   audience:"价值投资者首选",
+   verdict:"v-best", verdictText:"L3最稳健+估值最便宜"},
+   
+  {layer:"L3", name:"台光电子", code:"2383 TW", mkt:"TW",
+   mcap:1200, revenue:"NT$高位增长 FY25", revenueNum:0, growth:"+50%+", growthNum:50,
+   gm:30, nm:18, roe:"~25%", pe:"23-27", peNum:25, ttmpe:"30", ttmpeNum:30,
+   ytd:"+85%", ytdNum:85, y1:"+139%", y1Num:139,
+   conc:"AI server客户分散", concRisk:"低",
+   moat:"M8/M9高端CCL龙头", competition:"全球CCL前5(10-15%份额)", subst:"日厂Panasonic挤压",
+   moatRank:"强",
+   capex:"扩产积极",
+   buy:"高端CCL龙头+台股直接Beta",
+   sell:"已大涨; 新台币升值汇兑损失",
+   audience:"看好AI server的台股投资者",
+   verdict:"v-good", verdictText:"已大涨但仍有空间"},
+
+  {layer:"L3", name:"欣兴电子", code:"3037 TW", mkt:"TW",
+   mcap:1100, revenue:"NT$高速增长 FY25", revenueNum:0, growth:"+30%", growthNum:30,
+   gm:25, nm:15, roe:"~20%", pe:"20-25", peNum:22, ttmpe:"28", ttmpeNum:28,
+   ytd:"+60%", ytdNum:60, y1:"+95%", y1Num:95,
+   conc:"NVDA/AMD/Apple", concRisk:"中",
+   moat:"美系GPU ABF 30-40%份额", competition:"ABF四强(欣兴/Ibiden/南电/景硕)", subst:"日厂技术更强",
+   moatRank:"强",
+   capex:"稳步扩产",
+   buy:"ABF直接绑定NVDA/AMD",
+   sell:"日厂技术壁垒更高",
+   audience:"想暴露ABF赛道者",
+   verdict:"v-good", verdictText:"ABF台股代表"},
+
+  // L4
+  {layer:"L4", name:"Corning 康宁", code:"GLW US", mkt:"US",
+   mcap:1950, revenue:"$164亿 FY25", revenueNum:16400, growth:"+13%/光通信+35%", growthNum:35,
+   gm:38, nm:18, roe:"~20%", pe:"41", peNum:41, ttmpe:"45", ttmpeNum:45,
+   ytd:"+90%", ytdNum:90, y1:"+95%", y1Num:95,
+   conc:"hyperscaler长协兜底", concRisk:"低",
+   moat:"特种光纤+康宁连接器+Meta $6B长协", competition:"光纤连接绝对垄断", subst:"无替代",
+   moatRank:"无敌",
+   capex:"扩产匹配长协",
+   buy:"卖铲人卖铲人+长协兜底+估值最克制",
+   sell:"非AI业务拖累整体增速",
+   audience:"长期价值投资者",
+   verdict:"v-best", verdictText:"L4最稳健+估值最合理"},
+
+  {layer:"L4", name:"Credo", code:"CRDO US", mkt:"US",
+   mcap:3000, revenue:"$10亿+ FY26", revenueNum:1000, growth:"+200%+", growthNum:200,
+   gm:68.6, nm:51.3, roe:"~25%", pe:"60-80", peNum:70, ttmpe:"100", ttmpeNum:100,
+   ytd:"+85%", ytdNum:85, y1:"+250%", y1Num:250,
+   conc:"前3客户88% (39%/32%/17%)", concRisk:"极高",
+   moat:"AEC铜缆+光DSP双轮+ZeroFlap", competition:"AEC独家+光DSP后来者", subst:"光替代铜风险",
+   moatRank:"强",
+   capex:"$1.3B现金+加大投入",
+   buy:"高毛利率+爆炸增速",
+   sell:"前3客户88%+毛利率Q4下调",
+   audience:"高赔率冒险者",
+   verdict:"v-watch", verdictText:"业绩爆炸但客户集中度警铃"},
+
+  {layer:"L4", name:"致茂电子", code:"2360 TW", mkt:"TW",
+   mcap:450, revenue:"NT$高位 FY25", revenueNum:0, growth:"+16%", growthNum:16,
+   gm:55, nm:25, roe:"~22%", pe:"45-55", peNum:50, ttmpe:"60", ttmpeNum:60,
+   ytd:"+45%", ytdNum:45, y1:"+80%", y1Num:80,
+   conc:"TSMC等盟友", concRisk:"中",
+   moat:"高通道烧录测试+3D AOI检测", competition:"TSMC COUPE光学测试盟友", subst:"Advantest更强",
+   moatRank:"中",
+   capex:"研发投入",
+   buy:"CPO测试台股直接β",
+   sell:"被Advantest压制+订单兑现2027",
+   audience:"看好CPO量产时点者",
+   verdict:"v-watch", verdictText:"赔率高但订单兑现窗口未到"},
+
+  {layer:"L4", name:"Advantest", code:"6857 JP", mkt:"JP",
+   mcap:7000, revenue:"¥8000+亿日元 FY26E", revenueNum:5400, growth:"+60%", growthNum:60,
+   gm:55, nm:30, roe:"~30%", pe:"35-45", peNum:40, ttmpe:"50", ttmpeNum:50,
+   ytd:"+55%", ytdNum:55, y1:"+120%", y1Num:120,
+   conc:"TSMC+三星等大客户", concRisk:"中",
+   moat:"SoC测试龙头+CPO光学测试盟友", competition:"与Teradyne双寡头", subst:"无短期替代",
+   moatRank:"极强",
+   capex:"研发投入加大",
+   buy:"CPO测试最大盘标的+SoC测试龙头",
+   sell:"日元波动+CPO订单兑现2026下半年",
+   audience:"看好CPO量产+测试设备β者",
+   verdict:"v-good", verdictText:"L4最大盘+护城河强"},
+
+  {layer:"L4", name:"凌云光", code:"688400 SH", mkt:"A",
+   mcap:235, revenue:"¥29.12亿 25年", revenueNum:2912, growth:"+30.35%", growthNum:30.4,
+   gm:34, nm:5.5, roe:"~3%", pe:"100+", peNum:120, ttmpe:"140", ttmpeNum:140,
+   ytd:"+85%", ytdNum:85, y1:"+130%", y1Num:130,
+   conc:"机器视觉客户分散", concRisk:"中",
+   moat:"Polatis OCS中国代理+机器视觉", competition:"OCS国产独家代理", subst:"赛微/华懋等竞争",
+   moatRank:"中",
+   capex:"JAI整合中",
+   buy:"A股Polatis OCS最直接标的",
+   sell:"机器视觉主业增长慢+OCS订单尚未兑现",
+   audience:"看好Google OCS路线者",
+   verdict:"v-watch", verdictText:"OCS option价值大但风险高"}
+];
+
+// Render functions
+function fmtPE(pe, peNum) {
+  let cls = peNum >= 100 ? 'pe-extreme' : peNum >= 50 ? 'pe-expensive' : peNum >= 25 ? 'pe-fair' : 'pe-cheap';
+  return `<span class="${cls}">${pe}x</span>`;
+}
+function fmtGM(gm) {
+  let cls = gm >= 50 ? 'gm-high' : gm >= 30 ? 'gm-mid' : 'gm-low';
+  return `<span class="${cls}">${gm}%</span>`;
+}
+function fmtConc(conc, risk) {
+  let cls = risk === '极高' ? 'risk-high' : risk === '高' ? 'risk-mid' : 'risk-low';
+  return `<span class="${cls}">${conc}</span>`;
+}
+function fmtYTD(ytd, num) {
+  let cls = num >= 200 ? 'pos-strong' : num >= 50 ? 'pos' : 'neu';
+  return `<span class="${cls}">${ytd}</span>`;
+}
+function fmtVerdict(v, t) {
+  return `<span class="verdict ${v}">${t}</span>`;
+}
+function fmtMcap(m) {
+  if (m === 0) return '—';
+  if (m >= 10000) return `$${(m/10000).toFixed(2)}T`;
+  return `$${m/100}B`;
+}
+
+function renderAll() {
+  document.getElementById('tbody-all').innerHTML = data.map(c => `
+    <tr data-layer="${c.layer}" data-mkt="${c.mkt}">
+      <td><span class="layer-tag ${c.layer.toLowerCase()}">${c.layer}</span></td>
+      <td class="company-name">${c.name}</td>
+      <td class="code-cell">${c.code}</td>
+      <td class="num">${fmtMcap(c.mcap)}</td>
+      <td>${c.revenue}</td>
+      <td class="num pos">${c.growth}</td>
+      <td class="num">${fmtGM(c.gm)}</td>
+      <td class="num">${c.nm}%</td>
+      <td class="num">${fmtPE(c.pe, c.peNum)}</td>
+      <td class="num">${fmtYTD(c.ytd, c.ytdNum)}</td>
+      <td>${fmtConc(c.conc, c.concRisk)}</td>
+      <td>${fmtVerdict(c.verdict, c.verdictText)}</td>
+    </tr>`).join('');
+}
+
+function renderVal() {
+  document.getElementById('tbody-val').innerHTML = data.map(c => {
+    let percentile = c.peNum >= 100 ? '极端' : c.peNum >= 50 ? '偏高' : c.peNum >= 25 ? '合理' : '便宜';
+    let timing = c.ytdNum >= 200 ? '已大涨,等回调' : c.ytdNum >= 100 ? '涨幅大,谨慎' : c.ytdNum >= 50 ? '已兑现部分' : '仍有空间';
+    let pcls = c.peNum >= 100 ? 'risk-high' : c.peNum >= 50 ? 'risk-mid' : 'risk-low';
+    let tcls = c.ytdNum >= 200 ? 'risk-high' : c.ytdNum >= 100 ? 'risk-mid' : 'risk-low';
+    return `<tr data-layer="${c.layer}" data-mkt="${c.mkt}">
+      <td><span class="layer-tag ${c.layer.toLowerCase()}">${c.layer}</span></td>
+      <td class="company-name">${c.name}</td>
+      <td class="num">${fmtPE(c.pe, c.peNum)}</td>
+      <td class="num">${fmtPE(c.ttmpe, c.ttmpeNum)}</td>
+      <td class="num">${fmtYTD(c.ytd, c.ytdNum)}</td>
+      <td class="num">${c.y1}</td>
+      <td class="num">${fmtMcap(c.mcap)}</td>
+      <td class="${pcls}">${percentile}</td>
+      <td class="${tcls}">${timing}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderFin() {
+  document.getElementById('tbody-fin').innerHTML = data.map(c => {
+    let capexCls = c.capex.includes('激进') ? 'risk-mid' : 'neu';
+    let quality = c.gm >= 50 && c.nm >= 25 ? '优秀' : c.gm >= 35 && c.nm >= 15 ? '良好' : '一般';
+    let qcls = quality === '优秀' ? 'risk-low' : quality === '良好' ? 'neu' : 'risk-mid';
+    return `<tr data-layer="${c.layer}" data-mkt="${c.mkt}">
+      <td><span class="layer-tag ${c.layer.toLowerCase()}">${c.layer}</span></td>
+      <td class="company-name">${c.name}</td>
+      <td>${c.revenue}</td>
+      <td class="num pos">${c.growth}</td>
+      <td class="num">${fmtGM(c.gm)}</td>
+      <td class="num">${c.nm}%</td>
+      <td class="num">${c.roe}</td>
+      <td>${fmtConc(c.conc, c.concRisk)}</td>
+      <td class="${capexCls}">${c.capex}</td>
+      <td class="${qcls}">${quality}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderMoat() {
+  document.getElementById('tbody-moat').innerHTML = data.map(c => {
+    let rcls = c.moatRank === '无敌' ? 'pos-strong' : c.moatRank === '极强' ? 'pos' : c.moatRank === '强' ? 'neu' : 'risk-mid';
+    return `<tr data-layer="${c.layer}" data-mkt="${c.mkt}">
+      <td><span class="layer-tag ${c.layer.toLowerCase()}">${c.layer}</span></td>
+      <td class="company-name">${c.name}</td>
+      <td>${c.moat}</td>
+      <td>${c.competition}</td>
+      <td>${c.subst}</td>
+      <td class="${rcls}">${c.moatRank}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderVerdict() {
+  document.getElementById('tbody-verdict').innerHTML = data.map(c => `
+    <tr data-layer="${c.layer}" data-mkt="${c.mkt}">
+      <td><span class="layer-tag ${c.layer.toLowerCase()}">${c.layer}</span></td>
+      <td class="company-name">${c.name}</td>
+      <td>${c.buy}</td>
+      <td class="risk-mid">${c.sell}</td>
+      <td>${c.audience}</td>
+      <td>${fmtVerdict(c.verdict, c.verdictText)}</td>
+    </tr>`).join('');
+}
+
+renderAll(); renderVal(); renderFin(); renderMoat(); renderVerdict();
+
+// Tabs
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById('tab-' + t.dataset.tab).classList.add('active');
+}));
+
+// Filters
+let layerF = 'all', mktF = 'all';
+function applyFilters() {
+  document.querySelectorAll('tbody tr').forEach(r => {
+    let show = true;
+    if (layerF !== 'all' && r.dataset.layer !== layerF) show = false;
+    if (mktF !== 'all' && r.dataset.mkt !== mktF) show = false;
+    r.style.display = show ? '' : 'none';
+  });
+}
+document.querySelectorAll('.filter-btn[data-layer]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.filter-btn[data-layer]').forEach(x => x.classList.remove('active'));
+  b.classList.add('active'); layerF = b.dataset.layer; applyFilters();
+}));
+document.querySelectorAll('.filter-btn[data-mkt]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.filter-btn[data-mkt]').forEach(x => x.classList.remove('active'));
+  b.classList.add('active'); mktF = b.dataset.mkt; applyFilters();
+}));
+
+// Sorting
+document.querySelectorAll('th.sortable').forEach(th => {
+  let asc = false;
+  th.addEventListener('click', () => {
+    const key = th.dataset.key;
+    const numKey = key + 'Num';
+    const useNum = data.length > 0 && (numKey in data[0]);
+    asc = !asc;
+    
+    document.querySelectorAll('th.sortable').forEach(x => {
+      x.classList.remove('sort-asc', 'sort-desc');
+    });
+    th.classList.add(asc ? 'sort-asc' : 'sort-desc');
+    
+    const sortedData = [...data].sort((a, b) => {
+      const av = useNum ? a[numKey] : a[key];
+      const bv = useNum ? b[numKey] : b[key];
+      return asc ? (av - bv) : (bv - av);
+    });
+    
+    // Re-render all tabs with sorted data
+    const oldData = [...data];
+    data.length = 0;
+    sortedData.forEach(d => data.push(d));
+    renderAll(); renderVal(); renderFin(); renderMoat(); renderVerdict();
+    applyFilters();
+    data.length = 0;
+    oldData.forEach(d => data.push(d));
+  });
+});
+</script>
+
+</body>
+</html>
