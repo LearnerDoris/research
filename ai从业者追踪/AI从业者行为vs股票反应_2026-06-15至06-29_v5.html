@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AI 从业者两周观察 · 2026-06-15 至 06-29</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --ink: #1a1a1a;
+    --ink-soft: #2d2d2d;
+    --muted: #6a6a6a;
+    --line: #e5e3dc;
+    --accent: #3a5fcd;
+    --accent-soft: #eef2fa;
+    --good: #1f7a4a;
+    --bad: #b3261e;
+    --neu: #7a6a3a;
+    --chip-bg: #f0eee5;
+    --quote-bg: #f4f1e8;
+    --side-bg: #f5f3eb;
+    --tab-inactive: #888;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Helvetica Neue", -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+    line-height: 1.78;
+    font-size: 16px;
+  }
+  h1 {
+    font-size: 28px;
+    margin: 0 0 6px;
+    letter-spacing: -0.012em;
+    font-weight: 700;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 14.5px;
+    margin: 0 0 30px;
+    font-style: italic;
+  }
+  h2 {
+    font-size: 21px;
+    margin: 44px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: -0.005em;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 18px;
+    margin: 36px 0 8px;
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: -0.003em;
+  }
+  h3 .who { color: var(--accent); }
+  h3 .when {
+    color: var(--muted);
+    font-weight: 400;
+    font-size: 13.5px;
+    margin-left: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+  p { margin: 12px 0; }
+
+  .lede {
+    font-size: 16.5px;
+    line-height: 1.7;
+    background: var(--quote-bg);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 20px 0 28px;
+  }
+  .lede strong { color: var(--accent); }
+
+  .tabs { margin: 28px 0; }
+  .tabs input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .tab-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    border-bottom: 2px solid var(--line);
+    padding: 0;
+    margin: 0 0 24px;
+  }
+  .tab-labels label {
+    padding: 11px 18px;
+    cursor: pointer;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--tab-inactive);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .tab-labels label:hover {
+    color: var(--ink-soft);
+    background: var(--side-bg);
+  }
+  .tab-labels label .count {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 4px;
+  }
+  .tab-panels .panel { display: none; }
+
+  #t1:checked ~ .tab-labels label[for="t1"],
+  #t2:checked ~ .tab-labels label[for="t2"],
+  #t3:checked ~ .tab-labels label[for="t3"],
+  #t4:checked ~ .tab-labels label[for="t4"] {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  #t1:checked ~ .tab-panels .panel-1,
+  #t2:checked ~ .tab-panels .panel-2,
+  #t3:checked ~ .tab-panels .panel-3,
+  #t4:checked ~ .tab-panels .panel-4 { display: block; animation: fadein 0.2s ease; }
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .panel-intro {
+    color: var(--muted);
+    font-size: 14px;
+    font-style: italic;
+    margin: 0 0 22px;
+    padding: 10px 14px;
+    background: var(--side-bg);
+    border-radius: 4px;
+  }
+
+  .event {
+    margin: 32px 0 0;
+    padding-bottom: 28px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .event:last-child { border-bottom: none; }
+  .event h3 { margin-top: 0; }
+
+  .reaction {
+    background: var(--side-bg);
+    border-left: 3px solid var(--line);
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .reaction .label {
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .reaction.bad   { border-left-color: var(--bad); }
+  .reaction.good  { border-left-color: var(--good); }
+  .reaction.mix   { border-left-color: var(--neu); }
+
+  .up   { color: var(--good); font-weight: 600; }
+  .down { color: var(--bad); font-weight: 600; }
+  .ticker {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 13px;
+    background: var(--chip-bg);
+    padding: 0 5px;
+    border-radius: 2px;
+  }
+
+  blockquote {
+    margin: 16px 0;
+    padding: 6px 16px;
+    border-left: 2px solid var(--accent);
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 15px;
+  }
+
+  .takeaway-block {
+    background: var(--accent-soft);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin: 18px 0;
+  }
+  .takeaway-block ul { padding-left: 22px; margin: 8px 0; }
+  .takeaway-block li { margin: 6px 0; line-height: 1.65; }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  .caveat-list {
+    background: #fdf6e3;
+    border-left: 3px solid #d9a300;
+    padding: 14px 18px 14px 22px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: #5a4a10;
+  }
+  .caveat-list p { margin: 6px 0; }
+  em { color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<h1>AI 从业者两周观察</h1>
+<p class="subtitle">2026 年 6 月 15 日 — 6 月 29 日 · 按事件类别归档，以人物为叙事中心</p>
+
+<div class="lede">
+这两周的主旋律是<strong>"Google 大出血"</strong>——6 天之内，Sundar Pichai 失去 4 位关键 AI 研究员，其中包括 Transformer 共同作者 Noam Shazeer（去 OpenAI）和诺贝尔化学奖得主 John Jumper（去 Anthropic），<span class="ticker">GOOGL</span> 市值蒸发约 \$2690 亿。同一周，Sam Altman、Dario Amodei、Demis Hassabis 三人坐进 G7 总统午餐桌，Elon Musk 把 \$600 亿 SpaceX 股票砸下去收购 Cursor，Demis Hassabis 用 Gemini 2.5 Pro Deep Think 试图救火，Anthropic 公开指控阿里巴巴用 25,000 个假账号偷 Claude。最值得注意的或许是 6/26 出现的"叙事拐点"——CNBC 一篇文章把"tokenmaxxing"时代宣告结束，企业开始为效率付钱，而不是为模型规模付钱。
+</div>
+
+<div class="tabs">
+  <input type="radio" name="tabs" id="t1" checked>
+  <input type="radio" name="tabs" id="t2">
+  <input type="radio" name="tabs" id="t3">
+  <input type="radio" name="tabs" id="t4">
+
+  <div class="tab-labels">
+    <label for="t1">产品发布<span class="count">· 5</span></label>
+    <label for="t2">公开点评<span class="count">· 4</span></label>
+    <label for="t3">投资行为<span class="count">· 3</span></label>
+    <label for="t4">人事/战略<span class="count">· 6</span></label>
+  </div>
+
+  <div class="tab-panels">
+
+    <!-- ===== TAB 1: 产品发布 ===== -->
+    <div class="panel panel-1">
+      <div class="panel-intro">
+        这两周的产品发布有一个共同主题——"急救"。Hassabis 用 Gemini 2.5 Pro Deep Think 给 Google 输血；Altman 把 GPT-5.5-Cyber 当成对监管者的姿态；Pichai 重组开发者工具——这些发布都有一种"被时间表逼出来"的紧迫感。GPT-5.6、Grok 5、Gemini 3.5 Pro 三个旗舰本来该在 6 月发布，全部跳票到 7 月。
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Demis Hassabis</span> 用 Gemini 2.5 Pro Deep Think 给 Google 输血 <span class="when">6/22</span></h3>
+        <p>6 月 22 日，Demis Hassabis 在 Google 失去三位关键 AI 研究员（Shazeer、Jumper、之后还会有更多）之后的第四天，推出了 Gemini 2.5 Pro Deep Think。这是 Google 内部最重的一张牌——89.8% MMLU-Pro、82.4% GPQA Diamond，在科学和推理基准上首次超过 Anthropic 的 Fable 5 和 OpenAI 的 GPT-5.5；200 万 token 上下文窗口能一次吞下整个 codebase 或几个月的对话历史。</p>
+        <p>"Deep Think"是 Google 对 OpenAI o-series 和 Anthropic Extended Thinking 的回应——不是即时回答，而是"花时间分解问题、探索多条推理路径、自我验证"。配合 6 月底原本要发的 Gemini 3.5 Pro（被推迟到 7 月）形成两步策略。</p>
+        <p>这个发布的时机意味深长。前一周 GOOGL 因 Shazeer 离职跌 -7%，市场对"Google 是否能维持 AI 前沿"产生第一次系统性怀疑。Hassabis 让 Deep Think 在 6/22 周一开盘前发布，是想用产品数据回应人事危机——但市场反应有限，GOOGL 当周继续下跌。Hassabis 自己也是这周风口浪尖上的人——他刚跟 Altman、Amodei 在 G7 一起站台，下属却在持续流失。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">GOOGL</span> 6/22 当日 -7%（年内最差单日）；Deep Think 产品数据未能止血。"产品强不等于公司能留住人"成为新的 narrative 风险点。Google AI Ultra 订阅可访问 Deep Think，但只有"select mathematicians"能拿到完整版——一种刻意的稀缺定价。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sam Altman</span> 推 GPT-5.5-Cyber 当 Daybreak 计划的招牌 <span class="when">6/22</span></h3>
+        <p>同一个 6 月 22 日，Altman 正式发布了 GPT-5.5-Cyber 的完整版，作为 OpenAI "Daybreak" 网络安全计划的核心产品。CyberGym 测试 85.6%（标准 GPT-5.5 是 81.8%），ExploitGym 39.5%（vs 25.95%），SEC-bench Pro 69.8%（vs 63.1%）。OpenAI 自称"任何单一模型有史以来最高的 CyberGym 分数"。</p>
+        <p>这个产品的位置很微妙——它直接对标 Anthropic 的 Mythos 5（被美国政府 6/12 命令对外国人禁用）。Altman 选择给 GPT-5.5-Cyber 配合一套"主动给监管者看"的姿态——5/11 已经把它交给欧盟评估、给 EU AI Office 测试。Anthropic 的 Mythos 被监管"按死"，OpenAI 的 Cyber 模型却拿到合规通行证——这是 Altman 这一个季度战略上对 Amodei 的反向操作。</p>
+        <p>但 6/27 美国政府对 OpenAI 新模型也"看起来要进入同样的限制状态"——意味着"主动合规"不一定能换到豁免，监管的逻辑可能更复杂。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          OpenAI 一级估值；间接利好 <span class="ticker">CRWD</span>、<span class="ticker">PANW</span>（"AI 网络武器化"narrative 持续推动企业网安预算扩张）。但同时增加 OpenAI 自身的监管 overhang。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sundar Pichai</span> 让 Antigravity CLI 一夜替代 Gemini CLI <span class="when">6/18</span></h3>
+        <p>6 月 18 日（恰好是 Shazeer 宣布离开的同一天），Google 让 Gemini CLI 和 Gemini Code Assist IDE 扩展全部停止服务，并迁移到新的 Antigravity CLI。任何 CI/CD pipeline、shell 脚本、自动化里调用 <code>gemini</code> 命令的都会立即报错——没有警告、没有过渡期。企业 license 持有者除外，保留访问权。</p>
+        <p>这是 Pichai 在 5/19 I/O 上预告的开发者工具大整合——把所有开发者面对的产品都收编进"Antigravity"品牌，剑指 Cursor、Devin、Codex 的市场。Antigravity CLI 用 Go 重写，比 Gemini CLI 响应更快、能在后台跑多 agent。</p>
+        <p>但这个时间点选得很糟。Shazeer 当天离职、Jumper 第二天离职，给 Google 的开发者社区造成"既要切换工具、又要看着资深研究员离开"的双重不舒服。Antigravity 这次"硬切换"在 dev 社区引起广泛吐槽——任何 6/17 之前没迁移的 free-tier 用户脚本一夜失效。</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          没有直接二级影响。但作为 GOOGL 整周 narrative 的一部分（"产品体验混乱 + 人才流失 + capex 担忧"三连击），加速了 6/22 -7% 的单日跌幅。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Satya Nadella</span> 在 Anthropic 阴影下推 Work IQ API GA <span class="when">6/16</span></h3>
+        <p>6 月 16 日 Microsoft Work IQ API 正式 GA——把 Microsoft 365 里的数据、上下文、工具暴露给 agent 开发者。四个域（Chat、Context、Tools、Workspaces），三种协议（A2A、MCP、REST），按消费的"Copilot Credits"计价，没有独立 SKU。</p>
+        <p>Nadella 这一年的产品方向很清楚——把"M365 数据 + 用户行为"做成 AI agent 的语义层，不直接跟 Anthropic/OpenAI 拼模型，而是拼"AI 接入企业的语义入口"。Work IQ 的关键卖点是它继承了 MS Graph 的权限模型——任何 agent 调用都会自动遵守原始用户的权限边界。这是 OpenAI 和 Anthropic 想做但短期内做不到的。</p>
+        <p>这步棋跟 5/4 Anthropic 跟 PwC 30K 员工部署、5/14 OpenAI 跟 Dell on-prem 合作形成对比——三家在企业市场的逻辑完全不同：Anthropic 选"垂直渠道渗透"，OpenAI 选"客户运维灵活性"，Microsoft 选"既有用户基础上加 agent 层"。三套打法都有道理，但 Microsoft 的"既有用户基础"最难撼动。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">MSFT</span> 持稳。Work IQ API 没有立即的二级催化，但中长期对 Microsoft 在 AI agent 入口的地位是结构性利好。<span class="ticker">CRM</span>（Salesforce）和 <span class="ticker">NOW</span>（ServiceNow）面对的"AI agent 平台"竞争层次又上升一个量级。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Dario Amodei</span> 让 Fable 5 在三周内从免费走到全付费 <span class="when">6/23</span></h3>
+        <p>6 月 23 日，Fable 5 的"免费试用窗口"正式关闭——Pro、Max、Team、Enterprise 用户从这天起要按标准 API 价格（\$10/百万 input、\$50/百万 output）付费。Fable 5 是 Amodei 6/9 才发布的 Mythos 级模型，整个免费窗口只有两周。</p>
+        <p>但这段时间发生了三件让 Amodei 头疼的事：6/12 美国政府命令 Fable 5 对外国人禁用，6/22 Google Gemini 2.5 Pro Deep Think 在 MMLU-Pro/GPQA Diamond 上反超 Fable 5，6/24 公开指控 Alibaba/Qwen 蒸馏攻击。Fable 5 这次定价转换原本应该是一次"展示企业付费意愿"的胜利时刻，但叠加上面三件事，变成了"在外有竞品、内有窃听、监管压顶"的复杂局面。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          中性。Fable 5 在 6/12 被禁后实际可用范围已经收窄，全付费转换对收入影响有限。Anthropic 6 月 ARR 增至 \$47B 主要来自存量客户增订。
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 2: 公开点评 ===== -->
+    <div class="panel panel-2">
+      <div class="panel-intro">
+        这两周最重要的"公开点评"不是一个人说什么，而是三个人一起在 G7 总统午餐桌上说什么。同时还有 Anthropic 公开点名 Alibaba、Macron 暗讽美国 AI 主权、以及 6/26 一篇 CNBC 文章宣告"tokenmaxxing 时代结束"——这是过去半年最重要的叙事拐点之一。
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Altman, Amodei, Hassabis</span> 三人坐进 G7 总统午餐桌 <span class="when">6/17</span></h3>
+        <p>6 月 17 日，在法国 Évian-les-Bains，过去 18 个月里互相争抢人才、客户、监管者注意力的三位 CEO——Sam Altman、Dario Amodei、Demis Hassabis——一起坐进了 G7 领导人午餐桌。还有 Mistral CEO Arthur Mensch。Trump 在场。</p>
+        <p>三个人提出来的方案有微妙差异：</p>
+        <blockquote>
+          <strong>Amodei + Hassabis</strong>：力推"美国主导的 AI 联盟"——结构化前沿模型访问、芯片和关键部件的"贸易圈"明确排除中国、在网安/生物恐怖/情报领域的国际合作。<br>
+          <strong>Altman</strong>：呼吁"国际论坛形式"——建立全球认可的测试标准、提供专家分析、为国家间合作提供场所。比前两位的提案更"中性"。
+        </blockquote>
+        <p>这种差异不是偶然——Amodei 这一年一直在强化"有立场的 AI 公司"画像（拒交 Mythos 给军方和欧盟、给 FSB 主动简报），Hassabis 作为 Google 内部受到人才流失冲击的领军人物急需"国家级地位"的背书，Altman 则始终维持着"我们对所有人都开放"的中性姿态——这跟他 5/14 跟 ACN 联邦合作、5/18 跟 Dell on-prem 合作的"借道一切"路线一致。</p>
+        <p>事件的真正含义：三人坐进 G7 桌子等于"AI 实验室创始人正式被列入主权决策层"。这种地位过去只属于央行行长、军工高管、能源巨头。从这天起，三人在监管、贸易、国际关系议题上的发言权将超过他们各自公司的市值意义。</p>
+        <p>背景脚注——这次 G7 紧跟着 6/12 美国对 Anthropic 模型的出口管制。Macron 公开警告"如果美国 AI 可以被随时关掉，就没人敢买"——这是欧洲盟国对美国 AI 主权工具化的第一次明确反对。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          没有直接二级影响。但 narrative 上对 OpenAI/Anthropic/Google 三家估值都是中长期利好（"系统重要性"的最高级别承认）；对中国 AI 公司（Alibaba、DeepSeek、Moonshot）是 narrative 上的全球市场准入风险。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Dario Amodei</span> 公开点名阿里巴巴用 25,000 个假账号偷 Claude <span class="when">6/24</span></h3>
+        <p>6 月 24 日，Anthropic 给参议院银行委员会主席 Tim Scott 和资深成员 Elizabeth Warren 寄了一封 6/10 日期的信——指控 Alibaba 和 Qwen AI lab 的关联运营方用大约 <strong>25,000 个欺诈账号</strong>跟 Claude 进行了 <strong>2880 万次</strong>交互，时间窗口 4/22 - 6/5。Bloomberg 首先报道这封信，CNBC 当天确认。</p>
+        <p>Amodei 用的词是"brazen"（厚颜无耻）、"illicit"（非法）。指控的内容很具体——这次蒸馏攻击规模超过 2 月份 DeepSeek、MiniMax、Moonshot 三家加起来的总和（前次 24,000 账号、1600 万交互）。</p>
+        <p>这件事的人物意义重大。Amodei 这一年一直在做的"有立场的 AI 公司"画像，到这一天获得了第一次"商业上的伤害证据"——你以前可以说"我们拒绝合作军方是道德选择"，现在你能说"我们是被外国国家级竞争对手公开偷窃的受害者"。这是把 Anthropic 从"AI 公司"提升到"国家战略资产"的最关键叙事。</p>
+        <p>但这是指控，不是证据。Alibaba 没有公开回应。值得注意的是——前次 2 月份对 DeepSeek/MiniMax/Moonshot 的指控也没有最终证据被公开，但 narrative 上已经造成持续影响。</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">BABA</span> 当周走弱。"AI 蒸馏 = 知识产权窃取"narrative 被进一步推高——给美国进一步限制中国 AI 模型出口（包括开源权重）提供叙事支持。开源模型空间（DeepSeek、Qwen、Moonshot）的全球市场准入风险增加。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3>"tokenmaxxing 时代结束"——CNBC 一篇文章定下 6 月最后一周的基调 <span class="when">6/26</span></h3>
+        <p>6 月 26 日 CNBC 发表了一篇标题为《OpenAI and Anthropic face new AI reality as users shift from 'tokenmaxxing' to efficiency》的文章——里面用了一个很重要的新词"tokenmaxxing"，指的是过去两年企业"用越多 token 越好、模型越大越好"的支出哲学。文章给出几个证据：</p>
+        <blockquote>
+          1. AI 创业公司 Lindy 的 CEO 在 6 月初把 100% 流量从 Claude 切到 DeepSeek，理由是"成本"。<br>
+          2. OpenAI 内部正在考虑大幅下调 token 定价，回应 Anthropic Claude Code 在编码市场的 40% 份额冲击。<br>
+          3. 同日 TechCrunch 发文章《It's not about Anthropic vs. OpenAI anymore》。
+        </blockquote>
+        <p>这个 narrative 转向比表面看起来重要得多。过去 18 个月支撑 NVDA、AVGO、AMD 估值的核心假设之一是"AI 算力需求是线性甚至指数级增长的"——但 6/26 这篇文章质疑的是这条曲线本身。如果企业开始为效率付钱而不是为规模付钱，那么算力需求增长率会显著放缓。</p>
+        <p>6 月份原本应该上线的 GPT-5.6、Grok 5、Gemini 3.5 Pro 全部跳票到 7 月——叠加这个 narrative，市场开始问：是不是大家都遇到了 scaling 边际收益递减？</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">NVDA</span>、<span class="ticker">AVGO</span> 6/26-29 区间承压。开源模型 narrative 受益——但 Anthropic 6/24 对 Alibaba 的指控又把"中国开源"的可用性打了折扣。多空叙事高度交叉，二级标的难做。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Emmanuel Macron</span> 在 G7 上警告美国不要让 AI 变成"可被关闭的武器" <span class="when">6/17</span></h3>
+        <p>同样在 G7 现场，法国总统 Macron 公开发表一句让美国代表团尴尬的话："如果美国 AI 可以被随时关掉，就没人敢买。"背景是 6/12 美国政府刚以国家安全为由命令 Anthropic 对全球外国人关闭 Fable 5/Mythos 5 访问。Macron 这句话是欧洲盟国对"美国 AI 主权工具化"的第一次正式反对。</p>
+        <p>这件事的真正影响在 G7 闭门讨论里——领导人提出了"trusted partners"机制，让盟国可以"豁免"美国 AI 出口管制。如果这个机制落实，意味着美国 AI 公司将面对一个新的合规框架——不是"对所有外国人封锁"，而是"对 trusted partners 开放、对其他国家封锁"。这对 Anthropic、OpenAI 来说是中性偏好——增加合规复杂度，但保住了欧洲市场。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          二级影响中性。但对 Anthropic IPO（6/1 已经保密递交）估值是不确定性来源——投资者需要在出口管制 narrative 之外计算欧洲市场可达性。
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 3: 投资行为 ===== -->
+    <div class="panel panel-3">
+      <div class="panel-intro">
+        这两周最大的投资行为是 Elon Musk 用 SpaceX 股票完成的 \$600 亿 Cursor 收购——一次"通胀股价 + 行使期权"的精彩资本运作。同时人才流向也是一种"投资"——Anthropic 在两周内从 Google DeepMind 挖走 3 位顶级研究员（Jumper、Adler、Pritzel），实际"成本"是数千万美元的签约奖金 + 股权激励，但市场给出的回报是 GOOGL 蒸发 \$2690 亿市值的反向估值。
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Elon Musk</span> 用 IPO 后的 SpaceX 股票几小时内完成 \$600 亿 Cursor 收购 <span class="when">6/16-17</span></h3>
+        <p>6 月 16 日，SpaceX 行使了 4 月份签订的认购期权——以 \$600 亿股票收购 AI 编码工具 Cursor。6 月 17 日正式向 SEC 提交合并文件。这是 Musk 这一年最干净的一次资本运作，关键细节如下：</p>
+        <blockquote>
+          1. SpaceX 6/12 IPO 开盘价 \$135，6/15 周一收盘 \$192.46，market cap 达 \$2.51 万亿。<br>
+          2. 4 月份签的认购期权固定了 Cursor "\$600 亿股票交易"的结构——SpaceX 可以选择以 \$600 亿股票收购，或者支付 \$100 亿分手费。<br>
+          3. IPO 后 SpaceX 股价拉升，那 \$600 亿 stock consideration 在实际操作中只用了 SpaceX 几个小时的交易量。
+        </blockquote>
+        <p>Fortune 标题用了句精彩的话："Elon's super currency"——Musk 把 SpaceX 股票当成"用涨幅支付的现金"。这是 Bezos 在 2017 年用 Amazon 股票收购 Whole Foods 那种打法的 2026 版本，但规模大了一个量级。</p>
+        <p>战略上，Cursor 给 Musk 解决了 SpaceXAI 在编码工具市场的缺位——Cursor 在 5 月的市场份额已经超过 Devin 和 Codex，是 Claude Code 之外编码 agent 的第二极。Musk 借此把 SpaceXAI 从"xAI 残部 + Grok"变成"Grok + Cursor"——产品组合一夜之间变得更完整。</p>
+        <p>这件事还有个第二层效果——以前 OpenAI Codex、Anthropic Claude Code 在 IDE 集成里赢不过 Cursor，因为 Cursor 是中立平台。现在 Cursor 归 Musk，OpenAI 和 Anthropic 都不会愿意继续用 Cursor 的 IDE 入口，可能会加速 Codex、Claude Code 自己的 IDE 替代品开发。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">SpaceX</span>（DXYZ tracking）持续走强。<span class="ticker">DXYZ</span> 已经成为过去两周表现最好的 AI tangent 标的。OpenAI 和 Anthropic 加速 IDE 自有产品的传闻——对独立 IDE 公司（JetBrains、VSCode 生态）是中长期 narrative 压力。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Anthropic 团队</span> 在 6 天内"投资"了三位 Google 顶级研究员 <span class="when">6/19-24</span></h3>
+        <p>6 月 19 日 John Jumper（诺贝尔化学奖得主、AlphaFold 共同作者）宣布离开 Google DeepMind 加入 Anthropic。6 月 24 日 Jonas Adler（Gemini AI coding lead）和 Alexander Pritzel（Gemini 预训练专家、AlphaFold 贡献者）同时官宣加入 Anthropic。这 3 个人的"获取成本"虽然没披露，但根据 Shazeer 2024 年回 Google 的 \$27 亿 deal 类比，Anthropic 这一轮"投资"的总价值估计在 <strong>\$10-20 亿区间</strong>（签约奖金 + 4-6 年股权激励）。</p>
+        <p>这种"人才投资"的回报率比纯财务投资高得多——Jumper 的 AlphaFold 经验直接对接 Anthropic 5 月就开始铺设的"AI for science"narrative（5/14 Gates Foundation \$2 亿合作的延伸），同时 Anthropic 在 Jumper 宣布前就建好了 VirBench、湿实验室、跟 HHMI/Allen Institute 的合作——意味着 Jumper 上岗即可产出。Adler 和 Pritzel 直接补强 Anthropic 在编码模型和预训练上的能力。</p>
+        <p>对 Amodei 这是过去半年最重要的"非估值类资产"积累。\$10-20 亿的人才投入，撬动的是 \$2690 亿 Google 市值蒸发 + 自身估值再次跳升的对称收益。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          Anthropic IPO（6/1 保密递交，估值 \$965B+）narrative 持续加固。<span class="ticker">GOOGL</span> 同期蒸发 \$2690 亿市值，这是非财报事件的历史最大规模之一。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Sam Altman</span> 收购 Ona——给 Codex 安上"开发者关电脑也能继续干活"的能力 <span class="when">6/11（背景）</span></h3>
+        <p>6 月 11 日 OpenAI 公布收购德国 Ona 云启动公司（前身 Gitpod），交易金额约 €1 亿（\$1.08 亿）。Ona 给 Codex 提供的是"持久云执行环境"——开发者关掉电脑后，Codex agent 仍然能在云上跑长时间任务。Codex 现在每周 500 万开发者用，比年初增长 400%。</p>
+        <p>虽然在 6/15 之前 close，但这个收购的产品影响在 6/15-29 这两周才显化——配合 6/18 OpenAI × Dell 把 Codex 部署到企业本地的 narrative，Altman 在编码 agent 这条线上的产品厚度大幅增加。这也部分解释了为什么 Anthropic 这两周持续从 Google 挖编码相关人才（Adler 是 Gemini coding lead）——双方都在编码这个最高毛利的细分赛道全力投入。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">DELL</span>、<span class="ticker">HPE</span>（HP Enterprise）持续受益于"AI agent on-prem 部署"narrative。
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 4: 人事/收购/战略 ===== -->
+    <div class="panel panel-4">
+      <div class="panel-intro">
+        这两周战略层的事可以浓缩成一句话——"Sundar Pichai 在 6 天内失去了 Google 的四张王牌"。Noam Shazeer 去 OpenAI、John Jumper 去 Anthropic、Jonas Adler 和 Alexander Pritzel 同日去 Anthropic。这是 GOOGL 蒸发 \$2690 亿市值的核心驱动。同时 SpaceX 完成 Cursor 收购、美国政府关闭 Fable 5/Mythos 5 的外国访问、G7 提出"trusted partners"机制。
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Noam Shazeer</span> 离开 Google 回到 OpenAI——Transformer 共同作者重新归位 <span class="when">6/18</span></h3>
+        <p>6 月 18 日，Noam Shazeer 在 X 上宣布离开 Google，加入 OpenAI 担任 Lead, Architecture Research。这是 2017 年那篇 "Attention Is All You Need" 论文八位共同作者里离开 Google 阵营的最后一位——也是身价最重的一位。Google 2024 年用 \$27 亿（通过收购 Character.AI 的方式）把他从外部"买回来"，到 2026 年 6 月再次失去他。</p>
+        <p>这件事的人物意义不可低估。Shazeer 本人是 Gemini 模型架构的内部共同负责人，他的离开意味着 Gemini 团队的"原创者梯队"几乎全部流失。OpenAI 给他的职位定位是"Lead, Architecture Research"——明确告诉外界"我们要重新探索 Transformer 之后的下一代架构"。这恰好回应了 6/26 行业开始讨论"tokenmaxxing 时代结束"的 narrative——Shazeer 回 OpenAI 是 Altman 在赌"下一代架构突破"。</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">GOOGL</span> 当周 -7%。"Google 是否还能维持 AI 前沿"的市场怀疑从这天开始系统性形成。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">John Jumper</span> 离开 DeepMind 9 年——诺贝尔奖得主投奔 Anthropic <span class="when">6/19</span></h3>
+        <p>6 月 19 日，John Jumper 在 X 上宣布离开 Google DeepMind，加入 Anthropic。Jumper 是 2024 年诺贝尔化学奖得主，AlphaFold 的共同创造者，在 DeepMind 待了近 9 年。这是 AI 行业有史以来"中年职业转换"里最有分量的一次——一个已经拿到诺贝尔奖的科学家选择跳槽到对手公司。</p>
+        <p>Jumper 自己说"我会先休息一段时间再开始"。Anthropic 没披露他的具体职位，但所有线索都指向"AI for science"——Amodei 这一年铺设的 Gates Foundation 合作、VirBench、HHMI/Allen Institute 合作，等的就是 Jumper 这个级别的人来"压舱"。</p>
+        <p>从对 Hassabis 个人的打击角度看，Jumper 离开比 Shazeer 离开还重——Shazeer 走的是模型架构，Jumper 走的是 DeepMind 这 9 年最骄傲的科学成果（AlphaFold）的源头之一。Hassabis 自己是科学家出身，把 DeepMind 的科学叙事建立在 AlphaFold 上——现在科学叙事的核心人物去了对手公司。</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">GOOGL</span> 持续承压。"DeepMind 是否还能领导 AI 科学化"narrative 受到根本性打击。Anthropic IPO 估值再次跳升。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Jonas Adler + Alexander Pritzel</span> 同日加入 Anthropic——Google 的"出血"加速 <span class="when">6/24</span></h3>
+        <p>6 月 24 日，两个名字同时出现在 Anthropic 的入职名单上：Jonas Adler（Gemini AI coding lead）和 Alexander Pritzel（Gemini 预训练专家、AlphaFold 贡献者）。这一天距离 Jumper 宣布加入 Anthropic 仅 5 天。</p>
+        <p>这件事的"集团式离职"特征不是巧合——通常 senior researcher 跳槽前会先跟"朋友圈"打招呼，看是否一起走。Jumper 6/19 官宣后，Adler 和 Pritzel 选择 6/24 同日宣布，几乎是"我们一起跟着 John 去 Anthropic"的明确信号。Pritzel 本身就是 AlphaFold 团队成员，他跟 Jumper 一起走在意料之中；Adler 走的位置更敏感——Gemini coding 是 Google 这一年最被市场看重的 AI 应用之一，他的离开等于把 Gemini 编码战略的内部 know-how 直接交给了 Anthropic Claude Code。</p>
+        <p>到 6/24 这一天，Google 在 6 天内失去 4 位关键 AI 研究员（Shazeer、Jumper、Adler、Pritzel）。<span class="ticker">GOOGL</span> 累计市值蒸发 ~\$2690 亿——这是非财报事件的历史最大规模之一。</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">GOOGL</span> 6/22 单日 -7%，是年内最差。这种"集体出走"叙事如果持续，可能引发更多研究员考虑离开 Google——形成自我强化的恶性循环。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3><span class="who">Elon Musk</span> 借 IPO 后股价完成 \$600 亿 Cursor 并购 <span class="when">6/16-17</span></h3>
+        <p>详见"投资行为"tab。战略层意义在于——Musk 用最低实际现金支出把 SpaceXAI 的产品组合从"Grok + 闲散 xAI 团队"补全到"Grok + Cursor + IDE 入口"。这次收购是 4 月份签的认购期权，预设了 \$600 亿股票或 \$100 亿现金分手费的二元结构——Musk 当时用最便宜的方式锁定了 Cursor。</p>
+        <div class="reaction good">
+          <span class="label">市场怎么反应</span>
+          <span class="ticker">SpaceX</span>（DXYZ）持续走强。OpenAI 和 Anthropic 在 IDE 集成战线上需要重新规划——可能加速各自 IDE 替代品的开发。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3>美国政府关闭 Anthropic 模型的外国人访问——Amodei 在国家与生意之间的窄路 <span class="when">6/12（背景）</span></h3>
+        <p>6 月 12 日下午 5:21（ET），Anthropic 收到了美国政府的出口管制指令：暂停所有外国人对 Fable 5 和 Mythos 5 的访问——包括 Anthropic 自己的外籍员工。原因没明确，但政府"似乎认为发现了 Fable 5 的越狱方法"。Anthropic 不同意这种"小漏洞导致全面召回"的处理方式，但选择遵守。</p>
+        <p>这件事虽然 6/12 发生，但对 6/15-29 这两周的叙事是核心背景——它让 6/17 G7 上 Amodei 的发言"美国主导联盟"听起来既有底气（"我们和政府站一起"）又有讽刺（"我们的产品刚被政府打了一巴掌"）。同时也是 6/22 Gemini 2.5 Pro Deep Think 能在 narrative 上反超 Fable 5 的核心原因——你的对手被政府强制下线，你不需要"产品胜出"，你只需要"还能用"。</p>
+        <p>对 Amodei 个人来说，这是过去一年最复杂的"权衡时刻"。他可以选择对抗政府（保住欧洲、中东、印度等大量重要客户），也可以选择服从（保住国家安全合作伙伴的位置）。他选了后者——配合 G7 的 trusted partners 提案，押注"未来会有合规框架让我们继续服务盟国"。这是 Amodei 这一年所有"有立场"姿态里风险最大的一次。</p>
+        <div class="reaction bad">
+          <span class="label">市场怎么反应</span>
+          Anthropic 二级影响通过持股方 <span class="ticker">GOOGL</span> 和 <span class="ticker">AMZN</span> 间接体现。Anthropic 自身 IPO 估值（\$965B+）的 narrative 风险增加——投资者需要计算"出口管制下的全球可达市场"。
+        </div>
+      </div>
+
+      <div class="event">
+        <h3>G7 提出"trusted partners"机制——AI 出口管制框架开始成形 <span class="when">6/17（G7 闭门）</span></h3>
+        <p>跟 G7 工作午餐同期，领导人闭门讨论了"trusted partners"机制——让美国盟国可以"豁免"美国 AI 出口管制。这是对 Macron "如果可以随时关掉就没人买"批评的直接回应。如果这个机制落实，Anthropic、OpenAI、Google 在欧洲、日本、英国、加拿大、澳大利亚等市场仍可继续运营，但对其他国家（中国、俄罗斯、伊朗、朝鲜等）的限制会维持甚至加强。</p>
+        <p>从战略上这是一个 Altman、Amodei、Hassabis 三人都希望落地的框架——它把"美国 AI 主导"和"全球商业可行性"绑在一起，给三家公司一个清晰的"合规盟友市场"边界。预计 G20 会议（11 月）前这个机制会有更具体的文本。</p>
+        <div class="reaction mix">
+          <span class="label">市场怎么反应</span>
+          中性。机制如果落地，Anthropic、OpenAI、GOOGL 都受益（保住盟国市场）；中国 AI 公司全球准入风险加深。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>这两周的几条尾灯</h2>
+
+<div class="takeaway-block">
+<ul>
+<li><strong>Google 的"出血"是这两周最重要的故事。</strong>6 天内失去 4 位关键 AI 研究员，市值蒸发 \$2690 亿。这不是单一事件，是 Hassabis 内部领导力 + Pichai 整合策略 + 公司文化三个层面同时承压的结果。如果 7 月再有同级别离职，GOOGL 可能进入持续 derate 阶段。</li>
+<li><strong>Amodei 完成了"国家战略资产"身份的转换。</strong>从 G7 总统午餐桌 → 公开指控 Alibaba 蒸馏攻击 → 接收诺贝尔奖得主投奔 → 美国政府以出口管制"保护"Mythos——这一系列动作把 Anthropic 从"AI 公司"提升到了"美国 AI 主权资产"的等级。这种身份对 IPO 估值（\$965B+）是结构性利好。</li>
+<li><strong>Altman 这两周做了三件低调但精准的事。</strong>6/11 收购 Ona 给 Codex 装上持久云执行能力；6/17 在 G7 用"中性国际论坛"姿态区别于 Amodei/Hassabis 的"美国联盟"；6/22 推 GPT-5.5-Cyber 当合规姿态。三件事加起来 = 为 9 月份 IPO 准备一个"稳定、合规、可合作"的画像。</li>
+<li><strong>Musk 用 SpaceX 股票完成了过去一年最划算的一次资本运作。</strong>\$600 亿 Cursor 收购的实际成本被 IPO 后股价拉升对冲掉一大半，等于"用涨幅支付"。SpaceXAI 因此一夜之间获得编码工具市场的第二把交椅。</li>
+<li><strong>"tokenmaxxing 时代结束"是过去半年最重要的 narrative 拐点。</strong>如果企业开始为效率付钱而不是为模型规模付钱，<span class="ticker">NVDA</span>、<span class="ticker">AVGO</span>、<span class="ticker">AMD</span> 估值倍数面临结构性逆风。但 Anthropic 对 Alibaba 的指控同时压缩了中国开源模型的可用性——多空叙事高度交叉。</li>
+<li><strong>最干净的二级交易方向</strong>——多头：<span class="ticker">DXYZ</span>（SpaceX 持续走强）、<span class="ticker">MSFT</span>（Work IQ API 长期 agent 入口）、<span class="ticker">AMZN</span>（双押 Anthropic/OpenAI）；空头：<span class="ticker">GOOGL</span>（人才流失叙事持续，需新催化才能止血）、中国 AI 公司全球 ADR；矛盾标的：<span class="ticker">NVDA</span>（tokenmaxxing 结束 vs 算力订单仍庞大）。</li>
+</ul>
+</div>
+
+<h2>数据警示</h2>
+<div class="caveat-list">
+<p><strong>Anthropic 对 Alibaba 的指控是 allegation，不是证据。</strong>Alibaba 没公开回应；前次 2 月对 DeepSeek/MiniMax/Moonshot 的指控也未经独立核实。但 narrative 层面已经造成持续影响。</p>
+<p><strong>GOOGL \$2690 亿市值蒸发是累计数字。</strong>从 5/18 \$408.61 历史高点到 6/22 \$361.99，跌幅 11%；其中可归因于人才离职的比例难以精确分离 capex 担忧、reg 风险、整体科技股回调三个独立因素。</p>
+<p><strong>SpaceX 估值 \$2.51 万亿来自 6/15 收盘价 \$192.46 × 流通股</strong>——这是 6/12 IPO 后第三个交易日的数字，估值波动性极高，未来 6 个月可能有 30-50% 单向波动。</p>
+<p><strong>OpenAI、Anthropic 的 ARR 数字是公司自报口径</strong>，未审计。OpenAI \$25B（6 月）vs Anthropic \$47B（5 月）的对比需谨慎——两家口径定义可能不同。</p>
+<p><strong>美国政府对 Anthropic 模型的出口管制</strong>具体范围、申诉路径、豁免条件均未公开；Anthropic 6/13 公告中明确说"在试图恢复访问"。中长期框架仍在博弈。</p>
+<p><strong>G7 "trusted partners"机制目前只是讨论</strong>，没有正式文本或时间表；G20 (11 月) 可能是关键窗口。</p>
+</div>
+
+<footer>
+<strong>主要来源</strong><br>
+<strong>6/24 Anthropic vs Alibaba</strong>：<a href="https://www.cnbc.com/2026/06/24/anthropic-alibaba-distillation-campaign.html" target="_blank">CNBC</a> · <a href="https://finance.yahoo.com/technology/ai/articles/anthropic-says-alibaba-used-25-170511500.html" target="_blank">Yahoo Finance</a><br>
+<strong>6/19 Jumper → Anthropic</strong>：<a href="https://techcrunch.com/2026/06/20/nobel-laureate-john-jumper-is-leaving-deepmind-for-rival-anthropic/" target="_blank">TechCrunch</a> · <a href="https://thenextweb.com/news/john-jumper-nobel-deepmind-leaves-anthropic-alphafold" target="_blank">TheNextWeb</a><br>
+<strong>6/18 Shazeer → OpenAI</strong>：<a href="https://www.cnbc.com/2026/06/18/google-gemini-co-lead-noam-shazeer-leaves-for-openai.html" target="_blank">CNBC</a><br>
+<strong>6/17 G7 working lunch</strong>：<a href="https://www.cnbc.com/2026/06/17/anthropic-amodei-google-hassabis-us-ai-coalition-g7.html" target="_blank">CNBC</a> · <a href="https://fortune.com/2026/06/17/g7-ai-sovereignty-europe-anthropic-blackout-trump/" target="_blank">Fortune</a> · <a href="https://www.semafor.com/article/06/17/2026/ai-ceos-talk-global-standards-at-g7" target="_blank">Semafor</a><br>
+<strong>6/16-17 SpaceX × Cursor \$60B</strong>：<a href="https://www.cnbc.com/2026/06/16/spacex-spcx-cursor-acquisition-ipo.html" target="_blank">CNBC</a> · <a href="https://fortune.com/2026/06/16/elon-musk-spacex-ipo-ai-coding-startup-cursor-acquisition/" target="_blank">Fortune</a><br>
+<strong>6/22 Gemini 2.5 Pro Deep Think</strong>：<a href="https://blog.google/products/gemini/gemini-2-5-deep-think/" target="_blank">Google 官方</a><br>
+<strong>6/22 GPT-5.5-Cyber</strong>：<a href="https://www.cnbc.com/2026/06/22/openai-anthropic-new-ai-spending-reality-as-users-shift-to-efficiency.html" target="_blank">CNBC</a><br>
+<strong>6/16 Microsoft Work IQ API GA</strong>：<a href="https://www.microsoft.com/en-us/microsoft-365/blog/2026/06/02/announcing-the-new-work-iq-apis/" target="_blank">Microsoft 365 Blog</a> · <a href="https://devblogs.microsoft.com/microsoft365dev/work-iq-production-ready-intelligence-for-every-agent/" target="_blank">M365 Dev Blog</a><br>
+<strong>6/18 Antigravity CLI 替代 Gemini CLI</strong>：<a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/" target="_blank">Google Developers Blog</a><br>
+<strong>6/22 GOOGL -7%</strong>：<a href="https://www.cnbc.com/2026/06/22/alphabet-goog-stock-ai-departures.html" target="_blank">CNBC</a> · <a href="https://congress.net/alphabet-googl-loses-269-billion-in-market-value-as-ai-talent-exodus-rattles-investors/" target="_blank">$269B Loss</a><br>
+<strong>6/26 tokenmaxxing 拐点</strong>：<a href="https://www.cnbc.com/2026/06/26/openai-anthropic-new-ai-spending-reality-as-users-shift-to-efficiency.html" target="_blank">CNBC</a> · <a href="https://techcrunch.com/2026/06/26/its-not-about-anthropic-vs-openai-anymore/" target="_blank">TechCrunch</a><br>
+<strong>6/12 US 出口管制 Fable 5/Mythos 5（背景）</strong>：<a href="https://www.anthropic.com/news/fable-mythos-access" target="_blank">Anthropic 官方</a> · <a href="https://www.cnbc.com/2026/06/12/anthropic-disables-access-to-fable-5-and-mythos-5-to-comply-with-government-directive.html" target="_blank">CNBC</a><br>
+<strong>6/11 OpenAI × Ona（背景）</strong>：<a href="https://openai.com/index/openai-to-acquire-ona/" target="_blank">OpenAI 官方</a> · <a href="https://www.cnbc.com/2026/06/11/open-ai-ona-acquisition-codex.html" target="_blank">CNBC</a>
+</footer>
+
+</body>
+</html>
