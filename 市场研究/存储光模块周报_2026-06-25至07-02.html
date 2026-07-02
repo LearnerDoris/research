@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>存储 & 光模块订单追踪周报 | 2026-06-25 ～ 07-02</title>
+<style>
+  :root{
+    --bg:#0f1115; --card:#181b22; --card2:#1e222b; --border:#2a2f3a;
+    --text:#e8eaf0; --muted:#9aa3b2; --accent:#4f8ef7;
+    --pos:#34c77b; --neg:#f0564f; --warn:#f5a623; --neu:#8b93a5;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.7; padding:32px 16px;
+  }
+  .wrap{max-width:960px; margin:0 auto;}
+  header{margin-bottom:28px;}
+  h1{font-size:26px; font-weight:700; letter-spacing:.5px;}
+  .period{color:var(--muted); font-size:14px; margin-top:6px;}
+  .conclusion{
+    background:linear-gradient(135deg,#1a2740,#16202f); border:1px solid #2c4370;
+    border-left:4px solid var(--accent); border-radius:10px; padding:18px 20px; margin:20px 0 32px;
+    font-size:15px;
+  }
+  .conclusion b{color:#9ec3ff;}
+  section{margin-bottom:34px;}
+  h2{
+    font-size:18px; font-weight:700; padding-bottom:8px; margin-bottom:14px;
+    border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px;
+  }
+  .lv{font-size:12px; font-weight:600; padding:2px 10px; border-radius:20px; color:#fff;}
+  .lv1{background:#3d6fd6;} .lv2{background:#7a4fd0;} .lv3{background:#2e8f6e;} .lv4{background:#b5484f;}
+  table{width:100%; border-collapse:collapse; background:var(--card); border-radius:10px; overflow:hidden; font-size:14px; margin:12px 0;}
+  th{background:var(--card2); color:var(--muted); font-weight:600; text-align:left; padding:10px 14px; font-size:13px;}
+  td{padding:10px 14px; border-top:1px solid var(--border); vertical-align:top;}
+  .tag{display:inline-block; font-weight:700; font-size:13px; padding:1px 10px; border-radius:6px;}
+  .pos{color:var(--pos); background:rgba(52,199,123,.12);}
+  .neg{color:var(--neg); background:rgba(240,86,79,.12);}
+  .neu{color:var(--neu); background:rgba(139,147,165,.12);}
+  .warn{color:var(--warn); background:rgba(245,166,35,.12);}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin:12px 0;}
+  .card h3{font-size:15px; margin-bottom:8px; color:#c8d4ee;}
+  ul{padding-left:22px;}
+  li{margin:6px 0;}
+  .note{
+    background:rgba(245,166,35,.08); border:1px solid rgba(245,166,35,.35);
+    border-radius:8px; padding:12px 16px; font-size:14px; margin-top:12px;
+  }
+  .note b{color:var(--warn);}
+  .scoreboard td:first-child{font-weight:700;}
+  .small{color:var(--muted); font-size:13px;}
+  ol{padding-left:22px;} ol li{margin:6px 0;}
+  footer{
+    margin-top:40px; padding-top:16px; border-top:1px solid var(--border);
+    color:var(--muted); font-size:12.5px;
+  }
+  footer a{color:#7fa8e8; text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+  .disclaimer{margin-top:10px; font-style:italic;}
+  @media (max-width:600px){ body{padding:16px 8px;} td,th{padding:8px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>存储 &amp; 光模块订单追踪周报</h1>
+  <div class="period">区间：2026-06-25 ～ 07-02 ｜ 按 L1–L4 信号体系整理</div>
+</header>
+
+<div class="conclusion">
+  <b>本周一句话结论：</b>存储链信号全面向好（<b>美光史诗级财报 + HBM/LTA 锁定至 2027 后</b>），是本周最强 L1/L2 事件；光模块链 L2/L3 维持强势但无新增量催化，且 L4 出现两个需要记录的证伪候选信号：<b>原厂大规模扩产落地（韩国四厂）</b>与 <b>NVIDIA CPO 光学（Spectrum-X Photonics）进入量产</b>。
+</div>
+
+<section>
+  <h2><span class="lv lv1">L1</span> Capex 与平台级订单</h2>
+  <table>
+    <tr><th style="width:130px">信号</th><th>内容</th><th style="width:70px">方向</th></tr>
+    <tr><td>云厂商 Capex</td><td>高盛 6 月更新：四大云厂 2026 Capex 合计约 <b>$7,250 亿</b>（2025 年 $4,100 亿，+77%）。微软全年指引 ~$1,900 亿（+61%）、谷歌上修至 $1,800–1,900 亿、亚马逊维持 $2,000 亿、Meta 上调至 $1,250–1,450 亿</td><td><span class="tag pos">+1</span></td></tr>
+    <tr><td>Capex 结构</td><td>投入从 GPU/服务器向<b>网络、存储设备</b>、ASIC、电力散热扩散 → 直接利好两条链</td><td><span class="tag pos">+1</span></td></tr>
+    <tr><td>NVIDIA</td><td>Vera Rubin 6/1 GTC Taipei 宣布全面量产，350+ 工厂 ramp，H2 2026 云厂部署 → 1.6T 光模块与 HBM 配比确定性增强（月初事件，本周持续发酵）</td><td><span class="tag pos">+1</span></td></tr>
+  </table>
+  <p><b>L1 小结：</b><span class="tag pos">+1 强化</span></p>
+</section>
+
+<section>
+  <h2><span class="lv lv2">L2</span> 订单直接证据（本周核心）</h2>
+  <div class="card">
+    <h3>★ 美光 FY26 Q3 财报（6/24 盘后，本周最重事件）</h3>
+    <ul>
+      <li>营收 <b>$414.6 亿</b>，同比 <b>+346%</b>（预期 ~$360 亿）；毛利率 <b>84.9%</b>，EPS $25.11</li>
+      <li>下季（6–8 月）指引 <b>$490–510 亿</b>，毛利率 ~86%</li>
+      <li><b>HBM 产能 100% 售罄锁定至 2026 全年</b>；管理层明确供需紧张持续至 <b>2027 自然年之后</b></li>
+      <li>与 16 家客户签"照付不议" <b>LTA 长约</b>，锁定千亿级营收 —— 工作流定义的最高级别订单能见度信号</li>
+      <li>2026 全年 DRAM bit 出货指引 +20%，ASP 涨幅超两倍</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>光模块</h3>
+    <ul>
+      <li>中际旭创在手订单排至年底，新易盛订单能见度 12 个月以上；头部厂产能利用率 75%+（存量信息，本周无新增大额订单公告）</li>
+      <li>Lumentum：2026 年底 EML 产能较 2025 年 +50%（供给仍远小于需求）</li>
+    </ul>
+  </div>
+  <p><b>L2 小结：</b>存储 <span class="tag pos">+1 大幅强化</span>　光模块 <span class="tag neu">0 / +1 维持高位</span></p>
+</section>
+
+<section>
+  <h2><span class="lv lv3">L3</span> 高频草根信号</h2>
+  <table>
+    <tr><th style="width:110px">品类</th><th>本周变化</th><th style="width:70px">读数</th></tr>
+    <tr><td>DRAM 现货</td><td>DDR4 1Gx8 3200：$35.90（6/24）→ $36.00（6/30），<b>+0.28%</b>，高位横盘、追高意愿弱</td><td><span class="tag neu">0</span></td></tr>
+    <tr><td>NAND 现货</td><td>512Gb TLC 晶圆 <b>-1.03%</b> 至 $19.86（6/29），现货端持续走弱</td><td><span class="tag neg">-1</span></td></tr>
+    <tr><td>合约价背景</td><td>Q1 传统 DRAM 合约价环比 +90–95%、NAND +55–60%；Q2 续涨约 20%（背景，非本周增量）</td><td><span class="tag neu">—</span></td></tr>
+    <tr><td>EML 光芯片</td><td>200G EML 已从 $14–18 涨至 $21–22（+40%），市场预期 2026 年上修至 $25–28；交期排至 2027 后，2026 供需缺口 ~35%</td><td><span class="tag pos">+1</span></td></tr>
+    <tr><td>台链月营收</td><td>6 月营收 <b>7/10 前后</b>才公布，下周更新</td><td><span class="tag warn">待定</span></td></tr>
+  </table>
+  <div class="note"><b>注意：NAND 现货与合约价背离</b>（合约强、现货弱）—— 工作流规则里"L1 向好但 L3 现货回落"的传导断裂前兆，NAND 侧需连续观察 2–3 周。DRAM 侧现货横盘属高位消化，暂不算恶化。</div>
+</section>
+
+<section>
+  <h2><span class="lv lv4">L4</span> 证伪 / 风险信号（本周有两条新记录）</h2>
+  <ol>
+    <li><b>原厂扩产落地：</b>6/29 韩国政府联合三星、SK 集团公布 AI 投资计划，两家将在韩国西南部<b>各建 2 座、共 4 座晶圆厂</b>，瞄准 2026–2030 服务器 DRAM/HBM。投产时点 2027H2–2028 → 短期不改变紧缺，但这是工作流明确要求记录的"供给拐点前兆"，<b>周期顶部时钟开始走</b>。</li>
+    <li><b>CPO 替代加速：</b>NVIDIA Spectrum-X Ethernet Photonics（CPO）随 Rubin <b>进入量产</b> → 长期压缩可插拔模块估值、利好上游光芯片（源杰、仕佳、光迅方向）。OFC 后市场已在按此逻辑炒上游。</li>
+    <li>砍单传闻：本周未见。</li>
+    <li>Capex 放缓表态：未见，反向上修为主。</li>
+  </ol>
+  <p><b>L4 小结：</b>无立即触发降仓的信号，但 #1、#2 均需纳入长期监控表。</p>
+</section>
+
+<section>
+  <h2>📈 本周股价 vs 信号验证</h2>
+  <ul>
+    <li><b>美股存储：</b>财报次日（6/25）美光 <span class="tag pos">+15%</span> 创新高、闪迪 <span class="tag pos">+22%</span>、西数 <span class="tag pos">+5%</span>、希捷 +3% —— L2 信号→股价当日兑现。</li>
+    <li><b>A股光模块：</b>6/26 中际旭创、新易盛、天孚遭资金大幅抛售（跟随大盘调整+高位兑现）；6/30 财联社年中盘点显示 CPO/半导体材料仍是上半年最强主线。<b>股价高位但本周无新增订单信号 → 符合"预期先行"特征，按规则不追高。</b></li>
+    <li><b>A股存储：</b>普冉、科翔等年内最大涨幅超 500%，板块处超级周期主升段。</li>
+    <li>市场展望提示 7 月中旬半年报预告披露期，高低切换加速。</li>
+  </ul>
+  <p class="small">（A股个股精确周涨跌幅需行情数据源，本报告未逐一核对；如需可接入行情工具补齐。）</p>
+</section>
+
+<section>
+  <h2>🎯 信号计分卡（本周）</h2>
+  <table class="scoreboard">
+    <tr><th>链条</th><th>L1</th><th>L2</th><th>L3</th><th>L4</th><th>结论</th></tr>
+    <tr>
+      <td>存储</td>
+      <td><span class="tag pos">+1</span></td>
+      <td><span class="tag pos">+1</span></td>
+      <td><span class="tag neu">0</span><div class="small">DRAM 平、NAND 现货-1、合约强</div></td>
+      <td><span class="tag warn">⚠️</span><div class="small">扩产落地（2027H2 后兑现）</div></td>
+      <td><b>三层基本同向向好 → 趋势确认</b>；NAND 现货背离与扩产为两个观察点</td>
+    </tr>
+    <tr>
+      <td>光模块</td>
+      <td><span class="tag pos">+1</span></td>
+      <td><span class="tag neu">0/+1</span></td>
+      <td><span class="tag pos">+1</span><div class="small">EML 涨价缺货</div></td>
+      <td><span class="tag warn">⚠️</span><div class="small">CPO 量产</div></td>
+      <td><b>趋势未破坏但无新催化 + 股价高位</b> → 持有逻辑成立、不追高；上游光芯片相对占优</td>
+    </tr>
+  </table>
+</section>
+
+<section>
+  <h2>🔭 下周关注（7/3 – 7/10）</h2>
+  <ol>
+    <li><b>7/10 前后台系供应链 6 月营收</b>（Fabrinet 上游、联亚等）—— 光模块链最硬高频数据</li>
+    <li>TrendForce 7 月上旬合约价快报；<b>NAND 现货是否续跌</b>（连续 3 周跌 = L3 转 -1）</li>
+    <li>A股半年报业绩预告（7 月中旬密集期）：重点拆标的池<b>预付款项环比</b></li>
+    <li>云厂商 Q2 财报前瞻（7 月底开始）：Capex 指引有无再上修</li>
+  </ol>
+</section>
+
+<footer>
+  <b>主要来源：</b>
+  <a href="https://www.cnbc.com/2026/06/25/micron-stock-3q-earnings-memory.html">CNBC 美光财报/股价</a> ·
+  <a href="https://chinaflashmarket.com/a/183993">CFM闪存市场 LTA</a> ·
+  <a href="https://www.cls.cn/detail/2317622">财联社 EML/OFC</a> ·
+  <a href="https://finance.sina.com.cn/roll/2026-06-30/doc-inifehiu4835576.shtml">新浪 三星海力士扩产</a> ·
+  <a href="https://nvidianews.nvidia.com/news/vera-rubin-full-production-agentic-ai-factory">NVIDIA Rubin/Photonics 量产</a> ·
+  <a href="https://finance.sina.com.cn/wm/2026-06-13/doc-inicfkwv2984718.shtml">山证 Capex 复盘</a> ·
+  <a href="https://m.cls.cn/detail/2411748">财联社 年中盘点</a>
+  <div class="disclaimer">本报告为信息追踪与分析框架输出，不构成投资建议。</div>
+</footer>
+
+</div>
+</body>
+</html>
