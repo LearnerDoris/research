@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>P4 Oral — Study App</title>
+<style>
+:root {
+  --bg: #F7F6F2;
+  --card: #FFFFFF;
+  --text: #1C1C1A;
+  --text-sub: #6B6B67;
+  --text-muted: #A8A8A4;
+  --border: #E8E7E2;
+  --rc: 24px;
+  --rb: 16px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.07);
+  --green: #16A34A; --green-bg: #DCFCE7;
+  --orange: #D97706; --orange-bg: #FEF3C7;
+  --blue: #2563EB; --blue-bg: #EFF6FF;
+  --red: #DC2626; --red-bg: #FEF2F2;
+  --purple: #7C3AED; --purple-bg: #F5F3FF;
+  --pad: 20px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  background: var(--bg); color: var(--text);
+  height: 100vh; height: -webkit-fill-available;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+
+/* ── MODE TABS ── */
+.mode-tabs {
+  display: flex; gap: 0; padding: 12px var(--pad) 0;
+  flex-shrink: 0;
+}
+.mode-tab {
+  flex: 1; padding: 12px 0; font-size: 15px; font-weight: 600;
+  border: none; background: none; cursor: pointer; color: var(--text-muted);
+  border-bottom: 3px solid transparent; transition: all 0.15s;
+}
+.mode-tab.active { color: var(--text); border-bottom-color: var(--text); }
+
+/* ── SCREENS ── */
+.screen { display: none; flex-direction: column; flex: 1; overflow: hidden; min-height: 0; }
+.screen.active { display: flex; }
+
+/* ══════════════════════════════
+   FLASHCARD SCREEN
+══════════════════════════════ */
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px var(--pad) 10px; flex-shrink: 0; }
+.topbar-title { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.topbar-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+.score-badge { display: flex; align-items: center; gap: 6px; background: var(--green-bg); color: var(--green); font-size: 15px; font-weight: 700; padding: 8px 14px; border-radius: 40px; }
+
+.topic-scroll { padding: 0 var(--pad) 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; flex-shrink: 0; scrollbar-width: none; }
+.topic-scroll::-webkit-scrollbar { display: none; }
+.topic-pill { display: inline-block; padding: 9px 18px; border-radius: 40px; font-size: 14px; font-weight: 500; border: 2px solid transparent; cursor: pointer; margin-right: 8px; transition: transform 0.12s; user-select: none; }
+.topic-pill:active { transform: scale(0.95); }
+
+.progress-wrap { padding: 0 var(--pad) 10px; flex-shrink: 0; }
+.progress-row { display: flex; justify-content: space-between; margin-bottom: 7px; }
+.progress-label { font-size: 13px; color: var(--text-muted); }
+.progress-count { font-size: 13px; font-weight: 600; color: var(--text-sub); }
+.progress-bar { width: 100%; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg,#4ADE80,#22C55E); border-radius: 3px; transition: width 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+
+.card-area { flex: 1; overflow: hidden; padding: 0 var(--pad); display: flex; flex-direction: column; min-height: 0; }
+.flashcard { background: var(--card); border-radius: var(--rc); box-shadow: var(--shadow); border: 1.5px solid var(--border); flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; cursor: pointer; transition: transform 0.1s; }
+.flashcard:active { transform: scale(0.99); }
+.card-header { padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
+.card-type { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+.card-topic-chip { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 20px; }
+.card-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+.card-question { font-size: 20px; font-weight: 600; line-height: 1.45; letter-spacing: -0.2px; }
+.divider-line { height: 1.5px; background: var(--border); border-radius: 1px; flex-shrink: 0; }
+.answer-block { display: none; flex-direction: column; gap: 12px; }
+.answer-block.visible { display: flex; }
+.answer-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); }
+.answer-text { font-size: 16px; line-height: 1.7; }
+.tip-box { background: #FFFBEB; border: 1.5px solid #FDE68A; border-radius: 14px; padding: 13px 15px; font-size: 14px; line-height: 1.6; color: #92400E; }
+
+.tap-hint { text-align: center; padding: 10px; font-size: 14px; color: var(--text-muted); flex-shrink: 0; }
+
+.bottom-bar { padding: 10px var(--pad) 24px; flex-shrink: 0; }
+.rating-row { display: none; gap: 10px; margin-bottom: 10px; }
+.rating-row.visible { display: flex; }
+.rating-btn { flex: 1; padding: 14px 0; border-radius: var(--rb); border: 2px solid; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; -webkit-appearance: none; transition: transform 0.1s; }
+.rating-btn:active { transform: scale(0.96); }
+.got-it { background: var(--green-bg); border-color: #86EFAC; color: var(--green); }
+.practice { background: var(--orange-bg); border-color: #FCD34D; color: var(--orange); }
+
+.nav-row { display: flex; align-items: center; gap: 10px; }
+.nav-btn { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--border); background: var(--card); font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.1s, opacity 0.1s; flex-shrink: 0; -webkit-appearance: none; }
+.nav-btn:active { transform: scale(0.92); }
+.nav-btn:disabled { opacity: 0.3; }
+.shuffle-btn { flex: 1; height: 56px; border-radius: var(--rb); border: 2px solid var(--border); background: var(--card); font-size: 15px; font-weight: 600; cursor: pointer; color: var(--text-sub); display: flex; align-items: center; justify-content: center; gap: 6px; -webkit-appearance: none; transition: transform 0.1s; }
+.shuffle-btn:active { transform: scale(0.97); }
+
+/* celebration */
+.celebration { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.96); align-items: center; justify-content: center; flex-direction: column; gap: 18px; z-index: 200; padding: var(--pad); text-align: center; }
+.celebration.visible { display: flex; }
+.cel-emoji { font-size: 68px; }
+.cel-title { font-size: 28px; font-weight: 800; }
+.cel-sub { font-size: 16px; color: var(--text-sub); line-height: 1.5; }
+.cel-stats { display: flex; gap: 16px; }
+.stat-box { background: var(--bg); border-radius: 18px; padding: 16px 24px; text-align: center; border: 1.5px solid var(--border); }
+.stat-num { font-size: 32px; font-weight: 800; }
+.stat-lbl { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+.restart-btn { background: #1C1C1A; color: #fff; border: none; border-radius: var(--rb); padding: 18px 40px; font-size: 17px; font-weight: 700; cursor: pointer; -webkit-appearance: none; transition: transform 0.1s; }
+.restart-btn:active { transform: scale(0.97); }
+
+/* topic colours */
+.t-school { background:#EFF6FF; color:#1D4ED8; } .t-family { background:#F0FDF4; color:#15803D; }
+.t-community { background:#F7FEE7; color:#4D7C0F; } .t-health { background:#FFFBEB; color:#B45309; }
+.t-festivals { background:#FFF7ED; color:#C2410C; } .t-values { background:#F5F3FF; color:#6D28D9; }
+.pill-school { background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE; }
+.pill-family { background:#F0FDF4; color:#15803D; border-color:#BBF7D0; }
+.pill-community { background:#F7FEE7; color:#4D7C0F; border-color:#D9F99D; }
+.pill-health { background:#FFFBEB; color:#B45309; border-color:#FDE68A; }
+.pill-festivals { background:#FFF7ED; color:#C2410C; border-color:#FDBA74; }
+.pill-values { background:#F5F3FF; color:#6D28D9; border-color:#DDD6FE; }
+.pill-all { background:#F7F6F2; color:#1C1C1A; border-color:#D1D1CC; }
+.pill-active { border-width: 2.5px; }
+
+/* ══════════════════════════════
+   READING ALOUD SCREEN
+══════════════════════════════ */
+.ra-header { padding: 14px var(--pad) 0; flex-shrink: 0; }
+.ra-title { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.ra-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; margin-bottom: 12px; }
+
+.ra-passage-nav { display: flex; align-items: center; gap: 10px; padding: 0 var(--pad) 10px; flex-shrink: 0; }
+.ra-nav-btn { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--border); background: var(--card); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; -webkit-appearance: none; transition: transform 0.1s; }
+.ra-nav-btn:active { transform: scale(0.92); }
+.ra-nav-btn:disabled { opacity: 0.3; }
+.ra-passage-info { flex: 1; }
+.ra-passage-title { font-size: 16px; font-weight: 700; color: var(--text); }
+.ra-passage-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.ra-passage-dots { display: flex; gap: 6px; padding: 0 var(--pad) 10px; flex-shrink: 0; }
+.ra-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background 0.2s; cursor: pointer; }
+.ra-dot.done { background: #22C55E; }
+.ra-dot.active { background: var(--text); }
+
+.ra-card { flex: 1; overflow: hidden; margin: 0 var(--pad); display: flex; flex-direction: column; min-height: 0; }
+.ra-card-inner { background: var(--card); border-radius: var(--rc); box-shadow: var(--shadow); border: 1.5px solid var(--border); flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
+
+.ra-tips-row { display: flex; gap: 8px; padding: 14px 18px 10px; flex-shrink: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; white-space: nowrap; }
+.ra-tips-row::-webkit-scrollbar { display: none; }
+.ra-tip-chip { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.chip-pause { background: #FFF7ED; color: #C2410C; }
+.chip-stop { background: #FEF2F2; color: #DC2626; }
+.chip-exclaim { background: #EFF6FF; color: #1D4ED8; }
+.chip-question { background: #F5F3FF; color: #6D28D9; }
+.chip-stress { background: #F0FDF4; color: #15803D; }
+
+.ra-text-area { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 4px 22px 18px; min-height: 0; }
+.ra-passage-text { font-size: 19px; line-height: 2.1; color: var(--text); letter-spacing: 0.01em; }
+/* punctuation colour coding */
+.p-comma { color: #D97706; font-weight: 700; }
+.p-stop { color: #DC2626; font-weight: 700; }
+.p-exclaim { color: #2563EB; font-weight: 700; }
+.p-question { color: #7C3AED; font-weight: 700; }
+/* word highlight */
+.w-tricky { border-bottom: 2.5px solid #F59E0B; cursor: pointer; position: relative; }
+.w-tricky.revealed { background: #FFFBEB; border-radius: 4px; }
+.w-tooltip { display: none; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C1C1A; color: #fff; font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: 10px; white-space: nowrap; z-index: 50; pointer-events: none; }
+.w-tricky.revealed .w-tooltip { display: block; }
+/* sentence highlight on tap */
+.ra-sentence { cursor: pointer; border-radius: 6px; padding: 1px 3px; margin: 0 -3px; transition: background 0.15s; }
+.ra-sentence.hl { background: #FFFBEB; }
+
+.ra-legend { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 18px 12px; border-top: 1.5px solid var(--border); flex-shrink: 0; }
+.legend-item { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-sub); }
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+.ra-bottom { padding: 10px var(--pad) 24px; flex-shrink: 0; }
+.ra-action-row { display: flex; gap: 10px; }
+.ra-btn { flex: 1; height: 54px; border-radius: var(--rb); border: 2px solid var(--border); background: var(--card); font-size: 15px; font-weight: 600; cursor: pointer; color: var(--text-sub); display: flex; align-items: center; justify-content: center; gap: 7px; -webkit-appearance: none; transition: transform 0.1s; }
+.ra-btn:active { transform: scale(0.97); }
+.ra-btn.primary { background: #1C1C1A; color: #fff; border-color: #1C1C1A; }
+.ra-btn.primary:active { background: #333; }
+.ra-done-btn { width: 54px; height: 54px; border-radius: 50%; border: 2px solid #86EFAC; background: var(--green-bg); font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; -webkit-appearance: none; transition: transform 0.1s; }
+.ra-done-btn:active { transform: scale(0.92); }
+.ra-done-btn.done { background: var(--green-bg); border-color: var(--green); }
+
+/* tips panel */
+.tips-panel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 150; align-items: flex-end; justify-content: center; }
+.tips-panel.visible { display: flex; }
+.tips-sheet { background: var(--card); border-radius: 24px 24px 0 0; padding: 24px var(--pad) 40px; width: 100%; max-height: 70vh; overflow-y: auto; }
+.tips-sheet h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+.tips-close { float: right; font-size: 22px; background: none; border: none; cursor: pointer; color: var(--text-muted); }
+.tips-item { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+.tips-num { width: 32px; height: 32px; border-radius: 50%; background: #1C1C1A; color: #fff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.tips-text { font-size: 15px; line-height: 1.6; color: var(--text); }
+.tips-text strong { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- MODE TABS -->
+<div class="mode-tabs">
+  <button class="mode-tab active" id="tabFlash" onclick="switchMode('flash')">📚 Vocabulary Cards</button>
+  <button class="mode-tab" id="tabRead" onclick="switchMode('read')">🎙 Reading Aloud</button>
+</div>
+
+<!-- ══ FLASHCARD SCREEN ══ -->
+<div class="screen active" id="screenFlash">
+  <div class="topbar">
+    <div><div class="topbar-title">Oral Cards</div><div class="topbar-sub" id="topbarSub">25 cards · All topics</div></div>
+    <div class="score-badge">⭐ <span id="scoreCount">0</span></div>
+  </div>
+  <div class="topic-scroll" id="topicNav"></div>
+  <div class="progress-wrap">
+    <div class="progress-row">
+      <span class="progress-label">Progress</span>
+      <span class="progress-count" id="progressCount">0 / 25 done</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+  <div class="card-area">
+    <div class="flashcard" id="flashcard" onclick="toggleReveal()">
+      <div class="card-header">
+        <span class="card-type" id="cardType"></span>
+        <span class="card-topic-chip" id="cardTag"></span>
+      </div>
+      <div class="card-body" id="cardBody">
+        <div class="card-question" id="cardQ"></div>
+        <div class="divider-line" id="divider" style="display:none;"></div>
+        <div class="answer-block" id="answerBlock">
+          <div class="answer-label">Model Answer</div>
+          <div class="answer-text" id="cardA"></div>
+          <div class="tip-box" id="cardTip"></div>
+        </div>
+      </div>
+    </div>
+    <div class="tap-hint" id="tapHint">👆 Tap card to see the answer</div>
+  </div>
+  <div class="bottom-bar">
+    <div class="rating-row" id="ratingRow">
+      <button class="rating-btn got-it" onclick="rate('got')">✅ I got it!</button>
+      <button class="rating-btn practice" onclick="rate('practice')">🔁 Practice more</button>
+    </div>
+    <div class="nav-row">
+      <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">←</button>
+      <button class="shuffle-btn" onclick="shuffle()">🔀 Shuffle</button>
+      <button class="nav-btn" id="nextBtn" onclick="navigate(1)">→</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ READING ALOUD SCREEN ══ -->
+<div class="screen" id="screenRead">
+  <div class="ra-header">
+    <div class="ra-title">Reading Aloud</div>
+    <div class="ra-sub">Read each passage out loud. Tap coloured marks for tips.</div>
+  </div>
+  <div class="ra-passage-nav">
+    <button class="ra-nav-btn" id="raPrev" onclick="raNavigate(-1)">←</button>
+    <div class="ra-passage-info">
+      <div class="ra-passage-title" id="raTitle"></div>
+      <div class="ra-passage-meta" id="raMeta"></div>
+    </div>
+    <button class="ra-nav-btn" id="raNext" onclick="raNavigate(1)">→</button>
+  </div>
+  <div class="ra-passage-dots" id="raDots"></div>
+  <div class="ra-card">
+    <div class="ra-card-inner">
+      <div class="ra-tips-row">
+        <span class="ra-tip-chip chip-pause">🟠 Comma = short pause</span>
+        <span class="ra-tip-chip chip-stop">🔴 Full stop = full stop</span>
+        <span class="ra-tip-chip chip-question">🟣 Question = go up</span>
+        <span class="ra-tip-chip chip-exclaim">🔵 ! = strong feeling</span>
+        <span class="ra-tip-chip chip-stress">🟢 Underline = stress this word</span>
+      </div>
+      <div class="ra-text-area">
+        <div class="ra-passage-text" id="raText"></div>
+      </div>
+      <div class="ra-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#F59E0B;"></div> Tap underlined words for pronunciation</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#FFFBEB; border:1.5px solid #FDE68A;"></div> Tap any sentence to highlight</div>
+      </div>
+    </div>
+  </div>
+  <div class="ra-bottom">
+    <div class="ra-action-row">
+      <button class="ra-btn" onclick="showTips()">💡 How to read this</button>
+      <button class="ra-btn primary" onclick="raNavigate(1)" id="raNextBtn">Next passage →</button>
+      <button class="ra-done-btn" id="raDoneBtn" onclick="markDone()" title="Mark as done">☆</button>
+    </div>
+  </div>
+</div>
+
+<!-- Tips Panel -->
+<div class="tips-panel" id="tipsPanel" onclick="hideTips()">
+  <div class="tips-sheet" onclick="event.stopPropagation()">
+    <button class="tips-close" onclick="hideTips()">✕</button>
+    <h3>How to read this well</h3>
+    <div id="tipsList"></div>
+  </div>
+</div>
+
+<!-- Celebration (flashcards) -->
+<div class="celebration" id="celebration">
+  <div class="cel-emoji">🎉</div>
+  <div class="cel-title">Well done!</div>
+  <div class="cel-sub">You've finished all the cards!<br>Here's your score:</div>
+  <div class="cel-stats">
+    <div class="stat-box"><div class="stat-num" id="gotItCount" style="color:#16A34A;">0</div><div class="stat-lbl">I got it!</div></div>
+    <div class="stat-box"><div class="stat-num" id="practiceCount" style="color:#D97706;">0</div><div class="stat-lbl">Practice more</div></div>
+  </div>
+  <button class="restart-btn" onclick="restart()">Try again</button>
+</div>
+
+<script>
+/* ══════════════════════════════
+   FLASHCARD DATA
+══════════════════════════════ */
+const TOPICS=[{id:"all",label:"All topics",pillClass:"pill-all"},{id:"school",label:"🏫 School",pillClass:"pill-school"},{id:"family",label:"👨‍👩‍👧 Family",pillClass:"pill-family"},{id:"community",label:"🌳 Community",pillClass:"pill-community"},{id:"health",label:"🥗 Health",pillClass:"pill-health"},{id:"festivals",label:"🎉 Festivals",pillClass:"pill-festivals"},{id:"values",label:"💛 Values",pillClass:"pill-values"}];
+const TOPIC_TAG={school:"t-school",family:"t-family",community:"t-community",health:"t-health",festivals:"t-festivals",values:"t-values"};
+const TOPIC_LBL={school:"School life",family:"Family & home",community:"Community",health:"Health",festivals:"Festivals",values:"Values"};
+const ALL_CARDS=[
+{topic:"school",type:"Personal experience",q:"What do you usually eat at your school canteen?",a:"I usually eat chicken rice because it is filling and gives me energy for afternoon classes. I also like to buy a cup of barley water to cool myself down, especially after a long recess.",tip:"💡 Always give a reason. Don't just say 'I eat rice.' Say WHY you like it."},
+{topic:"school",type:"Opinion question",q:"Do you enjoy doing group projects? Why or why not?",a:"Yes, I do enjoy group projects most of the time. Working with friends means we can share different ideas and split the workload fairly. For example, during a recent project on recycling, each of us researched a different part and combined it together. However, it can be challenging if some members do not do their share.",tip:"💡 Use 'for example' to make your answer richer. Acknowledge both sides."},
+{topic:"school",type:"Opinion question",q:"What makes a good team member?",a:"A good team member listens carefully to others' ideas without interrupting, and is willing to share the workload fairly. He or she should also be responsible and complete tasks on time. Most importantly, a good team member encourages others and stays positive even when things get difficult.",tip:"💡 Give at least 2 qualities. Use connecting words: 'most importantly', 'also', 'furthermore'."},
+{topic:"school",type:"Opinion question",q:"Why is reading important for students?",a:"Reading is very important because it helps us build our vocabulary and improve our language skills. When we read widely, we also learn about different topics and broaden our knowledge. For example, I once read a book about space exploration and found it so fascinating that I started researching more on my own.",tip:"💡 Always relate back to your own life with a personal example."},
+{topic:"school",type:"Opinion question",q:"How can students make their school a better place?",a:"Students can help keep the school clean by disposing of litter properly and not vandalising school property. We can also be kind and inclusive, making sure no one feels left out during recess. Participating actively in school events like Sports Day also creates a strong sense of community.",tip:"💡 Suggest 2–3 practical actions. Be specific — say exactly what students can do."},
+{topic:"family",type:"Personal experience",q:"Do you enjoy spending time with your family? Tell me about it.",a:"Yes, I really enjoy spending time with my family. On weekends, we sometimes go to East Coast Park together. We cycle along the path, then stop for a picnic. I love these outings because we get to talk and laugh without being distracted by our phones, and it makes me feel very close to my family.",tip:"💡 Paint a picture! Name the place, describe what you do, then say how it makes you feel."},
+{topic:"family",type:"Opinion question",q:"Why is it important for families to spend time together?",a:"I think it is very important because it helps family members understand each other better. When we spend time together, we share our thoughts and feelings, and we feel loved and supported. It also creates happy memories that we will treasure for a long time, and strengthens the bond between family members.",tip:"💡 Give 2 reasons. Use 'because', 'also', 'furthermore' to link your ideas smoothly."},
+{topic:"family",type:"Opinion question",q:"How can children help out at home?",a:"Children can help with simple chores such as washing the dishes, sweeping the floor, or taking out the rubbish. We can also help younger siblings with their homework or keep our rooms tidy without being reminded. Helping at home teaches us responsibility and shows our appreciation for what our parents do for us.",tip:"💡 Give specific examples of chores, not just 'do housework'. The more specific, the better!"},
+{topic:"family",type:"Opinion question",q:"How should we treat our elderly grandparents?",a:"We should treat our elderly grandparents with patience, love, and respect. We can spend time talking with them, listening to their stories, or accompanying them on walks. We should also be careful not to speak harshly to them, and offer to help them with tasks that may be difficult due to their age.",tip:"💡 Show empathy. Examiners reward kind, thoughtful responses that show good values."},
+{topic:"community",type:"Opinion question",q:"Why is it important to keep Singapore clean?",a:"Keeping Singapore clean is important because it makes our environment pleasant and healthy for everyone. A clean environment also prevents the spread of diseases and keeps pests like rats and mosquitoes away. I believe every citizen has a role to play — for example, by disposing of litter properly and not leaving food waste in public areas.",tip:"💡 Start with the general reason, then get specific with a real example."},
+{topic:"community",type:"Opinion question",q:"How can we be a good neighbour?",a:"We can be a good neighbour by being considerate — for example, keeping noise levels down late at night and not leaving our belongings in shared corridors. We can also greet our neighbours warmly and offer to help if they need assistance, such as collecting their mail when they are away.",tip:"💡 'For example' is your best friend. Always follow a point with a concrete example."},
+{topic:"community",type:"General knowledge",q:"What outdoor activities do Singaporeans enjoy?",a:"Many Singaporeans enjoy cycling, jogging, and hiking. Families often visit green spaces like Gardens by the Bay or nature reserves like Bukit Timah Hill. These activities are not only enjoyable but also beneficial for our health. I personally enjoy cycling at Punggol Waterway with my family on weekends.",tip:"💡 Name real Singapore places — it shows the examiner you know your country well!"},
+{topic:"community",type:"Opinion question",q:"How can we practise road safety?",a:"We can practise road safety by always using pedestrian crossings and waiting for the green man before crossing. We should also avoid using our phones while walking near roads, as this can be very dangerous. As cyclists, we should wear a helmet and follow traffic rules. Road safety protects not just ourselves but others too.",tip:"💡 Include safety tips for pedestrians, cyclists, and passengers — shows wide thinking!"},
+{topic:"health",type:"Opinion question",q:"Why is it important to eat a proper lunch?",a:"Eating a proper lunch is very important because it gives us the energy we need to concentrate during afternoon lessons. If I skip lunch, I feel tired and find it hard to pay attention to my teacher. A nutritious meal also keeps us healthy and helps our bodies grow and develop properly.",tip:"💡 Use first person ('if I skip lunch') to make the answer feel personal and convincing."},
+{topic:"health",type:"Opinion question",q:"How much time should students spend on devices each day?",a:"I think students should limit their screen time to about one to two hours a day outside of school. Spending too much time on devices can strain our eyes and affect our sleep. Instead, we should spend time on physical activities, reading, or playing with friends. Balance is important — devices can be useful, but we should not be overly dependent on them.",tip:"💡 Give a specific time limit. Show you understand both sides."},
+{topic:"health",type:"Opinion question",q:"What can students do to stay healthy?",a:"Students can stay healthy by eating balanced meals with plenty of vegetables and fruits, and avoiding too much junk food or sugary drinks. Regular exercise is also important — even a 30-minute jog or swim a few times a week can make a big difference. Getting enough sleep each night is equally essential so that we feel refreshed and alert in school.",tip:"💡 Cover at least 3 areas: diet, exercise, sleep. Shows a well-rounded answer."},
+{topic:"health",type:"Opinion question",q:"Why is exercise important for children?",a:"Exercise is very important for children because it keeps our bodies strong and healthy. It also helps us manage stress and improves our mood — I always feel happier and more focused after a game of basketball. Regular exercise also teaches us teamwork and discipline, especially when we play as part of a team.",tip:"💡 Include both physical AND emotional benefits of exercise."},
+{topic:"festivals",type:"Personal experience",q:"What is your favourite festival and why?",a:"My favourite festival is Chinese New Year. I love it because the whole family gathers together, which is rare during the rest of the year. We visit relatives, exchange red packets, and enjoy a reunion dinner with special dishes like pineapple tarts and bak kwa. It is a time filled with warmth, laughter, and a strong sense of togetherness.",tip:"💡 Name specific foods, traditions, or activities — vivid details make your answer memorable!"},
+{topic:"festivals",type:"General knowledge",q:"How do Singaporeans celebrate National Day?",a:"Singaporeans celebrate National Day on 9 August each year. Many families gather to watch the National Day Parade, either in person or on television at home. Buildings and void decks are decorated with Singapore flags, and fireworks light up the sky at night. It is a time for all Singaporeans to feel proud of our country and reflect on how far we have come.",tip:"💡 Show national pride. Mention the date (9 August) — it shows you know your facts!"},
+{topic:"festivals",type:"Opinion question",q:"Why are festivals important in Singapore?",a:"Festivals are important because they bring people of different races and religions together, strengthening our multicultural identity. When we celebrate each other's festivals, we learn about different cultures and traditions, which promotes understanding and racial harmony. Festivals also give families a chance to reconnect and spend quality time together.",tip:"💡 In a Singapore context, always mention racial harmony — a key value examiners look for."},
+{topic:"values",type:"Personal experience",q:"Tell me about a time you helped someone.",a:"Once, I noticed a classmate struggling to carry a heavy stack of books to the library. I offered to help, and we carried them together. She was very grateful and thanked me. It was a small act, but it made me realise how a simple gesture of kindness can brighten someone's day and strengthen friendship.",tip:"💡 Use the structure: Situation → Action → Outcome → Reflection. Makes your story very clear!"},
+{topic:"values",type:"Opinion question",q:"Why is honesty important?",a:"Honesty is very important because it builds trust between people. When we are honest, others know they can rely on us and take us at our word. For example, if I accidentally broke something at home and lied about it, my parents might find out later and trust me less. Being honest, even when it is difficult, shows courage and strong character.",tip:"💡 Give a relatable example. Abstract talk about honesty is less convincing than a real scenario."},
+{topic:"values",type:"Personal experience",q:"How do you handle failure or disappointment?",a:"When I fail at something, I first allow myself to feel disappointed — I think it is natural to feel upset. But then I try to reflect on what went wrong and what I can do better next time. For example, when I did not do well in a spelling test, I made a list of the words I had missed and practised them every day until I knew them perfectly.",tip:"💡 Show emotional maturity — it is okay to feel sad, but show you bounce back and learn."},
+{topic:"values",type:"Opinion question",q:"What does it mean to be a responsible person?",a:"A responsible person is someone who takes ownership of their actions and duties. For example, a responsible student completes their homework on time without being reminded, and owns up to mistakes rather than blaming others. Responsibility also means thinking about how our actions affect the people around us.",tip:"💡 Define the value first, then show it with a concrete example from school life."},
+{topic:"values",type:"Opinion question",q:"Why is it important to be grateful?",a:"Being grateful is important because it helps us appreciate what we have instead of always wanting more. When we express gratitude — for example, by thanking a teacher who has helped us or a parent who has cooked a meal — it makes the other person feel valued and strengthens our relationship with them. Gratitude also makes us happier and more content.",tip:"💡 Explain what gratitude does for US and for OTHERS — two angles make for a richer answer."}
+];
+
+/* ══════════════════════════════
+   READING PASSAGES DATA
+══════════════════════════════ */
+// html() helper: <c> comma, <s> full stop, <q> question mark, <x> exclaim, <T word="pron"> tricky word
+// Sentences wrapped in <span class="ra-sentence"> for tap-highlighting
+const PASSAGES = [
+{
+  title: "A Day at the Park",
+  theme: "Family & Community",
+  wordCount: 130,
+  html: `<span class="ra-sentence">Last Saturday<span class="p-comma">,</span> my family decided to spend the afternoon at Bishan-Ang Mo Kio Park<span class="p-stop">.</span></span> <span class="ra-sentence">The weather was <span class="w-tricky" data-tip="pleh-zuhnt">pleasant</span><span class="p-comma">,</span> with a gentle breeze that made the outing perfect for all of us<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">My younger sister and I ran ahead to the playground<span class="p-comma">,</span> while our parents followed slowly behind<span class="p-stop">.</span></span> <span class="ra-sentence">We spent nearly an hour on the swings and slides<span class="p-comma">,</span> <span class="w-tricky" data-tip="laf-ing">laughing</span> and chasing each other around<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">Later<span class="p-comma">,</span> we sat together on a mat under a shady tree and enjoyed the sandwiches and fruit that Mother had packed<span class="p-stop">.</span></span> <span class="ra-sentence">It was a simple outing<span class="p-comma">,</span> but it brought us closer together as a family<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">As the sun began to set<span class="p-comma">,</span> we <span class="w-tricky" data-tip="re-loo-k-tant-lee">reluctantly</span> packed up and headed home<span class="p-comma">,</span> tired but happy<span class="p-stop">.</span></span> <span class="ra-sentence">I hope we can do this again soon<span class="p-exclaim">!</span></span>`,
+  tips: [
+    {t:"Pace", d:"Read at a calm, steady speed — not too fast. Imagine you are telling a story to a friend."},
+    {t:"Commas (orange)", d:"Pause briefly at every orange comma. Count 'one' in your head before continuing."},
+    {t:"Full stops (red)", d:"Take a full breath at every red full stop. Let the sentence land before moving on."},
+    {t:"Exclamation mark (blue)", d:"'I hope we can do this again soon!' — let your voice rise with genuine excitement here."},
+    {t:"Tricky words", d:"'Pleasant' = PLEH-zuhnt. 'Reluctantly' = re-LUK-tant-lee. Practise these before reading the full passage."},
+    {t:"Expression", d:"The picnic scene should sound warm and happy. Slow down on 'tired but happy' — savour those words."}
+  ]
+},
+{
+  title: "Keeping Our School Clean",
+  theme: "School Life & Values",
+  wordCount: 128,
+  html: `<span class="ra-sentence">Every morning<span class="p-comma">,</span> the students of Greendale Primary School take turns to clean their <span class="w-tricky" data-tip="class-room">classrooms</span> before lessons begin<span class="p-stop">.</span></span> <span class="ra-sentence">It is a <span class="w-tricky" data-tip="res-pon-si-bil-i-tee">responsibility</span> that the pupils take seriously<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">On Monday<span class="p-comma">,</span> Marcus noticed a pile of litter near the school canteen<span class="p-stop">.</span></span> <span class="ra-sentence">Instead of walking past<span class="p-comma">,</span> he stopped and picked it up<span class="p-comma">,</span> then <span class="w-tricky" data-tip="dis-pohzd">disposed</span> of it in the nearest bin<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">His teacher<span class="p-comma">,</span> Mrs Tan<span class="p-comma">,</span> saw what he did and praised him in front of the class<span class="p-stop">.</span></span> <span class="ra-sentence">"A clean school is something we should all be proud of<span class="p-comma">,</span>" she said with a warm smile<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">Marcus felt a glow of pride<span class="p-stop">.</span></span> <span class="ra-sentence">He <span class="w-tricky" data-tip="re-uh-lyzd">realised</span> that keeping the school clean was not just a duty<span class="p-comma">,</span> but a way of showing care for the people around him<span class="p-stop">.</span></span>`,
+  tips: [
+    {t:"Pace", d:"This passage has a serious, respectful tone. Read it calmly and clearly — not in a rush."},
+    {t:"Dialogue", d:"For Mrs Tan's speech — 'A clean school is something we should all be proud of' — slow down and speak warmly, as a kind teacher would."},
+    {t:"Commas in a list", d:"'he stopped and picked it up, then disposed of it' — pause at both commas, giving each action its own moment."},
+    {t:"Tricky words", d:"'Responsibility' = res-pon-si-BIL-i-tee. 'Disposed' = dis-POHZD. 'Realised' = REE-uh-lyzd."},
+    {t:"Full stops", d:"After 'Marcus felt a glow of pride.' — pause longer here. It is a short, powerful sentence. Let it breathe."},
+    {t:"Feeling", d:"End on a thoughtful, satisfied tone — Marcus has learned something important. Let your voice reflect that."}
+  ]
+},
+{
+  title: "A Healthy Lifestyle",
+  theme: "Health & Lifestyle",
+  wordCount: 132,
+  html: `<span class="ra-sentence">Many people know that eating well and exercising regularly are important for good health<span class="p-stop">.</span></span> <span class="ra-sentence">However<span class="p-comma">,</span> in today's busy world<span class="p-comma">,</span> it is easy to <span class="w-tricky" data-tip="ne-glekt">neglect</span> these habits<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">Doctors <span class="w-tricky" data-tip="rek-uh-mend">recommend</span> that children get at least sixty minutes of physical activity every day<span class="p-stop">.</span></span> <span class="ra-sentence">This can include sports<span class="p-comma">,</span> cycling<span class="p-comma">,</span> swimming<span class="p-comma">,</span> or even brisk walking with the family<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">Eating a <span class="w-tricky" data-tip="bal-unsd">balanced</span> diet is equally important<span class="p-stop">.</span></span> <span class="ra-sentence">Instead of <span class="w-tricky" data-tip="kon-soo-ming">consuming</span> too much sugar and fried food<span class="p-comma">,</span> we should choose fruits<span class="p-comma">,</span> vegetables<span class="p-comma">,</span> and whole grains<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">Most importantly<span class="p-comma">,</span> getting enough sleep each night helps our bodies recover and our minds stay sharp<span class="p-stop">.</span></span> <span class="ra-sentence">A healthy lifestyle is not difficult to achieve<span class="p-comma">,</span> but it requires <span class="w-tricky" data-tip="dis-uh-plin">discipline</span> and effort every single day<span class="p-stop">.</span></span>`,
+  tips: [
+    {t:"Pace", d:"This is an informational passage. Read it clearly and confidently, like a news presenter."},
+    {t:"Lists with commas", d:"'sports, cycling, swimming, or even brisk walking' — give each item its own clear beat. Don't rush through lists."},
+    {t:"Tricky words", d:"'Neglect' = ne-GLEKT. 'Recommend' = rek-uh-MEND. 'Balanced' = BAL-unsd. 'Consuming' = kon-SOO-ming. 'Discipline' = DIS-uh-plin."},
+    {t:"'Most importantly'", d:"Pause slightly after 'Most importantly,' — this signals to the listener that the next point is the most important one."},
+    {t:"Last sentence", d:"'it requires discipline and effort every single day' — stress the words 'discipline', 'effort', and 'every single day' to make the message land."},
+    {t:"Tone", d:"Stay calm and informative throughout. This is not an emotional passage — accuracy and clarity are what matter."}
+  ]
+},
+{
+  title: "A Surprise at the Door",
+  theme: "Family & Kindness",
+  wordCount: 138,
+  html: `<span class="ra-sentence">One rainy evening<span class="p-comma">,</span> there was a loud knock at the door<span class="p-stop">.</span></span> <span class="ra-sentence">Sarah opened it to find her elderly neighbour<span class="p-comma">,</span> Mdm Wong<span class="p-comma">,</span> standing in the corridor with <span class="w-tricky" data-tip="soak-ing">soaking</span> wet clothes<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">"I forgot my umbrella and I slipped on the wet steps<span class="p-comma">,</span>" the old lady said<span class="p-comma">,</span> her voice <span class="w-tricky" data-tip="trem-buh-ling">trembling</span> with cold<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">Without <span class="w-tricky" data-tip="hes-uh-tay-ting">hesitating</span><span class="p-comma">,</span> Sarah called her mother and they quickly helped Mdm Wong inside<span class="p-stop">.</span></span> <span class="ra-sentence">They gave her a warm towel<span class="p-comma">,</span> a fresh set of clothes<span class="p-comma">,</span> and a hot cup of tea<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">Later<span class="p-comma">,</span> as Mdm Wong prepared to leave<span class="p-comma">,</span> she held Sarah's hand and said softly<span class="p-comma">,</span> "Thank you<span class="p-comma">,</span> my dear<span class="p-stop">.</span> You are a very kind girl<span class="p-stop">."</span></span>
+
+<span class="ra-sentence">Sarah smiled<span class="p-stop">.</span></span> <span class="ra-sentence">She knew that showing <span class="w-tricky" data-tip="kom-pas-shun">compassion</span> to others was one of the most important things a person could do<span class="p-stop">.</span></span>`,
+  tips: [
+    {t:"Dialogue voices", d:"Mdm Wong is old and cold — her voice should sound weak and shaky. Sarah's family are warm and concerned. Make the voices different."},
+    {t:"Commas in dialogue", d:"'I forgot my umbrella and I slipped on the wet steps,' — the comma after 'steps' is a natural breath. Don't rush into 'the old lady said'."},
+    {t:"Tricky words", d:"'Soaking' = SOH-king. 'Trembling' = TREM-buh-ling. 'Hesitating' = HEZ-uh-tay-ting. 'Compassion' = kom-PASH-un."},
+    {t:"Short sentences", d:"'Sarah smiled.' — pause for a full two seconds after this. Short sentences carry big emotions. Give it space."},
+    {t:"Atmosphere", d:"The opening is dark and rainy — read it a little more slowly and seriously. The middle warms up as the family helps. Let your tone follow."},
+    {t:"Ending", d:"The last sentence is the moral of the story. Read it slowly and clearly, as if you really believe it."}
+  ]
+},
+{
+  title: "Celebrating National Day",
+  theme: "Festivals & National Pride",
+  wordCount: 134,
+  html: `<span class="ra-sentence">Every year on the ninth of August<span class="p-comma">,</span> Singaporeans come together to <span class="w-tricky" data-tip="sel-uh-brayt">celebrate</span> their nation's birthday with great pride and joy<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">The <span class="w-tricky" data-tip="an-yoo-ul">annual</span> National Day Parade is one of the most exciting events of the year<span class="p-stop">.</span></span> <span class="ra-sentence">Soldiers march in perfect formation<span class="p-comma">,</span> <span class="w-tricky" data-tip="jetz">jets</span> roar across the blue sky<span class="p-comma">,</span> and colourful fireworks light up the night<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">In <span class="w-tricky" data-tip="neigh-buh-hoods">neighbourhoods</span> across the island<span class="p-comma">,</span> families hang red and white flags outside their flats and gather to watch the parade on television<span class="p-stop">.</span></span> <span class="ra-sentence">Children wave small flags and sing along to the <span class="w-tricky" data-tip="pay-tree-ot-ik">patriotic</span> songs they have learnt in school<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">National Day is more than just a <span class="w-tricky" data-tip="hol-uh-day">holiday</span><span class="p-stop">.</span></span> <span class="ra-sentence">It is a time to remember the <span class="w-tricky" data-tip="sak-ruh-fy-ses">sacrifices</span> of those who built our nation<span class="p-comma">,</span> and to look forward to a bright future together<span class="p-exclaim">!</span></span>`,
+  tips: [
+    {t:"Pride and energy", d:"This passage should sound proud and upbeat — like you love Singapore. Don't read it flatly."},
+    {t:"List of sights", d:"'Soldiers march... jets roar... fireworks light up' — each item builds excitement. Let your voice rise slightly with each one."},
+    {t:"Exclamation mark", d:"'to look forward to a bright future together!' — end with real enthusiasm. This is the emotional peak of the passage."},
+    {t:"Tricky words", d:"'Annual' = AN-yoo-ul. 'Neighbourhoods' = NAY-buh-hudz. 'Patriotic' = pay-tree-OT-ik. 'Sacrifices' = SAK-ruh-fy-sez."},
+    {t:"'National Day is more than just a holiday.'", d:"Pause before this sentence. It is a shift from describing events to explaining meaning. Give it weight."},
+    {t:"Pace", d:"The parade description (middle) can be slightly faster and more energetic. Slow down for the final two sentences — they are the heart of the passage."}
+  ]
+},
+{
+  title: "The Lost Wallet",
+  theme: "Values — Honesty",
+  wordCount: 136,
+  html: `<span class="ra-sentence">One afternoon<span class="p-comma">,</span> twelve-year-old Amir was cycling home from school when he spotted a brown wallet lying on the pavement<span class="p-stop">.</span></span> <span class="ra-sentence">He stopped his bicycle and picked it up <span class="w-tricky" data-tip="kur-ee-us-lee">curiously</span><span class="p-stop">.</span></span>
+
+<span class="ra-sentence">Inside<span class="p-comma">,</span> he found two hundred dollars in cash<span class="p-comma">,</span> a <span class="w-tricky" data-tip="aye-dee">identification</span> card<span class="p-comma">,</span> and several credit cards<span class="p-stop">.</span></span> <span class="ra-sentence">For a moment<span class="p-comma">,</span> Amir <span class="w-tricky" data-tip="hes-ih-tay-ted">hesitated</span><span class="p-stop">.</span></span> <span class="ra-sentence">The money could buy him the new game he had been wanting for months<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">But he quickly pushed that thought away<span class="p-stop">.</span></span> <span class="ra-sentence">He cycled straight to the nearest police post and handed the wallet to the officer on duty<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">The next day<span class="p-comma">,</span> the wallet's owner<span class="p-comma">,</span> an elderly man<span class="p-comma">,</span> came to Amir's home to thank him <span class="w-tricky" data-tip="per-sun-uh-lee">personally</span><span class="p-stop">.</span></span> <span class="ra-sentence">"You are a truly <span class="w-tricky" data-tip="on-est">honest</span> young man<span class="p-comma">,</span>" the man said<span class="p-comma">,</span> his eyes glistening<span class="p-stop">.</span></span> <span class="ra-sentence">Amir smiled<span class="p-comma">,</span> knowing he had made the right choice<span class="p-stop">.</span></span>`,
+  tips: [
+    {t:"Build the tension", d:"Read the middle section slowly — 'The money could buy him the new game...' — let the listener feel Amir's temptation."},
+    {t:"'But he quickly pushed that thought away.'", d:"Read this firmly and decisively. Amir has made up his mind. Your voice should sound resolute."},
+    {t:"Dialogue", d:"The elderly man is grateful and emotional — 'his eyes glistening'. Read his words warmly and a little slowly."},
+    {t:"Tricky words", d:"'Curiously' = KYOOR-ee-us-lee. 'Hesitated' = HEZ-ih-tay-ted. 'Personally' = PER-sun-uh-lee. 'Identification' = eye-den-tih-fih-KAY-shun."},
+    {t:"Short sentences for effect", d:"'But he quickly pushed that thought away.' is very short on purpose. Read it with a slight pause before it — that pause is part of the drama."},
+    {t:"Ending", d:"'Amir smiled, knowing he had made the right choice.' — soft and warm. Don't rush the ending. Let it feel like a satisfying conclusion."}
+  ]
+},
+{
+  title: "Caring for the Environment",
+  theme: "Community & Environment",
+  wordCount: 130,
+  html: `<span class="ra-sentence">Singapore may be a small island<span class="p-comma">,</span> but it is home to a rich <span class="w-tricky" data-tip="vuh-ry-uh-tee">variety</span> of plants<span class="p-comma">,</span> birds<span class="p-comma">,</span> and wildlife<span class="p-stop">.</span></span> <span class="ra-sentence"><span class="w-tricky" data-tip="pree-zurv-ing">Preserving</span> this natural <span class="w-tricky" data-tip="her-uh-tij">heritage</span> is something every citizen should care about<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">One simple way to help is to <span class="w-tricky" data-tip="ree-sy-kul">recycle</span><span class="p-stop">.</span></span> <span class="ra-sentence">By sorting our waste into the correct bins<span class="p-comma">,</span> we reduce the amount of rubbish sent to <span class="w-tricky" data-tip="land-filz">landfills</span> and help <span class="w-tricky" data-tip="kon-zurv">conserve</span> our limited land<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">Another way is to use less plastic<span class="p-stop">.</span></span> <span class="ra-sentence">Bringing our own shopping bags and water bottles greatly reduces plastic waste<span class="p-comma">,</span> which can harm sea creatures and <span class="w-tricky" data-tip="pol-yoot">pollute</span> our oceans<span class="p-stop">.</span></span>
+
+<span class="ra-sentence">Every small action counts<span class="p-stop">.</span></span> <span class="ra-sentence">If each person does their part<span class="p-comma">,</span> together we can keep Singapore green<span class="p-comma">,</span> clean<span class="p-comma">,</span> and beautiful for <span class="w-tricky" data-tip="foo-cher">future</span> generations to enjoy<span class="p-stop">.</span></span>`,
+  tips: [
+    {t:"Informational tone", d:"This is a factual passage. Read it clearly and confidently — like you are explaining something important to your class."},
+    {t:"'Every small action counts.'", d:"This short sentence is powerful. Pause for two seconds before it, then read it slowly and deliberately."},
+    {t:"Final sentence list", d:"'green, clean, and beautiful' — give each word equal weight. Don't run them together."},
+    {t:"Tricky words", d:"'Variety' = vuh-RY-uh-tee. 'Preserving' = prih-ZURV-ing. 'Heritage' = HER-uh-tij. 'Landfills' = LAND-filz. 'Conserve' = kon-ZURV. 'Pollute' = puh-LOOT."},
+    {t:"Pace", d:"Read the middle sections at a steady pace. The opening and closing sentences are the most important — slow down for both."},
+    {t:"Conviction", d:"Sound like you actually care about the environment. The best readers believe what they are saying — let that show in your voice."}
+  ]
+}
+];
+
+/* ══════════════════════════════
+   MODE SWITCHING
+══════════════════════════════ */
+function switchMode(mode) {
+  document.getElementById('screenFlash').classList.toggle('active', mode==='flash');
+  document.getElementById('screenRead').classList.toggle('active', mode==='read');
+  document.getElementById('tabFlash').classList.toggle('active', mode==='flash');
+  document.getElementById('tabRead').classList.toggle('active', mode==='read');
+}
+
+/* ══════════════════════════════
+   FLASHCARD LOGIC
+══════════════════════════════ */
+let activeTopic="all",deck=[...ALL_CARDS],idx=0,revealed=false,ratings={},doneSet=new Set();
+
+function buildNav(){
+  const nav=document.getElementById("topicNav"); nav.innerHTML="";
+  TOPICS.forEach(t=>{
+    const btn=document.createElement("button");
+    btn.className="topic-pill "+t.pillClass+(t.id===activeTopic?" pill-active":"");
+    btn.textContent=t.label; btn.onclick=()=>setTopic(t.id); nav.appendChild(btn);
+  });
+}
+function setTopic(id){
+  activeTopic=id; deck=id==="all"?[...ALL_CARDS]:ALL_CARDS.filter(c=>c.topic===id);
+  idx=0; revealed=false; doneSet=new Set(); ratings={}; buildNav(); updateSub(); renderCard();
+}
+function updateSub(){
+  const lbl=TOPICS.find(t=>t.id===activeTopic).label.replace(/^[^\s]+ /,"");
+  document.getElementById("topbarSub").textContent=deck.length+" cards · "+(activeTopic==="all"?"All topics":lbl);
+}
+function shuffle(){
+  for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}
+  idx=0; revealed=false; doneSet=new Set(); ratings={}; renderCard();
+}
+function navigate(dir){
+  const n=idx+dir; if(n<0||n>=deck.length)return; idx=n; revealed=false; renderCard();
+}
+function toggleReveal(){
+  revealed=!revealed;
+  document.getElementById("answerBlock").classList.toggle("visible",revealed);
+  document.getElementById("divider").style.display=revealed?"block":"none";
+  document.getElementById("tapHint").textContent=revealed?"👇 How did you do?":"👆 Tap card to see the answer";
+  document.getElementById("ratingRow").classList.toggle("visible",revealed);
+}
+function rate(r){
+  ratings[idx]=r; doneSet.add(idx);
+  if(r==="got") document.getElementById("scoreCount").textContent=Object.values(ratings).filter(v=>v==="got").length;
+  updateProgress();
+  if(idx<deck.length-1){setTimeout(()=>{idx++;revealed=false;renderCard();},200);}
+  else setTimeout(showCelebration,300);
+}
+function updateProgress(){
+  const done=doneSet.size,total=deck.length;
+  document.getElementById("progressFill").style.width=(done/total*100)+"%";
+  document.getElementById("progressCount").textContent=done+" / "+total+" done";
+}
+function showCelebration(){
+  document.getElementById("gotItCount").textContent=Object.values(ratings).filter(v=>v==="got").length;
+  document.getElementById("practiceCount").textContent=Object.values(ratings).filter(v=>v==="practice").length;
+  document.getElementById("celebration").classList.add("visible");
+}
+function restart(){
+  document.getElementById("celebration").classList.remove("visible");
+  idx=0; revealed=false; doneSet=new Set(); ratings={};
+  document.getElementById("scoreCount").textContent="0"; updateProgress(); renderCard();
+}
+function renderCard(){
+  if(!deck.length)return;
+  const card=deck[idx];
+  document.getElementById("cardType").textContent=card.type;
+  document.getElementById("cardQ").textContent=card.q;
+  document.getElementById("cardA").textContent=card.a;
+  document.getElementById("cardTip").textContent=card.tip;
+  const tag=document.getElementById("cardTag");
+  tag.textContent=TOPIC_LBL[card.topic]; tag.className="card-topic-chip "+(TOPIC_TAG[card.topic]||"");
+  document.getElementById("answerBlock").classList.remove("visible");
+  document.getElementById("divider").style.display="none";
+  document.getElementById("tapHint").textContent="👆 Tap card to see the answer";
+  document.getElementById("ratingRow").classList.remove("visible");
+  document.getElementById("prevBtn").disabled=idx===0;
+  document.getElementById("nextBtn").disabled=idx===deck.length-1;
+  document.getElementById("cardBody").scrollTop=0; updateProgress();
+}
+
+/* ══════════════════════════════
+   READING ALOUD LOGIC
+══════════════════════════════ */
+let raIdx=0; const raDone=new Set();
+
+function raBuildDots(){
+  const el=document.getElementById("raDots"); el.innerHTML="";
+  PASSAGES.forEach((_,i)=>{
+    const d=document.createElement("div");
+    d.className="ra-dot"+(i===raIdx?" active":"")+(raDone.has(i)?" done":"");
+    d.onclick=()=>raGo(i); el.appendChild(d);
+  });
+}
+function raNavigate(dir){
+  const n=raIdx+dir; if(n<0||n>=PASSAGES.length)return; raIdx=n; raRender();
+}
+function raGo(i){ raIdx=i; raRender(); }
+function markDone(){
+  raDone.add(raIdx); raBuildDots();
+  const btn=document.getElementById("raDoneBtn");
+  btn.textContent="✅"; btn.classList.add("done");
+}
+function raRender(){
+  const p=PASSAGES[raIdx];
+  document.getElementById("raTitle").textContent=p.title;
+  document.getElementById("raMeta").textContent=p.theme+" · "+p.wordCount+" words";
+  document.getElementById("raText").innerHTML=p.html;
+  document.getElementById("raPrev").disabled=raIdx===0;
+  document.getElementById("raNext").disabled=raIdx===PASSAGES.length-1;
+  document.getElementById("raNextBtn").disabled=raIdx===PASSAGES.length-1;
+  const done=raDone.has(raIdx);
+  const btn=document.getElementById("raDoneBtn");
+  btn.textContent=done?"✅":"☆"; btn.classList.toggle("done",done);
+  raBuildDots();
+  // attach tricky word tap
+  document.querySelectorAll(".w-tricky").forEach(el=>{
+    el.onclick=(e)=>{
+      e.stopPropagation();
+      el.classList.toggle("revealed");
+      // close others
+      document.querySelectorAll(".w-tricky").forEach(other=>{
+        if(other!==el) other.classList.remove("revealed");
+      });
+    };
+    // inject tooltip
+    if(!el.querySelector(".w-tooltip")){
+      const tt=document.createElement("span");
+      tt.className="w-tooltip"; tt.textContent="Say: "+el.dataset.tip;
+      el.appendChild(tt);
+    }
+  });
+  // sentence highlight
+  document.querySelectorAll(".ra-sentence").forEach(el=>{
+    el.onclick=(e)=>{
+      const already=el.classList.contains("hl");
+      document.querySelectorAll(".ra-sentence").forEach(s=>s.classList.remove("hl"));
+      if(!already) el.classList.add("hl");
+    };
+  });
+  document.querySelector(".ra-text-area").scrollTop=0;
+}
+function showTips(){
+  const p=PASSAGES[raIdx];
+  const list=document.getElementById("tipsList"); list.innerHTML="";
+  p.tips.forEach((t,i)=>{
+    const div=document.createElement("div"); div.className="tips-item";
+    div.innerHTML=`<div class="tips-num">${i+1}</div><div class="tips-text"><strong>${t.t}:</strong> ${t.d}</div>`;
+    list.appendChild(div);
+  });
+  document.getElementById("tipsPanel").classList.add("visible");
+}
+function hideTips(){ document.getElementById("tipsPanel").classList.remove("visible"); }
+
+// Init
+buildNav(); updateSub(); renderCard(); raRender();
+</script>
+</body>
+</html>
