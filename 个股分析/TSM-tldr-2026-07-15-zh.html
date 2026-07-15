@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>台积电 TSM — 首次覆盖 TLDR — 2026-07-15</title>
+<style>
+:root{
+  --ink:#1a2733; --sub:#5b6b7a; --line:#dde4ea; --bg:#ffffff; --panel:#f6f8fa;
+  --navy:#1a3a5c; --steel:#4477aa; --gold:#c9a227; --green:#2e7d32; --red:#b03a3a; --orange:#d97b29;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --ink:#e8edf2; --sub:#9fb0bf; --line:#2c3a47; --bg:#12181f; --panel:#1a222b;
+         --navy:#7fa8d0; --steel:#6f9cc9; }
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:"PingFang SC","Songti SC","Helvetica Neue",Arial,sans-serif; color:var(--ink); background:var(--bg);
+     max-width:880px; margin:0 auto; padding:36px 22px 60px; line-height:1.65; font-size:15px;}
+header{border-bottom:3px solid var(--navy); padding-bottom:18px; margin-bottom:26px;}
+.kicker{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--sub);}
+h1{font-size:29px; margin:6px 0 2px; letter-spacing:-.01em;}
+.subtitle{color:var(--sub); font-size:14.5px;}
+.headline{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:14px;}
+.badge{background:var(--green); color:#fff; font-weight:700; padding:5px 14px; border-radius:4px; font-size:15px;}
+.px{font-size:15px;} .px b{font-size:19px;}
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-top:16px;}
+.stat{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:10px 12px;}
+.stat .k{font-size:11.5px; color:var(--sub); letter-spacing:.04em;}
+.stat .v{font-size:16.5px; font-weight:700; margin-top:2px;}
+.warn{margin-top:14px; border-left:4px solid var(--red); background:var(--panel); padding:9px 12px; font-size:13.5px;}
+section{margin:30px 0;}
+.secno{color:var(--gold); font-weight:800; font-size:13px; letter-spacing:.12em;}
+h2{font-size:20px; margin:2px 0 12px;}
+ul.thesis{list-style:none;} ul.thesis li{margin:0 0 12px; padding-left:18px; position:relative;}
+ul.thesis li::before{content:"■"; position:absolute; left:0; color:var(--navy); font-size:11px; top:4px;}
+ul.thesis b{color:var(--ink);}
+.caveat{font-size:13.5px; color:var(--sub); border-left:3px solid var(--gold); padding:6px 12px; margin-top:10px;}
+/* 足球场 */
+.ff{margin-top:6px; position:relative; padding:6px 0 30px;}
+.ffrow{display:flex; align-items:center; margin:9px 0; gap:10px;}
+.fflabel{width:255px; font-size:12.5px; text-align:right; color:var(--sub); flex-shrink:0;}
+.fftrack{position:relative; height:22px; flex:1; background:transparent;}
+.ffbar{position:absolute; height:100%; border-radius:3px; opacity:.9;}
+.ffval{font-size:11.5px; color:var(--sub); position:absolute; top:3px; white-space:nowrap;}
+.ffaxis{display:flex; justify-content:space-between; font-size:11px; color:var(--sub); margin-left:265px; border-top:1px solid var(--line); padding-top:4px;}
+.ffoverlay{position:absolute; top:6px; bottom:30px; left:0; right:0; display:flex; gap:10px; pointer-events:none; z-index:2;}
+.ffoverlay .fflabel{visibility:hidden;}
+.ffoverlay .fftrack{height:100%;}
+.markline{position:absolute; top:0; bottom:0; width:0; border-left:2px dashed var(--red);}
+.markline.pt{border-left:2.5px solid var(--green);}
+table{width:100%; border-collapse:collapse; font-size:13px; margin-top:6px;}
+th,td{padding:7px 9px; text-align:right; border-bottom:1px solid var(--line);}
+th{color:var(--sub); font-weight:600; font-size:12px; letter-spacing:.04em;}
+th:first-child, td:first-child{text-align:left;}
+td:first-child{font-weight:600;}
+.tblwrap{overflow-x:auto;}
+ul.plain{padding-left:18px;} ul.plain li{margin:7px 0;}
+.cat{display:flex; gap:12px; margin:10px 0; align-items:baseline;}
+.cat .when{min-width:150px; font-weight:700; color:var(--navy); font-size:13px;}
+footer{margin-top:40px; border-top:1px solid var(--line); padding-top:14px; font-size:12px; color:var(--sub);}
+@media(max-width:640px){ .fflabel{width:130px; font-size:11px;} .ffaxis{margin-left:140px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">股票研究 · 首次覆盖 (Initiating Coverage) · 2026-07-15 · 完整报告：TSM_Initiation_Report_2026-07-15_ZH.docx</div>
+  <h1>台积电（NYSE: TSM）— 首次覆盖 TLDR</h1>
+  <div class="subtitle">AI 资本开支周期的物理瓶颈——72.3% 份额的自然垄断，却是 AI 复合体中估值最便宜的标的</div>
+  <div class="headline">
+    <span class="badge">BUY</span>
+    <span class="px">现价（07-14）：<b>$420.39</b></span>
+    <span class="px">12 个月目标价：<b>$460</b>（+9.4%）</span>
+    <span class="px" style="color:var(--sub)">52 周区间：$223.70–479.00</span>
+  </div>
+  <div class="grid">
+    <div class="stat"><div class="k">市值 (Market Cap)</div><div class="v">$2.18 万亿</div></div>
+    <div class="stat"><div class="k">FY2025 营收</div><div class="v">$1,224 亿（+35.9%）</div></div>
+    <div class="stat"><div class="k">Q1-26 毛利率</div><div class="v">66.2%（历史新高）</div></div>
+    <div class="stat"><div class="k">代工份额（1Q26）</div><div class="v">72.3%</div></div>
+    <div class="stat"><div class="k">NTM P/E vs 同业中值</div><div class="v">20.7x / 29.2x</div></div>
+    <div class="stat"><div class="k">2026E 资本开支</div><div class="v">$560 亿（历史最高）</div></div>
+  </div>
+  <div class="warn">⚠ <b>临近事件警示：明日（7 月 16 日）发布 Q2 2026 财报。</b>增量建仓建议在财报落地后执行——该事件本身不改变 12 个月评级与目标价。</div>
+</header>
+
+<section>
+  <div class="secno">01</div>
+  <h2>核心论点 (The Thesis)</h2>
+  <ul class="thesis">
+    <li><b>AI 基建的每一条路径都必须经过台积电。</b>整体代工份额 72.3%（为第二名的 11 倍），5nm 及以下估计超过 90%，AI 加速器晶圆制造与 CoWoS 先进封装实质上接近 100%——NVIDIA、AMD 与所有云厂商自研 ASIC 无一例外。持有 TSM 等于做多「AI 算力总需求」本身，而无需押注任何单一芯片厂商的胜负。</li>
+    <li><b>客户榜单已经翻页：2025 年 NVIDIA（约 19%）首次超越 Apple（约 17.5%）成为第一大客户</b>——十余年来头把交椅首次易主。HPC 平台现占营收 58%（同比 +48%），Base 情景下 2030E 将升至约 73%。</li>
+    <li><b>受限的是供给，不是需求。</b>2nm 产能 2026 年实质售罄；N2/A16 产能 2026–2028 规划以约 70% CAGR 扩张；CoWoS 年底爬坡至 11.5–14 万片/月。$560 亿创纪录资本开支与「产能售罄」同步官宣——且 Q1-26 利润率（毛利 66.2% / 营业利益率 58.1%）全线历史新高。</li>
+    <li><b>AI 复合体中最便宜的优质资产。</b>NTM P/E 仅 20.7x，对同业中值 29.2x 折让 29%——尽管拥有最高的份额、35% 的营收增速与 66% 的毛利率。该折价定价了台海尾部风险、双客户集中与关税摩擦；我们认为已属过度补偿。</li>
+  </ul>
+  <div class="caveat"><b>DCF 附注（与 ASML 首次覆盖报告标注的结构性局限相同）：</b>五年显性期 + Gordon Growth 终值仅得出 $287/ADR——该框架无法承载管理层 AI 收入 mid-40s% CAGR 指引与显性期后资本开支强度正常化释放的自由现金流。因此 DCF 仅占 10% 权重；目标价主要依赖可比公司法（25x 一致预期 NTM EPS $20.29 = $507，权重 75%）与并购先例（$361，权重 15%）。</div>
+</section>
+
+<section>
+  <div class="secno">02</div>
+  <h2>估值——足球场 <span style="font-size:13px; color:var(--sub); font-weight:400">（US$/ADR；横轴 $200–620）</span></h2>
+  <div class="ff">
+    <div class="ffoverlay"><div class="fflabel"></div>
+      <div class="fftrack" style="position:relative; flex:1;">
+        <div class="markline" style="left:52.47%;"></div>
+        <div class="markline pt" style="left:61.90%;"></div>
+      </div></div>
+    <div class="ffrow"><div class="fflabel">52 周交易区间</div>
+      <div class="fftrack"><div class="ffbar" style="left:5.64%; width:60.79%; background:#8a8f98;"></div>
+      <div class="ffval" style="left:calc(5.64% + 6px); color:#fff;">$224</div><div class="ffval" style="left:calc(66.43% + 6px);">$479</div></div></div>
+    <div class="ffrow"><div class="fflabel">DCF（WACC 9.9–10.9%，g 3.0–4.0%）</div>
+      <div class="fftrack"><div class="ffbar" style="left:13.10%; width:18.10%; background:var(--steel);"></div>
+      <div class="ffval" style="left:calc(13.10% - 46px);">$255</div><div class="ffval" style="left:calc(31.19% + 6px);">$331 · 基准 $287</div></div></div>
+    <div class="ffrow"><div class="fflabel">并购先例（14.5x 2026E EBITDA）</div>
+      <div class="fftrack"><div class="ffbar" style="left:36.90%; width:2.86%; background:var(--orange);"></div>
+      <div class="ffval" style="left:calc(39.76% + 6px);">~$361</div></div></div>
+    <div class="ffrow"><div class="fflabel">可比公司（22–28x NTM EPS $20.29）</div>
+      <div class="fftrack"><div class="ffbar" style="left:58.57%; width:29.05%; background:var(--navy);"></div>
+      <div class="ffval" style="left:calc(58.57% - 46px);">$446</div><div class="ffval" style="left:calc(87.62% + 6px);">$568</div></div></div>
+    <div class="ffaxis"><span>$200</span><span>$300</span><span>$400</span><span>$500</span><span>$620</span></div>
+  </div>
+  <div style="font-size:12.5px; color:var(--sub); margin-top:2px;">
+    <span style="color:var(--red); font-weight:700;">┊ 现价 $420.39</span> &nbsp;·&nbsp;
+    <span style="color:var(--green); font-weight:700;">│ 目标价 $460</span> &nbsp;·&nbsp;
+    加权：10% DCF + 75% 可比 + 15% 先例 = $463.10 → 取整 <b>$460</b>。卖方一致目标价：$498（18 位分析师，Strong Buy）。
+  </div>
+  <div class="caveat">25x 的基准倍数 = 对同业中值折让约 15%（补偿台海与客户集中风险）、对台积电自身五年均值小幅溢价（以结构性更高的利润率、售罄的 N2 与 AI 收入指引为据）。交叉验证：Base 情景 2030 年价值 $603 以 10.4% 折现回今日约 $386；Bull/Bear（$871 / $284）对现价的收益风险比约 2.9 : 1。</div>
+</section>
+
+<section>
+  <div class="secno">03</div>
+  <h2>财务轨迹 <span style="font-size:13px; color:var(--sub); font-weight:400">（除注明外为 NT$ 十亿；Base 情景）</span></h2>
+  <div class="tblwrap">
+  <table>
+    <tr><th></th><th>2024A</th><th>2025A</th><th>2026E</th><th>2027E</th><th>2028E</th><th>2030E</th></tr>
+    <tr><td>营收</td><td>2,894</td><td>3,809</td><td>5,008</td><td>6,152</td><td>7,250</td><td>9,103</td></tr>
+    <tr><td>同比增速</td><td>+33.9%</td><td>+31.6%</td><td>+31.5%</td><td>+22.8%</td><td>+17.8%</td><td>+10.5%</td></tr>
+    <tr><td>毛利率 (GM)</td><td>56.1%</td><td>59.9%</td><td>66.0%</td><td>64.5%</td><td>63.5%</td><td>62.5%</td></tr>
+    <tr><td>营业利益率 (OM)</td><td>45.7%</td><td>50.8%</td><td>57.0%</td><td>55.5%</td><td>54.5%</td><td>53.5%</td></tr>
+    <tr><td>EPS（NT$）</td><td>45.25</td><td>66.25</td><td>95.26</td><td>113.58</td><td>131.33</td><td>161.69</td></tr>
+    <tr><td>每 ADR EPS（US$）</td><td>7.05</td><td>10.65</td><td>15.88</td><td>19.25</td><td>22.26</td><td>27.40</td></tr>
+    <tr><td>自由现金流 (FCF)</td><td>861</td><td>992</td><td>1,736</td><td>2,295</td><td>2,810</td><td>3,689</td></tr>
+  </table>
+  </div>
+  <div style="font-size:13px; color:var(--sub); margin-top:8px;">
+    情景（2030E 营收 / 隐含 ADR 价值）：<b style="color:var(--green)">Bull NT$10,900B → $871</b> ·
+    <b>Base NT$9,103B → $603</b> · <b style="color:var(--red)">Bear NT$6,900B → $284</b>。
+    毛利率回落反映海外厂稀释（管理层指引每年 2–3pp）与 N2 爬坡成本，部分被先进制程提价对冲；资本开支占营收比从 34% 降至 22.5%，是预测后段 FCF 快速释放的核心机制。
+  </div>
+</section>
+
+<section>
+  <div class="secno">04</div>
+  <h2>关键风险 (Key Risks)</h2>
+  <ul class="plain">
+    <li><b>台海地缘集中（严重度极高、概率低-中）：</b>所有 sub-3nm 产能在台湾一岛，属不可对冲尾部风险。亚利桑那/熊本/德累斯顿正在分散——但按政策落后两代。</li>
+    <li><b>客户集中：</b>NVIDIA 约 19% + Apple 约 17.5%；前五大客户合计约占营收三分之二。</li>
+    <li><b>AI 资本开支消化（核心盈利风险）：</b>HPC 占营收 58%；若 2027 年出现暂停，增速或降至个位数并伴随 3–6pp 利润率压缩（Bear 情景 $284）。7 月初的「Meta 算力过剩」恐慌已预演了传导机制。</li>
+    <li><b>利润率正常化 + 新台币升值：</b>66% 毛利率含峰值稼动率与定价；新台币每升值 1% ≈ 影响毛利率 0.4pp；海外厂爬坡每年稀释 2–3pp。</li>
+    <li><b>政策引导订单：</b>华盛顿持有 Intel 股权并握有关税杠杆；即便 Intel 技术未达同等水平，美国边际订单仍可能被导向 18A。</li>
+    <li><b>执行与单一供应商依赖：</b>半导体史上最大资本开支计划，进度受制于 ASML EUV/High-NA 设备交付。</li>
+  </ul>
+</section>
+
+<section>
+  <div class="secno">05</div>
+  <h2>催化剂日历 (Catalysts to Watch)</h2>
+  <div class="cat"><div class="when">2026-07-16 ⚠</div><div><b>Q2 2026 财报与指引。</b>紧盯 CoWoS 三信号：产能爬坡节奏、封装定价、2027 年预订承诺——比财报数字本身更重要。</div></div>
+  <div class="cat"><div class="when">2026 下半年</div><div><b>N2P / A16 量产与 2027 年晶圆提价官宣。</b>先进制程每提价约 10% ≈ 毛利率 +2pp。</div></div>
+  <div class="cat"><div class="when">2027 年 1 月</div><div><b>2027 年资本开支指引。</b>高于 $600 亿确认需求驱动扩张；持平或下调则是消化信号。</div></div>
+  <div class="cat"><div class="when">2026-10 至 2027-02</div><div><b>云厂商 2027 资本开支指引 + 亚利桑那 / Section 232 关税细则。</b>前者是 HPC 平台（58% 营收）最大的外生变量；每一次关税升级反而强化台积电美国厂的特许价值。</div></div>
+</section>
+
+<footer>
+  本页由 Claude equity-research initiating-coverage 工作流（Tasks 1–5）于 2026-07-15 生成。配套文件：
+  TSM_Financial_Model_2026-07-15.xlsx（11 个工作表，公式全簿验证）· TSM_Initiation_Report_2026-07-15_ZH.docx（26 图、15 表）。
+  数据来源：TSMC 申报文件（6-K/20-F）、TrendForce、Yahoo Finance（2026-07-14）。1 ADR = 5 股普通股；估值以 ADR 为口径。
+  本报告为 AI 生成研究，仅供参考，不构成投资建议。
+</footer>
+
+</body>
+</html>
