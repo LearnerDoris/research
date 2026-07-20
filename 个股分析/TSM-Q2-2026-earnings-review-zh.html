@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>台积电 TSM — Q2 2026 财报 Review — 2026-07-20</title>
+<style>
+:root{
+  --ink:#1a2733; --sub:#5b6b7a; --line:#dde4ea; --bg:#ffffff; --panel:#f6f8fa;
+  --navy:#1a3a5c; --steel:#4477aa; --gold:#c9a227; --green:#2e7d32; --red:#b03a3a; --orange:#d97b29;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --ink:#e8edf2; --sub:#9fb0bf; --line:#2c3a47; --bg:#12181f; --panel:#1a222b;
+         --navy:#7fa8d0; --steel:#6f9cc9; }
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:"PingFang SC","Songti SC","Helvetica Neue",Arial,sans-serif; color:var(--ink); background:var(--bg);
+     max-width:880px; margin:0 auto; padding:36px 22px 60px; line-height:1.65; font-size:15px;}
+header{border-bottom:3px solid var(--navy); padding-bottom:18px; margin-bottom:26px;}
+.kicker{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--sub);}
+h1{font-size:28px; margin:6px 0 2px; letter-spacing:-.01em;}
+.subtitle{color:var(--sub); font-size:14.5px;}
+.headline{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:14px;}
+.badge{background:var(--green); color:#fff; font-weight:700; padding:5px 14px; border-radius:4px; font-size:15px;}
+.px{font-size:15px;} .px b{font-size:19px;}
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-top:16px;}
+.stat{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:10px 12px;}
+.stat .k{font-size:11.5px; color:var(--sub); letter-spacing:.04em;}
+.stat .v{font-size:16.5px; font-weight:700; margin-top:2px;}
+.stat .v.up{color:var(--green);} .stat .v.dn{color:var(--red);}
+section{margin:30px 0;}
+.secno{color:var(--gold); font-weight:800; font-size:13px; letter-spacing:.12em;}
+h2{font-size:20px; margin:2px 0 12px;}
+table{width:100%; border-collapse:collapse; font-size:13px; margin-top:6px;}
+th,td{padding:7px 9px; text-align:right; border-bottom:1px solid var(--line); vertical-align:top;}
+th{color:var(--sub); font-weight:600; font-size:12px; letter-spacing:.04em;}
+th:first-child, td:first-child{text-align:left;}
+td:first-child{font-weight:600;}
+td.l{text-align:left; font-weight:400;}
+.beat{color:var(--green); font-weight:700;} .miss{color:var(--red); font-weight:700;}
+.tblwrap{overflow-x:auto;}
+ul.plain{padding-left:18px;} ul.plain li{margin:7px 0;}
+.callout{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--navy); border-radius:6px; padding:12px 14px; margin:12px 0; font-size:14px;}
+.check{color:var(--green); font-weight:700;} .cross{color:var(--red); font-weight:700;} .half{color:var(--orange); font-weight:700;}
+.caveat{font-size:13.5px; color:var(--sub); border-left:3px solid var(--gold); padding:6px 12px; margin-top:10px;}
+footer{margin-top:40px; border-top:1px solid var(--line); padding-top:14px; font-size:12px; color:var(--sub);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">股票研究 · Earnings Review · 2026-07-20 · 覆盖起点：首次覆盖 2026-07-15（BUY，PT $460）</div>
+  <h1>台积电（NYSE: TSM）— Q2 2026 财报 Review</h1>
+  <div class="subtitle">五项全破纪录、全年指引上调至 40%+，股价却跌 5%——市场在为 margin 稀释与 $265B 美国投资定价，而非需求</div>
+  <div class="headline">
+    <span class="badge">BUY（维持）</span>
+    <span class="px">现价（07-17 收盘）：<b>$398.37</b></span>
+    <span class="px">目标价：<b>$460</b>（+15.5%，复核方向：上调）</span>
+    <span class="px" style="color:var(--sub)">财报后两日：-5.0%</span>
+  </div>
+  <div class="grid">
+    <div class="stat"><div class="k">Q2 Revenue</div><div class="v up">$40.20B（触指引上限）</div></div>
+    <div class="stat"><div class="k">Q2 Gross Margin</div><div class="v up">67.7%（破指引上限）</div></div>
+    <div class="stat"><div class="k">Q2 净利润 YoY</div><div class="v up">+77.4%</div></div>
+    <div class="stat"><div class="k">FY26 增速指引</div><div class="v up">30% → 40%+（USD）</div></div>
+    <div class="stat"><div class="k">FY26 Capex 指引</div><div class="v">$52-56B → $60-64B</div></div>
+    <div class="stat"><div class="k">股价反应（两日）</div><div class="v dn">$419.48 → $398.37</div></div>
+  </div>
+</header>
+
+<section>
+  <div class="secno">01</div>
+  <h2>结果 vs 预期：五项全破纪录，连续第五个纪录季</h2>
+  <div class="tblwrap">
+  <table>
+    <tr><th></th><th>Q2 2026 实际</th><th>公司指引</th><th>一致预期</th><th>判定</th></tr>
+    <tr><td>Revenue（US$）</td><td>$40.20B（+36.0% YoY NT$ 口径 / +12.0% QoQ）</td><td>$39.0–40.2B</td><td>~$39.3B</td><td class="beat">触及指引上限，beat ~$0.9B</td></tr>
+    <tr><td>Revenue（NT$）</td><td>NT$1,270.38B</td><td>—</td><td>—</td><td class="beat">纪录</td></tr>
+    <tr><td>Gross Margin</td><td>67.7%</td><td>65.5–67.5%</td><td>~66.5%</td><td class="beat">突破指引上限，历史新高</td></tr>
+    <tr><td>Operating Margin</td><td>60.3%</td><td>56.5–58.5%</td><td>—</td><td class="beat">大幅突破上限，历史新高</td></tr>
+    <tr><td>净利润</td><td>NT$706.56B（+77.4% YoY）</td><td>—</td><td>~NT$632.6B</td><td class="beat">beat ~12%</td></tr>
+    <tr><td>EPS</td><td>NT$27.25 / $4.31 per ADR</td><td>—</td><td>~$3.94</td><td class="beat">beat $0.37</td></tr>
+    <tr><td>先进制程（≤7nm）占比</td><td>77% 晶圆收入</td><td>—</td><td>—</td><td class="beat">环比 +3pp</td></tr>
+    <tr><td>N2（2nm）收入贡献</td><td>3% 晶圆收入（首次有意义贡献）</td><td>—</td><td>—</td><td class="beat">快于典型节点爬坡节奏</td></tr>
+  </table>
+  </div>
+  <div class="caveat">对照我们 7-15 首次覆盖模型：我们的 FY26E（营收 NT$5,008B、GM 66.0%、EPS NT$95.26）在财报前已属市场偏保守一档；Q2 实际 + 新指引确认模型系统性偏低——H1 实际 EPS 已达 NT$49.33，按 Q3 指引轨迹推算 FY26 EPS 将落在 NT$105–110 区间（较我们模型高约 10–15%）。方向：好问题，模型需要上修而非下修。</div>
+</section>
+
+<section>
+  <div class="secno">02</div>
+  <h2>CoWoS 三信号核对（我们财报前列出的检查清单）</h2>
+  <div class="tblwrap">
+  <table>
+    <tr><th style="width:26%">信号</th><th style="width:44%">财报/电话会实际披露</th><th>判定</th></tr>
+    <tr><td>① 产能爬坡节奏</td><td class="l">CEO 魏哲家：CoWoS 产能「extremely tight and sold out through 2026」；capex 上调中 10–20% 继续投向先进封装</td><td class="beat">✓ 强于预期</td></tr>
+    <tr><td>② 封装定价</td><td class="l">未单独披露定价数字；但 Q2 GM 67.7% 破纪录、且在 2nm 稀释开始前仍指引结构性提价延续——间接印证定价权</td><td class="half">◐ 间接确认</td></tr>
+    <tr><td>③ 2027 年预订承诺</td><td class="l">CoWoS 交期已排入 2027 年（NVIDIA 管理层口径：至少到 2026 年中都是 oversubscribed）</td><td class="beat">✓ 确认</td></tr>
+  </table>
+  </div>
+  <div class="callout">结论：三信号两个明确为正、一个间接为正。「AI 支出天花板」的测试没有出现任何裂缝——瓶颈依然在供给端。这直接反驳了 7 月初「Meta 算力过剩」叙事对 TSMC 环节的外推。</div>
+</section>
+
+<section>
+  <div class="secno">03</div>
+  <h2>指引与新增信息：需求上调、利润率给出明确稀释路径</h2>
+  <ul class="plain">
+    <li><b>Q3 2026 指引：Revenue $44.6–45.8B</b>（中值 +37% YoY、环比 +12.4%——环比加速）；<b>Gross Margin 中值约 65%</b>，明确归因于 N2 量产初期成本稀释。</li>
+    <li><b>FY2026 USD 营收增速指引：约 30% → 40% 以上</b>。隐含 FY26 营收 ≥$171B（我们模型 $167B，需上修 3–5%）。</li>
+    <li><b>FY2026 capex：$52–56B → $60–64B</b>（高于 $58B 的买方预期上限），70–80% 投向先进制程、10–20% 先进封装、10% 特殊工艺。这正是我们首次覆盖中「2027 年 capex 指引 >$60B = 确认需求驱动扩张」催化剂的提前兑现。</li>
+    <li><b>亚利桑那追加 $100B</b>：新建 4 座 2nm 或更先进晶圆厂，美国总投资升至 <b>$265B</b>（10 座晶圆厂 + 2 座先进封装厂 + 1 座研发中心）。战略上强化 Section 232 体制下的关税豁免特许地位；财务上加深海外稀释。</li>
+    <li><b>利润率稀释路径首次被官方量化到季度层面</b>：N2 量产稀释 GM 约 3–4pp（爬坡期）；海外厂未来数年额外压制 2–4pp。Q2 的 67.7% 大概率是本轮 GM 的局部峰值——这与我们模型「2026 见顶后每年回落 0.5–1.0pp 至 2030E 62.5%」的中期曲线一致，但斜率可能前置。</li>
+  </ul>
+</section>
+
+<section>
+  <div class="secno">04</div>
+  <h2>为什么大超预期，股价反而两日 -5%？</h2>
+  <ul class="plain">
+    <li><b>预期已满仓抢跑：</b>6 月单月营收 +68% 早已泄露强度，股价 6 月收于 $477.6 的历史高位区，财报前一个月市场已经把「大超」定价了大半；7 月上旬 AI 板块回调（SOX 财报日反而收跌 531 点）叠加获利了结。</li>
+    <li><b>市场把焦点放在 margin 而非需求：</b>Q3 GM 指引中值 65%（环比 -2.7pp）+ 官方量化的 2nm 3–4pp / 海外 2–4pp 稀释路径，触发「利润率见顶」交易。</li>
+    <li><b>$100B 追加美国投资的双面性：</b>多头读作特许地位与需求确定性，空头读作资本强度上升 + 低回报资产占比上升 + 政治绑定加深。短线由空头叙事主导。</li>
+    <li><b>但卖方在提价：</b>财报后一致目标价从 $498 升至 <b>$520</b>（18 位）；Citi 将台股目标价 T$2,875 → T$3,800，Barclays $470 → $625。基本面上修与股价下跌同时发生——分歧本身就是机会的形状。</li>
+  </ul>
+  <div class="callout"><b>我们的读法：</b>这是一次典型的「利好出尽 + 利润率噪音」回调，而非论点受损。需求侧的每一条信息（40%+ 全年指引、capex 上调、CoWoS 售罄至 2027）都在强化垄断论点；利润率稀释是我们模型早已嵌入的已知变量，且 65% 的「稀释后」GM 仍高于 2025 全年的 59.9%。</div>
+</section>
+
+<section>
+  <div class="secno">05</div>
+  <h2>论点核对与模型影响</h2>
+  <div class="tblwrap">
+  <table>
+    <tr><th style="width:38%">首次覆盖论点（7-15）</th><th style="width:42%">Q2 财报证据</th><th>状态</th></tr>
+    <tr><td class="l">AI 每条路径必经台积电（份额 72.3%）</td><td class="l">先进制程占比升至 77%；CoWoS 售罄至 2027</td><td class="beat">强化</td></tr>
+    <tr><td class="l">供给受限而非需求受限</td><td class="l">全年增速指引 30%→40%+；capex $60–64B；N2 爬坡快于节奏</td><td class="beat">强化</td></tr>
+    <tr><td class="l">创纪录盈利能力</td><td class="l">GM 67.7% / OM 60.3% 双新高；但官方确认 Q2 为局部峰值</td><td class="half">兑现后转入回落段（已建模）</td></tr>
+    <tr><td class="l">AI 复合体最便宜估值</td><td class="l">股价 -5% + forward EPS 上修至 $21.24 → NTM P/E 压缩至 ~18.8x，折价反而加深</td><td class="beat">强化</td></tr>
+  </table>
+  </div>
+  <p style="margin-top:10px"><b>模型待上修项（下次 model-update 执行）：</b>FY26E 营收 NT$5,008B → 约 NT$5,150–5,250B（对应 USD +40%+）；FY26E EPS NT$95.26 → 约 NT$105–110；FY26E GM 66.0% 可微升至 66.5% 但 2027E 斜率前置（N2 稀释）；capex NT$1,700B → 约 NT$1,850–1,950B（$60–64B），DCF 显性期 FCF 略降、被 EBIT 上修抵消。</p>
+  <p style="margin-top:8px"><b>目标价含义：</b>comps 锚（75% 权重）用的一致预期 NTM ADR EPS 已从 $20.29 上修至 $21.24：25x × $21.24 = $531，机械加权 = 0.10×$287 + 0.75×$531 + 0.15×$361 ≈ <b>$481</b>。即便对 base 倍数因利润率回落段打 1x 折扣（24x → $510，加权 ≈ $465），目标价的复核方向也是<b>上调（$460 → $480–500 区间）</b>。正式变更待 model-update 完成后发布；当前维持 <b>BUY / $460</b>，对 $398.37 现价的上行空间已从 +9.4% 扩大至 +15.5%。</p>
+</section>
+
+<section>
+  <div class="secno">06</div>
+  <h2>结论与行动</h2>
+  <ul class="plain">
+    <li><b>评级：BUY 维持，PT $460（复核方向上调至 $480–500）。</b>财报是论点的全面验证：需求指引上调、供给瓶颈延长、估值折价加深。</li>
+    <li><b>仓位纪律：</b>首次覆盖中的「临近事件警示」已随财报落地解除——按 7-15 报告的纪律，现在才是执行增量建仓的窗口，且入场价（$398）比警示时（$420）低 5%。</li>
+    <li><b>需要盯住的反面证据：</b>①（Q3 财报，10 月中）N2 稀释是否超出 3–4pp 官方口径；② 新台币若再度急升（每 1% ≈ -0.4pp GM）；③ 云厂商 10 月起的 2027 capex 指引——仍是 HPC 平台（58% 营收）最大的外生变量。</li>
+    <li><b>下一个日历节点：</b>10 月中旬 Q3 2026 财报（Q3 指引隐含环比 +12.4%，市场将检验 GM 65% 成色）；2027 年 1 月法说会的 2027 capex 首次指引。</li>
+  </ul>
+</section>
+
+<footer>
+  Earnings Review · 2026-07-20 生成，衔接 2026-07-15 首次覆盖（TSM_Initiation_Report_2026-07-15_ZH.docx / TSM_Financial_Model_2026-07-15.xlsx / TSM-tldr-2026-07-15-zh.html）。
+  数据来源：TSMC Q2 2026 earnings release（Form 6-K，2026-07-16）与法说会、TechPowerUp、Yahoo Finance、BigGo Finance、DCD、TechTimes、Phoenix.gov（Arizona $100B）、
+  Citi/Barclays 目标价调整报道；市场数据 yfinance（2026-07-17 收盘）。本报告为 AI 生成研究，仅供参考，不构成投资建议。
+</footer>
+
+</body>
+</html>
