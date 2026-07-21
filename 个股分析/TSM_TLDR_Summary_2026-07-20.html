@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Taiwan Semiconductor (TSM) — Initiating Coverage TL;DR</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    color-scheme: light dark;
+    --surface: #fcfcfb;
+    --page: #f2f2ef;
+    --ink: #0b0b0b;
+    --ink2: #52514e;
+    --muted: #898781;
+    --border: #e1e0d9;
+    --navy: #1F4E78;
+    --navy-tint: #D9E1F2;
+    --red: #C00000;
+    --green: #0ca30c;
+    --card: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #1a1a19;
+      --page: #0d0d0d;
+      --ink: #ffffff;
+      --ink2: #c3c2b7;
+      --muted: #948f86;
+      --border: #33322f;
+      --navy: #6fa8dc;
+      --navy-tint: #1c2b3a;
+      --red: #e66767;
+      --green: #3ecf3e;
+      --card: #202020;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: "Georgia", "Times New Roman", "SimSun", serif;
+    line-height: 1.45;
+  }
+  .sheet {
+    max-width: 1180px;
+    margin: 24px auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 28px 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .zh { font-family: "PingFang SC", "Microsoft YaHei", "SimSun", sans-serif; }
+  header.title-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  h1 { font-size: 24px; margin: 2px 0 2px; color: var(--navy); }
+  .subtitle { font-size: 13.5px; color: var(--ink2); font-style: italic; max-width: 660px; }
+  .rating-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 340px;
+  }
+  .rating-box .cell { background: var(--card); padding: 8px 10px; text-align: center; }
+  .rating-box .cell .lbl { font-size: 9.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--ink2); font-family: system-ui, sans-serif; }
+  .rating-box .cell .val { font-size: 16px; font-weight: 700; margin-top: 2px; }
+  .rating-box .cell.rating .val { color: var(--green); }
+  .rating-box .cell.up .val { color: var(--green); }
+
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 6px;
+  }
+  .col h2 {
+    font-size: 13.5px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 3px;
+    margin: 16px 0 6px;
+    font-family: system-ui, sans-serif;
+  }
+  .col .zh { font-size: 13.5px; }
+  .col p, .col li { font-size: 12.5px; margin: 4px 0; }
+  .col ul { margin: 4px 0; padding-left: 18px; }
+  b { color: var(--ink); }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 6px 0 4px;
+  }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 8px;
+    text-align: center;
+  }
+  .stat .n { font-size: 15px; font-weight: 700; color: var(--navy); font-family: system-ui, sans-serif;}
+  .stat .l { font-size: 9px; color: var(--muted); font-family: system-ui, sans-serif; }
+
+  .flash {
+    background: var(--navy-tint);
+    border-left: 3px solid var(--navy);
+    border-radius: 4px;
+    padding: 8px 11px;
+    font-size: 11.5px;
+    margin: 10px 0 2px;
+  }
+
+  table.mini { width: 100%; border-collapse: collapse; font-size: 11px; margin: 4px 0; }
+  table.mini th, table.mini td { border: 1px solid var(--border); padding: 3px 5px; text-align: right; }
+  table.mini th { background: var(--navy-tint); color: var(--ink); font-weight: 600; text-align: center; font-family: system-ui, sans-serif; }
+  table.mini td:first-child, table.mini th:first-child { text-align: left; }
+  table.mini tr.total td { font-weight: 700; background: var(--navy-tint); }
+
+  .ff { margin: 6px 0; }
+  .ff-row { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 10.5px; }
+  .ff-label { width: 118px; flex-shrink: 0; font-family: system-ui, sans-serif; color: var(--ink2); }
+  .ff-track { position: relative; flex: 1; height: 14px; background: var(--navy-tint); border-radius: 3px; }
+  .ff-bar { position: absolute; top: 0; bottom: 0; background: var(--navy); border-radius: 3px; opacity: .75; }
+  .ff-bar.range { background: #8a8f98; }
+  .ff-bar.prec { background: #d97b29; }
+  .ff-bar.comps { background: #1baf7a; }
+  .ff-cur { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--red); }
+  .ff-tgt { position: absolute; top: -3px; bottom: -3px; width: 2px; background: #4a3aa7; }
+  .ff-axis { display: flex; justify-content: space-between; font-size: 9px; color: var(--muted);
+             font-family: system-ui, sans-serif; margin-left: 126px; padding-top: 2px; }
+
+  .footnote { font-size: 10px; color: var(--muted); margin-top: 18px; border-top: 1px solid var(--border); padding-top: 8px; font-family: system-ui, sans-serif; }
+  .verify { background: var(--navy-tint); border-radius: 4px; padding: 8px 10px; font-size: 10.5px; margin-top: 8px; }
+  @media print {
+    body { background: white; }
+    .sheet { box-shadow: none; margin: 0; border: none; max-width: 100%; }
+  }
+  @media (max-width: 860px) {
+    .cols { grid-template-columns: 1fr; }
+    header.title-block { flex-direction: column; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="title-block">
+    <div>
+      <div class="tag">Initiating Coverage TL;DR &nbsp;|&nbsp; 首次覆盖研报 · 一页纸摘要</div>
+      <h1>Taiwan Semiconductor Mfg. Co. <span style="font-weight:400;font-size:17px;">(NYSE: TSM / TWSE: 2330)</span></h1>
+      <div class="subtitle">The physical bottleneck of the AI capex cycle — a 72.3%-share natural monopoly trading at the cheapest multiple in the AI complex.<br>
+      <span class="zh">AI capex 周期的物理瓶颈——72.3% 份额的自然垄断，却是 AI 复合体中估值最便宜的标的。</span></div>
+    </div>
+    <div class="rating-box">
+      <div class="cell rating"><div class="lbl">Rating 评级</div><div class="val">BUY</div></div>
+      <div class="cell"><div class="lbl">Current 现价</div><div class="val">$398.37</div></div>
+      <div class="cell"><div class="lbl">Target 目标价</div><div class="val">$460</div></div>
+      <div class="cell up"><div class="lbl">Upside 空间</div><div class="val">+15.5%</div></div>
+    </div>
+  </header>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="n">~$2.07T</div><div class="l">Market Cap · 市值（全球前五）</div></div>
+    <div class="stat"><div class="n">$40.2B / +36%</div><div class="l">Q2 FY2026A Revenue · 单季营收（纪录）</div></div>
+    <div class="stat"><div class="n">67.7% / 60.3%</div><div class="l">Q2 Gross / Operating Margin · 毛利率与营业利益率（双新高）</div></div>
+    <div class="stat"><div class="n">72.3%</div><div class="l">Foundry Share 1Q26 · 代工份额（第二名的11倍）</div></div>
+    <div class="stat"><div class="n">$60–64B</div><div class="l">FY2026E Capex Guidance · 资本开支指引（自$52–56B上调）</div></div>
+    <div class="stat"><div class="n">~18.8x vs 29.2x</div><div class="l">NTM P/E vs Peer Median · 对同业中值折让29%</div></div>
+  </div>
+
+  <div class="flash">
+    <b>Post-Q2 update 财报后更新 (2026-07-20):</b> Coverage initiated 2026-07-15 at $420.39. Q2 FY2026 reported Jul 16 — a clean beat on every line
+    (revenue at the top of guidance, GM/OM above the guided range, net income +77.4% YoY), FY26 USD growth guidance raised from ~30% to <b>40%+</b>,
+    capex raised to <b>$60–64B</b>, plus an incremental <b>$100B</b> Arizona commitment. The stock nonetheless fell 5% on 2nm/overseas margin-dilution
+    optics. Thesis intact and strengthening; <b>PT $460 maintained pending model update — review direction is upward ($480–500)</b>.
+    <span class="zh">首次覆盖于 2026-07-15、现价 $420.39。7 月 16 日 Q2 财报全线超预期（营收触指引上限、毛利率与营业利益率双双突破指引、净利 +77.4%），
+    全年美元增速指引由约 30% 上调至 <b>40%+</b>，capex 上调至 <b>$60–64B</b>，并追加亚利桑那 <b>$100B</b> 投资。股价反因 2nm 与海外厂的
+    margin 稀释叙事两日下跌 5%。论点完好且获强化；<b>目标价 $460 暂维持，模型更新后复核方向为上调至 $480–500</b>。</span>
+  </div>
+
+  <div class="cols">
+    <!-- ENGLISH COLUMN -->
+    <div class="col">
+      <h2>Investment Summary</h2>
+      <p>Every path through the AI buildout runs through TSMC. Foundry share reached <b>72.3% in 1Q26</b> (11x the #2 player), an estimated <b>&gt;90% at ≤5nm</b>, and effectively <b>~100% of AI accelerator fabrication and CoWoS advanced packaging</b> — NVIDIA, AMD, and every hyperscaler custom ASIC alike. Owning TSM is a bet on total AI compute demand, not on any single chip vendor winning. The customer ledger flipped in 2025: <b>NVIDIA (~19%) overtook Apple (~17.5%)</b> as the largest customer for the first time in over a decade, and HPC now stands at 58% of revenue heading toward ~73% by 2030E in our base case.</p>
+      <p>The constraint is supply, not demand. 2nm was effectively sold out for 2026 before it shipped; N2/A16 capacity is planned at ~70% CAGR through 2028; CoWoS is <b>sold out through 2026 with lead times into 2027</b>. Q2 confirmed the economics: <b>GM 67.7%, OM 60.3%</b>, both all-time highs, with N2 already contributing 3% of wafer revenue in its first meaningful quarter and advanced nodes (≤7nm) at 77% of the mix.</p>
+      <p><b>Why the discount persists — and why we think it overcompensates:</b> at ~18.8x NTM P/E against a <b>29.2x peer median</b>, TSM is the second-cheapest name in the AI complex despite the highest share, ~36% growth, and 67% gross margins. The gap prices Taiwan-strait tail risk, two-customer concentration (~36% of revenue), and tariff friction. Those risks are real and chronic — but they are not new, and Q2's guidance raise widened the fundamental gap while the multiple compressed. Our <b>DCF yields only $287/ADR</b>, a known structural limitation (a 5-year window plus Gordon Growth cannot carry mid-40s% AI revenue CAGR guidance or post-window capex normalization), so it carries just 10% weight; the target leans on trading comps.</p>
+
+      <h2>Valuation Bridge</h2>
+      <table class="mini">
+        <tr><th>Method</th><th>Low</th><th>Base</th><th>High</th><th>Wt.</th></tr>
+        <tr><td>DCF (WACC 10.4%, g 3.5%)</td><td>$255</td><td>$287</td><td>$331</td><td>10%</td></tr>
+        <tr><td>Trading Comps (22–28x NTM EPS)</td><td>$446</td><td>$507</td><td>$568</td><td>75%</td></tr>
+        <tr><td>Precedent Transactions (14.5x EBITDA)</td><td>n/a</td><td>$361</td><td>n/a</td><td>15%</td></tr>
+        <tr class="total"><td>Weighted Target</td><td>—</td><td>$463 → $460</td><td>—</td><td>100%</td></tr>
+      </table>
+
+      <div class="ff">
+        <div class="ff-row"><div class="ff-label">52-wk range 区间</div><div class="ff-track"><div class="ff-bar range" style="left:5.64%;width:60.79%"></div><div class="ff-cur" style="left:47.23%"></div><div class="ff-tgt" style="left:61.90%"></div></div></div>
+        <div class="ff-row"><div class="ff-label">DCF</div><div class="ff-track"><div class="ff-bar" style="left:13.10%;width:18.10%"></div><div class="ff-cur" style="left:47.23%"></div><div class="ff-tgt" style="left:61.90%"></div></div></div>
+        <div class="ff-row"><div class="ff-label">Precedents 先例</div><div class="ff-track"><div class="ff-bar prec" style="left:36.90%;width:2.86%"></div><div class="ff-cur" style="left:47.23%"></div><div class="ff-tgt" style="left:61.90%"></div></div></div>
+        <div class="ff-row"><div class="ff-label">Trading comps</div><div class="ff-track"><div class="ff-bar comps" style="left:58.57%;width:29.05%"></div><div class="ff-cur" style="left:47.23%"></div><div class="ff-tgt" style="left:61.90%"></div></div></div>
+        <div class="ff-axis"><span>$200</span><span>$300</span><span>$400</span><span>$500</span><span>$620</span></div>
+      </div>
+      <p style="font-size:9.5px;color:var(--muted);font-family:system-ui,sans-serif;">Track scaled $200–$620/ADR. <span style="color:var(--red)">Red</span> = current $398.37 · <span style="color:#4a3aa7">purple</span> = target $460. 红线为现价，紫线为目标价。</p>
+
+      <h2>Key Catalysts (6–12mo)</h2>
+      <ul>
+        <li><b>Q3 FY2026 earnings — mid-Oct 2026:</b> tests the guided GM step-down to ~65% and whether N2 dilution stays within the official 3–4pp</li>
+        <li><b>FY2027 capex guidance — Jan 2027 call:</b> the single cleanest read on whether AI demand is still supply-constrained</li>
+        <li>Hyperscaler FY2027 capex guidance (Oct 2026 – Feb 2027) — largest exogenous swing factor for HPC, 58% of revenue</li>
+        <li>N2P / A16 ramp and 2027 wafer pricing — each ~10% leading-edge hike ≈ +2pp gross margin</li>
+        <li>Arizona milestones &amp; Section 232 exemption detail — every tariff escalation strengthens the US-fab franchise</li>
+      </ul>
+
+      <h2>Key Risks</h2>
+      <ul>
+        <li><b>Taiwan-strait concentration (extreme severity, low-moderate probability):</b> all sub-3nm capacity on one island; unhedgeable. Arizona/Kumamoto/Dresden diversify but stay ~2 generations behind by policy</li>
+        <li><b>AI capex digestion (the central earnings risk):</b> HPC = 58% of revenue; a 2027 pause would cut growth to single digits with 3–6pp margin compression (bear case $284)</li>
+        <li><b>Margin normalization:</b> management now quantifies 2nm ramp dilution at 3–4pp and overseas fabs at a further 2–4pp over coming years; Q2's 67.7% is likely a local peak</li>
+        <li><b>NTD appreciation:</b> revenue ~100% USD vs. ~75% NTD costs — every 1% of appreciation ≈ −0.4pp gross margin, and largely unhedgeable at TSMC's scale</li>
+        <li><b>Customer concentration &amp; policy steering:</b> top-two ≈ 36% of revenue; Washington holds Intel equity plus tariff leverage and could direct marginal US volumes to 18A</li>
+      </ul>
+    </div>
+
+    <!-- CHINESE COLUMN -->
+    <div class="col zh">
+      <h2>投资摘要</h2>
+      <p>AI 基建的每一条路径都必须经过台积电。1Q26 代工份额达 <b>72.3%</b>（为第二名的 11 倍），5nm 及以下估计 <b>&gt;90%</b>，AI 加速器晶圆制造与 <b>CoWoS 先进封装实质上接近 100%</b>——NVIDIA、AMD 与所有云厂商自研 ASIC 无一例外。持有 TSM 等于做多「AI 算力总需求」本身，而无需押注任何单一芯片厂商的胜负。2025 年客户榜单翻页：<b>NVIDIA（约 19%）十余年来首次超越 Apple（约 17.5%）</b>成为第一大客户；HPC 现占营收 58%，Base 情景下 2030E 升至约 73%。</p>
+      <p>受限的是供给，不是需求。2nm 在出货前就已实质售罄；N2/A16 产能规划 2026–2028 以约 70% CAGR 扩张；<b>CoWoS 已售罄至 2026 年底、交期排入 2027 年</b>。Q2 财报确认了这套经济学：<b>Gross Margin 67.7%、Operating Margin 60.3%</b> 双双创历史新高，N2 在首个有意义的季度即贡献 3% 晶圆收入，先进制程（≤7nm）占比升至 77%。</p>
+      <p><b>折价为何存在，以及我们为何认为它已过度补偿：</b>以约 18.8x NTM P/E 对 <b>同业中值 29.2x</b>，TSM 是 AI 复合体中第二便宜的标的——尽管拥有最高份额、约 36% 的增速与 67% 的毛利率。这一价差定价了台海尾部风险、双客户集中（约占营收 36%）与关税摩擦。这些风险真实且长期存在，但并非新增变量；而 Q2 的指引上调在倍数收缩的同时反而拉大了基本面差距。我们的 <b>DCF 仅得出 $287/ADR</b>，这是一项已知的结构性局限（五年显性期 + Gordon Growth 无法承载管理层 AI 收入 mid-40s% CAGR 指引与显性期后 capex 强度正常化），因此仅占 10% 权重，目标价主要依赖 trading comps。</p>
+
+      <h2>估值桥接</h2>
+      <table class="mini">
+        <tr><th>方法</th><th>低值</th><th>基准</th><th>高值</th><th>权重</th></tr>
+        <tr><td>DCF（WACC 10.4%，g 3.5%）</td><td>$255</td><td>$287</td><td>$331</td><td>10%</td></tr>
+        <tr><td>Trading Comps（22–28x NTM EPS）</td><td>$446</td><td>$507</td><td>$568</td><td>75%</td></tr>
+        <tr><td>并购先例法（14.5x EBITDA）</td><td>n/a</td><td>$361</td><td>n/a</td><td>15%</td></tr>
+        <tr class="total"><td>加权目标价</td><td>—</td><td>$463 → $460</td><td>—</td><td>100%</td></tr>
+      </table>
+
+      <p style="font-size:11px;">（Football field 图示见左栏；坐标轴范围 $200–$620/ADR，红线为现价 $398.37，紫线为目标价 $460。）</p>
+      <p style="font-size:11px;">交叉验证：Base 情景 2030E 价值 $603 以 10.4% 折现回今日约 $386；Bull / Bear 分别为 $871 / $284，对现价的收益风险比约 <b>3.6 : 1</b>（财报后现价下移，较首次覆盖时的 2.9 : 1 进一步改善）。25x 的基准倍数 = 对同业中值折让约 15%，对台积电自身五年均值小幅溢价。</p>
+
+      <h2>关键催化剂（未来6-12个月）</h2>
+      <ul>
+        <li><b>Q3 FY2026 财报 — 2026年10月中旬：</b>检验指引中毛利率回落至约 65% 的成色，以及 N2 稀释是否守在官方 3–4pp 口径内</li>
+        <li><b>FY2027 资本开支指引 — 2027年1月法说会：</b>判断 AI 需求是否仍处供给受限状态的最直接读数</li>
+        <li>云厂商 FY2027 资本开支指引（2026年10月–2027年2月）——HPC 平台（58% 营收）最大的外生变量</li>
+        <li>N2P / A16 放量与 2027 年晶圆定价——先进制程每提价约 10% ≈ Gross Margin +2pp</li>
+        <li>亚利桑那进度与 Section 232 关税豁免细则——每一次关税升级反而强化台积电美国厂的特许价值</li>
+      </ul>
+
+      <h2>关键风险</h2>
+      <ul>
+        <li><b>台海地缘集中（严重度极高、概率低-中）：</b>所有 sub-3nm 产能集中于一岛，不可对冲。亚利桑那/熊本/德累斯顿虽在分散，但按政策落后约两代</li>
+        <li><b>AI capex 消化（核心盈利风险）：</b>HPC 占营收 58%；若 2027 年出现暂停，增速或降至个位数并伴随 3–6pp 利润率压缩（Bear 情景 $284）</li>
+        <li><b>Margin 正常化：</b>管理层已量化 2nm 爬坡稀释 3–4pp、海外厂未来数年再压 2–4pp；Q2 的 67.7% 大概率是本轮局部峰值</li>
+        <li><b>新台币升值：</b>收入约 100% 以美元计价、成本约 75% 为新台币——每升值 1% ≈ Gross Margin −0.4pp，且以台积电体量基本无法有效对冲</li>
+        <li><b>客户集中与政策引导：</b>前两大客户约占营收 36%；华盛顿持有 Intel 股权并握有关税杠杆，可能将美国边际订单导向 18A</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify">
+    <b>待核对 / To-verify:</b> Q2 FY2026 platform &amp; geography mix (awaiting full 6-K/management report detail) · ADR EPS at quarterly vs. average FX ·
+    all 9 peer comps figures and the NTM consensus EPS ($21.24) / Street PT ($520.37, 18 analysts) · FY2026 model not yet re-based for the raised guidance
+    (FY26E revenue and EPS are expected to move up ~3–5% and ~10–15% respectively). None of this analysis used a paid data terminal (Bloomberg/FactSet/CapIQ) — verify before external use.
+    <span class="zh">本分析未接入付费数据终端，Q2 后的模型上修尚未执行，对外使用前请与官方 filing 及实时数据终端核实。</span>
+  </div>
+
+  <div class="footnote">
+    Source: Task 1 Company Research, Task 2 Financial Model (11 tabs, formula-verified) &amp; Task 3 Valuation Analysis — TSM_Initiation_Report_2026-07-15_ZH.docx (26 figures, 15 tables, in this folder);
+    Q2 FY2026 results per TSMC 6-K and earnings call (2026-07-16); market data Yahoo Finance (2026-07-17 close). TL;DR condensed 2026-07-20. Not investment advice. 本报告仅供研究参考，不构成投资建议。
+  </div>
+
+</div>
+</body>
+</html>
