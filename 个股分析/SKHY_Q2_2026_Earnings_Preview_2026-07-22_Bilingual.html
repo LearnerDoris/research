@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SK hynix (SKHY) — Q2 2026 Earnings Preview (Bilingual) — 2026-07-22</title>
+<style>
+  :root {
+    --bg: #F4F5F7; --surface: #FFFFFF; --surface-2: #EBEEF2; --ink: #12161C; --ink-soft: #3A4250;
+    --muted: #6B7480; --border: #D7DCE3; --border-strong: #C1C8D1; --accent: #1E6E76; --accent-ink: #0F4A50;
+    --accent-soft: #E4F0EF; --bull: #1F7A4D; --bull-bg: #E7F5EC; --base-c: #8A6D1F; --base-bg: #FBF3DF;
+    --bear: #B23A3A; --bear-bg: #FBEAEA;
+    --shadow: 0 1px 2px rgba(20,24,31,.06), 0 8px 24px -12px rgba(20,24,31,.12);
+    --font-display: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, "Cascadia Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0F1319; --surface: #161B22; --surface-2: #1E242C; --ink: #E8EAED; --ink-soft: #C3C9D1;
+      --muted: #8993A1; --border: #2A313B; --border-strong: #384150; --accent: #4FB8B0; --accent-ink: #9FE0D9;
+      --accent-soft: #14312F; --bull: #4CBE85; --bull-bg: #163829; --base-c: #D8B255; --base-bg: #3A2F14;
+      --bear: #E2686B; --bear-bg: #3A1E1F;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1319; --surface: #161B22; --surface-2: #1E242C; --ink: #E8EAED; --ink-soft: #C3C9D1;
+    --muted: #8993A1; --border: #2A313B; --border-strong: #384150; --accent: #4FB8B0; --accent-ink: #9FE0D9;
+    --accent-soft: #14312F; --bull: #4CBE85; --bull-bg: #163829; --base-c: #D8B255; --base-bg: #3A2F14;
+    --bear: #E2686B; --bear-bg: #3A1E1F;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+  :root[data-theme="light"] {
+    --bg: #F4F5F7; --surface: #FFFFFF; --surface-2: #EBEEF2; --ink: #12161C; --ink-soft: #3A4250;
+    --muted: #6B7480; --border: #D7DCE3; --border-strong: #C1C8D1; --accent: #1E6E76; --accent-ink: #0F4A50;
+    --accent-soft: #E4F0EF; --bull: #1F7A4D; --bull-bg: #E7F5EC; --base-c: #8A6D1F; --base-bg: #FBF3DF;
+    --bear: #B23A3A; --bear-bg: #FBEAEA;
+    --shadow: 0 1px 2px rgba(20,24,31,.06), 0 8px 24px -12px rgba(20,24,31,.12);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+  @media (prefers-reduced-motion: reduce) { * { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px 80px; }
+  header.masthead {
+    background: radial-gradient(circle at 1px 1px, var(--border-strong) 1px, transparent 1px) 0 0/16px 16px, var(--surface);
+    border-bottom: 1px solid var(--border); padding: 28px 0 22px;
+  }
+  .masthead-inner { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+  .ticker-badge { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .04em; color: var(--accent-ink); background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 4px; padding: 3px 9px; margin-bottom: 10px; }
+  h1.title { font-family: var(--font-display); font-weight: 800; letter-spacing: -.01em; margin: 0 0 6px; }
+  h1.title .en-line { display: block; font-size: clamp(22px, 3.4vw, 30px); text-wrap: balance; }
+  h1.title .zh-line { display: block; font-size: clamp(16px, 2.2vw, 19px); font-weight: 700; color: var(--muted); margin-top: 2px; }
+  .subtitle { color: var(--muted); font-size: 14px; margin: 0; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); }
+  .meta-row b { color: var(--ink); font-weight: 600; }
+  .meta-row .lbl { font-family: var(--font-body); color: var(--muted); }
+  .bi { display: grid; grid-template-columns: 1fr 1fr; column-gap: 26px; align-items: start; }
+  .bi .en { color: var(--ink-soft); font-size: 14px; }
+  .bi .zh { color: var(--ink-soft); font-size: 14px; border-left: 1px solid var(--border); padding-left: 26px; }
+  @media (max-width: 640px) { .bi { grid-template-columns: 1fr; row-gap: 8px; } .bi .zh { border-left: none; padding-left: 0; border-top: 1px dashed var(--border); padding-top: 8px; } }
+  .timing-note { margin: 16px 0 0; padding: 12px 16px; background: var(--bear-bg); border: 1px solid var(--bear); border-radius: 6px; }
+  .timing-note .bi .en, .timing-note .bi .zh { font-size: 13px; color: var(--ink-soft); }
+  .timing-note b { color: var(--bear); }
+  section { margin-top: 44px; }
+  .section-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  .section-num { font-family: var(--font-mono); font-size: 13px; color: var(--accent); font-weight: 700; }
+  h2 { font-family: var(--font-display); font-size: 19px; font-weight: 700; margin: 0; text-wrap: balance; }
+  h2 .cn { color: var(--muted); font-weight: 600; font-size: 16px; margin-left: 8px; }
+  .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; background: var(--surface); }
+  th, td { text-align: left; padding: 10px 14px; font-size: 13.5px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-family: var(--font-display); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); background: var(--surface-2); white-space: nowrap; }
+  th .cn { display: block; text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--muted); font-size: 11px; margin-top: 2px; }
+  td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  td .note { display: block; font-family: var(--font-body); color: var(--muted); font-size: 11.5px; margin-top: 2px; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface-2); }
+  .cite { margin-top: 10px; }
+  .cite .bi .en, .cite .bi .zh { font-size: 11.5px; color: var(--muted); }
+  ol.metrics { list-style: none; margin: 0; padding: 0; counter-reset: metric; display: flex; flex-direction: column; gap: 2px; }
+  ol.metrics li { counter-increment: metric; display: grid; grid-template-columns: 34px 1fr; gap: 14px; padding: 16px 4px; border-bottom: 1px solid var(--border); }
+  ol.metrics li:last-child { border-bottom: none; }
+  ol.metrics li::before { content: counter(metric); font-family: var(--font-mono); font-weight: 700; font-size: 15px; color: var(--accent); background: var(--accent-soft); border-radius: 6px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; }
+  .metric-title { font-weight: 700; color: var(--ink); font-size: 14.5px; margin-bottom: 8px; }
+  .metric-title .cn { font-weight: 600; color: var(--ink-soft); font-size: 13.5px; }
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 860px) { .scenario-grid { grid-template-columns: 1fr; } }
+  .scenario-card { border: 1px solid var(--border); border-top: 4px solid var(--sc-color); border-radius: 8px; padding: 16px; background: var(--surface); box-shadow: var(--shadow); }
+  .scenario-card.bull { --sc-color: var(--bull); }
+  .scenario-card.base { --sc-color: var(--base-c); }
+  .scenario-card.bear { --sc-color: var(--bear); }
+  .scenario-pill { display: inline-block; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 10px; }
+  .scenario-card.bull .scenario-pill { color: var(--bull); background: var(--bull-bg); }
+  .scenario-card.base .scenario-pill { color: var(--base-c); background: var(--base-bg); }
+  .scenario-card.bear .scenario-pill { color: var(--bear); background: var(--bear-bg); }
+  .scenario-card dl { margin: 0; }
+  .scenario-card dt { font-size: 11px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); margin-top: 12px; }
+  .scenario-card dt:first-of-type { margin-top: 0; }
+  .scenario-card dt .cn { text-transform: none; letter-spacing: 0; }
+  .scenario-card dd { margin: 3px 0 0; font-size: 13.5px; color: var(--ink); font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .scenario-card .driver-en, .scenario-card .driver-zh { font-family: var(--font-body); font-size: 13px; color: var(--ink-soft); font-variant-numeric: normal; display: block; }
+  .scenario-card .driver-zh { margin-top: 4px; padding-top: 4px; border-top: 1px dashed var(--border); }
+  .scenario-reaction { font-weight: 700; color: var(--sc-color) !important; }
+  ul.catalysts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  ul.catalysts li { display: flex; gap: 10px; padding: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+  ul.catalysts li::before { content: "▲"; color: var(--accent); font-size: 11px; flex-shrink: 0; margin-top: 4px; }
+  ul.catalysts .bi { flex: 1; }
+  ul.catalysts .bi .en, ul.catalysts .bi .zh { font-size: 14px; }
+  ul.catalysts b { color: var(--ink); }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .stat-tile { border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; background: var(--surface); }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); margin-bottom: 6px; }
+  .stat-label .cn { display: block; text-transform: none; letter-spacing: 0; font-size: 10.5px; margin-top: 1px; }
+  .stat-value { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .stat-sub { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+  .stat-sub .cn { display: block; margin-top: 1px; }
+  ul.verify { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+  ul.verify li { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--border); }
+  ul.verify li:last-child { border-bottom: none; }
+  ul.verify .box { flex-shrink: 0; width: 15px; height: 15px; border: 1.5px solid var(--border-strong); border-radius: 3px; margin-top: 3px; }
+  ul.verify .bi { flex: 1; }
+  ul.verify .bi .en, ul.verify .bi .zh { font-size: 13px; }
+  .flag { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: var(--bear); background: var(--bear-bg); border-radius: 4px; padding: 1px 7px; margin-left: 6px; }
+  footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border); }
+  footer .bi .en, footer .bi .zh { font-size: 11.5px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header class="masthead">
+<div class="masthead-inner">
+<span class="ticker-badge">NASDAQ · SKHY ｜ KRX · 000660</span>
+<h1 class="title">
+<span class="en-line">SK hynix — Q2 2026 Earnings Preview</span>
+<span class="zh-line">SK 海力士 SK hynix — Q2 2026 财报前瞻</span>
+</h1>
+<p class="subtitle">Key things to watch &amp; consensus estimates ahead of the print ｜ 财报公布前的关注点与市场一致预期</p>
+<div class="meta-row">
+<span><span class="lbl">Prepared 撰写日期</span>: <b>2026-07-22</b></span>
+<span><span class="lbl">Report time 发布时间</span>: <b>Wed, Jul 29, 2026 · 09:00 Seoul (IR call)</b></span>
+<span><span class="lbl">Coverage 覆盖评级</span>: <b>NEUTRAL · PT KRW 1,950,000 / SKHY $160</b></span>
+</div>
+</div>
+</header>
+<div class="wrap">
+
+<div class="timing-note">
+<div class="bi">
+<div class="en"><b>Our stance into the print — do not chase.</b> This is a genuinely dominant HBM franchise (56% share, sold out for ~3 years) that is <i>cheap on forward earnings</i> (~8x) — yet it is capitalizing a <b>72% operating margin</b> at <b>~8x book</b>, one cycle after posting an operating <b>loss</b> in FY2023. With a Q2 print 7 days out, a Strong-Buy street already at +93%, and normalization risk under-priced, the risk/reward into the event is balanced, not compelling. Wait for the 2H/HBM4 supply-discipline commentary.</div>
+<div class="zh"><b>财报前立场——不建议追高。</b> 这是真正占据统治地位的 HBM 特许经营权（56% 份额、已售罄约 3 年），且<i>以 forward earnings 计算并不贵</i>（约 8x）——但它是在把 <b>72% 的 operating margin</b> 按 <b>约 8x book</b> 资本化，而就在上一个周期（FY2023）它还录得经营<b>亏损</b>。Q2 财报 7 天后公布、卖方已是 Strong Buy（+93%）、且 normalization 风险被低估——事件前的风险收益是均衡的，而非有吸引力。等待 2H / HBM4 供给纪律的表述。</div>
+</div>
+</div>
+
+<!-- 1. Consensus vs Guidance -->
+<section>
+<div class="section-head">
+<span class="section-num">01</span>
+<h2>Consensus Estimates vs. Prior Quarter<span class="cn">市场预期 vs. 上一季度</span></h2>
+</div>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th>Metric<span class="cn">指标</span></th>
+<th>Street Consensus (Q2'26E)<span class="cn">市场一致预期</span></th>
+<th>Prior Qtr (Q1'26 actual)<span class="cn">上季度实际（Q1'26）</span></th>
+<th>YoY Comp (Q2'25 actual, est.)<span class="cn">去年同期（Q2'25，估）</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Revenue<span class="note">营收</span></td>
+<td class="num">~$52B / ~₩72T<span class="note">+260% YoY; DRAM $40.4B, NAND $13.1B</span></td>
+<td class="num">₩52.58T<span class="note">$34.6B · +198% YoY, +60% QoQ</span></td>
+<td class="num">~₩20T<span class="note">est. from +260% YoY <span class="flag">verify</span></span></td>
+</tr>
+<tr>
+<td>Operating profit<span class="note">经营利润</span></td>
+<td class="num">₩53T (modeled)<span class="note">at Q1 ~72% margin</span></td>
+<td class="num">₩37.61T<span class="note">72% margin, +96% QoQ</span></td>
+<td class="num">~₩9T<span class="note">est. <span class="flag">verify</span></span></td>
+</tr>
+<tr>
+<td>Operating profit — KR-brokerage prints<span class="note">韩国券商口径经营利润</span></td>
+<td class="num">₩60–70T<span class="note">KIS 60.4 / mkt ~65 / Kiwoom 70 <span class="flag">reconcile</span></span></td>
+<td class="num">—</td>
+<td class="num">—</td>
+</tr>
+<tr>
+<td>Net profit<span class="note">净利润</span></td>
+<td class="num">n/a widely modeled<span class="note">Q1 net &gt; OP on non-op gains</span></td>
+<td class="num">₩40.35T<span class="note">77% net margin</span></td>
+<td class="num">n/a</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cite">
+<div class="bi">
+<div class="en"><b>Data-integrity note:</b> the revenue consensus (~$52B / ₩72T, DRAM $40.4B + NAND $13.1B) is the coherent anchor. The KR-brokerage "Q2 operating profit ₩60–70T" figures <b>cannot be reconciled</b> with that revenue at Q1's 72% margin (they imply ~85–90% OM) — we therefore model a Q1-margin base of ~₩53T and flag ₩60–70T as published-but-unreconciled upside skew to verify against the actual print. SK hynix does not issue explicit next-quarter EPS/revenue guidance the way US names do; "consensus" here is the analyst mean. Q2'25 comps are our estimates.</div>
+<div class="zh"><b>数据完整性提示：</b> 营收 consensus（约 $52B / ₩72T，DRAM $40.4B + NAND $13.1B）是自洽的锚点。韩国券商"Q2 经营利润 ₩60–70T"与该营收在 Q1 的 72% margin 下<b>无法调和</b>（隐含约 85–90% OM）——故我们以 Q1 margin 建模的 ~₩53T 为基准，并把 ₩60–70T 标注为"已公布但未调和"的上行偏移，待财报核对。SK hynix 不像美股那样给出明确的下季 EPS/营收指引；此处"consensus"为分析师均值。Q2'25 对比为我们的估算。</div>
+</div>
+</div>
+<div class="stat-grid" style="margin-top:16px;">
+<div class="stat-tile">
+<div class="stat-label">HBM revenue share<span class="cn">HBM 收入份额（IDC Q1'26）</span></div>
+<div class="stat-value">56.4%</div>
+<div class="stat-sub">#1 globally; core Nvidia supplier<span class="cn">全球第一；Nvidia 核心供应商</span></div>
+</div>
+<div class="stat-tile">
+<div class="stat-label">Q1'26 operating margin<span class="cn">Q1'26 经营利润率</span></div>
+<div class="stat-value" style="color:var(--bull)">72%</div>
+<div class="stat-sub">vs 58% in Q4'25<span class="cn">Q4'25 为 58%</span></div>
+</div>
+<div class="stat-tile">
+<div class="stat-label">Last down-cycle (FY2023)<span class="cn">上一轮下行周期</span></div>
+<div class="stat-value" style="color:var(--bear)">−₩7.7T</div>
+<div class="stat-sub">operating LOSS, 2 years ago<span class="cn">经营亏损，就在两年前</span></div>
+</div>
+</div>
+</section>
+
+<!-- 2. Key metrics to watch -->
+<section>
+<div class="section-head">
+<span class="section-num">02</span>
+<h2>Key Metrics to Watch<span class="cn">核心关注点（按重要性排序）</span></h2>
+</div>
+<ol class="metrics">
+<li>
+<div>
+<div class="metric-title">The 2H'26 / HBM4 supply-discipline commentary — matters more than the Q2 print<span class="cn"> · 2H / HBM4 供给纪律表述 —— 比 Q2 本身更关键</span></div>
+<div class="bi">
+<div class="en">At ~8x book on a 72% operating margin, the entire debate is <b>durability</b>, not the level of Q2 profit. The market needs to hear that (a) HBM long-term agreements (LTAs) lock 2027 pricing/volume, (b) HBM4 is ramping to plan with SOCAMM2 for Nvidia, and (c) capacity additions (M15X, Yongin) are demand-matched, not a supply race. Any language hinting at conventional-DRAM price stabilization or an ASP peak is the single most dangerous line in the release.</div>
+<div class="zh">在 72% 经营利润率上按约 8x book 定价，整个争论是<b>持续性</b>，而非 Q2 利润的绝对水平。市场需要听到：(a) HBM 长期协议（LTA）锁定 2027 年价格/量，(b) HBM4 按计划放量、SOCAMM2 供货 Nvidia，(c) 新增产能（M15X、龙仁）与需求匹配、而非供给竞赛。任何暗示 conventional-DRAM 价格企稳或 ASP 见顶的表述，都是本次财报最危险的一句话。</div>
+</div>
+</div>
+</li>
+<li>
+<div>
+<div class="metric-title">HBM &amp; server-DRAM ASP trajectory into 2H<span class="cn"> · HBM 与 server-DRAM 的 ASP 走势</span></div>
+<div class="bi">
+<div class="en">The Q1→Q2 revenue jump is ASP-led. Watch whether management frames DRAM/HBM pricing as still climbing or "stabilizing." KIS trimmed its Q2 profit estimate specifically on lower-than-expected general-DRAM price increases and LTA-driven ASP stabilization — that is the crack the bears are watching.</div>
+<div class="zh">Q1→Q2 的营收跳升由 ASP 主导。关注管理层把 DRAM/HBM 定价描述为"仍在上行"还是"企稳"。KIS 正是因 general-DRAM 涨价不及预期、以及 LTA 带来的 ASP 企稳而下调 Q2 利润预测——这正是空头盯着的裂缝。</div>
+</div>
+</div>
+</li>
+<li>
+<div>
+<div class="metric-title">NAND / eSSD acceleration — the second leg<span class="cn"> · NAND / eSSD 加速 —— 第二增长腿</span></div>
+<div class="bi">
+<div class="en">Consensus has NAND at ~$13.1B (+330% YoY). NAND is more commoditized and less defensible than HBM; a strong NAND quarter broadens the story, but NAND is also the first place a supply response shows up. Watch the eSSD / high-capacity server mix.</div>
+<div class="zh">consensus 给 NAND ~$13.1B（+330% YoY）。NAND 相较 HBM 更商品化、护城河更浅；NAND 强劲能拓宽故事，但 NAND 也是供给反应最先显现之处。关注 eSSD / 高容量服务器的 mix。</div>
+</div>
+</div>
+</li>
+<li>
+<div>
+<div class="metric-title">Capex &amp; capacity guidance (M15X, Yongin, EUV)<span class="cn"> · 资本开支与产能指引</span></div>
+<div class="bi">
+<div class="en">Q1 flagged that "this year's investment scale will increase significantly." The bull reading is demand-pull; the bear reading is the start of the next supply glut. The <b>size</b> and <b>discipline</b> of the capex message directly drives the through-cycle earnings the stock should be valued on.</div>
+<div class="zh">Q1 已提示"今年投资规模将显著增加"。多头解读是需求拉动；空头解读是下一轮供给过剩的起点。capex 表述的<b>规模</b>与<b>纪律</b>直接决定应据以估值的 through-cycle 盈利。</div>
+</div>
+</div>
+</li>
+<li>
+<div>
+<div class="metric-title">Shareholder-return &amp; net-cash trajectory<span class="cn"> · 股东回报与净现金轨迹</span></div>
+<div class="bi">
+<div class="en">Net cash reached ₩35T in Q1 (from a net-debt position not long ago) and FY2025 returned ₩3,000 DPS + ₩12.2T buyback. A raised return policy would partly offset the peak-cycle valuation concern; silence on it, with capex rising, tilts capital toward the supply race.</div>
+<div class="zh">Q1 净现金达 ₩35T（不久前还是净负债），FY2025 派息 ₩3,000 + 回购 ₩12.2T。上调回报政策可部分对冲 peak-cycle 估值担忧；若对此沉默而 capex 上升，则资本更偏向供给竞赛。</div>
+</div>
+</div>
+</li>
+</ol>
+</section>
+
+<!-- 3. Scenarios -->
+<section>
+<div class="section-head">
+<span class="section-num">03</span>
+<h2>Scenarios for the Print<span class="cn">财报情景分析</span></h2>
+</div>
+<div class="scenario-grid">
+<div class="scenario-card bull">
+<span class="scenario-pill">Bull · 30%</span>
+<dl>
+<dt>Revenue / OP<span class="cn"> 营收/经营利润</span></dt>
+<dd>&ge; $54B / &ge; ₩60T</dd>
+<dt>2H / HBM4<span class="cn"> 下半年 / HBM4</span></dt>
+<dd>ramp on-plan; LTAs firm</dd>
+<dt>Drivers<span class="cn"> 驱动</span></dt>
+<dd>
+<span class="driver-en">Beat on ASP + HBM4 ramp reaffirmed; 2027 LTA visibility; NAND accelerates; return policy raised; management frames pricing as still climbing</span>
+<span class="driver-zh">ASP 超预期 + HBM4 放量重申；2027 LTA 可见度；NAND 加速；上调回报政策；管理层把定价描述为仍在上行</span>
+</dd>
+<dt>Stock Reaction<span class="cn"> 预期股价反应</span></dt>
+<dd class="scenario-reaction">+10% ~ +20%</dd>
+</dl>
+</div>
+<div class="scenario-card base">
+<span class="scenario-pill">Base · 45%</span>
+<dl>
+<dt>Revenue / OP<span class="cn"> 营收/经营利润</span></dt>
+<dd>~$52B / ₩53–60T</dd>
+<dt>2H / HBM4<span class="cn"> 下半年 / HBM4</span></dt>
+<dd>solid, few surprises</dd>
+<dt>Drivers<span class="cn"> 驱动</span></dt>
+<dd>
+<span class="driver-en">A record quarter that is "priced in"; HBM4 on track but no new LTA; some ASP-stabilization language on general DRAM — reaction hinges on the 2H guide, not the print</span>
+<span class="driver-zh">创纪录但"已被 price in"；HBM4 按计划但无新 LTA；general DRAM 出现部分 ASP 企稳表述——股价反应取决于 2H 指引而非当季数字</span>
+</dd>
+<dt>Stock Reaction<span class="cn"> 预期股价反应</span></dt>
+<dd class="scenario-reaction">−6% ~ +6%</dd>
+</dl>
+</div>
+<div class="scenario-card bear">
+<span class="scenario-pill">Bear · 25%</span>
+<dl>
+<dt>Revenue / OP<span class="cn"> 营收/经营利润</span></dt>
+<dd>miss vs whisper</dd>
+<dt>2H / HBM4<span class="cn"> 下半年 / HBM4</span></dt>
+<dd>ASP peak / glut hint</dd>
+<dt>Drivers<span class="cn"> 驱动</span></dt>
+<dd>
+<span class="driver-en">OP below the ₩53T model or a soft mix; explicit conventional-DRAM price stabilization; capex jump read as a supply race; any hint the cycle is peaking → violent de-rate off 8x book on peak earnings</span>
+<span class="driver-zh">OP 低于 ₩53T 模型或 mix 偏软；明确的 conventional-DRAM 价格企稳；capex 跳升被解读为供给竞赛；任何周期见顶的暗示 → 在 peak earnings 的 8x book 上剧烈 de-rate</span>
+</dd>
+<dt>Stock Reaction<span class="cn"> 预期股价反应</span></dt>
+<dd class="scenario-reaction">−12% ~ −22%</dd>
+</dl>
+</div>
+</div>
+<div class="cite" style="margin-top:14px;">
+<div class="bi">
+<div class="en"><b>The asymmetry is negative into the event.</b> The stock already gave back its Nasdaq-debut pop ($170 → $151) and the Seoul line is ~38% off its high — but at ~8x book on peak margins, the downside on a cycle-peak signal is larger than the upside on an in-line record. A −12% to −22% reaction from KRW 1,836,000 lands at ~KRW 1.43–1.62M (SKHY ~$118–133) — inside or near the KRW 1.5M / $123 band where we would turn Overweight. Reaction ranges are realized-vol / listing-volatility estimates, <i>not</i> an options-implied straddle.</div>
+<div class="zh"><b>事件前风险收益偏负。</b> 股价已回吐 Nasdaq 首日涨幅（$170 → $151），首尔线较高点回落约 38%——但在 peak margin 的约 8x book 上，"周期见顶"信号的下行大于"符合预期的创纪录"的上行。自 KRW 1,836,000 下跌 12%–22% 对应约 KRW 1.43–1.62M（SKHY ~$118–133），落在我们上调至 Overweight 的 KRW 1.5M / $123 区间之内或附近。反应区间为已实现波动率/上市波动估算，<i>而非</i>期权隐含跨式定价。</div>
+</div>
+</div>
+</section>
+
+<!-- 4. Catalyst Checklist -->
+<section>
+<div class="section-head">
+<span class="section-num">04</span>
+<h2>Catalyst Checklist<span class="cn">催化剂清单</span></h2>
+</div>
+<ul class="catalysts">
+<li>
+<div class="bi">
+<div class="en"><b>2H'26 demand &amp; HBM4 ramp commentary</b> — durability of the super-cycle matters more than the Q2 profit level.</div>
+<div class="zh"><b>2H 2026 需求与 HBM4 放量表述</b> —— 超级周期的持续性比 Q2 利润水平更重要。</div>
+</div>
+</li>
+<li>
+<div class="bi">
+<div class="en"><b>Conventional-DRAM &amp; HBM ASP language</b> — "still climbing" vs "stabilizing"; the latter is the bear trigger.</div>
+<div class="zh"><b>conventional-DRAM 与 HBM 的 ASP 表述</b> —— "仍在上行"还是"企稳"；后者是空头触发点。</div>
+</div>
+</li>
+<li>
+<div class="bi">
+<div class="en"><b>A new HBM long-term agreement / 2027 LTA visibility</b> — the most likely trigger for a sharp upside reaction.</div>
+<div class="zh"><b>新的 HBM 长期协议 / 2027 LTA 可见度</b> —— 最可能引发大幅上行的触发点。</div>
+</div>
+</li>
+<li>
+<div class="bi">
+<div class="en"><b>Capex &amp; capacity discipline</b> (M15X, Yongin, EUV) — demand-matched additions vs the start of the next glut.</div>
+<div class="zh"><b>资本开支与产能纪律</b>（M15X、龙仁、EUV）—— 与需求匹配的扩产，还是下一轮过剩的起点。</div>
+</div>
+</li>
+<li>
+<div class="bi">
+<div class="en"><b>Hyperscaler &amp; Nvidia demand signals</b> (2026–27 AI capex) — the main exogenous swing for HBM pricing.</div>
+<div class="zh"><b>hyperscaler 与 Nvidia 需求信号</b>（2026–27 AI capex）—— HBM 定价最主要的外生变量。</div>
+</div>
+</li>
+</ul>
+</section>
+
+<!-- 5. Trading Setup -->
+<section>
+<div class="section-head">
+<span class="section-num">05</span>
+<h2>Trading Setup<span class="cn">交易层面设置</span></h2>
+</div>
+<div class="stat-grid">
+<div class="stat-tile">
+<div class="stat-label">SKHY ADR (07-21)<span class="cn">Nasdaq ADR 价</span></div>
+<div class="stat-value">$151.16</div>
+<div class="stat-sub">IPO'd $149 on 07-10; opened $170<span class="cn">7月10日上市$149，开盘$170</span></div>
+</div>
+<div class="stat-tile">
+<div class="stat-label">Seoul 000660 (07-21)<span class="cn">首尔线</span></div>
+<div class="stat-value" style="font-size:17px;">₩1,836,000</div>
+<div class="stat-sub">−38% from ₩2,987,000 high<span class="cn">较52周高点</span></div>
+</div>
+<div class="stat-tile">
+<div class="stat-label">ADR range since IPO<span class="cn">ADR 上市以来区间</span></div>
+<div class="stat-value" style="font-size:16px;">$145.57–$194.80</div>
+</div>
+<div class="stat-tile">
+<div class="stat-label">Street PT (KRW, n=37)<span class="cn">卖方目标价共识</span></div>
+<div class="stat-value" style="font-size:16px;">₩3.41M avg</div>
+<div class="stat-sub">Strong Buy; +93%; range ₩1.2–5.3M<span class="cn">37位分析师，Strong Buy</span></div>
+</div>
+<div class="stat-tile">
+<div class="stat-label">Our Target · 我们的目标价<span class="cn">NEUTRAL / HOLD</span></div>
+<div class="stat-value" style="font-size:16px;">₩1.95M / $160</div>
+<div class="stat-sub">+6% vs anchor; OW at ₩1.5M/$123<span class="cn">较现价约+6%</span></div>
+</div>
+<div class="stat-tile">
+<div class="stat-label">Options-Implied Move<span class="cn">期权隐含波动幅度</span></div>
+<div class="stat-value" style="font-size:16px;">not available</div>
+<div class="stat-sub">no options surface accessed<span class="cn">未接入期权链</span> <span class="flag">verify</span></div>
+</div>
+</div>
+<div class="cite" style="margin-top:14px;">
+<div class="bi">
+<div class="en">Prices: SKHY $151.16 &amp; 000660 ₩1,836,000 (2026-07-21 close). USD/KRW conversions use ~₩1,520/USD to tie to source USD figures; the ADR-to-ordinary ratio and live FX should be confirmed. We did not access an options chain — Section 3 ranges are realized/listing-vol estimates, not a priced straddle.</div>
+<div class="zh">价格：SKHY $151.16、000660 ₩1,836,000（2026-07-21 收盘）。USD/KRW 折算采用约 ₩1,520/USD 以对齐来源美元数据；ADR 兑普通股比例与实时汇率需确认。我们未接入期权链——第 3 节区间为已实现/上市波动估算，而非期权定价。</div>
+</div>
+</div>
+</section>
+
+<!-- 6. To-verify -->
+<section>
+<div class="section-head">
+<span class="section-num">06</span>
+<h2>To-Verify Checklist<span class="cn">待核对清单</span></h2>
+</div>
+<ul class="verify">
+<li><span class="box"></span>
+<div class="bi">
+<div class="en"><b>Reconcile the ₩60–70T KR-brokerage "Q2 OP" with the ~$52B revenue consensus</b> — at Q1's 72% margin they are inconsistent. Confirm both against the actual Q2 2026 press release / IR deck on 2026-07-29.</div>
+<div class="zh"><b>调和韩国券商"Q2 OP ₩60–70T"与 ~$52B 营收 consensus</b> —— 在 Q1 的 72% margin 下二者不一致。财报（2026-07-29）公布后以官方 press release / IR 核对。</div>
+</div>
+</li>
+<li><span class="box"></span>
+<div class="bi">
+<div class="en">Verify Q2'25 comps (rev ~₩20T, OP ~₩9T are our estimates, not confirmed).</div>
+<div class="zh">核对 Q2'25 对比基数（营收 ~₩20T、OP ~₩9T 为我们的估算，未经确认）。</div>
+</div>
+</li>
+<li><span class="box"></span>
+<div class="bi">
+<div class="en">Confirm the exact report date/time — cited as Wed Jul 29, 2026, 09:00 Seoul (IR conference). Note a preliminary (잠정) results release may precede the full call.</div>
+<div class="zh">核对确切财报日期/时间——本文引用为 2026-07-29（周三）首尔时间 09:00 IR 电话会。注意可能先发布잠정（初步）业绩。</div>
+</div>
+</li>
+<li><span class="box"></span>
+<div class="bi">
+<div class="en">Pull a live SKHY options chain for the actual implied move — none was accessed for this note.</div>
+<div class="zh">拉取 SKHY 实时期权链以获取真实隐含波动幅度——本文未接入。</div>
+</div>
+</li>
+<li><span class="box"></span>
+<div class="bi">
+<div class="en">Confirm the ADR-to-ordinary conversion ratio and live USD/KRW; our USD figures assume ~₩1,520/USD.</div>
+<div class="zh">确认 ADR 兑普通股比例与实时 USD/KRW；本文美元数据假设约 ₩1,520/USD。</div>
+</div>
+</li>
+</ul>
+</section>
+
+<footer>
+<div class="bi">
+<div class="en">Companion coverage: SKHY_Initiation_Report_2026-07-22 (EN / 中文 DOCX) · SKHY_TLDR_Summary_2026-07-22.html · SKHY_Financial_Model_2026-07-22.xlsx. SK hynix reports in KRW and does not issue explicit US-style quarterly guidance; "consensus" is the analyst mean. This is AI-generated research condensed 2026-07-22 for reference only — not investment advice. No paid data terminal (Bloomberg/FactSet/CapIQ) was used; reconcile to SK hynix official filings before external use.</div>
+<div class="zh">配套研报：SKHY_Initiation_Report_2026-07-22（英文 / 中文 DOCX）· SKHY_TLDR_Summary_2026-07-22.html · SKHY_Financial_Model_2026-07-22.xlsx。SK hynix 以 KRW 报告，且不发布美股式的明确季度指引；"consensus"为分析师均值。本文为 AI 生成研究，整理于 2026-07-22，仅供参考，不构成投资建议。未使用任何付费数据终端（Bloomberg/FactSet/CapIQ）；对外使用前请与 SK hynix 官方 filing 核实。</div>
+</div>
+</footer>
+
+</div>
+</body>
+</html>
