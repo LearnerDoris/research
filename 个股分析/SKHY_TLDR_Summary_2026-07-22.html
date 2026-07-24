@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SK hynix (SKHY / 000660) — Initiating Coverage TL;DR — 2026-07-22</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --surface: #fcfcfb;
+    --page: #f2f2ef;
+    --ink: #0b0b0b;
+    --ink2: #52514e;
+    --muted: #898781;
+    --border: #e1e0d9;
+    --navy: #1F4E78;
+    --navy-tint: #D9E1F2;
+    --red: #C00000;
+    --green: #0ca30c;
+    --card: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #1a1a19;
+      --page: #0d0d0d;
+      --ink: #ffffff;
+      --ink2: #c3c2b7;
+      --muted: #948f86;
+      --border: #33322f;
+      --navy: #6fa8dc;
+      --navy-tint: #1c2b3a;
+      --red: #e66767;
+      --green: #3ecf3e;
+      --card: #202020;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: "Georgia", "Times New Roman", "SimSun", serif;
+    line-height: 1.45;
+  }
+  .sheet {
+    max-width: 1180px;
+    margin: 24px auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 28px 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .zh { font-family: "PingFang SC", "Microsoft YaHei", "SimSun", sans-serif; }
+  header.title-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  h1 { font-size: 24px; margin: 2px 0 2px; color: var(--navy); }
+  .subtitle { font-size: 13.5px; color: var(--ink2); font-style: italic; max-width: 660px; }
+  .rating-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 360px;
+  }
+  .rating-box .cell { background: var(--card); padding: 8px 10px; text-align: center; }
+  .rating-box .cell .lbl { font-size: 9.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--ink2); font-family: system-ui, sans-serif; }
+  .rating-box .cell .val { font-size: 15px; font-weight: 700; margin-top: 2px; }
+  .rating-box .cell.rating .val { color: var(--navy); }
+  .rating-box .cell.up .val { color: var(--green); }
+
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 6px;
+  }
+  .col h2 {
+    font-size: 13.5px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 3px;
+    margin: 16px 0 6px;
+    font-family: system-ui, sans-serif;
+  }
+  .col .zh { font-size: 13.5px; }
+  .col p, .col li { font-size: 12.5px; margin: 4px 0; }
+  .col ul { margin: 4px 0; padding-left: 18px; }
+  b { color: var(--ink); }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 6px 0 4px;
+  }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 8px;
+    text-align: center;
+  }
+  .stat .n { font-size: 14px; font-weight: 700; color: var(--navy); font-family: system-ui, sans-serif;}
+  .stat .l { font-size: 9px; color: var(--muted); font-family: system-ui, sans-serif; }
+
+  table.mini { width: 100%; border-collapse: collapse; font-size: 11px; margin: 4px 0; }
+  table.mini th, table.mini td { border: 1px solid var(--border); padding: 3px 5px; text-align: right; }
+  table.mini th { background: var(--navy-tint); color: var(--ink); font-weight: 600; text-align: center; font-family: system-ui, sans-serif; }
+  table.mini td:first-child, table.mini th:first-child { text-align: left; }
+  table.mini tr.total td { font-weight: 700; background: var(--navy-tint); }
+
+  .ff { margin: 6px 0; }
+  .ff-row { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 10.5px; }
+  .ff-label { width: 120px; flex-shrink: 0; font-family: system-ui, sans-serif; color: var(--ink2); }
+  .ff-track { position: relative; flex: 1; height: 14px; background: var(--navy-tint); border-radius: 3px; }
+  .ff-bar { position: absolute; top: 0; bottom: 0; background: var(--navy); border-radius: 3px; opacity: .75; }
+  .ff-bar.comps { background: #1baf7a; }
+  .ff-bar.scen { background: #c9932a; }
+  .ff-bar.target { background: #4a3aa7; }
+  .ff-cur { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--red); }
+  .ff-pt { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--green); }
+
+  .footnote { font-size: 10px; color: var(--muted); margin-top: 18px; border-top: 1px solid var(--border); padding-top: 8px; font-family: system-ui, sans-serif; }
+  .verify { background: var(--navy-tint); border-radius: 4px; padding: 8px 10px; font-size: 10.5px; margin-top: 8px; }
+  @media print {
+    body { background: white; }
+    .sheet { box-shadow: none; margin: 0; border: none; max-width: 100%; }
+  }
+  @media (max-width: 860px) {
+    .cols { grid-template-columns: 1fr; }
+    header.title-block { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="title-block">
+    <div>
+      <div class="tag">Initiating Coverage TL;DR &nbsp;|&nbsp; 首次覆盖研报 · 一页纸摘要</div>
+      <h1>SK hynix Inc. <span style="font-weight:400;font-size:16px;">(NASDAQ: SKHY ｜ KRX: 000660)</span></h1>
+      <div class="subtitle">The dominant HBM franchise — cheap on forward earnings, yet capitalizing a 72% peak-cycle margin at ~8x book, one cycle after an operating loss.<br>
+      <span class="zh">占据统治地位的 HBM 特许经营权——以 forward earnings 计并不贵，但在上一轮周期录得经营亏损后，如今按约 8x book 资本化 72% 的 peak-cycle margin。</span></div>
+    </div>
+    <div class="rating-box">
+      <div class="cell rating"><div class="lbl">Rating 评级</div><div class="val">NEUTRAL</div></div>
+      <div class="cell"><div class="lbl">Current 现价 (SKHY)</div><div class="val">$151.16</div></div>
+      <div class="cell"><div class="lbl">Target 目标价</div><div class="val">$160 / ₩1.95M</div></div>
+      <div class="cell up"><div class="lbl">Upside 空间</div><div class="val">+5.8%</div></div>
+    </div>
+  </header>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="n">~$849B / ₩1,308T</div><div class="l">Market Cap · 市值</div></div>
+    <div class="stat"><div class="n">₩97.15T / +47%</div><div class="l">FY2025A Revenue · 营收（YoY）</div></div>
+    <div class="stat"><div class="n">56.4% · #1</div><div class="l">HBM revenue share (IDC Q1'26) · HBM 份额</div></div>
+    <div class="stat"><div class="n">72% vs −24%</div><div class="l">Op margin Q1'26 vs FY2023 · 经营利润率（周期性）</div></div>
+    <div class="stat"><div class="n">₩3.41M avg · Strong Buy</div><div class="l">Street PT (n=37, +93%) · 卖方一致目标价</div></div>
+    <div class="stat"><div class="n">~8x vs ~6x</div><div class="l">Fwd P/E vs Micron · 远期市盈率 vs 同业</div></div>
+  </div>
+
+  <div class="cols">
+    <!-- ENGLISH COLUMN -->
+    <div class="col">
+      <h2>Investment Summary</h2>
+      <p>SK hynix is the world's <b>#1 HBM supplier (56.4% revenue share, IDC Q1'26)</b> and <b>#2 in DRAM (29.1%)</b>, the core memory partner to Nvidia through HBM3E, HBM4 and SOCAMM2. The AI-memory shortage has driven an extraordinary print: <b>Q1'26 revenue ₩52.58T (+198% YoY), operating profit ₩37.61T at a 72% margin</b>, on top of record <b>FY2025 revenue ₩97.15T and operating profit ₩47.21T (49% margin)</b> — enough to overtake Samsung on memory profit. The balance sheet flipped to a <b>₩35T net-cash</b> position; FY2025 returned ₩3,000 DPS plus a ₩12.2T buyback. HBM is booked out for ~three years. On <b>forward earnings the stock is cheap: ~8x</b> our FY2026E, versus a euphoric street at <b>₩3.41M (Strong Buy, +93%)</b>.</p>
+      <p>The problem is <b>what those earnings are</b>. A 72% operating margin and <b>~8x book</b> capitalize the peak of the most violently cyclical business in tech — the same franchise posted an operating <b>loss of ₩7.7T in FY2023</b>, just two years ago. Our valuation blends the cheap-on-peak lens (forward P/E ~9–11x, Micron-parity comps → <b>₩2.04–2.55M</b>) against the through-cycle discipline (normalized P/E ~11–13x on a structurally-higher-but-not-peak HBM floor → <b>₩0.85–1.50M</b>; 4–5x forward book; a mid-cycle <b>DCF</b>). Weighted, base <b>₩1.93M</b>; headline target <b>₩1,950,000 (SKHY ~$160)</b>, at the middle of the market-based cluster.</p>
+      <p><b>Why NEUTRAL, not BUY:</b> we are not calling a top on a genuinely dominant franchise — we are saying the market already prices a <i>durable</i> super-cycle, leaving balanced risk/reward, while the euphoric street under-writes the normalization risk that memory always eventually delivers. Two hard constraints seal the call: (1) <b>a Q2 print is 7 days out (Jul 29)</b> — our 14-day-catalyst rule bars adding into the event; (2) at ~8x book on peak margins, a single "ASP-stabilizing" line de-rates the stock violently. <b>We would turn Overweight at ~₩1.5M / SKHY ~$123</b>, or on durable through-cycle pricing evidence (firm 2027 LTAs, disciplined capex, HBM4 ramp on plan).</p>
+
+      <h2>Valuation Bridge (KRW per share)</h2>
+      <table class="mini">
+        <tr><th>Method</th><th>Low</th><th>Base</th><th>High</th><th>Wt.</th></tr>
+        <tr><td>Forward P/E (9–11x FY26E net)</td><td>₩2.04M</td><td>₩2.27M</td><td>₩2.50M</td><td>40%</td></tr>
+        <tr><td>Comps / EV-EBITDA (Micron-parity)</td><td>₩1.85M</td><td>₩2.15M</td><td>₩2.55M</td><td>25%</td></tr>
+        <tr><td>Normalized P/E (11–13x through-cycle)</td><td>₩0.85M</td><td>₩1.10M</td><td>₩1.50M</td><td>15%</td></tr>
+        <tr><td>P/B (4–5x fwd book)</td><td>₩1.40M</td><td>₩1.80M</td><td>₩2.25M</td><td>10%</td></tr>
+        <tr><td>DCF (mid-cycle, WACC 9%, g 3%)</td><td>₩1.11M</td><td>₩1.41M</td><td>₩1.65M</td><td>10%</td></tr>
+        <tr class="total"><td>Weighted Target</td><td>₩1.66M</td><td>₩1.93M</td><td>₩2.25M</td><td>100%</td></tr>
+      </table>
+
+      <div class="ff">
+        <div class="ff-row"><div class="ff-label">DCF</div><div class="ff-track"><div class="ff-bar" style="left:36.7%;width:23.3%"></div></div></div>
+        <div class="ff-row"><div class="ff-label">Normalized EPS</div><div class="ff-track"><div class="ff-bar scen" style="left:28.3%;width:21.7%"></div></div></div>
+        <div class="ff-row"><div class="ff-label">Comps / Fwd P/E</div><div class="ff-track"><div class="ff-bar comps" style="left:61.7%;width:23.3%"></div></div></div>
+        <div class="ff-row"><div class="ff-label">Weighted / Target</div><div class="ff-track"><div class="ff-bar target" style="left:55.3%;width:20.4%"></div><div class="ff-cur" style="left:61.2%"></div><div class="ff-pt" style="left:65.0%"></div></div></div>
+      </div>
+      <p style="font-size:9.5px;color:var(--muted);font-family:system-ui,sans-serif;">Track scaled ₩0–₩3.0M/share. Red line = current ₩1,836,000; green line = target ₩1,950,000. 52-wk range ₩245,000–₩2,987,000 (Seoul); SKHY ADR $145.57–$194.80 since 07-10 IPO.</p>
+
+      <h2>Key Catalysts (0–12mo)</h2>
+      <ul>
+        <li><b>Q2 2026 results — Jul 29, 2026</b> (7 days out): street mean rev ~$52B/₩72T; the <b>2H'26 guide &amp; HBM4 commentary matter more than the print</b> — durability, not the level of peak profit</li>
+        <li>A <b>new HBM long-term agreement / 2027 LTA visibility</b> — the most likely trigger for a sharp re-rating</li>
+        <li>Conventional-DRAM &amp; HBM <b>ASP language</b> ("still climbing" vs "stabilizing") — the latter is the bear trigger</li>
+        <li>Hyperscaler &amp; Nvidia 2026–27 AI capex; capex/capacity discipline (M15X, Yongin, EUV); shareholder-return policy</li>
+      </ul>
+
+      <h2>Key Risks</h2>
+      <ul>
+        <li><b>Upside to ₩1.95M:</b> the super-cycle proves structural (HBM oligopoly, sold-out ~3yr, LTAs); FY2026E net &gt;₩180T holds an ~8x forward multiple; NAND accelerates; the street's +93% partially realizes; a raised return policy re-rates the fortress balance sheet</li>
+        <li><b>Downside to ₩1.95M:</b> classic memory normalization — ASP peak → the 72% margin mean-reverts and ~8x book compresses toward the 1–2x the group trades at mid-cycle; a supply race (own capex + Samsung/Micron HBM catch-up) ends the oligopoly rent; Nvidia/hyperscaler capex digestion; KRW/geopolitics (Korea-US-China); single-customer HBM concentration; post-IPO ADR technicals &amp; lock-up flow</li>
+      </ul>
+    </div>
+
+    <!-- CHINESE COLUMN -->
+    <div class="col zh">
+      <h2>投资摘要</h2>
+      <p>SK hynix 是全球 <b>#1 HBM 供应商（56.4% 收入份额，IDC Q1'26）</b>、<b>DRAM 全球第二（29.1%）</b>，通过 HBM3E、HBM4 与 SOCAMM2 成为 Nvidia 的核心内存伙伴。AI-memory 短缺催生了惊人的业绩：<b>Q1'26 营收 ₩52.58T（+198% YoY），operating profit ₩37.61T、margin 72%</b>，叠加创纪录的 <b>FY2025 营收 ₩97.15T、operating profit ₩47.21T（49% margin）</b>——足以在内存利润上反超三星。资产负债表转为 <b>₩35T 净现金</b>；FY2025 派息 ₩3,000 并回购 ₩12.2T。HBM 已售罄约三年。以 <b>forward earnings 计股价便宜：约 8x</b> 我们的 FY2026E，而卖方一片狂热，目标价 <b>₩3.41M（Strong Buy，+93%）</b>。</p>
+      <p>问题在于<b>这些盈利是什么</b>。72% 的 operating margin 与 <b>约 8x book</b>，是在把科技业中周期性最剧烈业务的<b>顶部</b>加以资本化——同一家公司就在两年前的 <b>FY2023 录得 ₩7.7T 经营亏损</b>。我们的估值把"peak 便宜"视角（forward P/E ~9–11x、Micron-parity comps → <b>₩2.04–2.55M</b>）与 through-cycle 纪律（normalized P/E ~11–13x，采用"结构性抬升但非峰值"的 HBM 盈利底 → <b>₩0.85–1.50M</b>；4–5x forward book；mid-cycle <b>DCF</b>）加权。加权基准 <b>₩1.93M</b>；headline 目标价 <b>₩1,950,000（SKHY ~$160）</b>，取 market-based 区间中部。</p>
+      <p><b>为何是 NEUTRAL 而非 BUY（大白话）：</b>公司很好，问题只在价格——现在这个价是“按最景气的时候”定的。单看今年利润，股价约 8x forward 并不贵；但这是 72% 利润率、约 8x book 的<b>顶峰利润</b>，而同一家公司 2023 年还亏了 ₩7.7 万亿。综合五种方法，合理价约 ₩1.93M，远低于卖方一致的 ₩3.41M——差距就是卖方没算“利润早晚会回落”（normalization）。两点让我们先等：<b>① 7 月 29 日就出财报</b>（7 天后；我们规矩是大事件前 14 天不加仓）；② 股价高又建在顶峰利润上，很脆弱，财报里一句“价格企稳”就可能大跌。<b>跌到约 ₩1.5M / SKHY ~$123，或看到景气能持续（锁定 2027 HBM 长约、扩产跟着需求走、HBM4 按计划量产），我们就上调至 Overweight。</b></p>
+
+      <h2>估值桥接（每股 KRW）</h2>
+      <table class="mini">
+        <tr><th>方法</th><th>低值</th><th>基准</th><th>高值</th><th>权重</th></tr>
+        <tr><td>Forward P/E（9–11x FY26E 净利）</td><td>₩2.04M</td><td>₩2.27M</td><td>₩2.50M</td><td>40%</td></tr>
+        <tr><td>Comps / EV-EBITDA（Micron-parity）</td><td>₩1.85M</td><td>₩2.15M</td><td>₩2.55M</td><td>25%</td></tr>
+        <tr><td>Normalized P/E（11–13x 穿越周期）</td><td>₩0.85M</td><td>₩1.10M</td><td>₩1.50M</td><td>15%</td></tr>
+        <tr><td>P/B（4–5x forward book）</td><td>₩1.40M</td><td>₩1.80M</td><td>₩2.25M</td><td>10%</td></tr>
+        <tr><td>DCF（mid-cycle，WACC 9%，g 3%）</td><td>₩1.11M</td><td>₩1.41M</td><td>₩1.65M</td><td>10%</td></tr>
+        <tr class="total"><td>加权目标价</td><td>₩1.66M</td><td>₩1.93M</td><td>₩2.25M</td><td>100%</td></tr>
+      </table>
+      <p style="font-size:9.5px;color:var(--muted);">横轴刻度 ₩0–₩3.0M/股。红线 = 现价 ₩1,836,000；绿线 = 目标价 ₩1,950,000。52 周区间 ₩245,000–₩2,987,000（首尔）；SKHY ADR 自 7-10 上市以来 $145.57–$194.80。</p>
+
+      <h2>关键催化剂（0–12个月）</h2>
+      <ul>
+        <li><b>Q2 2026 财报——2026 年 7 月 29 日</b>（7 天后）：卖方均值营收约 $52B/₩72T；<b>2H 2026 指引与 HBM4 表述比当季数字更关键</b>——看持续性，而非峰值利润的绝对水平</li>
+        <li><b>新的 HBM 长期协议 / 2027 LTA 可见度</b>——最可能引发大幅重估的触发点</li>
+        <li>conventional-DRAM 与 HBM 的 <b>ASP 表述</b>（"仍在上行" vs "企稳"）——后者是空头触发点</li>
+        <li>hyperscaler 与 Nvidia 的 2026–27 AI capex；capex/产能纪律（M15X、龙仁、EUV）；股东回报政策</li>
+      </ul>
+
+      <h2>关键风险</h2>
+      <ul>
+        <li><b>支撑股价高于 ₩1.95M 的因素：</b>超级周期被证明具结构性（HBM 寡头、售罄约 3 年、LTA）；FY2026E 净利 &gt;₩180T 支撑约 8x forward 倍数；NAND 加速；卖方 +93% 部分兑现；上调回报政策使堡垒式资产负债表重估</li>
+        <li><b>支撑股价低于 ₩1.95M 的因素：</b>典型的内存 normalization——ASP 见顶 → 72% margin 均值回归、约 8x book 向该组 mid-cycle 的 1–2x 收敛；供给竞赛（自身 capex + 三星/美光 HBM 追赶）终结寡头租金；Nvidia/hyperscaler capex 消化；KRW/地缘（韩-美-中）；HBM 单一客户集中；上市后 ADR 技术面与 lock-up 解禁流</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify">
+    <b>待核对 / To-verify:</b> Current prices (SKHY $151.16 &amp; 000660 ₩1,836,000, 2026-07-21 close) · ADR-to-ordinary ratio &amp; live USD/KRW (USD figures assume ~₩1,520/USD to tie to source; market cap $849B / equity $107.9B) · shares outstanding (~728M, from FY25 buyback math) · Q1'26 net &gt; operating profit (non-op/equity-method gains) · FY2022/2023 net-income figures (approx.) · <b>Q2 OP consensus of ₩60–70T could not be reconciled with the ~$52B revenue consensus</b> (implies ~85–90% margin) — we model ₩53T at Q1 margin · Micron comp multiples · all valuation inputs. No paid data terminal (Bloomberg/FactSet/CapIQ) was used — verify against SK hynix filings before external use. 本分析未接入付费数据终端，对外使用前请与官方 filing 及实时数据终端核实。
+  </div>
+
+  <div class="footnote">
+    Source: Task 1 Company Research &amp; Task 3 Valuation Analysis, SKHY_Initiation_2026-07-22 (EN / 中文 DOCX in this folder) · SKHY_Financial_Model_2026-07-22.xlsx · SKHY_Q2_2026_Earnings_Preview_2026-07-22_Bilingual.html. Full pack anchored to the 2026-07-21 close (SKHY $151.16 / 000660 ₩1,836,000). SK hynix reports in KRW; valuation is done on aggregate equity value and translated to each listing pro-rata. TL;DR condensed 2026-07-22. Not investment advice. 不构成投资建议。
+  </div>
+
+</div>
+</body>
+</html>
