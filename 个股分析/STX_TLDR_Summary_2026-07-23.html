@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seagate (STX) — Initiating Coverage TL;DR — 2026-07-23</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --surface: #fcfcfb; --page: #f2f2ef; --ink: #0b0b0b; --ink2: #52514e; --muted: #898781;
+    --border: #e1e0d9; --navy: #1F4E78; --navy-tint: #D9E1F2; --red: #C00000; --green: #0ca30c; --card: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #1a1a19; --page: #0d0d0d; --ink: #ffffff; --ink2: #c3c2b7; --muted: #948f86;
+      --border: #33322f; --navy: #6fa8dc; --navy-tint: #1c2b3a; --red: #e66767; --green: #3ecf3e; --card: #202020;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font-family: "Georgia", "Times New Roman", "SimSun", serif; line-height: 1.45; }
+  .sheet { max-width: 1180px; margin: 24px auto; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 28px 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .zh { font-family: "PingFang SC", "Microsoft YaHei", "SimSun", sans-serif; }
+  header.title-block { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid var(--navy); padding-bottom: 10px; margin-bottom: 14px; gap: 16px; flex-wrap: wrap; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; color: var(--red); text-transform: uppercase; margin-bottom: 2px; }
+  h1 { font-size: 24px; margin: 2px 0 2px; color: var(--navy); }
+  .subtitle { font-size: 13.5px; color: var(--ink2); font-style: italic; max-width: 660px; }
+  .rating-box { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; min-width: 360px; }
+  .rating-box .cell { background: var(--card); padding: 8px 10px; text-align: center; }
+  .rating-box .cell .lbl { font-size: 9.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--ink2); font-family: system-ui, sans-serif; }
+  .rating-box .cell .val { font-size: 15px; font-weight: 700; margin-top: 2px; }
+  .rating-box .cell.rating .val { color: var(--navy); }
+  .rating-box .cell.down .val { color: var(--red); }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 6px; }
+  .col h2 { font-size: 13.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--navy); border-bottom: 1px solid var(--border); padding-bottom: 3px; margin: 16px 0 6px; font-family: system-ui, sans-serif; }
+  .col .zh { font-size: 13.5px; }
+  .col p, .col li { font-size: 12.5px; margin: 4px 0; }
+  .col ul { margin: 4px 0; padding-left: 18px; }
+  b { color: var(--ink); }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 6px 0 4px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 6px 8px; text-align: center; }
+  .stat .n { font-size: 14px; font-weight: 700; color: var(--navy); font-family: system-ui, sans-serif;}
+  .stat .l { font-size: 9px; color: var(--muted); font-family: system-ui, sans-serif; }
+  table.mini { width: 100%; border-collapse: collapse; font-size: 11px; margin: 4px 0; }
+  table.mini th, table.mini td { border: 1px solid var(--border); padding: 3px 5px; text-align: right; }
+  table.mini th { background: var(--navy-tint); color: var(--ink); font-weight: 600; text-align: center; font-family: system-ui, sans-serif; }
+  table.mini td:first-child, table.mini th:first-child { text-align: left; }
+  table.mini tr.total td { font-weight: 700; background: var(--navy-tint); }
+  .ff { margin: 6px 0; }
+  .ff-row { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 10.5px; }
+  .ff-label { width: 120px; flex-shrink: 0; font-family: system-ui, sans-serif; color: var(--ink2); }
+  .ff-track { position: relative; flex: 1; height: 14px; background: var(--navy-tint); border-radius: 3px; }
+  .ff-bar { position: absolute; top: 0; bottom: 0; background: var(--navy); border-radius: 3px; opacity: .75; }
+  .ff-bar.comps { background: #1baf7a; }
+  .ff-bar.scen { background: #c9932a; }
+  .ff-bar.target { background: #4a3aa7; }
+  .ff-cur { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--red); }
+  .ff-pt { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--green); }
+  .footnote { font-size: 10px; color: var(--muted); margin-top: 18px; border-top: 1px solid var(--border); padding-top: 8px; font-family: system-ui, sans-serif; }
+  .verify { background: var(--navy-tint); border-radius: 4px; padding: 8px 10px; font-size: 10.5px; margin-top: 8px; }
+  @media print { body { background: white; } .sheet { box-shadow: none; margin: 0; border: none; max-width: 100%; } }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } header.title-block { flex-direction: column; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="title-block">
+    <div>
+      <div class="tag">Initiating Coverage TL;DR &nbsp;|&nbsp; 首次覆盖研报 · 一页纸摘要</div>
+      <h1>Seagate Technology <span style="font-weight:400;font-size:16px;">(NASDAQ: STX)</span></h1>
+      <div class="subtitle">The HDD-duopoly / HAMR leader — genuinely superior with a backlog locked through FY2027, yet priced at ~40x forward, a premium to WDC, one cycle after a FY2023 GAAP loss.<br>
+      <span class="zh">HDD 双寡头 / HAMR 领导者——质地真正更优、backlog 锁定至 FY2027，但按 ~40x forward 定价、较 WDC 溢价，而上一个周期（FY2023）它还录得 GAAP 亏损。</span></div>
+    </div>
+    <div class="rating-box">
+      <div class="cell rating"><div class="lbl">Rating 评级</div><div class="val">NEUTRAL</div></div>
+      <div class="cell"><div class="lbl">Current 现价</div><div class="val">$871</div></div>
+      <div class="cell"><div class="lbl">Target 目标价</div><div class="val">$800</div></div>
+      <div class="cell down"><div class="lbl">Return 空间</div><div class="val">−8%</div></div>
+    </div>
+  </header>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="n">~$197B</div><div class="l">Market Cap · 市值（226M 股）</div></div>
+    <div class="stat"><div class="n">$9.10B → ~$12.0B</div><div class="l">Revenue FY2025A → FY2026E · 营收</div></div>
+    <div class="stat"><div class="n">Duopoly · HAMR #1</div><div class="l">HDD structure / tech lead · 双寡头与技术领先</div></div>
+    <div class="stat"><div class="n">47% vs 23%</div><div class="l">Gross margin Q3'26 vs FY24 trough · 毛利率（周期性）</div></div>
+    <div class="stat"><div class="n">~$771 median · Buy</div><div class="l">Street PT (n=38, ~at/below px) · 卖方目标价</div></div>
+    <div class="stat"><div class="n">~40x vs ~27x</div><div class="l">Fwd P/E FY27E vs WDC · 远期市盈率 vs 同业</div></div>
+  </div>
+
+  <div class="cols">
+    <!-- ENGLISH COLUMN -->
+    <div class="col">
+      <h2>Investment Summary</h2>
+      <p>Seagate is one of two survivors of the <b>HDD duopoly</b> (with Western Digital) and the clear <b>HAMR/Mozaic technology leader</b> — the mass-storage backbone of the AI-datacenter build-out. The AI-nearline shortage has driven a historic run: <b>Q3 FY2026 revenue $3.11B (+44% YoY), a record 47% gross margin, ~37.5% operating margin, ~$953M FCF (a decade high), non-GAAP EPS $4.10</b> (vs $3.48 consensus). FY2026 is tracking to <b>~$12.0B revenue / ~$14.8 non-GAAP EPS</b>, eclipsing the FY2022 peak. Uniquely, <b>nearline is contractually locked through fiscal 2027</b> (build-to-order contracts set config <i>and</i> price); management raised the annual growth target to <b>≥20%</b>.</p>
+      <p>The problem is <b>price</b>. At $871 the stock trades at <b>~59x FY2026E / ~40x FY2027E</b> non-GAAP earnings — a premium to <b>WDC (~27x)</b> and to its own history — capitalizing record peak-cycle margins one cycle after a <b>FY2023 GAAP loss</b>. Our bridge blends the structural-winner lens (forward P/E on contracted earnings, comps → <b>$720–$1,060</b>) against through-cycle discipline (normalized P/E ~18–26x on a structurally-higher-but-not-peak floor → <b>$280–$520</b>; a mid-cycle <b>DCF ~$220</b>). Weighted base <b>~$747</b>; headline target <b>$800</b>, the upper end of the market-based cluster.</p>
+      <p><b>Why NEUTRAL, not BUY:</b> we are not calling a top on a genuinely superior franchise — we are saying the market already prices AI-storage as <i>permanent</i>, leaving no margin of safety and a <b>negative</b> asymmetry. Two hard constraints seal the call: (1) <b>a fiscal Q4 + full-year print is ~5 days out (Jul 28)</b> — our 14-day-catalyst rule bars adding into the event; (2) at ~40x forward on peak margins, one line on nearline-pricing "normalizing" de-rates the stock violently. <b>We would turn Overweight at ~$600</b> (forward P/E ~30x, near WDC), or on hard evidence the demand is structurally non-cyclical (FY2028+ BTO extensions).</p>
+
+      <h2>Valuation Bridge (USD / share)</h2>
+      <table class="mini">
+        <tr><th>Method</th><th>Low</th><th>Base</th><th>High</th><th>Wt.</th></tr>
+        <tr><td>Forward P/E — FY2027E (38–50x ~$21)</td><td>$820</td><td>$940</td><td>$1,060</td><td>30%</td></tr>
+        <tr><td>Forward P/E — FY2026E (52–62x ~$14.8)</td><td>$780</td><td>$850</td><td>$920</td><td>25%</td></tr>
+        <tr><td>Comps / EV-EBITDA (WDC-relative)</td><td>$720</td><td>$850</td><td>$980</td><td>20%</td></tr>
+        <tr><td>Normalized P/E (18–26x thru-cycle)</td><td>$280</td><td>$400</td><td>$520</td><td>15%</td></tr>
+        <tr><td>DCF (mid-cycle, WACC 10%, g 3%)</td><td>$180</td><td>$220</td><td>$280</td><td>10%</td></tr>
+        <tr class="total"><td>Weighted Target</td><td>$645</td><td>$747</td><td>$850</td><td>100%</td></tr>
+      </table>
+
+      <div class="ff">
+        <div class="ff-row"><div class="ff-label">DCF</div><div class="ff-track"><div class="ff-bar" style="left:15.0%;width:8.3%"></div></div></div>
+        <div class="ff-row"><div class="ff-label">Normalized EPS</div><div class="ff-track"><div class="ff-bar scen" style="left:23.3%;width:20.0%"></div></div></div>
+        <div class="ff-row"><div class="ff-label">Comps / Fwd P/E</div><div class="ff-track"><div class="ff-bar comps" style="left:60.0%;width:28.3%"></div></div></div>
+        <div class="ff-row"><div class="ff-label">Weighted / Target</div><div class="ff-track"><div class="ff-bar target" style="left:53.75%;width:17.1%"></div><div class="ff-cur" style="left:72.6%"></div><div class="ff-pt" style="left:66.7%"></div></div></div>
+      </div>
+      <p style="font-size:9.5px;color:var(--muted);font-family:system-ui,sans-serif;">Track scaled $0–$1,200/share. Red line = current $871; green line = target $800. 52-wk range $138.30–$1,145.00 (now −24% off the high, ~6x off the low).</p>
+
+      <h2>Key Catalysts (0–12mo)</h2>
+      <ul>
+        <li><b>Fiscal Q4 + full-year FY2026 results — Jul 28, 2026</b> (~5 days out): guidance rev $3.45B ±0.1 / non-GAAP EPS $5.00 ±0.20; the <b>FY2027 framing &amp; nearline-pricing language matter more than the print</b></li>
+        <li><b>FY2028+ BTO contract extensions / new nearline agreements</b> — the most likely trigger for a durable re-rating</li>
+        <li><b>HAMR / Mozaic 4 exabyte ramp &amp; Mozaic 5 (50TB) qualification</b> — technology-lead proof points; slippage is a bear trigger</li>
+        <li>Hyperscaler 2026–27 AI capex &amp; nearline demand; capex/capacity discipline; deleveraging → larger buybacks</li>
+      </ul>
+
+      <h2>Key Risks</h2>
+      <ul>
+        <li><b>Upside to $800:</b> AI-storage proves structural (duopoly, HAMR lead, BTO locked); ~$20+ EPS becomes the new floor, holding a ~40x multiple; GM toward 50%; larger buybacks as deleveraging completes; a bullish-outlier street ($966 avg / $1,000 high) is realized</li>
+        <li><b>Downside to $800:</b> classic storage normalization — nearline ASP/BTO pricing peaks → the 47% record margin mean-reverts and ~40–59x compresses toward WDC's ~27x; a capacity/capex race (own HAMR + WDC catch-up + high-end flash) ends the pricing rent; hyperscaler capex digestion; FY2023 GAAP-loss precedent; net debt (~$2.6B) amplifies drawdowns</li>
+      </ul>
+    </div>
+
+    <!-- CHINESE COLUMN -->
+    <div class="col zh">
+      <h2>投资摘要</h2>
+      <p>Seagate（希捷）是 <b>HDD 双寡头</b>中的两家幸存者之一（另一家为 Western Digital），也是明确的 <b>HAMR/Mozaic 技术领导者</b>——AI 数据中心建设的大容量存储基座。AI-nearline 短缺催生了历史性业绩：<b>Q3 FY2026 营收 $3.11B（+44% YoY）、record 47% gross margin、~37.5% operating margin、~$953M FCF（十年新高）、non-GAAP EPS $4.10</b>（vs 一致预期 $3.48）。FY2026 全年 tracking 至 <b>~$12.0B 营收 / ~$14.8 non-GAAP EPS</b>，超过 FY2022 峰值。罕见的是，<b>nearline 已通过 build-to-order 合同锁定至 fiscal 2027</b>（同时锁定配置<i>与</i>价格）；管理层把年度增长目标上调至 <b>≥20%</b>。</p>
+      <p>问题在于<b>价格</b>。$871 对应 <b>~59x FY2026E / ~40x FY2027E</b> non-GAAP earnings——较 <b>WDC（~27x）</b>与自身历史都是溢价，是在把 record peak-cycle margins 资本化，而上一个周期（<b>FY2023</b>）它还录得 GAAP 亏损。我们的估值桥把"结构性赢家"视角（对已签约盈利的 forward P/E、comps → <b>$720–$1,060</b>）与 through-cycle 纪律（normalized P/E ~18–26x，采用"结构性抬升但非峰值"的盈利底 → <b>$280–$520</b>；mid-cycle <b>DCF ~$220</b>）加权。加权基准 <b>~$747</b>；headline 目标价 <b>$800</b>，取 market-based 区间上沿。</p>
+      <p><b>为何是 NEUTRAL 而非 BUY：</b>我们并非对一个真正更优的特许经营权"喊顶"——而是认为市场已经把 AI-storage 当作<i>永久性</i>来定价，因此没有 margin of safety、且不对称<b>偏负</b>。两条硬约束锁定评级：(1) <b>fiscal Q4 + 全年财报约 5 天后公布（7 月 28 日）</b>——14 天催化剂规则禁止在事件前加仓；(2) 在 peak margin 的 ~40x forward 上，一句 nearline 定价"企稳"就会让股价剧烈 de-rate。<b>若回落至 ~$600</b>（forward P/E ~30x，接近 WDC），或出现需求结构性非周期化的证据（FY2028+ 的 BTO 续约），我们将上调至 Overweight。</p>
+
+      <h2>估值桥接（每股 USD）</h2>
+      <table class="mini">
+        <tr><th>方法</th><th>低值</th><th>基准</th><th>高值</th><th>权重</th></tr>
+        <tr><td>Forward P/E — FY2027E（38–50x ~$21）</td><td>$820</td><td>$940</td><td>$1,060</td><td>30%</td></tr>
+        <tr><td>Forward P/E — FY2026E（52–62x ~$14.8）</td><td>$780</td><td>$850</td><td>$920</td><td>25%</td></tr>
+        <tr><td>Comps / EV-EBITDA（WDC-relative）</td><td>$720</td><td>$850</td><td>$980</td><td>20%</td></tr>
+        <tr><td>Normalized P/E（18–26x 穿越周期）</td><td>$280</td><td>$400</td><td>$520</td><td>15%</td></tr>
+        <tr><td>DCF（mid-cycle，WACC 10%，g 3%）</td><td>$180</td><td>$220</td><td>$280</td><td>10%</td></tr>
+        <tr class="total"><td>加权目标价</td><td>$645</td><td>$747</td><td>$850</td><td>100%</td></tr>
+      </table>
+      <p style="font-size:9.5px;color:var(--muted);">横轴刻度 $0–$1,200/股。红线 = 现价 $871；绿线 = 目标价 $800。52 周区间 $138.30–$1,145.00（较高点 −24%，较低点约 6 倍）。</p>
+
+      <h2>关键催化剂（0–12个月）</h2>
+      <ul>
+        <li><b>fiscal Q4 + 全年 FY2026 财报——2026 年 7 月 28 日</b>（约 5 天后）：指引营收 $3.45B ±0.1 / non-GAAP EPS $5.00 ±0.20；<b>FY2027 的框架与 nearline 定价表述比当季数字更关键</b></li>
+        <li><b>FY2028+ 的 BTO 合同续约 / 新的 nearline 协议</b>——最可能引发持续性重估的触发点</li>
+        <li><b>HAMR / Mozaic 4 exabyte 放量与 Mozaic 5（50TB）qualification</b>——技术领先的证据点；进度滞后是空头触发点</li>
+        <li>hyperscaler 2026–27 AI capex 与 nearline 需求；capex/产能纪律；去杠杆 → 加大回购</li>
+      </ul>
+
+      <h2>关键风险</h2>
+      <ul>
+        <li><b>支撑股价高于 $800 的因素：</b>AI-storage 被证明具结构性（双寡头、HAMR 领先、BTO 锁定）；~$20+ EPS 成为新的底、支撑 ~40x 倍数；GM 迈向 50%；去杠杆完成后加大回购；看多一侧的卖方（$966 均值 / $1,000 高点）兑现</li>
+        <li><b>支撑股价低于 $800 的因素：</b>典型的存储 normalization——nearline ASP/BTO 定价见顶 → record 47% margin 均值回归、~40–59x 向 WDC 的 ~27x 收敛；产能/capex 竞赛（自身 HAMR + WDC 追赶 + 高端 flash）终结定价租金；hyperscaler capex 消化；FY2023 GAAP 亏损先例；net debt（~$2.6B）放大回撤</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="verify">
+    <b>待核对 / To-verify:</b> Current price ($871.00, 2026-07-22 close; day range $840–$909) · market cap ~$197B at 226.25M sh × $871 (a source snapshot showed ~$186B at ~$821) · <b>FY2027E non-GAAP EPS (~$21) &amp; normalized through-cycle EPS (~$11–14) are our estimates — the target keys off them</b> · GAAP vs non-GAAP EPS (Seagate non-GAAP &gt; GAAP; FY25 $8.10 vs $6.77) · net debt (~$2.6B) · WDC comp multiples · all valuation inputs. No paid data terminal (Bloomberg/FactSet/CapIQ) used — verify against Seagate filings before external use. 本分析未接入付费数据终端，对外使用前请与官方 filing 及实时数据终端核实。
+  </div>
+
+  <div class="footnote">
+    Source: Task 1 Company Research &amp; Task 3 Valuation Analysis, STX_Initiation_2026-07-23 (EN / 中文 DOCX in this folder) · STX_Financial_Model_2026-07-23.xlsx · STX_Q4_FY2026_Earnings_Preview_2026-07-23_Bilingual.html. Full pack anchored to the 2026-07-22 close ($871.00). Seagate reports non-GAAP EPS prominently; our multiples use non-GAAP. TL;DR condensed 2026-07-23. Not investment advice. 不构成投资建议。
+  </div>
+
+</div>
+</body>
+</html>
