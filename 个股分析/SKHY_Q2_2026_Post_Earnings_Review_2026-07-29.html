@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SK hynix (SKHY) — Q2 2026 Post-Earnings Review — Reiterate NEUTRAL</title>
+<style>
+  :root{
+    --bg:#f5f4f1; --surface:#ffffff; --ink:#16181d; --ink2:#3d434e; --muted:#7b8290;
+    --border:#e2e1db; --line-soft:#eeede8;
+    --navy:#20486f; --navy-soft:#e7eef5; --gold:#a8801f; --gold-soft:#f6efd9;
+    --green:#1f7a4d; --green-soft:#e6f4ec; --red:#b23a3a; --red-soft:#f8e9e9;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0f1319; --surface:#171b22; --ink:#e9ebee; --ink2:#c2c8d1; --muted:#8a919d;
+      --border:#2a2f38; --line-soft:#22262e;
+      --navy:#6fa8d8; --navy-soft:#182633; --gold:#d3b160; --gold-soft:#31280f;
+      --green:#4cbe85; --green-soft:#15311f; --red:#e2686b; --red-soft:#331b1c; }
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg); color:var(--ink); line-height:1.6;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:830px; margin:26px auto; background:var(--surface); border:1px solid var(--border);
+    border-radius:8px; padding:34px 40px 44px; box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .en-zh{font-size:14px; color:var(--ink2); margin:0 0 13px;}
+  .en-zh .zh{display:block; margin-top:5px; font-size:.93em; color:var(--muted);}
+  b{color:var(--ink);}
+  .kicker{font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:600;}
+  h1{font-size:25px; margin:8px 0 4px; letter-spacing:-.01em;}
+  h1 span{font-weight:400; font-size:15px; color:var(--muted);}
+  .verdict{font-size:16.5px; font-weight:600; color:var(--navy); margin:10px 0 4px; line-height:1.45;}
+  .verdict .zh{display:block; font-size:14.5px; color:var(--ink2); font-weight:500; margin-top:4px;}
+  .change{display:flex; flex-wrap:wrap; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-top:16px;}
+  .change .c{flex:1; min-width:120px; padding:9px 13px; border-right:1px solid var(--border);}
+  .change .c:last-child{border-right:none;}
+  .change .l{font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted);}
+  .change .v{font-size:17px; font-weight:700; margin-top:1px;}
+  .change .was{font-size:11.5px; color:var(--muted); text-decoration:line-through; margin-left:5px; font-weight:400;}
+  .change .v.up{color:var(--green);}
+  .change .v.hold{color:var(--navy);}
+  section{margin-top:32px;}
+  h2{font-size:15.5px; margin:0 0 3px; display:flex; align-items:baseline; gap:9px;}
+  h2 .num{font-family:ui-monospace,Menlo,monospace; font-size:12px; color:var(--navy); font-weight:700;}
+  h2 .zh{font-size:13.5px; color:var(--muted); font-weight:500;}
+  .rule{height:1px; background:var(--border); margin:9px 0 14px;}
+  table{width:100%; border-collapse:collapse; font-size:13px; margin:4px 0 6px;}
+  th,td{padding:7px 10px; border-bottom:1px solid var(--border); text-align:right;}
+  th{font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted); background:var(--line-soft);}
+  th:first-child,td:first-child{text-align:left;}
+  td:first-child{font-weight:600;}
+  td.beat{color:var(--green); font-weight:700;}
+  td.miss{color:var(--red); font-weight:700;}
+  .tblcap{font-size:11.5px; color:var(--muted); margin-top:2px;}
+  .callout{border-left:3px solid var(--green); background:var(--green-soft); border-radius:0 6px 6px 0; padding:12px 15px; margin:6px 0;}
+  .callout .t{font-weight:700; font-size:13.5px; color:var(--green);}
+  .callout .b{font-size:13px; color:var(--ink2); margin-top:4px;}
+  .callout .b .zh{display:block; color:var(--muted); margin-top:3px;}
+  .proofs{display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:4px;}
+  @media(max-width:560px){ .proofs{grid-template-columns:1fr;} }
+  .proof{border:1px solid var(--border); border-left:3px solid var(--green); border-radius:5px; padding:9px 12px;}
+  .proof.neg{border-left:3px solid var(--gold);}
+  .proof .n{font-size:15px; font-weight:700; color:var(--ink);}
+  .proof .t{font-size:12px; color:var(--ink2); margin-top:1px;}
+  .proof .t .zh{display:block; color:var(--muted); font-size:11.5px;}
+  .why{border:1px solid var(--border); border-radius:6px; padding:11px 14px; margin:9px 0;}
+  .why .h{font-weight:700; font-size:13.5px; color:var(--ink);}
+  .why .h .w{font-size:11px; font-weight:700; color:var(--red); background:var(--red-soft); border-radius:4px; padding:1px 7px; margin-left:7px; text-transform:uppercase;}
+  .why .d{font-size:12.5px; color:var(--ink2); margin-top:4px;}
+  .why .d .zh{display:block; color:var(--muted); margin-top:3px;}
+  .risk{border-left:3px solid var(--gold);}
+  .box{border:1px solid var(--navy); background:var(--navy-soft); border-radius:7px; padding:13px 16px; margin-top:8px;}
+  .box .t{font-weight:700; color:var(--navy); font-size:13.5px;}
+  .box .b{font-size:13px; color:var(--ink2); margin-top:5px;}
+  .box .b .zh{display:block; color:var(--muted); margin-top:3px;}
+  .strip{display:grid; grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); gap:1px; background:var(--border);
+    border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-top:24px;}
+  .strip .s{background:var(--surface); padding:9px 11px;}
+  .strip .s .l{font-size:10px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted);}
+  .strip .s .v{font-size:14px; font-weight:700; margin-top:1px;}
+  footer{margin-top:24px; padding-top:14px; border-top:1px solid var(--border); font-size:11px; color:var(--muted);}
+  footer .zh{display:block; margin-top:3px;}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="kicker">SK hynix · NASDAQ: SKHY / KRX: 000660 · Q2 2026 Post-Earnings Review · 2026-07-29</div>
+  <h1>SK hynix Inc. <span>(NASDAQ: SKHY | KRX: 000660)</span></h1>
+  <div class="verdict">An all-time record — revenue +257%, a 76% operating margin — and the stock fell ~9%. Our "do not chase into the print" call played out. The entry got better; the core debate did not resolve. We reiterate NEUTRAL, bias turning constructive.
+    <span class="zh">历史新高——营收 +257%、经营利润率 76%——股价却跌约 9%。我们“不要追高”的判断兑现了。入场点变好，但核心争论并未解决。我们维持 NEUTRAL，倾向转积极。</span></div>
+
+  <div class="change">
+    <div class="c"><div class="l">Rating 评级</div><div class="v hold">NEUTRAL</div></div>
+    <div class="c"><div class="l">Target 目标价</div><div class="v">₩1.95M / $160</div></div>
+    <div class="c"><div class="l">Price (07-29) 现价</div><div class="v">$130.17</div></div>
+    <div class="c"><div class="l">Implied upside 空间</div><div class="v up">+23% <span class="was">+6%</span></div></div>
+  </div>
+
+  <div class="en-zh" style="margin-top:16px;">On July 29 SK hynix reported an all-time record — revenue <b>₩79.3T (+257% YoY, +51% QoQ)</b> and operating profit <b>₩60.5T at a 76% margin</b> — yet the ADR fell <b>~9% to $130.17</b> (the Seoul line briefly −11%), erasing ~₩190T of market value. Nothing in the results was weak. The print simply landed <b>~5% below an elevated Street</b> (≈₩84T sales / ₩64T OP), a <b>~₩50T capex plan</b> revived supply-glut fears, and a 76% margin built on <b>DRAM ASP +~30% / NAND +mid-50% QoQ</b> looked pricing-dependent. This is the reaction our July 22 preview called for — and it hands us a meaningfully better entry, without yet resolving the structural-vs-cyclical question.
+    <span class="zh">7 月 29 日 SK hynix 交出历史新高——营收 <b>₩79.3T（+257% YoY、+51% QoQ）</b>、operating profit <b>₩60.5T、margin 76%</b>——ADR 却<b>跌约 9% 至 $130.17</b>（首尔线盘中一度 −11%），蒸发约 ₩190T 市值。业绩本身并不弱：只是<b>较偏高的卖方预期低约 5%</b>（≈₩84T 营收 / ₩64T OP），<b>约 ₩50T 的 capex 计划</b>重新点燃供给过剩担忧，且 76% 的 margin 建立在 <b>DRAM ASP 环比 +~30% / NAND +mid-50%</b> 之上、显得靠涨价撑着。这正是我们 7 月 22 日前瞻预判的反应——给出明显更好的入场点，但结构性 vs 周期性的问题仍未解决。</span></div>
+
+  <section>
+    <h2><span class="num">01</span> The scorecard <span class="zh">业绩对照表</span></h2>
+    <div class="rule"></div>
+    <table>
+      <tr><th>Metric 指标</th><th>Q2'26 Actual</th><th>Consensus</th><th>Our preview</th><th>YoY / QoQ</th></tr>
+      <tr><td>Revenue</td><td class="miss">₩79.3T</td><td>~₩84T</td><td>~₩72T</td><td>+257% / +51%</td></tr>
+      <tr><td>Operating profit</td><td class="miss">₩60.5T</td><td>~₩64T</td><td>~₩53T</td><td>+557% YoY</td></tr>
+      <tr><td>Operating margin</td><td class="beat">76%</td><td>—</td><td>~72%</td><td>+4pp QoQ · record</td></tr>
+      <tr><td>Net profit</td><td>₩93.9T</td><td>—</td><td>—</td><td>net ≫ OP (non-op)</td></tr>
+      <tr><td>DRAM / NAND ASP (QoQ)</td><td class="beat">+~30% / +mid-50%</td><td>—</td><td>—</td><td>price-led</td></tr>
+      <tr><td>USD revenue / OP</td><td class="miss">$54.6B / $41.6B</td><td>$57.7B / $44.2B</td><td>—</td><td>−5% vs est</td></tr>
+      <tr><td>Q3'26 DRAM bit guide</td><td>~+10% QoQ</td><td>—</td><td>—</td><td>server-led</td></tr>
+      <tr><td>2026 capex guide</td><td class="miss">~₩50T</td><td>—</td><td>—</td><td>M15X pull-forward</td></tr>
+    </table>
+    <div class="tblcap">Red = the lines that mattered — a record in absolute terms, but below the elevated Street, plus a capex step-up. Green = the genuine positive surprise (record 76% margin, ASP strength). Consensus/preview figures approximate. · 红=真正重要的行：绝对创纪录但低于偏高的卖方预期，且 capex 抬升；绿=真正的正面超预期（76% margin 创纪录、ASP 强)。</div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> Why a record sold off ~9% <span class="zh">为何创纪录还大跌</span></h2>
+    <div class="rule"></div>
+    <div class="why">
+      <div class="h">A ~5% miss against an elevated whisper <span class="w">the trigger</span></div>
+      <div class="d">Revenue ₩79.3T and OP ₩60.5T were records — but the buy-side had crept to ≈₩84T / ₩64T. When expectations run ahead of even a parabolic print, "record but not enough" sells off. OP landed at the <b>low end</b> of the ₩60–70T range — almost exactly the KIS bear estimate (₩60.4T) we cited in the preview.
+        <span class="zh">营收 ₩79.3T、OP ₩60.5T 均创纪录——但买方已悄然升至 ≈₩84T / ₩64T。当预期跑在抛物线业绩之前，“创纪录但不够”就会被卖出。OP 落在 ₩60–70T 区间<b>低端</b>，几乎正好等于我们前瞻引用的 KIS 空头值（₩60.4T）。</span></div>
+    </div>
+    <div class="why">
+      <div class="h">A ~₩50T capex plan — the supply-race signal <span class="w">amplifier</span></div>
+      <div class="d">Management guided 2026 capex to the high-₩40T range, pulling forward M15X and accelerating Yongin Fab1 into early 2027. In a memory cycle, a capex step-up at the peak is exactly what the bears watch for — the seed of the next glut. This is one of the <b>downgrade triggers</b> we named in the initiation, and it directly qualifies the bull case.
+        <span class="zh">管理层将 2026 capex 指引至 ₩40T 高段，提前 M15X、把龙仁 Fab1 加速至 2027 年初。在内存周期里，顶峰时的 capex 抬升正是空头盯着的信号——下一轮过剩的种子。这是我们首次覆盖中列出的<b>下调触发</b>之一，直接给多头逻辑打了折扣。</span></div>
+    </div>
+    <div class="why">
+      <div class="h">Priced on peak margins — no cushion to absorb it <span class="w">the setup</span></div>
+      <div class="d">This is the initiation thesis in one event: at ~8× book on a 72–76% margin, the stock had no margin of safety. A record-but-imperfect quarter, with margin visibly ASP-dependent (DRAM +30% / NAND +mid-50% QoQ) and LTAs now capping spot upside, was enough to compress hard. The problem was never the business; it was the price on peak-cycle earnings.
+        <span class="zh">这正是首次覆盖论点在一次事件中的体现：在 72–76% margin 上按约 8× book 定价，毫无安全边际。一个“创纪录但不完美”的季度，margin 明显靠 ASP（DRAM +30% / NAND +mid-50%）、且 LTA 开始封顶现货上行，就足以令估值大幅收缩。问题从不是生意，而是给顶峰盈利定的价。</span></div>
+    </div>
+  </section>
+
+  <div class="callout">
+    <div class="t">✓ The July 22 preview called this — and resolved our data flag</div>
+    <div class="b">We rated it "do not chase," said <b>the 2H/HBM4 commentary would matter more than the print</b>, put the bear/base reaction at <b>−6% to −22%</b>, and pre-committed to Overweight at <b>₩1.5M / SKHY ~$123, or on durable through-cycle evidence</b>. The ADR closed <b>−9% at $130.17</b> — inside that band. And our flagged data inconsistency is resolved: we couldn't reconcile a ₩60–70T OP with a ~₩72T revenue (implied ~85–90% margin) — actual revenue was simply higher (₩79.3T), so ₩60.5T OP = a coherent 76% margin.
+      <span class="zh">我们评级“不要追高”，指出 <b>2H/HBM4 表述比当季数字更重要</b>，将 bear/base 反应定为 <b>−6% 至 −22%</b>，并预先承诺在 <b>₩1.5M / SKHY ~$123，或出现穿越周期的持续性证据时上调至 Overweight</b>。ADR 收 <b>−9% 于 $130.17</b>，落在该区间内。我们此前标注的数据矛盾也已解决：₩60–70T 的 OP 与 ~₩72T 营收无法调和（隐含 ~85–90% margin）——实际营收更高（₩79.3T），故 ₩60.5T OP = 自洽的 76% margin。</span></div>
+  </div>
+
+  <section>
+    <h2><span class="num">03</span> What improved — and what got worse <span class="zh">改善的部分——与恶化的部分</span></h2>
+    <div class="rule"></div>
+    <div class="en-zh">Unlike a clean upgrade, this print cut both ways. Two of our upgrade signals arrived; two new bear signals arrived with them — which is exactly why we hold NEUTRAL rather than upgrade.
+      <span class="zh">与“干净的上调”不同，这次财报是双向的：我们的两个上调信号到来，同时也带来两个新的空头信号——这正是我们维持 NEUTRAL 而非上调的原因。</span></div>
+    <div class="proofs">
+      <div class="proof"><div class="n">✓ HBM4 mass production began</div><div class="t">on plan, "customer-required speeds"; full ramp in 2H — de-risks the 2027 bridge<span class="zh">按计划量产，下半年全面放量——为 2027 排雷</span></div></div>
+      <div class="proof"><div class="n">✓ ~10 customer LTAs signed</div><div class="t">locks mid-term supply/pricing visibility — one of our two OW conditions<span class="zh">锁定中期供给/价格可见度——我们两个上调条件之一</span></div></div>
+      <div class="proof neg"><div class="n">⚠ Capex → ~₩50T</div><div class="t">a supply-race step-up at the peak — one of our downgrade triggers<span class="zh">顶峰时的供给竞赛抬升——我们的下调触发之一</span></div></div>
+      <div class="proof neg"><div class="n">⚠ Margin is ASP-dependent</div><div class="t">76% built on +30% / +mid-50% price; fragile if pricing cools; LTAs cap spot upside<span class="zh">76% 靠涨价；降温则脆弱；LTA 封顶现货</span></div></div>
+    </div>
+    <div class="en-zh" style="margin-top:13px;">The durability evidence (HBM4, LTAs) modestly <b>raises</b> the through-cycle normalized earnings floor; the capex step-up modestly <b>raises</b> supply risk. Net, our fair value is little changed — so we keep the target rather than move it.
+      <span class="zh">持续性证据（HBM4、LTA）小幅<b>抬高</b>穿越周期的 normalized 盈利底；capex 抬升小幅<b>抬高</b>供给风险。净影响下，我们的合理价变化不大——故维持目标价而非上调。</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Numbers &amp; rating — why we hold, not upgrade <span class="zh">数字与评级——为何维持而非上调</span></h2>
+    <div class="rule"></div>
+    <table>
+      <tr><th>KRW T (our est.)</th><th>2026E</th><th>2027E</th><th>2028E</th><th>vs prior</th></tr>
+      <tr><td>Revenue</td><td>~₩265B*</td><td>~₩225B*</td><td>~₩195B*</td><td>▲ slightly</td></tr>
+      <tr><td>Operating profit</td><td>~₩175</td><td>~₩125</td><td>~₩85</td><td>▲ (H1 already ₩98T)</td></tr>
+      <tr><td>Through-cycle normalized net</td><td colspan="3" style="text-align:center">~₩60–70T (unchanged anchor)</td><td>◆ steady</td></tr>
+    </table>
+    <div class="tblcap">*KRW trillion. H1'26 operating profit already ₩98.1T (Q1 37.6 + Q2 60.5); we nudge FY26–28E up modestly, but the valuation runs on <i>normalized</i>, not peak, earnings — which the ~10 LTAs raise only slightly. · H1'26 OP 已达 ₩98.1T；小幅上调 FY26–28E，但估值基于 normalized 而非峰值盈利。</div>
+    <div class="en-zh" style="margin-top:10px;">We keep the <b>₩1,950,000 / SKHY ~$160</b> target: it was built on through-cycle normalized earnings, and Q2 was a miss versus the Street, not versus our discipline. At $130 that is now <b>~+23% upside</b> (versus +6% pre-print) — the risk/reward we wanted and did not have at $151. But we do <b>not</b> upgrade yet, for two reasons: the price has not reached the <b>₩1.5M / $123</b> band, and the same print delivered a genuine <b>supply-race capex signal</b> that offsets the LTA/HBM4 good news. NEUTRAL, improving.
+      <span class="zh">我们维持 <b>₩1,950,000 / SKHY ~$160</b> 目标价：它建立在穿越周期的 normalized 盈利之上，Q2 是相对卖方 miss、并非相对我们的纪律 miss。$130 时对应<b>约 +23% 空间</b>（财报前为 +6%）——这正是我们在 $151 时没有、如今得到的风险收益。但我们<b>暂不</b>上调，原因有二：价格尚未到 <b>₩1.5M / $123</b> 区间，且同一份财报带来了真实的<b>供给竞赛 capex 信号</b>，抵消了 LTA/HBM4 的利好。NEUTRAL，且在转好。</span></div>
+    <div class="box">
+      <div class="t">Bottom line · 结论</div>
+      <div class="b">SK hynix did the hard part — a record quarter, HBM4 into mass production, ~10 LTAs locked — and the sell-off handed us a 23% cheaper entry to our target. But a ₩50T capex plan at the cycle peak, and a 76% margin that leans on continued price gains, keep the normalization debate open. <b>Reiterate NEUTRAL, target ₩1,950,000 / $160. Upgrade to Overweight at ₩1.5M / SKHY ~$123, or on Q3 evidence the LTAs defend pricing.</b>
+        <span class="zh">SK hynix 做成了最难的部分——创纪录、HBM4 量产、锁定约 10 份 LTA——抛售也给了我们相对目标便宜 23% 的入场点。但顶峰时的 ₩50T capex，以及靠持续涨价撑着的 76% margin，让 normalization 之争仍未定。<b>维持 NEUTRAL，目标价 ₩1,950,000 / $160。若回落至 ₩1.5M / SKHY ~$123，或 Q3 证明 LTA 守住价格，则上调至 Overweight。</b></span></div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="s"><div class="l">Price 现价</div><div class="v">$130.17</div></div>
+    <div class="s"><div class="l">Session move 当日</div><div class="v" style="color:var(--red)">−9%</div></div>
+    <div class="s"><div class="l">Target 目标</div><div class="v">₩1.95M / $160</div></div>
+    <div class="s"><div class="l">Upside 空间</div><div class="v" style="color:var(--green)">+23%</div></div>
+    <div class="s"><div class="l">Q2 op margin</div><div class="v">76%</div></div>
+    <div class="s"><div class="l">Street avg 街价</div><div class="v">₩3.41M</div></div>
+  </div>
+
+  <footer>
+    Data: SK hynix 2Q26 press release &amp; earnings call (2026-07-29); secondary coverage (Investing.com, BigGo, Yahoo/Bloomberg, TradingKey, StockTitan, Wall St Engine). ADR $130.17 (07-29, ~−9%); Seoul 000660 briefly −11% intraday; ~₩190T market-value loss. USD at ~₩1,520/USD. Net ₩93.9T ≫ OP reflects non-operating / equity-method gains — verify against the filing. Consensus/our-estimate figures are approximate — verify before external use. No paid data terminal used. Prior note: SKHY_Q2_2026_Earnings_Preview (2026-07-22, NEUTRAL PT ₩1,950,000 / $160).
+    <span class="zh">AI 生成研究，仅供参考，不构成投资建议。净利 ≫ OP 含非经营/权益法收益，请以 filing 核实；consensus 与我方估算为近似值，对外使用前请核对。未使用付费数据终端。</span>
+  </footer>
+
+</div>
+</body>
+</html>
