@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corning (GLW) — Q2 2026 Post-Earnings Review — Upgrade to Overweight</title>
+<style>
+  :root{
+    --bg:#f5f4f1; --surface:#ffffff; --ink:#16181d; --ink2:#3d434e; --muted:#7b8290;
+    --border:#e2e1db; --line-soft:#eeede8;
+    --navy:#20486f; --navy-soft:#e7eef5; --gold:#a8801f; --gold-soft:#f6efd9;
+    --green:#1f7a4d; --green-soft:#e6f4ec; --red:#b23a3a; --red-soft:#f8e9e9;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0f1319; --surface:#171b22; --ink:#e9ebee; --ink2:#c2c8d1; --muted:#8a919d;
+      --border:#2a2f38; --line-soft:#22262e;
+      --navy:#6fa8d8; --navy-soft:#182633; --gold:#d3b160; --gold-soft:#31280f;
+      --green:#4cbe85; --green-soft:#15311f; --red:#e2686b; --red-soft:#331b1c; }
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg); color:var(--ink); line-height:1.6;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  .sheet{max-width:830px; margin:26px auto; background:var(--surface); border:1px solid var(--border);
+    border-radius:8px; padding:34px 40px 44px; box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .en-zh{font-size:14px; color:var(--ink2); margin:0 0 13px;}
+  .en-zh .zh{display:block; margin-top:5px; font-size:.93em; color:var(--muted);}
+  b{color:var(--ink);}
+  .kicker{font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:600;}
+  h1{font-size:25px; margin:8px 0 4px; letter-spacing:-.01em;}
+  h1 span{font-weight:400; font-size:16px; color:var(--muted);}
+  .verdict{font-size:16.5px; font-weight:600; color:var(--navy); margin:10px 0 4px; line-height:1.45;}
+  .verdict .zh{display:block; font-size:14.5px; color:var(--ink2); font-weight:500; margin-top:4px;}
+  /* rating change banner */
+  .change{display:flex; flex-wrap:wrap; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-top:16px;}
+  .change .c{flex:1; min-width:120px; padding:9px 13px; border-right:1px solid var(--border);}
+  .change .c:last-child{border-right:none;}
+  .change .l{font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted);}
+  .change .v{font-size:17px; font-weight:700; margin-top:1px;}
+  .change .was{font-size:11.5px; color:var(--muted); text-decoration:line-through; margin-left:5px; font-weight:400;}
+  .change .v.up{color:var(--green);}
+  .arrow{color:var(--green); font-weight:700;}
+  section{margin-top:32px;}
+  h2{font-size:15.5px; margin:0 0 3px; display:flex; align-items:baseline; gap:9px;}
+  h2 .num{font-family:ui-monospace,Menlo,monospace; font-size:12px; color:var(--navy); font-weight:700;}
+  h2 .zh{font-size:13.5px; color:var(--muted); font-weight:500;}
+  .rule{height:1px; background:var(--border); margin:9px 0 14px;}
+  table{width:100%; border-collapse:collapse; font-size:13px; margin:4px 0 6px;}
+  th,td{padding:7px 10px; border-bottom:1px solid var(--border); text-align:right;}
+  th{font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted); background:var(--line-soft);}
+  th:first-child,td:first-child{text-align:left;}
+  td:first-child{font-weight:600;}
+  td.beat{color:var(--green); font-weight:700;}
+  td.miss{color:var(--red); font-weight:700;}
+  .tblcap{font-size:11.5px; color:var(--muted); margin-top:2px;}
+  .callout{border-left:3px solid var(--green); background:var(--green-soft); border-radius:0 6px 6px 0; padding:12px 15px; margin:6px 0;}
+  .callout .t{font-weight:700; font-size:13.5px; color:var(--green);}
+  .callout .b{font-size:13px; color:var(--ink2); margin-top:4px;}
+  .callout .b .zh{display:block; color:var(--muted); margin-top:3px;}
+  .proofs{display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:4px;}
+  @media(max-width:560px){ .proofs{grid-template-columns:1fr;} }
+  .proof{border:1px solid var(--border); border-left:3px solid var(--green); border-radius:5px; padding:9px 12px;}
+  .proof .n{font-size:15.5px; font-weight:700; color:var(--ink);}
+  .proof .t{font-size:12px; color:var(--ink2); margin-top:1px;}
+  .proof .t .zh{display:block; color:var(--muted); font-size:11.5px;}
+  .why{border:1px solid var(--border); border-radius:6px; padding:11px 14px; margin:9px 0;}
+  .why .h{font-weight:700; font-size:13.5px; color:var(--ink);}
+  .why .h .w{font-size:11px; font-weight:700; color:var(--red); background:var(--red-soft); border-radius:4px; padding:1px 7px; margin-left:7px; text-transform:uppercase;}
+  .why .d{font-size:12.5px; color:var(--ink2); margin-top:4px;}
+  .why .d .zh{display:block; color:var(--muted); margin-top:3px;}
+  .risk{border-left:3px solid var(--gold);}
+  .box{border:1px solid var(--gold); background:var(--gold-soft); border-radius:7px; padding:13px 16px; margin-top:8px;}
+  .box .t{font-weight:700; color:var(--gold); font-size:13.5px;}
+  .box .b{font-size:13px; color:var(--ink2); margin-top:5px;}
+  .box .b .zh{display:block; color:var(--muted); margin-top:3px;}
+  .strip{display:grid; grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); gap:1px; background:var(--border);
+    border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-top:24px;}
+  .strip .s{background:var(--surface); padding:9px 11px;}
+  .strip .s .l{font-size:10px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted);}
+  .strip .s .v{font-size:14px; font-weight:700; margin-top:1px;}
+  footer{margin-top:24px; padding-top:14px; border-top:1px solid var(--border); font-size:11px; color:var(--muted);}
+  footer .zh{display:block; margin-top:3px;}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="kicker">Corning · NYSE: GLW · Q2 2026 Post-Earnings Review · 2026-07-28</div>
+  <h1>Corning Incorporated <span>(NYSE: GLW)</span></h1>
+  <div class="verdict">Beat on everything, raised the plan, signed NVIDIA and Amazon — and fell ~18%. The business got better while the stock got cheaper. We upgrade.
+    <span class="zh">全面 beat、上调计划、签下 NVIDIA 与 Amazon——股价却跌约 18%。生意变得更好，股票却变得更便宜。我们上调评级。</span></div>
+
+  <div class="change">
+    <div class="c"><div class="l">Rating 评级</div><div class="v up">OVERWEIGHT <span class="was">HOLD</span></div></div>
+    <div class="c"><div class="l">Target 目标价</div><div class="v">$158 <span class="was">$145</span></div></div>
+    <div class="c"><div class="l">Price (07-28) 现价</div><div class="v">$126.01</div></div>
+    <div class="c"><div class="l">Upside 上行空间</div><div class="v up">+25%</div></div>
+  </div>
+
+  <div class="en-zh" style="margin-top:16px;">On July 28 Corning reported a clean beat and <b>raised its long-term plan</b>, yet the stock closed <b>−12% on the session</b> (down ~18% intraday — its worst single day since 2002) and dragged the whole optical complex (LITE, COHR, MRVL all −10%+) down with it. Nothing in the results was the problem. The Q3 revenue guide of $4.9–5.0B landed just below the Street's elevated ~$5.0B whisper, and a broad rotation out of AI-infrastructure names did the rest. This is the reaction our July 21 preview called for — and it has finally handed us the entry the initiation was waiting for.
+    <span class="zh">7 月 28 日康宁交出干净的 beat 并<b>上调了长期计划</b>，股价当日却<b>收跌约 12%</b>（盘中一度跌约 18%，为 2002 年以来最差单日），并带动整个 optical 板块（LITE、COHR、MRVL 均跌逾 10%）。问题不在业绩本身：Q3 营收指引 $4.9–5.0B 略低于市场约 $5.0B 的偏高预期，加上 AI-infrastructure 板块的整体轮动，共同促成了这次抛售。这正是我们 7 月 21 日前瞻所预判的反应——也终于给出了首次覆盖时一直在等的入场点。</span></div>
+
+  <section>
+    <h2><span class="num">01</span> The scorecard <span class="zh">业绩对照表</span></h2>
+    <div class="rule"></div>
+    <table>
+      <tr><th>Metric 指标 (core)</th><th>Q2'26 Actual</th><th>Consensus</th><th>Guidance</th><th>YoY</th></tr>
+      <tr><td>Core sales</td><td class="beat">$4.74B</td><td>$4.62B</td><td>~$4.6B</td><td>+17%</td></tr>
+      <tr><td>Core EPS</td><td class="beat">$0.78</td><td>$0.75</td><td>$0.73–0.77</td><td>+30%</td></tr>
+      <tr><td>Core gross margin</td><td class="beat">39.6%</td><td>—</td><td>—</td><td>+120bp</td></tr>
+      <tr><td>Core operating margin</td><td class="beat">20.9%</td><td>—</td><td>—</td><td>+190bp · record</td></tr>
+      <tr><td>Adj. free cash flow</td><td>$1.42B</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>GAAP sales / EPS</td><td>$4.51B / $0.64</td><td>—</td><td>—</td><td>+17% / +19%</td></tr>
+      <tr><td>Q3'26 core sales guide</td><td class="miss">$4.9–5.0B</td><td>~$5.0B</td><td>—</td><td>+16%</td></tr>
+      <tr><td>Q3'26 core EPS guide</td><td class="beat">$0.85–0.89</td><td>~$0.83</td><td>—</td><td>+28%</td></tr>
+    </table>
+    <div class="tblcap">Green = beat; red = the one line that mattered — the Q3 sales guide at/just-below the buy-side whisper. Consensus figures approximate (yfinance/press aggregation). · 绿=超预期；红=唯一真正重要的一行：Q3 营收指引压在买方偏高预期之下。</div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> Why a beat sold off ~18% <span class="zh">为何 beat 却大跌</span></h2>
+    <div class="rule"></div>
+    <div class="why">
+      <div class="h">The guidance "whiff" against an elevated whisper <span class="w">the trigger</span></div>
+      <div class="d">Q3 sales guided $4.9–5.0B (+16% YoY). Above the ~$4.8–4.9B <i>we</i> flagged as necessary — but the buy-side had crept to ~$5.0B, so the midpoint read as a shortfall. When consensus already equals guidance, "in-line" is a disappointment. Exactly the mechanism our preview warned about.
+        <span class="zh">Q3 营收指引 $4.9–5.0B（+16%），高于<i>我们</i>此前标注的约 $4.8–4.9B 门槛，却低于买方悄然升至的约 $5.0B 预期，中值因此被读作不及。当 consensus 已等于指引，「符合预期」即是失望——正是前瞻警示的机制。</span></div>
+    </div>
+    <div class="why">
+      <div class="h">A broad AI-infrastructure rotation <span class="w">amplifier</span></div>
+      <div class="d">GLW did not fall alone — Lumentum, Coherent, Marvell and the optical complex all dropped 10%+ the same day. After a ~391% run, a high-beta (~1.1) momentum name in a de-rating sector was the first thing sold. Analysts explicitly attribute the move to rotation and expectations, <b>not to any change in fundamentals</b>. A "memory-price" cost headwind was cited as a minor added worry.
+        <span class="zh">GLW 并非独跌——Lumentum、Coherent、Marvell 及整个 optical 板块当日同跌逾 10%。在约 391% 涨幅之后，一只高 beta（约 1.1）动量股在板块 de-rating 中最先被卖出。分析师明确将下跌归因于轮动与预期，<b>而非基本面变化</b>；「memory 价格」成本逆风被视为次要额外担忧。</span></div>
+    </div>
+    <div class="why">
+      <div class="h">Priced for perfection — no margin of safety to absorb it <span class="w">the setup</span></div>
+      <div class="d">This is the initiation thesis in one event: at 36× forward, the stock had zero cushion. Great-but-not-flawless was enough to compress the multiple hard. The problem was never the business; it was the price the business was carrying.
+        <span class="zh">这正是首次覆盖论点在一次事件中的体现：36× forward 之下毫无缓冲，「优秀但非完美」就足以令估值大幅收缩。问题从来不是生意，而是生意所背负的价格。</span></div>
+    </div>
+  </section>
+
+  <div class="callout">
+    <div class="t">✓ The July 21 preview called this — almost to the dollar</div>
+    <div class="b">We rated it "do not add," said <b>the Q3 guide would matter more than the print</b>, put the bear-case reaction at <b>$126–138</b>, and pre-committed to turning <b>Overweight at $120–130 or on Q2 re-acceleration evidence</b>. The stock closed at <b>$126.01</b> — the bottom of that band — and delivered <i>both</i> upgrade triggers at once. We are not chasing a dip; we are executing a plan set in writing before the event.
+      <span class="zh">我们此前评级「不建议加仓」，指出 <b>Q3 指引比当季数字更重要</b>，将 bear 情景反应定为 <b>$126–138</b>，并预先承诺在 <b>$120–130 或出现 Q2 再加速证据时上调至 Overweight</b>。股价收于 <b>$126.01</b>——正是该区间下沿——且两个上调触发条件同时满足。这不是追跌，而是执行事前书面设定的计划。</span></div>
+  </div>
+
+  <section>
+    <h2><span class="num">03</span> What actually improved in the thesis <span class="zh">论点中真正改善的部分</span></h2>
+    <div class="rule"></div>
+    <div class="en-zh">The reason we upgrade is not merely the lower price — it is that the fundamental case is <b>materially stronger</b> than when we set the trigger:
+      <span class="zh">我们上调的理由不仅是更低的价格，更是基本面较设定触发条件时<b>实质性增强</b>：</span></div>
+    <div class="proofs">
+      <div class="proof"><div class="n">Springboard → $30B / $40B</div><div class="t">run-rate targets upgraded: $20B end-'26, $30B end-'28, $40B end-'30 (19% CAGR)<span class="zh">run-rate 目标上调，Q4'26–Q4'30 复合增速 19%</span></div></div>
+      <div class="proof"><div class="n">NVIDIA + Amazon</div><div class="t">the 4th &amp; 5th hyperscalers we were waiting for; NVIDIA = 10× optical mfg, +50% fiber<span class="zh">我们等待的第 4、5 家 hyperscaler；NVIDIA 光学产能扩 10 倍、光纤 +50%</span></div></div>
+      <div class="proof"><div class="n">Optical +32% · NI +77%</div><div class="t">$2.07B sales, record 21% of sales margin; Enterprise Networks +65%<span class="zh">营收 $2.07B，21% 利润率创纪录；企业网络 +65%</span></div></div>
+      <div class="proof"><div class="n">Core OM 20.9%</div><div class="t">record, +190bp YoY — the margin-expansion thesis is intact and ahead of plan<span class="zh">创纪录、同比 +190bp——利润率扩张论点成立且超预期</span></div></div>
+    </div>
+    <div class="en-zh" style="margin-top:13px;">In the initiation we said we would revisit the multiple only if <b>a fourth hyperscale agreement plus a raised plan</b> arrived. We got a fourth <i>and</i> fifth (Amazon, NVIDIA) and a plan raised by 50–100%. That is a thesis change, not a beat — so we move our numbers, not just our rating.
+      <span class="zh">首次覆盖时我们说过，只有<b>出现第四家 hyperscaler 合同并上调计划</b>时才会重估倍数。如今第四、第五家（Amazon、NVIDIA）同时到来，计划上调 50–100%。这是论点改变而非一次 beat——因此我们调整的是数字，而不仅是评级。</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Revised numbers &amp; the new $158 target <span class="zh">上调后的数字与 $158 新目标</span></h2>
+    <div class="rule"></div>
+    <table>
+      <tr><th>Core (US$)</th><th>2026E</th><th>2027E</th><th>2028E</th><th>vs prior '28E</th></tr>
+      <tr><td>Core sales</td><td>~$19.0B</td><td>~$22.5B</td><td>~$26.5B</td><td>▲ from ~$24.5B</td></tr>
+      <tr><td>Core EPS</td><td>~$3.25</td><td>~$4.15</td><td>~$5.15</td><td>▲ from $4.79</td></tr>
+      <tr><td>Core operating margin</td><td>~21%</td><td>~22.5%</td><td>~24%</td><td>▲ ahead of plan</td></tr>
+    </table>
+    <div class="en-zh" style="margin-top:10px;">We raise 2028E core EPS to <b>~$5.15</b> (from $4.79) — crediting the beat, record margins, the upgraded $30B exit-2028 run-rate and the NVIDIA/Amazon de-risking, while haircutting management's full ambition. At <b>~30.7×</b> that gives a 12-month target of <b>$158</b>, +25% from $126.01. We do <i>not</i> expand the multiple: the day just proved the market won't pay up, and the NVIDIA build raises capital intensity. The DCF remains a structural outlier (still ~$60) and stays weighted 10%.
+      <span class="zh">我们将 2028E core EPS 上调至 <b>约 $5.15</b>（原 $4.79）——计入 beat、创纪录利润率、上调后的 $30B 年底 run-rate 及 NVIDIA/Amazon 的排雷效应，同时对管理层完整目标打折。以 <b>约 30.7×</b> 得出 12 个月目标价 <b>$158</b>，较 $126.01 有 +25% 空间。我们<i>不</i>扩张估值倍数：当日已证明市场不愿付溢价，且 NVIDIA 扩产提升了资本强度。DCF 仍为结构性偏低（约 $60），维持 10% 权重。</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> What changed on the bear side — the new risks <span class="zh">空头侧的变化——新增风险</span></h2>
+    <div class="rule"></div>
+    <div class="why risk">
+      <div class="h">Capital intensity — the "capital-efficient Springboard" story is now qualified</div>
+      <div class="d">The NVIDIA agreement means a <b>10× optical-manufacturing expansion and 50%+ more fiber capacity</b>. That is a real capex step-up, and it partly undercuts the original low-capital-intensity appeal — and raises overbuild risk if AI capex ever digests. Watch the next capex guide closely.
+        <span class="zh">NVIDIA 协议意味着<b>光学产能扩 10 倍、光纤产能增逾 50%</b>，这是实实在在的 capex 台阶，部分削弱了原本「低资本消耗」的吸引力，并在 AI capex 一旦消化时抬高过度建设风险。需密切关注下一次 capex 指引。</span></div>
+    </div>
+    <div class="why risk">
+      <div class="h">Momentum &amp; rotation — a 2002-scale single-day break leaves technical damage</div>
+      <div class="d">This is an upgrade to accumulate <i>into</i> the rotation, not a call for a one-day bounce. The AI-infrastructure de-rating can persist, and a name this heavily sold can stay heavy for weeks. Size in, don't reach.
+        <span class="zh">这是在轮动<i>之中</i>逐步买入的上调，而非押注次日反弹。AI-infrastructure 的 de-rating 可能持续，遭如此重卖的个股可能疲弱数周。分批建仓，勿追。</span></div>
+    </div>
+    <div class="box">
+      <div class="t">Bottom line · 结论</div>
+      <div class="b">Corning did the hard part — it grew, it raised the plan, it won NVIDIA and Amazon — and the market handed us a 25% cheaper entry for the trouble. That is the asymmetry we wanted and did not have at $153. <b>Upgrade to Overweight, target $158; accumulate into the AI-optical rotation.</b>
+        <span class="zh">康宁做成了最难的部分——增长、上调计划、赢得 NVIDIA 与 Amazon——市场却为此给了我们便宜 25% 的入场点。这正是我们在 $153 时没有、如今得到的非对称性。<b>上调至 Overweight，目标价 $158；在 AI-optical 轮动中逐步买入。</b></span></div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="s"><div class="l">Price 现价</div><div class="v">$126.01</div></div>
+    <div class="s"><div class="l">Session move 当日</div><div class="v" style="color:var(--red)">−12.1%</div></div>
+    <div class="s"><div class="l">New target 新目标</div><div class="v">$158</div></div>
+    <div class="s"><div class="l">Upside 空间</div><div class="v" style="color:var(--green)">+25%</div></div>
+    <div class="s"><div class="l">Fwd P/E on '28E</div><div class="v">24.5×</div></div>
+    <div class="s"><div class="l">Street avg 街价</div><div class="v">$215</div></div>
+  </div>
+
+  <footer>
+    Data: Corning Q2 2026 press release &amp; earnings call (2026-07-28); yfinance (price $126.01 = 07-28 close, −12.1% vs $143.36 prior close; press cited ~−18% intraday, largest single-day drop since 2002). "core" = non-GAAP per Corning. Q3 guide, Springboard $20/30/40B run-rate targets, and Amazon/NVIDIA agreements per company release. Consensus figures are aggregated estimates — verify against a paid consensus source before external use. No paid data terminal used. Prior note: GLW_Q2_2026_Earnings_Preview (2026-07-21, NEUTRAL PT $145).
+    <span class="zh">AI 生成研究，仅供参考，不构成投资建议。core=非 GAAP。consensus 为汇总估算，对外使用前请核实。</span>
+  </footer>
+
+</div>
+</body>
+</html>
