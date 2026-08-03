@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seagate (STX) — Q4 FY2026 + Full-Year Earnings Review (Bilingual) — 2026-07-29</title>
+<style>
+  :root {
+    --bg: #F4F5F7; --surface: #FFFFFF; --surface-2: #EBEEF2; --ink: #12161C; --ink-soft: #3A4250;
+    --muted: #6B7480; --border: #D7DCE3; --border-strong: #C1C8D1; --accent: #1E6E76; --accent-ink: #0F4A50;
+    --accent-soft: #E4F0EF; --bull: #1F7A4D; --bull-bg: #E7F5EC; --base-c: #8A6D1F; --base-bg: #FBF3DF;
+    --bear: #B23A3A; --bear-bg: #FBEAEA;
+    --shadow: 0 1px 2px rgba(20,24,31,.06), 0 8px 24px -12px rgba(20,24,31,.12);
+    --font-display: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, "Cascadia Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0F1319; --surface: #161B22; --surface-2: #1E242C; --ink: #E8EAED; --ink-soft: #C3C9D1;
+      --muted: #8993A1; --border: #2A313B; --border-strong: #384150; --accent: #4FB8B0; --accent-ink: #9FE0D9;
+      --accent-soft: #14312F; --bull: #4CBE85; --bull-bg: #163829; --base-c: #D8B255; --base-bg: #3A2F14;
+      --bear: #E2686B; --bear-bg: #3A1E1F;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"] { --bg:#0F1319;--surface:#161B22;--surface-2:#1E242C;--ink:#E8EAED;--ink-soft:#C3C9D1;--muted:#8993A1;--border:#2A313B;--border-strong:#384150;--accent:#4FB8B0;--accent-ink:#9FE0D9;--accent-soft:#14312F;--bull:#4CBE85;--bull-bg:#163829;--base-c:#D8B255;--base-bg:#3A2F14;--bear:#E2686B;--bear-bg:#3A1E1F;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.5);}
+  :root[data-theme="light"] { --bg:#F4F5F7;--surface:#FFFFFF;--surface-2:#EBEEF2;--ink:#12161C;--ink-soft:#3A4250;--muted:#6B7480;--border:#D7DCE3;--border-strong:#C1C8D1;--accent:#1E6E76;--accent-ink:#0F4A50;--accent-soft:#E4F0EF;--bull:#1F7A4D;--bull-bg:#E7F5EC;--base-c:#8A6D1F;--base-bg:#FBF3DF;--bear:#B23A3A;--bear-bg:#FBEAEA;--shadow:0 1px 2px rgba(20,24,31,.06),0 8px 24px -12px rgba(20,24,31,.12);}
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px 80px; }
+  header.masthead { background: radial-gradient(circle at 1px 1px, var(--border-strong) 1px, transparent 1px) 0 0/16px 16px, var(--surface); border-bottom: 1px solid var(--border); padding: 28px 0 22px; }
+  .masthead-inner { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+  .ticker-badge { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .04em; color: var(--accent-ink); background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 4px; padding: 3px 9px; margin-bottom: 10px; }
+  .rating-change { display:inline-block; font-family:var(--font-mono); font-size:12px; font-weight:700; color:var(--bull); background:var(--bull-bg); border:1px solid var(--bull); border-radius:4px; padding:3px 9px; margin-bottom:10px; margin-left:8px; }
+  h1.title { font-family: var(--font-display); font-weight: 800; letter-spacing: -.01em; margin: 0 0 6px; }
+  h1.title .en-line { display: block; font-size: clamp(22px, 3.4vw, 30px); text-wrap: balance; }
+  h1.title .zh-line { display: block; font-size: clamp(16px, 2.2vw, 19px); font-weight: 700; color: var(--muted); margin-top: 2px; }
+  .subtitle { color: var(--muted); font-size: 14px; margin: 0; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); }
+  .meta-row b { color: var(--ink); font-weight: 600; }
+  .meta-row .lbl { font-family: var(--font-body); color: var(--muted); }
+  .bi { display: grid; grid-template-columns: 1fr 1fr; column-gap: 26px; align-items: start; }
+  .bi .en { color: var(--ink-soft); font-size: 14px; }
+  .bi .zh { color: var(--ink-soft); font-size: 14px; border-left: 1px solid var(--border); padding-left: 26px; }
+  @media (max-width: 640px) { .bi { grid-template-columns: 1fr; row-gap: 8px; } .bi .zh { border-left: none; padding-left: 0; border-top: 1px dashed var(--border); padding-top: 8px; } }
+  .callout { margin: 16px 0 0; padding: 12px 16px; background: var(--bull-bg); border: 1px solid var(--bull); border-radius: 6px; }
+  .callout.warn { background: var(--base-bg); border-color: var(--base-c); }
+  .callout .bi .en, .callout .bi .zh { font-size: 13px; color: var(--ink-soft); }
+  .callout b { color: var(--bull); } .callout.warn b { color: var(--base-c); }
+  section { margin-top: 44px; }
+  .section-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  .section-num { font-family: var(--font-mono); font-size: 13px; color: var(--accent); font-weight: 700; }
+  h2 { font-family: var(--font-display); font-size: 19px; font-weight: 700; margin: 0; text-wrap: balance; }
+  h2 .cn { color: var(--muted); font-weight: 600; font-size: 16px; margin-left: 8px; }
+  .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; background: var(--surface); }
+  th, td { text-align: left; padding: 10px 14px; font-size: 13.5px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-family: var(--font-display); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); background: var(--surface-2); white-space: nowrap; }
+  th .cn { display: block; text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--muted); font-size: 11px; margin-top: 2px; }
+  td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  td .note { display: block; font-family: var(--font-body); color: var(--muted); font-size: 11.5px; margin-top: 2px; }
+  tr:last-child td { border-bottom: none; }
+  .beat { color: var(--bull); font-weight: 700; } .miss { color: var(--bear); font-weight: 700; }
+  .cite { margin-top: 10px; } .cite .bi .en, .cite .bi .zh { font-size: 11.5px; color: var(--muted); }
+  .cols2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; } @media (max-width:860px){.cols2{grid-template-columns:1fr;}}
+  .card { border:1px solid var(--border); border-radius:8px; padding:16px; background:var(--surface); box-shadow:var(--shadow); }
+  .card.wrong { border-top:4px solid var(--bear); } .card.right { border-top:4px solid var(--bull); }
+  .card h3 { margin:0 0 8px; font-size:14.5px; } .card.wrong h3 { color:var(--bear); } .card.right h3 { color:var(--bull); }
+  .card .bi .en, .card .bi .zh { font-size:13px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .stat-tile { border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; background: var(--surface); }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); margin-bottom: 6px; }
+  .stat-label .cn { display: block; text-transform: none; letter-spacing: 0; font-size: 10.5px; margin-top: 1px; }
+  .stat-value { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .stat-sub { font-size: 11.5px; color: var(--muted); margin-top: 3px; } .stat-sub .cn { display:block; margin-top:1px; }
+  ul.verify { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+  ul.verify li { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--border); }
+  ul.verify li:last-child { border-bottom: none; }
+  ul.verify .box { flex-shrink: 0; width: 15px; height: 15px; border: 1.5px solid var(--border-strong); border-radius: 3px; margin-top: 3px; }
+  ul.verify .bi { flex: 1; } ul.verify .bi .en, ul.verify .bi .zh { font-size: 13px; }
+  .flag { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: var(--bear); background: var(--bear-bg); border-radius: 4px; padding: 1px 7px; margin-left: 6px; }
+  footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border); }
+  footer .bi .en, footer .bi .zh { font-size: 11.5px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header class="masthead">
+<div class="masthead-inner">
+<span class="ticker-badge">NASDAQ · STX</span><span class="rating-change">RATING CHANGE ▲ NEUTRAL → OVERWEIGHT ｜ 上调评级</span>
+<h1 class="title">
+<span class="en-line">Seagate — Q4 FY2026 + Full-Year Earnings Review</span>
+<span class="zh-line">Seagate 希捷 — 财年 Q4 及全年 FY2026 财报点评（post-earnings）</span>
+</h1>
+<p class="subtitle">A decisive fundamental beat forced us to change our mind ｜ 一次决定性的基本面超预期，迫使我们修正判断</p>
+<div class="meta-row">
+<span><span class="lbl">Reported 财报日</span>: <b>2026-07-28 (after close)</b></span>
+<span><span class="lbl">This note 点评日</span>: <b>2026-07-29</b></span>
+<span><span class="lbl">Prior 原评级</span>: <b>NEUTRAL · PT $800</b></span>
+<span><span class="lbl">New 新评级</span>: <b>OVERWEIGHT · PT $1,100</b></span>
+</div>
+</div>
+</header>
+<div class="wrap">
+
+<div class="callout">
+<div class="bi">
+<div class="en"><b>We were wrong on the one thing that mattered — and we are changing the call.</b> Q4 was a decisive beat (rev $3.63B vs $3.45B guide; non-GAAP EPS <b>$5.71</b> vs $5.00 guide; gross margin <b>52.7%</b>, through our "toward 50%" bull marker). But the number that changes the thesis is the <b>FY2027 guide</b>: Q1 FY2027 non-GAAP EPS of <b>$7.30</b> (vs ~$5.87 consensus) with FY2027 growth guided to <i>outpace</i> FY2026. That implies FY2027 EPS near <b>~$30</b> — our prior $21 estimate, the linchpin of the NEUTRAL call, was far too low. On corrected numbers the stock trades ~30x FY2027E (in line with WDC, not a ~40x premium), and the durability evidence we had demanded for an upgrade (HAMR at scale in two hyperscalers, GM >50%, pricing locked through FY2027) arrived. <b>We upgrade to Overweight, PT $1,100.</b></div>
+<div class="zh"><b>在唯一要紧的事情上我们错了——并据此修正评级。</b> Q4 决定性超预期（营收 $3.63B vs 指引 $3.45B；non-GAAP EPS <b>$5.71</b> vs 指引 $5.00；毛利率 <b>52.7%</b>，冲破我们"toward 50%"的多头标志）。但真正改变论点的是 <b>FY2027 指引</b>：Q1 FY2027 non-GAAP EPS 达 <b>$7.30</b>（vs 一致预期 ~$5.87），且明确指引 FY2027 增速将<i>超过</i> FY2026。这意味着 FY2027 EPS 接近 <b>~$30</b>——我们此前 $21 的估算（正是 NEUTRAL 的支点）大幅偏低。按修正后的数字，股价约 30x FY2027E（与 WDC 持平，而非 ~40x 溢价），而我们要求上调所需的"持续性证据"（HAMR 在两家 hyperscaler 规模量产、GM >50%、定价锁定至 FY2027）已经到位。<b>我们上调至 Overweight，目标价 $1,100。</b></div>
+</div>
+</div>
+
+<div class="callout warn">
+<div class="bi">
+<div class="en"><b>…but the stock's reaction validated our valuation caution.</b> Despite the blowout, the price action was muted-to-negative — an initial ~+7.4% after-hours pop reportedly gave way to a "sell-the-news" move (one source cites STX slipping toward <b>~$782</b>), then ~+3% the next session. After a ~6x run off the low, even a bull-case print was largely "priced in." Net: the <i>fundamentals</i> won the bull case; the <i>price</i> proved our "no margin of safety" point. The improved risk/reward comes as much from any pullback as from the raised numbers.</div>
+<div class="zh"><b>……但股价反应印证了我们对估值的谨慎。</b> 尽管数字爆表，价格反应却是 muted 偏负——盘后先约 +7.4%，随后据称转为"卖预期"（一家源称 STX 一度跌向 <b>~$782</b>），次日约 +3%。在较低点约 6 倍涨幅之后，即便是多头情景的财报也基本被 price in。结论：<i>基本面</i>赢了多头，<i>价格</i>证明了我们"没有安全边际"的判断。改善后的风险收益，既来自上调的数字，也来自任何回调带来的更好入场点。</div>
+</div>
+</div>
+
+<!-- 1. Results vs guide vs our preview -->
+<section>
+<div class="section-head"><span class="section-num">01</span><h2>Actual vs. Guidance / Consensus / Our Preview<span class="cn">实际 vs. 指引 / 一致预期 / 我们的前瞻</span></h2></div>
+<div class="table-scroll">
+<table>
+<thead><tr>
+<th>Metric<span class="cn">指标</span></th>
+<th>Q4 FY26 Actual<span class="cn">实际</span></th>
+<th>Guide / Consensus<span class="cn">指引 / 预期</span></th>
+<th>YoY (Q4 FY25)<span class="cn">去年同期</span></th>
+<th>Verdict<span class="cn">结论</span></th>
+</tr></thead>
+<tbody>
+<tr><td>Revenue<span class="note">营收</span></td><td class="num">$3.63B</td><td class="num">$3.45B guide / $3.49B cons.</td><td class="num">$2.44B (+48.5%)</td><td class="beat">BEAT +4%</td></tr>
+<tr><td>Non-GAAP EPS<span class="note">每股收益</span></td><td class="num">$5.71</td><td class="num">$5.00 guide / $5.09 cons.</td><td class="num">$2.59 (+120%)</td><td class="beat">BEAT +12%</td></tr>
+<tr><td>Non-GAAP gross margin<span class="note">毛利率</span></td><td class="num">52.7%</td><td class="num">— (Q3 was 47%)</td><td class="num">37.9% (+14.8pp)</td><td class="beat">RECORD</td></tr>
+<tr><td>Non-GAAP operating margin<span class="note">经营利润率</span></td><td class="num">44.6%</td><td class="num">low-40s% guide</td><td class="num">26.2% (+18.4pp)</td><td class="beat">BEAT</td></tr>
+<tr><td>Free cash flow (qtr)<span class="note">季度自由现金流</span></td><td class="num">$1.1B</td><td class="num">—</td><td class="num">$425M (+163%)</td><td class="beat">STRONG</td></tr>
+<tr><td>FY2026 revenue<span class="note">全年营收</span></td><td class="num">$12.20B</td><td class="num">$12.06B cons. / our $12.02B</td><td class="num">$9.10B (+34%)</td><td class="beat">RECORD</td></tr>
+<tr><td>FY2026 non-GAAP EPS<span class="note">全年 EPS</span></td><td class="num">$15.58</td><td class="num">$14.89 cons. / our $14.82</td><td class="num">$8.10 (+92%)</td><td class="beat">BEAT</td></tr>
+<tr><td>FY2026 free cash flow<span class="note">全年 FCF</span></td><td class="num">$3.1B</td><td class="num">—</td><td class="num">$818M (+279%)</td><td class="beat">RECORD</td></tr>
+</tbody>
+</table>
+</div>
+<div class="cite"><div class="bi">
+<div class="en">Every line beat, most by a wide margin. Q4 non-GAAP EPS more than doubled YoY; gross margin of 52.7% is a company record and well above the ~44% we had modeled for full-year FY2026. Our preview's <b>bull scenario</b> (beat the guide + GM toward 50% + FY2027 acceleration) is the one that played out on the fundamentals.</div>
+<div class="zh">每一行都超预期，多数大幅超。Q4 non-GAAP EPS 同比翻倍多；52.7% 毛利率创公司纪录，远高于我们对 FY2026 全年 ~44% 的建模。我们 preview 里的<b>多头情景</b>（超指引 + GM 迈向 50% + FY2027 加速）在基本面上兑现了。</div>
+</div></div>
+</section>
+
+<!-- 2. The FY2027 guide -->
+<section>
+<div class="section-head"><span class="section-num">02</span><h2>The FY2027 Guide — the Number That Changes the Thesis<span class="cn">FY2027 指引 —— 改变论点的那个数</span></h2></div>
+<div class="stat-grid">
+<div class="stat-tile"><div class="stat-label">Q1 FY2027 revenue guide<span class="cn">Q1 FY27 营收指引</span></div><div class="stat-value">$4.1B</div><div class="stat-sub">±$0.1B; +13% QoQ; vs ~$3.8B cons.<span class="cn">环比 +13%</span></div></div>
+<div class="stat-tile"><div class="stat-label">Q1 FY2027 EPS guide<span class="cn">Q1 FY27 EPS 指引</span></div><div class="stat-value" style="color:var(--bull)">$7.30</div><div class="stat-sub">±$0.20; +28% QoQ; vs ~$5.87 cons. (+24%)<span class="cn">远超预期</span></div></div>
+<div class="stat-tile"><div class="stat-label">FY2027 growth<span class="cn">FY2027 增速</span></div><div class="stat-value" style="font-size:15px;">outpaces FY26</div><div class="stat-sub">explicitly guided to accelerate<span class="cn">明确指引加速</span></div></div>
+<div class="stat-tile"><div class="stat-label">Our FY2027E EPS<span class="cn">我们的 FY27E EPS</span></div><div class="stat-value" style="font-size:16px;">$21 → ~$30</div><div class="stat-sub">raised ~40% <span class="flag">est.</span><span class="cn">上调约 40%</span></div></div>
+<div class="stat-tile"><div class="stat-label">HAMR / Mozaic 4+<span class="cn">HAMR 进度</span></div><div class="stat-value" style="font-size:15px;">2 hyperscalers</div><div class="stat-sub">at production scale; ~40% adoption<span class="cn">两家云厂规模量产</span></div></div>
+<div class="stat-tile"><div class="stat-label">Nearline pricing<span class="cn">nearline 定价</span></div><div class="stat-value" style="font-size:15px;">locked to FY27</div><div class="stat-sub">BTO config + price through end-FY2027<span class="cn">配置与价格锁定</span></div></div>
+</div>
+<div class="cite" style="margin-top:14px;"><div class="bi">
+<div class="en"><b>Why this breaks the NEUTRAL call.</b> Our NEUTRAL rested on (1) the 14-day catalyst rule — now void, the print has passed; (2) FY2027 being speculative and the stock at ~40x that speculative number — now FY2027 is <i>guided</i> and accelerating, and on ~$30 EPS the stock is ~30x, roughly WDC-parity; (3) no margin of safety — the one pillar still standing, but improved by any post-print pullback. Two of three pillars fell in the bull direction, and our FY2027 earnings-power estimate was simply too conservative.</div>
+<div class="zh"><b>为何这瓦解了 NEUTRAL。</b> 我们的 NEUTRAL 基于：(1) 14 天催化剂规则——现已失效，财报已出；(2) FY2027 属"投机"、且股价按 ~40x 该投机数字定价——如今 FY2027 已被<i>指引</i>且加速，按 ~$30 EPS 股价约 30x、与 WDC 大致持平；(3) 没有安全边际——唯一仍成立的支柱，但任何财报后回调都在改善它。三大支柱有两条向多头方向倒下，而我们的 FY2027 盈利能力估算就是太保守了。</div>
+</div></div>
+</section>
+
+<!-- 3. What we got wrong / right -->
+<section>
+<div class="section-head"><span class="section-num">03</span><h2>What We Got Wrong — and Right<span class="cn">我们错在哪、对在哪</span></h2></div>
+<div class="cols2">
+<div class="card wrong">
+<h3>Wrong ｜ 错的地方</h3>
+<div class="bi">
+<div class="en"><b>FY2027 earnings power.</b> Our $21 EPS estimate was ~40% too low; the Q1 run-rate alone annualizes near $29. We under-credited HAMR's pricing/margin power — GM hit 52.7% vs our ~44% full-year model. The "durable structural evidence" we set as an upgrade trigger arrived faster than we expected, so ~40x FY2027E — the crux of the bear valuation case — was the wrong denominator.</div>
+<div class="zh"><b>FY2027 的盈利能力。</b> 我们 $21 的 EPS 估算低了约 40%；仅 Q1 年化就接近 $29。我们低估了 HAMR 的定价/利润率能力——GM 达 52.7% vs 我们 ~44% 的全年模型。我们设为上调触发的"结构性持续证据"比预期更快到位，所以 ~40x FY2027E（空头估值的核心）用错了分母。</div>
+</div>
+</div>
+<div class="card right">
+<h3>Right ｜ 对的地方</h3>
+<div class="bi">
+<div class="en"><b>Valuation caution &amp; the catalyst rule.</b> After a ~6x run, we declined to chase into a binary print — and the muted "sell-the-news" reaction (toward ~$782 on one read) shows a bull-case quarter was largely priced in. "No margin of safety" was real. Not adding pre-print was the correct discipline; the upgrade is driven by <i>new information</i>, not by chasing strength.</div>
+<div class="zh"><b>对估值的谨慎与催化剂规则。</b> 在约 6 倍涨幅后，我们拒绝在二元事件前追高——而 muted 的"卖预期"反应（一种读数是跌向 ~$782）说明多头情景的季度已基本被 price in。"没有安全边际"是真实的。财报前不加仓是正确的纪律；此次上调由<i>新信息</i>驱动，而非追涨。</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 4. Updated valuation & rating -->
+<section>
+<div class="section-head"><span class="section-num">04</span><h2>Updated Valuation &amp; Rating<span class="cn">估值与评级更新</span></h2></div>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Input<span class="cn">输入</span></th><th>Prior (preview)<span class="cn">此前</span></th><th>Updated (post-print)<span class="cn">更新后</span></th></tr></thead>
+<tbody>
+<tr><td>FY2027E non-GAAP EPS<span class="note">我们的估算 <span class="flag">est.</span></span></td><td class="num">~$21</td><td class="num beat">~$30</td></tr>
+<tr><td>Implied fwd P/E on FY2027E (at $871)<span class="note">远期市盈率</span></td><td class="num">~40x</td><td class="num">~29x (≈ WDC)</td></tr>
+<tr><td>Fair multiple (duopoly leader, accelerating, locked)<span class="note">合理倍数</span></td><td class="num">—</td><td class="num">~35–40x</td></tr>
+<tr><td>Rating<span class="note">评级</span></td><td class="num">NEUTRAL</td><td class="num beat">OVERWEIGHT</td></tr>
+<tr><td>Price target<span class="note">目标价</span></td><td class="num">$800</td><td class="num beat">$1,100</td></tr>
+<tr><td>vs pre-print anchor $871<span class="note">相对锚点</span></td><td class="num">−8%</td><td class="num beat">+26%</td></tr>
+</tbody>
+</table>
+</div>
+<div class="cite"><div class="bi">
+<div class="en"><b>New target $1,100 ≈ 37x FY2027E ~$30</b> — a modest premium to WDC (~27x) for the HAMR lead, accelerating contracted growth, and record margins. Deliberately below the most bullish street targets (Rosenblatt initiated Buy at $1,300) — we credit the beat but keep the FY2028+ normalization question live. Off any "sell-the-news" pullback toward the high-$700s, the implied return is +40%+.</div>
+<div class="zh"><b>新目标价 $1,100 ≈ 37x FY2027E ~$30</b>——对 WDC（~27x）给予小幅溢价，反映 HAMR 领先、已签约的加速增长与创纪录利润率。刻意低于最看多的卖方（Rosenblatt 以 Buy、$1,300 起评）——我们认可超预期，但把 FY2028+ 的 normalization 问题继续摆在台面上。若"卖预期"回调至 $700 中后段，隐含回报 +40% 以上。</div>
+</div></div>
+</section>
+
+<!-- 5. Risks / what to watch now -->
+<section>
+<div class="section-head"><span class="section-num">05</span><h2>The Debate Has Moved to FY2028+<span class="cn">争论已推移到 FY2028 之后</span></h2></div>
+<div class="bi">
+<div class="en">The bull case for FY2026–27 is now largely settled by contracted BTO pricing and the HAMR ramp. The live risk is no longer "is this quarter priced in" but <b>whether FY2028+ nearline pricing normalizes once supply catches up</b>. Watch: (1) any FY2028 BTO extension terms — the single biggest new-information catalyst; (2) WDC's HAMR progress closing the lead; (3) whether GM can hold in the 50s%; (4) sentiment — after a 6x run and a big beat that still saw a soft reaction, positioning is stretched and volatility will be high. We would trim toward Neutral again if the stock reached the low-$1,300s (~44x FY2027E) without FY2028 visibility, or on the first sign of nearline-pricing softening.</div>
+<div class="zh">FY2026–27 的多头逻辑，如今已基本被已签约的 BTO 定价与 HAMR 放量所锁定。真正的风险不再是"当季是否已 price in"，而是 <b>FY2028+ 一旦供给追上，nearline 定价是否 normalization</b>。关注：(1) 任何 FY2028 的 BTO 续约条款——最大的新信息催化剂；(2) WDC 的 HAMR 进度是否缩小差距；(3) GM 能否维持在 50% 区间；(4) 情绪——在 6 倍涨幅 + 大超预期却仍反应偏软之后，持仓已拥挤、波动会很大。若股价在缺乏 FY2028 可见度的情况下升至 $1,300 出头（~44x FY2027E），或出现 nearline 定价走软的首个迹象，我们会再度下调回 Neutral。</div>
+</div>
+</section>
+
+<!-- 6. To-verify -->
+<section>
+<div class="section-head"><span class="section-num">06</span><h2>To-Verify Checklist<span class="cn">待核对清单</span></h2></div>
+<ul class="verify">
+<li><span class="box"></span><div class="bi">
+<div class="en"><b>The live post-earnings price is unsettled / conflicting in sources</b> — an initial ~+7.4% after-hours pop, a reported "sell-the-news" move toward ~$782, and ~+3% the next session. Confirm the actual close before using any upside figure; our returns are anchored to the pre-print $871 (2026-07-22) close. <span class="flag">verify</span></div>
+<div class="zh"><b>财报后实时价格未定、来源冲突</b>——盘后先约 +7.4%、又有跌向 ~$782 的"卖预期"报道、次日约 +3%。使用任何空间数字前请先核实真实收盘价；本文回报以财报前 $871（2026-07-22）收盘为锚。<span class="flag">verify</span></div>
+</div></li>
+<li><span class="box"></span><div class="bi">
+<div class="en">FY2027E ~$30 is our estimate off the $7.30 Q1 guide + "growth outpaces FY2026"; the full-year run-rate could fade in 2H FY2027. Reconcile against management's explicit FY2027 framing on the call.</div>
+<div class="zh">FY2027E ~$30 是我们据 $7.30 的 Q1 指引 +"增速超 FY2026"的估算；下半财年 run-rate 可能回落。请以电话会中管理层对 FY2027 的明确表述核对。</div>
+</div></li>
+<li><span class="box"></span><div class="bi">
+<div class="en">Q4 FY25 comps (rev $2.44B, EPS $2.59, GM 37.9%, OM 26.2%) and consensus ($3.49B / $5.09; one source $5.04) — verify against the official 8-K.</div>
+<div class="zh">Q4 FY25 对比基数（营收 $2.44B、EPS $2.59、GM 37.9%、OM 26.2%）与一致预期（$3.49B / $5.09；一家源为 $5.04）——请以官方 8-K 核对。</div>
+</div></li>
+</ul>
+</section>
+
+<footer><div class="bi">
+<div class="en">Supersedes the NEUTRAL initiation (STX_Initiation_2026-07-23) and the pre-print earnings preview. Companion coverage: STX_Initiation_Report_2026-07-23_ZH.docx · STX_Financial_Model_2026-07-23.xlsx · STX_Charts_2026-07-23.zip. Seagate reports non-GAAP EPS prominently; our multiples use non-GAAP. AI-generated research, 2026-07-29, for reference only — not investment advice. No paid data terminal used; reconcile to Seagate's official Q4 FY2026 8-K / call before external use.</div>
+<div class="zh">本点评取代 NEUTRAL 首次覆盖（STX_Initiation_2026-07-23）与财报前的 earnings preview。配套：STX_Initiation_Report_2026-07-23_ZH.docx · STX_Financial_Model_2026-07-23.xlsx · STX_Charts_2026-07-23.zip。Seagate 以 non-GAAP EPS 为主口径，倍数用 non-GAAP。AI 生成研究，2026-07-29，仅供参考，不构成投资建议。未使用付费数据终端；对外使用前请与 Seagate 官方 Q4 FY2026 8-K / 电话会核实。</div>
+</div></footer>
+
+</div>
+</body>
+</html>
