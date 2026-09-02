@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snowflake (SNOW) 首次覆盖 · 2026-09-02</title>
+<style>
+  :root { --ink:#0b0b0b; --ink2:#52514e; --blue:#2a78d6; --orange:#eb6834; --aqua:#1baf7a;
+          --red:#e34948; --magenta:#e87ba4; --surface:#fcfcfb; --line:#e5e4e0; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#f4f3f0; color:var(--ink);
+         font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+         line-height:1.85; }
+  .page { max-width:920px; margin:0 auto; background:var(--surface); padding:48px 56px 64px; }
+  header.rpt { border-bottom:3px solid var(--ink); padding-bottom:18px; margin-bottom:8px; }
+  .kicker { font-size:13px; letter-spacing:.12em; color:var(--ink2); text-transform:uppercase; }
+  h1 { font-size:30px; margin:8px 0 6px; line-height:1.32; }
+  .sub { color:var(--ink2); font-size:14.5px; }
+  .ratingbox { display:flex; gap:12px; flex-wrap:wrap; margin:22px 0 6px; }
+  .pill { border:1px solid var(--line); border-radius:10px; padding:10px 16px; background:#faf9f7; min-width:132px; }
+  .pill.hi { background:#fdf1ea; border-color:var(--orange); }
+  .pill .k { font-size:12px; color:var(--ink2); }
+  .pill .v { font-size:19px; font-weight:700; }
+  .pill .v.small { font-size:15px; }
+  .pill .v.neg { color:var(--red); }
+  h2 { font-size:21px; margin:46px 0 12px; padding-top:20px; border-top:1px solid var(--line); }
+  h2 .no { color:var(--blue); margin-right:10px; }
+  h3 { font-size:16.5px; margin:28px 0 8px; }
+  p { margin:11px 0; font-size:15.5px; }
+  .lead { font-size:16.5px; }
+  table { border-collapse:collapse; width:100%; margin:16px 0; font-size:14px; }
+  th { text-align:left; background:#f2f1ee; padding:8px 10px; border-bottom:2px solid var(--line); font-weight:600; }
+  td { padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+  tr.hl td { background:#fff8ee; font-weight:600; }
+  .beat { color:var(--aqua); font-weight:600; }
+  .miss { color:var(--red); font-weight:600; }
+  .flat { color:var(--ink2); }
+  figure { margin:24px 0; }
+  figure img { width:100%; border:1px solid var(--line); border-radius:8px; }
+  figcaption { font-size:13px; color:var(--ink2); margin-top:7px; line-height:1.7; }
+  .callout { border-left:4px solid var(--blue); background:#eef4fc; padding:14px 18px;
+             border-radius:0 8px 8px 0; margin:20px 0; font-size:15px; }
+  .callout.warn { border-color:var(--orange); background:#fdf1ea; }
+  .callout.risk { border-color:var(--red); background:#fdeeee; }
+  .callout.good { border-color:var(--aqua); background:#eaf7f1; }
+  .callout b.tag { display:block; font-size:13px; letter-spacing:.06em; margin-bottom:5px; }
+  ul,ol { padding-left:22px; font-size:15.5px; }
+  li { margin:7px 0; }
+  .gap { font-size:13.5px; color:var(--ink2); }
+  .srcs { font-size:12.5px; color:var(--ink2); word-break:break-word; }
+  .srcs a { color:var(--blue); text-decoration:none; }
+  .disc { font-size:12.5px; color:var(--ink2); border-top:1px solid var(--line);
+          margin-top:40px; padding-top:14px; }
+  .toc { background:#faf9f7; border:1px solid var(--line); border-radius:10px; padding:14px 22px; margin:22px 0; }
+  .toc ol { font-size:14.5px; margin:6px 0; }
+  .toc a { color:var(--ink); text-decoration:none; }
+  .toc a:hover { color:var(--blue); }
+  .big { font-size:26px; font-weight:700; }
+  .kv { display:flex; gap:26px; flex-wrap:wrap; margin:14px 0; }
+  .kv div { min-width:150px; }
+  .kv .k { font-size:12.5px; color:var(--ink2); }
+  .kv .v { font-size:20px; font-weight:700; }
+  @media (max-width:760px){ .page{padding:26px 18px 40px;} h1{font-size:23px;} }
+</style></head><body><div class="page">
+
+<header class="rpt">
+  <div class="kicker">Initiating Coverage · Equity Research · AI 基础设施 — 数据平台层</div>
+  <h1>Snowflake（NYSE: SNOW）首次覆盖：<br>增长是真的，加速是真的，价格也已经全知道了</h1>
+  <div class="sub">价格锚点 2026-09-01 美东收盘 · 报告日期 2026-09-02（SGT） · 分析师：Claude Research</div>
+  <div class="ratingbox">
+    <div class="pill hi"><div class="k">首次覆盖评级</div><div class="v">观望（NEUTRAL）</div></div>
+    <div class="pill hi"><div class="k">12 个月目标价</div><div class="v">$265 <span style="font-size:13px" class="neg">−17.1%</span></div></div>
+    <div class="pill"><div class="k">9/1 收盘价</div><div class="v">$319.80 <span style="font-size:13px;color:var(--red)">−3.51%</span></div></div>
+    <div class="pill"><div class="k">Market Cap（市值）</div><div class="v">$110.8B</div></div>
+    <div class="pill"><div class="k">EV/Sales FY2028E</div><div class="v">14.2x</div></div>
+    <div class="pill"><div class="k">52 周区间</div><div class="v small">$118.3 – $341.95</div></div>
+    <div class="pill"><div class="k">Street 一致目标价</div><div class="v small">$331.66（48 家）</div></div>
+  </div>
+  <div class="callout warn" style="margin-top:18px">
+    <b class="tag">⚠️ 临近催化剂警示（12 小时内）</b>
+    Snowflake 的 <b>Q2 FY2027 财报将于 2026-09-02 美东收盘后发布</b>（电话会 PT 14:00 / SGT 9/3 05:00）。
+    本报告的全部数据、估值与结论均为<b>财报前状态</b>。该公司过去 10 次财报次日平均绝对波动 <b>15.9%</b>，
+    最近一次为 <b>+36.5%</b>。按本项目规则第 5 条，任何加仓建议一律改为观望。<b>本报告不构成在今晚财报前的建仓依据。</b>
+  </div>
+</header>
+
+<div class="toc">
+  <b style="font-size:14px">目录</b>
+  <ol>
+    <li><a href="#s1">一页速览：三句话讲清这只票</a></li>
+    <li><a href="#s2">今晚：三个数字决定明天开盘</a></li>
+    <li><a href="#s3">Company 101：它到底卖什么</a></li>
+    <li><a href="#s4">增长引擎：CoCo，和那 +36% 的一天</a></li>
+    <li><a href="#s5">财务解剖：加速是真的，杠杆也是真的</a></li>
+    <li><a href="#s6">现金流的成色：同一家公司的两种自由现金流</a></li>
+    <li><a href="#s7">竞争格局：Databricks 这个数字必须放进模型</a></li>
+    <li><a href="#s8">估值：三种方法，一个必须解释的矛盾</a></li>
+    <li><a href="#s9">情景与赔率：+31% 对 −43%</a></li>
+    <li><a href="#s10">风险矩阵</a></li>
+    <li><a href="#s11">结论、触发器与改判条件</a></li>
+    <li><a href="#s12">附录：数据缺口与来源</a></li>
+  </ol>
+</div>
+
+<h2 id="s1"><span class="no">1</span>一页速览：三句话讲清这只票</h2>
+<p class="lead">Snowflake 是一家把企业数据集中存放、并按<b>实际消耗的计算量</b>收费的云数据平台公司。
+过去半年它完成了一次教科书级别的翻身：从被市场判定为「AI 的受害者」，变成被判定为「AI 的受益者」。
+这个判定的转折点有精确的日期和精确的数字。</p>
+
+<ol>
+  <li><b>业务真的在加速。</b>Product revenue 同比增速：去年同期 26% → 上一季 30% → 最新一季 <b>34%</b>。
+      一家收入体量已到 $45 亿的软件公司做到增速反转，非常罕见。归因很明确：2 月 5 日正式上线的
+      AI coding agent <b>Cortex Code（CoCo）</b>，Q1 已有 7,100+ 活跃账户，被 CFO 亲口称为「上调全年预测的最大单一驱动」。
+      同期经营杠杆也在兑现：GAAP 营业利润率一年从 −43% 改善到 −23.4%。</li>
+  <li><b>但价格已经把这一切定完了，而且定得更多。</b>股价从 4 月 10 日的 $121.11 涨到 $319.80，涨幅 164%。
+      按我们的反推 DCF，现价隐含 Snowflake 在 FY2029–FY2036 还要以 <b>32.2%</b> 的复合增速再跑八年——
+      届时收入 <b>$717 亿</b>，<b>超过今天 Oracle 的 $674 亿</b>。卖方 48 家机构的一致目标价 $331.66，
+      距现价只剩 <b>+3.7%</b>：华尔街已经追到位了。</li>
+  <li><b>赔率是不对称的。</b>我们的 Bull 情景 $420（+31%），Bear 情景 $182（−43%）。
+      用 43% 的左尾去博 31% 的右尾，在一个必须靠「增速远超模型」才能撑住的价格上，这笔交易不划算。</li>
+</ol>
+
+<div class="callout">
+  <b class="tag">📌 一句话结论</b>
+  <b>公司我们喜欢，价格我们不喜欢，今晚我们不动。</b>
+  首次覆盖给 <b>观望（NEUTRAL）</b>，12 个月目标价 <b>$265</b>（−17.1%）。
+  这不是看空——我们不建议做空一家刚把全年指引上调两次、增速仍在加速的公司。这是「不追高、等回调」。
+  分批介入的参考区间是 <b>$230–255</b>。
+</div>
+<figure><img src="charts/chart_01_price.png" alt="SNOW 两年股价走势与关键事件"><figcaption>图 1 · 这张图里藏着本报告的全部张力：2 月 CoCo 发布时股价三天跌 18%（市场认为 AI 会吃掉软件），4 月见底 $121，5 月 28 日财报后单日 +36.5%，此后一路到 $342。同一个产品，市场在半年内给了完全相反的两个定价。</figcaption></figure>
+<table>
+  <tr><th>核心指标</th><th class="num">最新值</th><th class="num">一年前</th><th class="num">方向</th></tr>
+  <tr><td>Product revenue 同比增速</td><td class="num">34%（Q1 FY27）</td><td class="num">26%（Q1 FY26）</td><td class="num beat">加速 +8pct</td></tr>
+  <tr><td>Net revenue retention（NRR）</td><td class="num">126%</td><td class="num">124%</td><td class="num beat">回升</td></tr>
+  <tr><td>RPO 同比增速</td><td class="num">38%</td><td class="num">34%</td><td class="num miss">较上季 42% 放缓</td></tr>
+  <tr><td>GAAP 营业利润率</td><td class="num">−23.4%</td><td class="num">−43%</td><td class="num beat">改善 20pct</td></tr>
+  <tr><td>Non-GAAP 营业利润率</td><td class="num">11.9%</td><td class="num">9%</td><td class="num beat">改善</td></tr>
+  <tr><td>$1M+ 客户数</td><td class="num">779</td><td class="num">606</td><td class="num beat">+29%</td></tr>
+  <tr><td>SBC 占收入比（FY2026）</td><td class="num">34.2%</td><td class="num">40.8%（FY2025）</td><td class="num flat">下降但仍极高</td></tr>
+  <tr class="hl"><td>扣除 SBC 后的自由现金流（FY2026）</td><td class="num">−$407M</td><td class="num">−$537M</td><td class="num miss">仍为负</td></tr>
+  <tr class="hl"><td>股价</td><td class="num">$319.80</td><td class="num">$225.58（2025-09-05）</td><td class="num beat">+41.8%</td></tr>
+</table>
+
+<h2 id="s2"><span class="no">2</span>今晚：三个数字决定明天开盘</h2>
+<p>先把最紧要的事情说完。<b>Q2 FY2027 财报今晚美东收盘后发布</b>，电话会太平洋时间下午两点，
+新加坡时间 9 月 3 日凌晨五点。公司自己给的指引和街端的一致预期如下：</p>
+<figure><img src="charts/chart_34_tonight.png" alt="今晚的指引与一致预期"><figcaption>图 2 · 公司指引 product revenue $1,415–1,420M（同比 +30%），街端一致预期总收入 $14.7 亿、non-GAAP EPS $0.45。过去四个季度全部超预期，平均超预期幅度 22%。</figcaption></figure>
+<h3>要看的三个数</h3>
+<ol>
+  <li><b>Product revenue 增速能否守住 30%+。</b>Q1 的 34% 有一个特殊性：CoCo 当季刚上线，
+      公司在做指引时手里<b>没有 CoCo 的实际消耗数据</b>（CFO 原话是「we didn't have any Observe behavior for guidance for CoCo」）。
+      这一季是第一次带着真实消耗数据做预测。<b>能不能再超，才是 AI 增量可持续性的第一份证据。</b></li>
+  <li><b>RPO。</b>Q1 的 $9.21b / +38% 已经较 Q4 的 +42% 放缓，且环比从 $9.77b 回落。
+      季节性可以解释环比（Q4 是签约大月），但增速的一阶导已经转负。若本季继续掉到 35% 以下，
+      我们的 Bear 情景概率要上调。</li>
+  <li><b>NRR。</b>126% 能否守住。这一项区分「AI 带来关注」和「AI 带来收入」。</li>
+</ol>
+
+<div class="callout good">
+  <b class="tag">📌 一个值得赞许的细节</b>
+  CFO Brian Robins 在上一次电话会上主动说：<b>「There's been no change in guidance philosophy and we view a 3% beat is a very solid beat.」</b>
+  在一只当天刚涨 36% 的股票上，CFO 亲口把「合格 beat」的标准定在 3%——这是主动给市场降温，
+  在本系列覆盖的公司里并不多见。它也意味着：<b>市场今晚若按「必须大超」来定价，会失望。</b>
+</div>
+<figure><img src="charts/chart_02_earnings_reaction.png" alt="历次财报次日涨跌幅"><figcaption>图 3 · 过去 10 次财报的次日涨跌：6 涨 4 跌，平均绝对波动 15.9%。最惨的一次是 2024 年 2 月换帅当天 −18.1%，最猛的一次是今年 5 月 28 日 +36.5%。</figcaption></figure><figure><img src="charts/chart_35_move_distribution.png" alt="财报单日绝对波动排序"><figcaption>图 4 · 把 10 次波动按绝对值排序：中位数 14.1%，没有一次低于 2%。换句话说，<b>今晚持仓过夜等于承担一个中位数 14% 的双向赌注</b>。这是我们给观望评级的直接原因之一。</figcaption></figure>
+<h2 id="s3"><span class="no">3</span>Company 101：它到底卖什么</h2>
+<p>把 Snowflake 想象成企业的<b>中央数据仓库 + 按表付费的电力公司</b>。企业把散落在几十个系统里的数据
+（交易记录、用户行为、供应链、财务）集中放进 Snowflake，需要分析时启动计算，用多少算多少钱。
+它不按席位收费，也不按预置容量收费——<b>这个选择决定了它后面所有的财务特征</b>。</p>
+
+<h3>收入结构：只有一个指标重要</h3>
+<p>FY2026 总收入 $46.84 亿，其中 <b>Product revenue $44.72 亿，占 95.5%</b>，其余是专业服务。
+公司自己在 8-K 里写明：product revenue 是关键指标，因为收入按平台消耗量确认，
+而消耗量「inherently variable at our customers' discretion」——<b>本质上由客户自己决定</b>。
+这既是弹性的来源，也是可见度差的根源。</p>
+<figure><img src="charts/chart_05_revenue_by_product.png" alt="收入构成：产品收入与专业服务"><figcaption>图 5 · 收入构成（US$m）。深蓝色是按用量计费的 product revenue，占 96%。FY2027E 为公司指引，FY2028E 为街端一致预期，其后为本模型假设。</figcaption></figure><figure><img src="charts/chart_06_revenue_by_geography.png" alt="FY2026 收入地理分布"><figcaption>图 6 · 美洲 78%、EMEA 16%、APJ 6%。国际化程度显著低于同体量的美国软件公司——既是对北美企业 IT 预算周期的单点暴露，也是一个尚未兑现的选项。</figcaption></figure>
+<h3>产品栈：从数据仓库到 AI 数据云</h3>
+<table>
+  <tr><th>产品</th><th>是什么</th><th>最新进展</th></tr>
+  <tr><td><b>核心数据平台</b></td><td>数据仓库、数据工程、数据共享</td><td>仍是收入绝对主体；AI 需求最终落在这里消耗算力</td></tr>
+  <tr><td><b>Cortex AI</b></td><td>在数据旁边直接调用大模型</td><td>OpenAI（GPT-5.2）、Anthropic Claude、Meta Llama 均原生可用；2026-02-02 与 OpenAI 签 $200M 多年合作</td></tr>
+  <tr><td><b>Cortex Code（CoCo）</b></td><td>懂企业数据上下文的 AI coding agent</td><td><b>2026-02-05 GA；Q1 FY27 已有 7,100+ 活跃账户</b></td></tr>
+  <tr><td><b>Snowflake Intelligence</b></td><td>业务用户用自然语言问数据</td><td>Q1 FY27 使用账户数<b>环比翻倍</b></td></tr>
+  <tr><td><b>Openflow</b></td><td>数据集成与管道</td><td>已在 AWS / Azure / GCP 三朵云 GA</td></tr>
+  <tr><td><b>Snowpark Container Services</b></td><td>在 Snowflake 内跑容器化负载</td><td>已与 Vercel v0 集成，自然语言生成数据应用</td></tr>
+  <tr><td><b>Marketplace</b></td><td>数据与应用的交易市场</td><td>FY2026 有 3,678 个 listing（+21%）</td></tr>
+</table>
+<p>截至 Q1 FY2027，<b>13,600+ 账户每周使用 Snowflake 的 AI 功能</b>。</p>
+
+<h3>客户：增长来自老客户加深，不是新客户拓宽</h3>
+<figure><img src="charts/chart_09_customers.png" alt="大客户与 G2000 客户数"><figcaption>图 7 · 两条曲线在分化：TTM 消费超 $100 万的客户一年增 29%（606 → 779），而 Forbes G2000 客户只增 5–9%。<b>增长来自存量大客户的用量扩张，而不是新的旗舰客户获取。</b>这与 126% 的 NRR 互相印证，也意味着增长的持续性取决于既有客户的 AI 负载能否继续加深。</figcaption></figure><figure><img src="charts/chart_07_nrr.png" alt="净收入留存率"><figcaption>图 8 · NRR 在连续三个季度 125% 之后，Q1 FY27 回升到 126%。对一家 consumption model 公司，NRR 掉头向上比绝对水平更重要。</figcaption></figure>
+<h3>管理层：一条值得记住的履历</h3>
+<p><b>CEO Sridhar Ramaswamy</b> 在 Google 干了 15 年，做到广告与电商业务的高级副总裁——
+主导过全球最大的按用量计费业务之一。2019 年离开创办订阅制搜索引擎 Neeva，
+2023 年 5 月 Neeva 被 Snowflake 以约 $1.5 亿收购，他随之加入任 AI 高级副总裁；
+<b>2024 年 2 月接替 Frank Slootman 出任 CEO，换帅当天股价跌 18.1%</b>。</p>
+<p>评价他只需要看一件事：接任时 Snowflake 增速正在下滑、市场普遍认为它会成为 AI 时代的输家；
+两年半后 product revenue 增速回到 34%，而这个加速的直接归因（CoCo）是他亲手推动的产品。
+<b>这是本次覆盖中管理层可信度最高的一条证据。</b>风险的另一面是：他的履历是产品和技术，不是成本控制，
+而 Snowflake 的 GAAP 亏损三年没有收窄。</p>
+<p><b>CFO Brian Robins</b> 来自 GitLab，更早是 Sisense、Cylance、AlienVault、Verisign 的 CFO——
+典型的「带公司规模化」路径。他在电话会上的两处表述值得记录：一是用带宽成本下降对冲 AI 产品低毛利
+（「We're offsetting it with lower bandwidth cost」），从而守住 75% 的 non-GAAP product gross margin；
+二是主动把「合格 beat」定义为 3%。</p>
+<p>两位联合创始人 <b>Benoit Dageville</b>（存算分离架构的主要设计者）与 <b>Thierry Cruanes</b> 均为前 Oracle 数据库架构师。
+截至 2026 年 8 月，Dageville 已从产品总裁转为战略顾问——创始人退居顾问，通常意味着技术路线定型、组织进入规模化执行阶段。</p>
+
+<h2 id="s4"><span class="no">4</span>增长引擎：CoCo，和那 +36% 的一天</h2>
+<p>要理解现在这个价格，必须先理解 2026 年 5 月 28 日发生了什么。</p>
+<figure><img src="charts/chart_04_growth_acceleration.png" alt="产品收入同比增速轨迹"><figcaption>图 9 · 这条线是本轮 re-rating 的全部起点。一家 $45 亿收入的软件公司，增速从 26% 反弹到 34%，在整个软件板块里都极其罕见。</figcaption></figure><figure><img src="charts/chart_03_quarterly_product_revenue.png" alt="季度产品收入"><figcaption>图 10 · Q1 FY27 的 $1,334.3M 是 Snowflake 历史上最大的单季环比增量。CEO 原话：「marking the strongest sequential dollar growth in our history」。</figcaption></figure>
+<h3>三件事同一天发生</h3>
+<ol>
+  <li><b>Q1 FY2027 大超预期</b>：product revenue $13.34 亿（+34%），总收入 $13.91 亿（+33%），
+      远超街端预期的 $13.2 亿。</li>
+  <li><b>全年指引大幅上调</b>：FY2027 product revenue 指引从 $56.60 亿上调到 <b>$58.40 亿</b>
+      （增速口径从 27% 提到 31%），non-GAAP 营业利润率指引从 12.5% 提到 13.5%。</li>
+  <li><b>宣布与 AWS 的五年 $60 亿承诺</b>：规模是 2023 年那笔的 <b>2.4 倍</b>，核心是 AWS 的
+      Graviton（Arm 架构 CPU）+ Cortex AI 深度集成 + Marketplace 渠道。</li>
+</ol>
+<p>次日股价 <b>+36.5%</b>。</p>
+
+<div class="callout">
+  <b class="tag">📌 $60 亿 AWS 承诺的产业含义（八层栈视角）</b>
+  这笔钱主要花在 <b>CPU（Graviton）而不是 GPU</b> 上。逻辑是：AI 从训练转向推理和 agent 之后，
+  吃掉算力的大头变成了 CPU——agent 每一次调用背后是大量的数据检索、编排、状态管理。
+  这与我们在 AI 基础设施八层栈中「算力结构性迁移」的观察线是同一条证据。
+  财务上它的作用是<b>守住毛利率</b>：AI 产品的毛利天然低于核心平台，公司用 AWS 协议换来的带宽和计算成本下降来对冲，
+  代价是 FY2027 的 adjusted FCF margin 指引从 FY2026 的 25% 下调到 <b>23%</b>。
+</div>
+<figure><img src="charts/chart_12_gross_margin.png" alt="产品毛利率"><figcaption>图 11 · Product gross margin 几乎是一条直线：non-GAAP 稳在 75–76%。在 AI 产品占比快速提升的同时守住毛利率，是 AWS 协议最直接的财务证据。</figcaption></figure>
+<h3>但必须同时说清楚风险的另一面</h3>
+<div class="callout risk">
+  <b class="tag">⚠️ CoCo 的效率悖论</b>
+  CoCo 的价值主张之一，是让数据工程变得更高效。<b>更高效意味着完成同样的任务消耗更少的计算。</b>
+  Snowflake 按计算量收费。所以 CoCo 对收入的净效应 =（新增 AI 工作负载带来的消耗）−（效率提升省下的消耗）。
+  目前净效应显著为正，但这个差额能维持多久，是整个多头逻辑里最脆弱的一环。
+  第三方研究已明确指出：一旦 CoCo 的采用曲线走平，或效率提升超过用量增量，增速可能快速回落。
+</div>
+
+<h2 id="s5"><span class="no">5</span>财务解剖：加速是真的，杠杆也是真的</h2>
+<h3>5.1 经营杠杆：这是本报告里最容易被忽略的一条好消息</h3>
+<figure><img src="charts/chart_10_operating_margin.png" alt="GAAP 与 non-GAAP 营业利润率"><figcaption>图 12 · GAAP 营业利润率一年从 −43% 改善到 −23.4%，20 个百分点。两条线之间那 35 个点的落差，几乎全部是股权激励。</figcaption></figure><figure><img src="charts/chart_11_annual_margin.png" alt="年度营业利润率"><figcaption>图 13 · non-GAAP 营业利润率 FY2025 6% → FY2026 10% → FY2027 指引 13.5%（年内已上调一次）。</figcaption></figure><figure><img src="charts/chart_13_opex_ratio.png" alt="GAAP 经营费用占收入比"><figcaption>图 14 · GAAP 口径的经营费用占收入比，一年从 109% 降到 90%。</figcaption></figure><figure><img src="charts/chart_14_nongaap_opex.png" alt="non-GAAP 费用率对比"><figcaption>图 15 · 拆开看会发现一个重要细节：<b>省下来的钱几乎全部来自研发（23% → 20%），销售费用率纹丝不动（34%）。</b>这说明经营杠杆来自研发的规模效应，而不是销售效率的提升——在一家 consumption model 公司里，这是次优的杠杆来源。</figcaption></figure>
+<h3>5.2 但 GAAP 亏损三年没有收窄</h3>
+<figure><img src="charts/chart_16_net_loss.png" alt="GAAP 净亏损"><figcaption>图 16 · FY2024 −$8.38 亿 → FY2025 −$12.89 亿 → FY2026 −$13.29 亿。同期收入增长了 1.67 倍，<b>亏损额却在扩大</b>。管理层给的 GAAP 转正时点是 FY2028 Q4。</figcaption></figure><figure><img src="charts/chart_15_sbc.png" alt="股权激励绝对额与占收入比"><figcaption>图 17 · FY2026 股权激励 $15.995 亿，占收入 34.2%（FY2025 为 40.8%）。比例在下降，但绝对水平仍处于软件行业最高一档。这个数字是理解下一节的钥匙。</figcaption></figure><figure><img src="charts/chart_17_nongaap_eps.png" alt="non-GAAP 每股收益"><figcaption>图 18 · non-GAAP EPS 季度轨迹。今晚一致预期 $0.45。</figcaption></figure><figure><img src="charts/chart_21_shares.png" alt="两个股数口径"><figcaption>图 19 · Q1 FY27 的 GAAP 摊薄股数 345.4M，non-GAAP 摊薄股数 375.0M，相差 8.6%。GAAP 亏损时反摊薄项被剔除，结果是 GAAP 每股亏损看起来更小、non-GAAP 每股收益的分母更大。<b>本报告的全部估值一律使用 375.0M</b>——用基本股数会系统性高估每股价值约 8%。</figcaption></figure>
+<h3>5.3 订单与资产负债表</h3>
+<figure><img src="charts/chart_08_rpo.png" alt="RPO 与同比增速"><figcaption>图 20 · RPO（已签约未确认收入）$92.1 亿，同比 +38%——但环比从 Q4 的 $97.7 亿回落，增速也从 42% 降到 38%。季节性可以解释环比（Q4 是签约大月），<b>但增速的一阶导已经转负，这是上季度唯一的瑕疵，也是今晚必须修复的一项。</b></figcaption></figure><figure><img src="charts/chart_22_balance_sheet.png" alt="资产负债表"><figcaption>图 21 · 现金及投资 $43.88 亿，可转债 $22.82 亿（0% 票息，2027/2029 到期，已配 capped call）。<b>净现金 $21.06 亿</b>，无偿债压力。资产负债表不是这只票的风险点。</figcaption></figure>
+<p>补充两条现金运用的事实：Q1 FY2027 回购 170 万股花费 <b>$3.00 亿</b>，均价约 <b>$176</b>——
+以现价 $319.80 回看，这笔回购执行得相当漂亮。$45 亿的回购授权还剩约 <b>$8 亿</b>。
+FY2026 全年回购 $8.735 亿，FY2025 为 $19.323 亿。</p>
+
+<h2 id="s6"><span class="no">6</span>现金流的成色：同一家公司的两种自由现金流</h2>
+<p class="lead">这一节是整份报告里最需要读者停下来看清楚的地方。</p>
+<p>Snowflake 官方口径的 FY2026 <b>adjusted free cash flow 是 +$11.93 亿，FCF margin 25%</b>。
+听起来是一家现金流健康的公司。但这个数字把<b>股权激励加回去了</b>——理由是股权激励「不消耗现金」。</p>
+<p>股权激励确实不消耗公司的现金。它消耗的是<b>股东的所有权</b>。公司用股票代替现金支付员工薪酬，
+省下的现金体现为「自由现金流」，代价是股东手里的股份被稀释。对<b>股东</b>而言，这是不折不扣的成本。</p>
+<figure><img src="charts/chart_20_fcf_ex_sbc.png" alt="两种口径的自由现金流"><figcaption>图 22 · 绿柱是公司口径的 adjusted FCF，橙/红柱是扣除股权激励后的 FCF。<b>Snowflake 过去四个完整财年从未在扣除股权激励后产生过一分钱自由现金流</b>——FY2023 −$3.45 亿、FY2024 −$3.54 亿、FY2025 −$5.37 亿、FY2026 −$4.03 亿。按本模型要到 <b>FY2029E</b> 才转正。</figcaption></figure><figure><img src="charts/chart_18_fcf.png" alt="年度自由现金流与 FCF margin"><figcaption>图 23 · 公司口径的 adjusted FCF 与 margin。FY2027 指引 23%（较 FY2026 的 25% 下调，原因是 AWS 承诺带来的前置成本）。</figcaption></figure><figure><img src="charts/chart_19_fcf_seasonality.png" alt="季度 FCF margin 的季节性"><figcaption>图 24 · 季度 adjusted FCF margin 的季节性极强：Q2 只有 6%，Q4 高达 61%。<b>单看任何一个季度都会误判。</b>今晚公布的 Q2 数字如果偏低，那是季节性，不是恶化。</figcaption></figure>
+<div class="callout risk">
+  <b class="tag">⚠️ 这个数字如何影响估值</b>
+  用哪一条现金流做 DCF，结论差一倍：
+  <ul style="margin:8px 0 0">
+    <li>常规口径（SBC 视为非现金，与卖方一致）：每股 <b>$117</b></li>
+    <li>SBC 费用化口径（把它当作它实际是的成本）：每股 <b>$37</b></li>
+  </ul>
+  我们两条都披露，并在最终桥接中分别给 15% 和 5% 的权重。<b>我们不认为市场会按第二种口径定价</b>——
+  历史上从来没有——但读者有权知道这个数字存在。
+</div>
+
+<h2 id="s7"><span class="no">7</span>竞争格局：Databricks 这个数字必须放进模型</h2>
+<figure><img src="charts/chart_24_vs_databricks.png" alt="Snowflake 与 Databricks 对比"><figcaption>图 25 · Databricks 的收入 run-rate 已经<b>超过</b> Snowflake，增速是它的两倍多，一级市场估值（$1,900 亿）接近 Snowflake 市值（$1,108 亿）的两倍。</figcaption></figure>
+<table>
+  <tr><th></th><th class="num">Snowflake</th><th class="num">Databricks</th></tr>
+  <tr><td>收入 run-rate</td><td class="num">~$53.4 亿</td><td class="num"><b>$70 亿</b></td></tr>
+  <tr><td>同比增速</td><td class="num">33.5%</td><td class="num"><b>&gt;80%</b></td></tr>
+  <tr><td>$1M+ 客户</td><td class="num">779</td><td class="num">500+</td></tr>
+  <tr><td>估值</td><td class="num">市值 $1,108 亿（公开市场）</td><td class="num"><b>$1,900 亿</b>（2026-08-13 一级）</td></tr>
+  <tr><td>IPO</td><td class="num">已上市</td><td class="num">2026 年内明确不上市</td></tr>
+</table>
+
+<p><b>这个对比不能证明 Snowflake「在输」</b>——两家产品定位有差异（Snowflake 起于结构化数据仓库，
+Databricks 起于 lakehouse 和机器学习工程），且非上市公司的 run-rate 口径未经审计，
+$70 亿也不是收入而是年化运行率。<b>但它足以证明另一件事：Snowflake 在数据平台层已经不再拥有稀缺性溢价的基础。</b>
+这一点必须写进估值假设，而不是只写在风险提示里。</p>
+
+<h3>还有两条更结构性的威胁</h3>
+<ol>
+  <li><b>三大云厂商既是渠道、又是供应商、还是竞争对手。</b>Snowflake 跑在 AWS/Azure/GCP 上
+      （$60 亿 AWS 承诺就是明证），通过它们的 Marketplace 卖货，又与 Redshift / BigQuery / Fabric 正面竞争。
+      结构性后果是：<b>毛利率的天花板由云厂商的定价决定，Snowflake 没有议价空间。</b></li>
+  <li><b>开放表格式（Iceberg）在削弱锁定效应。</b>Snowflake 自己在 FY2026 10-K 里把 Iceberg tables
+      和分层存储定价列为可能压制消耗量的因素。数据一旦以开放格式存在客户自己的对象存储里，
+      换一个计算引擎的成本大幅下降。<b>这比 Databricks 更长期、更难逆转。</b></li>
+</ol>
+<figure><img src="charts/chart_23_rule40.png" alt="Rule of 40 同业对比"><figcaption>图 26 · Rule of 40（TTM 收入增速 + 营业利润率）。Snowflake 只有 11 分，在同业中排名靠后——不是因为增速不够，而是因为 GAAP 营业利润率仍是 −22%。<b>它靠增长拿分，不靠利润拿分。</b></figcaption></figure>
+<h2 id="s8"><span class="no">8</span>估值：三种方法，一个必须解释的矛盾</h2>
+<div class="kv">
+  <div><div class="k">企业价值 EV</div><div class="v">$108.7B</div></div>
+  <div><div class="k">EV/Sales FY2027E</div><div class="v">17.8x</div></div>
+  <div><div class="k">EV/Sales FY2028E</div><div class="v">14.2x</div></div>
+  <div><div class="k">WACC</div><div class="v">11.0%</div></div>
+  <div><div class="k">永续增长率</div><div class="v">3.0%</div></div>
+  <div><div class="k">摊薄股数</div><div class="v">375.0M</div></div>
+</div>
+<p class="gap">WACC 构成：无风险利率 4.80%（美国 10 年期国债，2026-09-01）+ Beta 1.315 × 股权风险溢价 5.0% = 权益成本 11.38%；
+可转债为 0% 票息且规模小，加权后取 11.0%。模型区间为 FY2023A–FY2036E，即<b>四年已披露实际 + 十年预测</b>。</p>
+
+<h3>8.1 方法一：可比公司 —— 用回归，不用中位数</h3>
+<p>同业中位数把 10% 增速的 Salesforce 和 93% 增速的 Palantir 放进同一个篮子，
+得出的中位数对 Snowflake 没有任何解释力。正确的做法是回归。</p>
+<figure><img src="charts/chart_26_regression.png" alt="EV/Sales 对增速的回归"><figcaption>图 27 · <b>本报告最重要的一张图。</b>对 7 家可比公司（剔除 Oracle：传统授权基数 + 高杠杆，明显偏离 SaaS 定价线）做 EV/Sales 对下一财年收入增速的回归，得到 <b>EV/Sales = −6.07 + 0.834 × 增速，R² = 0.975</b>。R² 高达 0.975 意味着：<b>整个软件板块的估值几乎只由一个变量解释——预期增速。</b></figcaption></figure><figure><img src="charts/chart_25_comps_evs.png" alt="可比公司 EV/Sales"><figcaption>图 28 · 各家 EV / 下一财年收入倍数，柱下标注对应的一致预期增速。</figcaption></figure>
+<p>把 Snowflake 的 25.6% 一致预期增速代入回归线：</p>
+<table>
+  <tr><th>口径</th><th class="num">EV/Sales</th><th class="num">隐含股价</th></tr>
+  <tr><td>回归线给出的「公允」倍数</td><td class="num">15.3x</td><td class="num">$318.44</td></tr>
+  <tr class="hl"><td>SNOW 实际倍数</td><td class="num">14.2x</td><td class="num">$319.80（现价）</td></tr>
+  <tr><td>增速最接近的可比公司 Datadog</td><td class="num">14.0x</td><td class="num">$291.86</td></tr>
+</table>
+
+<div class="callout">
+  <b class="tag">📌 关键发现</b>
+  <b>以现价计，Snowflake 相对同业的增速—倍数定价线，误差只有 0.4%（$318.44 vs $319.80）。
+  市场对 Snowflake 的相对定价没有错。</b>
+</div>
+
+<h3>8.2 方法二：DCF —— 先看历史，再看预测</h3>
+<p><b>做 DCF 之前必须先把已经发生的四年摆出来</b>，否则读者无从判断 FY2027E 那个起点是不是被拍出来的。
+把历史放进来之后，我们改掉了初稿里的一个实质性错误。</p>
+
+<table>
+  <tr><th>财年（截至 1/31）</th><th class="num">FY2023</th><th class="num">FY2024</th><th class="num">FY2025</th><th class="num">FY2026</th><th class="num">FY2027 指引</th></tr>
+  <tr><td>总收入（US$m）</td><td class="num">2,065.7</td><td class="num">2,806.5</td><td class="num">3,626.4</td><td class="num">4,683.9</td><td class="num">6,090（推算）</td></tr>
+  <tr><td>Non-GAAP 营业利润率</td><td class="num">5%</td><td class="num">8%</td><td class="num">6%</td><td class="num">10%</td><td class="num">13.5%</td></tr>
+  <tr class="hl"><td><b>Adjusted FCF margin</b></td><td class="num">25%</td><td class="num"><b>29%</b></td><td class="num">26%</td><td class="num">25%</td><td class="num"><b>23%</b></td></tr>
+  <tr><td>两者价差（百分点）</td><td class="num">+20</td><td class="num">+21</td><td class="num">+20</td><td class="num">+15</td><td class="num"><b>+9.5</b></td></tr>
+  <tr><td>SBC 占收入比</td><td class="num">41.7%</td><td class="num">41.6%</td><td class="num">40.8%</td><td class="num">34.1%</td><td class="num">29%（本模型）</td></tr>
+  <tr><td>递延收入净增（占收入）</td><td class="num">24.9%</td><td class="num">18.8%</td><td class="num">10.6%</td><td class="num">16.1%</td><td class="num">—</td></tr>
+</table>
+<figure><img src="charts/chart_36_fcf_margin_history.png" alt="FCF margin 历史与预测、价差压缩"><figcaption>图 29 · <b>左：营业利润率在稳步扩张（5%→13.5%），但 FCF margin 四年没有改善过</b>——峰值是 FY2024 的 29%，FY2027 还被公司自己指引下调到 23%。<b>右：撑住 FCF margin 的那个价差正在快速消失（+20 → +9.5 → 转负）。</b></figcaption></figure>
+<div class="callout warn">
+  <b class="tag">⚠️ 我们据此改掉了初稿的一个错误</b>
+  <p style="margin:6px 0">初稿沿用了「成熟 SaaS 的 FCF margin 会爬到 34%」这个常规假设。<b>四年历史证明这个假设是错的。</b>
+  真正撑住 Snowflake FCF margin 的，是它相对营业利润率那 20 个百分点的价差，而价差有两个来源：
+  <b>递延收入（客户预付，规模随增速走）</b>和<b>被加回的股权激励</b>。</p>
+  <p style="margin:6px 0">这两项<b>都会随本模型的假设自己萎缩</b>——增速从 30% 衰减到 7.5%，SBC 占收入比从 34% 降到 15%。
+  再叠加现金税率从 0% 爬到 21%（公司目前有大量累计亏损可抵扣），价差在 FY2032 之后必然转负：
+  <b>一家要交税的公司，自由现金流率不可能长期高于它的税前营业利润率。</b></p>
+  <p style="margin:6px 0"><b>修正后的口径：</b>adjusted FCF margin = non-GAAP 营业利润率 ×（1 − 现金税率）+ 价差，
+  价差从 FY2027 的 +9.5pt 压缩到 FY2033 的 +2pt（资产轻公司的折旧减资本开支常态值）。
+  该公式在 FY2027 上给出 13.5% × 1.00 + 9.5 = <b>23.0%，与公司指引完全吻合</b>，可作为校准检验。
+  修正结果：终局 FCF margin 从 34% 降到 <b>24%</b>，DCF 每股价值从 $156 降到 <b>$117</b>，目标价从 $270 降到 <b>$265</b>。</p>
+</div>
+
+<h3>8.2b DCF 结果：和相对估值给出完全相反的答案</h3>
+<figure><img src="charts/chart_29_dcf_sensitivity.png" alt="DCF 敏感性热力图"><figcaption>图 30 · 基准情形（WACC 11.0% / 永续增长 3.0%）每股 <b>$117</b>。<b>整张表里最大值只有 $164（WACC 9.5% / g 4.0%），约为现价的一半——没有任何一格接近 $319.80。</b></figcaption></figure><figure><img src="charts/chart_30_dcf_decomposition.png" alt="DCF 价值拆解"><figcaption>图 31 · 显性期（FY2027E–FY2036E，10 年）现值 $176.9 亿，终值现值 $239.9 亿，终值占企业价值 57.6%。加上净现金后的权益价值约为当前市值的 40%。</figcaption></figure><figure><img src="charts/chart_27_revenue_projection.png" alt="收入预测路径"><figcaption>图 32 · 收入路径：FY2027E 用公司指引，FY2028E 用街端一致预期，FY2029E 起按 23% → 20% → 17% → 14.5% → 12.5% → 10.5% → 9% → 7.5% 逐年衰减，FY2036E 达 $221 亿。</figcaption></figure><figure><img src="charts/chart_28_fcf_two_ways.png" alt="两种口径的现金流预测"><figcaption>图 33 · 四年实际 + 十年预测。注意左边四根：<b>扣除股权激励后的自由现金流从来没有为正过</b>。</figcaption></figure>
+<div class="callout warn">
+  <b class="tag">⚠️ 必须同时说清楚的两件事</b>
+  <p style="margin:6px 0"><b>DCF 可能给得偏低的理由（真实存在）：</b>10 年显性期对一家仍在 30%+ 增速的公司偏短；
+  consumption model 的长尾极长，数据一旦沉淀，消耗量的复利可以持续二十年；AI 是全新的 TAM 增量，
+  历史增速外推捕捉不到。本系列覆盖过的 ASML、TSM、GLW 也都出现过 DCF 远低于市价的情况。</p>
+  <p style="margin:6px 0"><b>DCF 不能被忽略的理由：</b>我们的假设已经相当慷慨——终局 FCF margin 34%、
+  八年 14.1% 复合增速、WACC 只有 11%。而落差不是几个百分点，是<b>一倍以上</b>。</p>
+  <p style="margin:6px 0"><b>处理方式：</b>DCF 在最终桥接中合计权重 20%，不作为目标价的锚，
+  但它是「为什么不追高」这个结论的量化底座。</p>
+</div>
+
+<h3>8.3 方法三：反推 DCF —— 现价到底假设了什么</h3>
+<p>这是回答「贵不贵」最诚实的方式：不问它值多少，而问<b>要相信什么才能接受现价</b>。</p>
+<figure><img src="charts/chart_31_reverse_dcf.png" alt="反推 DCF 的收入路径"><figcaption>图 34 · 保持本模型的 FCF margin 路径不变，反解现价所需的收入增速。</figcaption></figure>
+<table>
+  <tr><th></th><th class="num">本模型</th><th class="num">现价隐含</th></tr>
+  <tr><td>FY2029–FY2036 收入复合增速</td><td class="num">14.1%</td><td class="num"><b>32.2%</b></td></tr>
+  <tr><td>FY2036E 收入</td><td class="num">$220.8 亿</td><td class="num"><b>$717.0 亿</b></td></tr>
+  <tr class="hl"><td>或者：FY2036E adjusted FCF margin</td><td class="num">24.0%</td><td class="num"><b>62.5%</b></td></tr>
+</table>
+
+<p>两个参照系：</p>
+<ul>
+  <li><b>Oracle 今天的 TTM 收入是 $673.6 亿。</b>现价要求 Snowflake 在十年后的收入体量<b>超过今天的 Oracle</b>。</li>
+  <li><b>Snowflake FY2026 的 non-GAAP product gross margin 是 76%，而过去四年实际 FCF margin 从未超过 29%。</b>
+      62.5% 的 FCF margin 意味着扣掉全部销售、研发、管理费用、资本开支和现金税后只剩 13 个百分点——这在数学上几乎不可能。</li>
+</ul>
+<div class="callout">
+  <b class="tag">📌 结论</b>
+  现价<b>必须</b>靠「增速远超模型」来支撑，<b>不能</b>靠「利润率超预期」来支撑。
+  也就是说，今晚以及之后每一个季度的增速数字，就是这只股票的全部。
+</div>
+
+<h3>8.4 估值桥接与目标价</h3>
+<table>
+  <tr><th>方法</th><th class="num">每股价值</th><th class="num">权重</th><th class="num">贡献</th></tr>
+  <tr><td>Comps：增速回归拟合 EV/Sales 15.3x × FY2028E 收入</td><td class="num">$318.44</td><td class="num">30%</td><td class="num">$95.53</td></tr>
+  <tr><td>Comps：增速最接近的可比公司 DDOG 14.0x</td><td class="num">$291.86</td><td class="num">10%</td><td class="num">$29.19</td></tr>
+  <tr><td>DCF（常规口径，SBC 视为非现金）</td><td class="num">$116.78</td><td class="num">15%</td><td class="num">$17.52</td></tr>
+  <tr><td>DCF（SBC 费用化口径）</td><td class="num">$37.35</td><td class="num">5%</td><td class="num">$1.87</td></tr>
+  <tr><td>情景加权期望值（Bear/Base/Bull = 25/50/25）</td><td class="num">$298.40</td><td class="num">40%</td><td class="num">$119.36</td></tr>
+  <tr class="hl"><td><b>加权值</b></td><td class="num"><b>$263.46</b></td><td class="num"></td><td class="num"></td></tr>
+  <tr class="hl"><td><b>目标价（取整）</b></td><td class="num"><b>$265</b></td><td class="num"></td><td class="num"><b>−17.1%</b></td></tr>
+</table>
+<p>目标价 $265 对应 <b>EV/Sales FY2028E 12.7x</b>，位于 Bear 的 9.3x 与 Base 的 14.2x 之间——
+这个位置准确反映了本报告的立场：<b>与同业的增速—倍数定价线一致，但绝对估值与赔率都不支持在现价建仓</b>。</p>
+<figure><img src="charts/chart_32_football_field.png" alt="Football field"><figcaption>图 35 · 现价 $319.80（黑线）站在几乎所有估值方法的上沿；目标价 $265（粉色虚线）。注意卖方一致目标价的区间跨度 $110–$500——分歧之大本身就是一个信号。</figcaption></figure>
+<h2 id="s9"><span class="no">9</span>情景与赔率：+31% 对 −43%</h2>
+<figure><img src="charts/chart_33_scenarios.png" alt="情景分析"><figcaption>图 36 · Bull / Base / Bear 三情景与概率加权期望值。</figcaption></figure>
+<table>
+  <tr><th>情景</th><th class="num">概率</th><th class="num">FY2028E 收入</th><th class="num">EV/Sales</th><th class="num">股价</th><th class="num">vs 现价</th><th>触发条件</th></tr>
+  <tr><td><b>Bull</b></td><td class="num">25%</td><td class="num">$8,400M</td><td class="num">18.5x</td><td class="num"><b>$420</b></td><td class="num beat">+31%</td><td>CoCo/Snowflake Intelligence 形成第二增长曲线，增速守在 30%+，GAAP 转正提前至 FY2028</td></tr>
+  <tr><td><b>Base</b></td><td class="num">50%</td><td class="num">$7,667M</td><td class="num">14.2x</td><td class="num"><b>$296</b></td><td class="num flat">-7%</td><td>兑现街端一致预期，倍数维持现价水平（与增速最接近的 Datadog 基本同档）</td></tr>
+  <tr><td><b>Bear</b></td><td class="num">25%</td><td class="num">$7,100M</td><td class="num">9.3x</td><td class="num"><b>$182</b></td><td class="num miss">-43%</td><td>CoCo 贡献见顶或被效率抵消，增速回落至 20% 出头；Databricks 持续抢份额；倍数向 MongoDB（25% 增速）的 9.3x 收敛</td></tr>
+  <tr class="hl"><td colspan="4"><b>概率加权期望值</b></td><td class="num"><b>$298</b></td><td class="num">-6.7%</td><td></td></tr>
+</table>
+
+<div class="callout risk">
+  <b class="tag">⚠️ 赔率是本次给出观望评级的最强量化依据</b>
+  <b>上行 +31%，下行 −43%。</b>在一个必须靠「增速远超模型」才能撑住的价格上，
+  承担 43% 的左尾去博 31% 的右尾，是不划算的交易。<br><br>
+  Bear 情景的 9.3x 不是危言耸听——<b>那就是 MongoDB 今天的倍数，而 MongoDB 的增速是 25%</b>。
+  如果 Snowflake 的增速回到 20% 出头，按回归线它甚至不该有 9.3x。
+</div>
+
+<h2 id="s10"><span class="no">10</span>风险矩阵</h2>
+<table>
+  <tr><th>风险</th><th>严重性</th><th>触发信号</th><th>影响机制</th><th>监测指标</th></tr>
+  <tr><td><b>消耗量模型的可见度缺陷</b></td><td class="miss">高</td><td>客户重启成本优化</td>
+      <td>收入不锁在席位上，客户可随时削减用量；FY2024–25 的增速下滑正是这样发生的</td><td>Product revenue 环比、NRR</td></tr>
+  <tr><td><b>CoCo 的效率悖论</b></td><td class="miss">高</td><td>CoCo 账户数增长走平</td>
+      <td>提效意味着同样任务消耗更少计算，与按量计费直接冲突</td><td>CoCo 活跃账户数、AI 周活账户数</td></tr>
+  <tr><td><b>估值已充分定价</b></td><td class="miss">高</td><td>任何一个季度增速不及 30%</td>
+      <td>现价隐含 FY29–36 复合增速 32.2%（本模型 14.1%），容错空间为零</td><td>Product revenue 增速、EV/Sales</td></tr>
+  <tr><td><b>财报日极端波动</b></td><td class="miss">高</td><td>财报日本身</td>
+      <td>过去 10 次平均绝对波动 15.9%，最近一次 +36.5%</td><td>期权隐含波动率</td></tr>
+  <tr><td><b>GAAP 亏损三年未收窄</b></td><td class="miss">高</td><td>FY2028 Q4 未如期转正</td>
+      <td>亏损额从 −$8.4 亿扩大到 −$13.3 亿，同期收入增 1.67 倍</td><td>GAAP 营业利润率、净亏损</td></tr>
+  <tr><td><b>股权激励占收入 34%</b></td><td class="miss">高</td><td>SBC 占比停止下降</td>
+      <td>扣除后自由现金流为负，且要到 FY2029E 才转正</td><td>SBC/收入、摊薄股数</td></tr>
+  <tr><td><b>Databricks 的增速碾压</b></td><td class="miss">高</td><td>Databricks 启动 IPO</td>
+      <td>收入更大、增速两倍、一级估值近两倍，稀释 Snowflake 的稀缺性溢价</td><td>Databricks run-rate 与融资</td></tr>
+  <tr><td><b>开放表格式削弱锁定</b></td><td>中高</td><td>Iceberg 采用率上升</td>
+      <td>数据存在客户自己的对象存储里，换引擎成本大降；公司自己写进 10-K 风险因子</td><td>存储收入占比、NRR</td></tr>
+  <tr><td><b>云厂商的定价压力</b></td><td>中高</td><td>某云厂商原生数仓降价</td>
+      <td>COGS 主体是向云厂商采购算力，毛利率天花板由对方决定</td><td>Product gross margin</td></tr>
+  <tr><td><b>RPO 增速放缓</b></td><td>中</td><td>RPO 增速跌破 35%</td>
+      <td>已签约未确认收入是未来增长的领先指标，一阶导已转负</td><td>RPO 与同比增速</td></tr>
+  <tr><td><b>地理集中（美洲 78%）</b></td><td>中</td><td>北美企业 IT 预算收缩</td>
+      <td>缺乏地区分散，对单一市场的预算周期高度暴露</td><td>分地区收入占比</td></tr>
+  <tr><td><b>G2000 客户渗透缓慢</b></td><td>中</td><td>G2000 客户数增长停滞</td>
+      <td>增长依赖存量大客户加深而非新旗舰客户，长期天花板受限</td><td>G2000 客户数、$1M+ 客户数</td></tr>
+</table>
+
+<div class="callout good">
+  <b class="tag">📌 我们可能错在哪一边（反向风险）</b>
+  本报告的核心论点是「好公司，贵价格」。它最可能出错的方式<b>不是</b>公司变差，而是：
+  <ul style="margin:8px 0 0">
+    <li><b>CoCo 打开的是一个全新的、我们没有建模的 TAM。</b>如果 AI agent 让企业的数据消耗量出现阶跃式增长，
+        14.1% 的长期复合增速假设会显得可笑，DCF 的 $117 会成为笑话。</li>
+    <li><b>整个软件板块的定价线可能是对的。</b>R² = 0.975 说明市场对这一类资产有高度一致的定价框架，
+        而我们的 DCF 用的是一个 11% 的折现率——如果利率下行，整条线会整体上移。</li>
+    <li><b>动量本身是一种事实。</b>过去 7 次财报 6 次上涨，这不是随机的。观望的代价是可能错过又一个 +30% 的夜晚。</li>
+  </ul>
+</div>
+
+<h2 id="s11"><span class="no">11</span>结论、触发器与改判条件</h2>
+<div class="kv">
+  <div><div class="k">评级</div><div class="v">观望 NEUTRAL</div></div>
+  <div><div class="k">目标价</div><div class="v">$265</div></div>
+  <div><div class="k">隐含空间</div><div class="v" style="color:var(--red)">−17.1%</div></div>
+  <div><div class="k">分批介入区间</div><div class="v">$230–255</div></div>
+</div>
+
+<p class="lead"><b>为什么目标价低于现价却给观望而不是看空？</b></p>
+<p>三个理由，都必须说清楚：</p>
+<ol>
+  <li><b>基本面动能真实且在加速。</b>做空一家刚把全年指引上调两次、增速从 26% 反弹到 34% 的公司，赔率很差。</li>
+  <li><b>今晚有硬催化剂。</b>过去 7 次财报 6 次上涨，上一次 +36.5%。在财报前给出看空评级，是在赌一个 6:1 的反向概率。</li>
+  <li><b>相对同业的定价是一致的。</b>回归线给出 $318，与现价误差 0.4%。若这个价格站不住，站不住的是<b>整条定价线</b>，不是 Snowflake 一家——
+      这是一个板块判断，不是个股判断，不应该以个股评级的形式表达。</li>
+</ol>
+<p>所以这是一个<b>「不追高、等回调」</b>的评级，不是「看空」的评级。在 $230–255 区间分批介入时，
+上行至 Base $296 是 +16%~+29%，下行至 Bear $182 是 −21%~−29%，赔率第一次接近对称。</p>
+
+<h3>今晚之后要做的事</h3>
+<table>
+  <tr><th>情形</th><th>解读</th><th>动作</th></tr>
+  <tr><td>Product revenue 超指引 &gt;3% 且 RPO 增速回升至 40%+</td><td>加速可持续性得到第一份验证</td><td>上调 Bull 概率，目标价上修；但仍不在高位追</td></tr>
+  <tr><td>Product revenue 仅小幅超、RPO 增速继续掉到 35% 以下</td><td>CoCo 的增量在被效率提升抵消</td><td>上调 Bear 概率至 35%，重算目标价</td></tr>
+  <tr><td>NRR 跌破 125%</td><td>存量客户加深的故事出现裂缝</td><td>论文重审</td></tr>
+  <tr><td>股价财报后跌至 $255 以下且基本面无恶化</td><td>赔率转为有利</td><td><b>启动分批建仓</b></td></tr>
+</table>
+
+<h3>改判触发器</h3>
+<p><b>上调至 OVERWEIGHT：</b>（1）股价回落至 $255 以下且基本面无恶化；或（2）连续两个季度 product revenue 增速 ≥ 33%
+且 RPO 增速回升至 40%+；或（3）扣除 SBC 后的自由现金流提前转正（本模型假设为 FY2029E）。</p>
+<p><b>下调至 UNDERWEIGHT：</b>（1）product revenue 增速跌破 26%；或（2）NRR 跌破 120%；或
+（3）SBC 占收入比停止下降——那说明经营杠杆的改善是靠会计口径而非真实效率。</p>
+
+<h3>后续催化剂日历</h3>
+<table>
+  <tr><th>日期</th><th>事件</th><th>重要性</th></tr>
+  <tr class="hl"><td><b>2026-09-02 盘后</b></td><td><b>Q2 FY2027 财报</b>（电话会 PT 14:00 / SGT 9/3 05:00）</td><td class="miss">极高</td></tr>
+  <tr><td>同日</td><td>FY2027 全年指引是否第三次上调</td><td class="miss">极高</td></tr>
+  <tr><td>约 2026 年 12 月</td><td>Q3 FY2027 财报——CoCo 首个完整年度的续费与用量数据</td><td>高</td></tr>
+  <tr><td>待定</td><td>Databricks IPO（公司已表示 2026 年内不上市）</td><td>中</td></tr>
+  <tr><td>约 2028 年初</td><td>管理层承诺的 GAAP 转正时点（FY2028 Q4）</td><td>高</td></tr>
+</table>
+
+<h2 id="s12"><span class="no">12</span>附录：数据缺口与来源</h2>
+<h3>12.1 已知数据缺口（本项目规则：无法获取的字段必须显式标注，不以主观判断填补）</h3>
+<ol class="gap">
+  <li>Q1 FY26 的 NRR/RPO/客户数/EPS 等字段来自跨期推算或二手来源，已在 quarters[].derived 标注；Q1 FY26 8-K 原文未逐项核对。</li>
+  <li>FY2024 总收入 $2,806.5M 与 FCF $813M 来自二手汇总，未从 8-K 原文逐项核对。</li>
+  <li>Snowflake 不披露分产品线（Cortex/Snowpark/核心仓库）收入，AI 产品收入贡献无法量化，仅有管理层定性表述。</li>
+  <li>地理收入拆分仅有 FY2026 的百分比（78/16/6），无历史逐年序列与绝对金额，图表中的金额为按百分比推算。</li>
+  <li>Databricks 为非上市公司，$7B run-rate / +80% / $190B 估值均来自公司新闻稿与媒体报道，无审计披露。</li>
+  <li>Q2 FY2027 一致预期（rev $1.47B / EPS $0.45）来自二手汇总（Zacks/Benzinga），非 IBES 原始终端数据。</li>
+  <li>P/S 历史带图使用当前股本 346.6M 回溯计算，未逐季调整股本，存在约 3% 以内误差。</li>
+  <li>ServiceNow (NOW) 股价 $142.90 隐含约 10.3 亿股，与历史股本不符，疑似期间发生拆股；comps 中仅使用倍数不使用绝对股价。</li>
+  <li>历史序列自 FY2023 起（FY2022 及更早未纳入）；FY2023/FY2024 数据取自 FY2024 Q4 8-K 的比较列，为一手来源。</li>
+  <li><b>本报告撰写于 Q2 FY2027 财报发布前，全部结论在财报落地后需要重审。</b></li>
+</ol>
+
+<h3>12.2 交付物清单</h3>
+<table>
+  <tr><th>文件</th><th>内容</th></tr>
+  <tr><td><code>Task1_Research/SNOW_Research_Document_2026-09-02.md</code></td><td>公司研究底稿（业务、管理层、行业、竞争、风险）</td></tr>
+  <tr><td><code>Task2_Model/SNOW_Financial_Model_2026-09-02.xlsx</code></td><td>财务模型，11 个 tab（黄=假设 / 绿=披露实际值 / 灰=推算或 N/A）</td></tr>
+  <tr><td><code>Task3_Valuation/SNOW_Valuation_Analysis_2026-09-02.md</code></td><td>估值分析全文（DCF 双口径、回归 comps、反推 DCF、情景、桥接）</td></tr>
+  <tr><td><code>charts/</code></td><td>36 张图表（PNG，160 DPI）</td></tr>
+  <tr><td><code>data/SNOW_master_data_2026-09-02.json</code></td><td>全部底稿数据与数据缺口清单</td></tr>
+  <tr><td><code>SNOW_Initial_Report_2026-09-02.html</code></td><td>本报告</td></tr>
+</table>
+
+<h3>12.3 主要信息来源</h3>
+<p class="srcs">
+一手资料：
+<a href="https://www.sec.gov/Archives/edgar/data/0001640147/000164014726000027/fy2027q1earnings.htm">Snowflake Q1 FY2027 8-K（2026-05-27）</a> ·
+<a href="https://www.sec.gov/Archives/edgar/data/1640147/000162828026011631/fy2026q4earnings.htm">Q4/FY2026 8-K（2026-02-25）</a> ·
+<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014725000016/fy2025q4earnings.htm">Q4/FY2025 8-K（2025-02-26）</a> ·
+<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000008/snow-20260131.htm">FY2026 Form 10-K</a> ·
+<a href="https://www.snowflake.com/en/news/press-releases/snowflake-reports-financial-results-for-the-third-quarter-of-fiscal-2026/">Q3 FY2026 新闻稿</a> ·
+<a href="https://www.snowflake.com/en/news/press-releases/snowflake-reports-financial-results-for-the-second-quarter-of-fiscal-2026/">Q2 FY2026 新闻稿</a> ·
+<a href="https://www.snowflake.com/en/news/press-releases/snowflake-expands-aws-collaboration-with-6b-commitment-to-accelerate-enterprise-agentic-ai-adoption/">$6B AWS 合作新闻稿</a> ·
+<a href="https://www.snowflake.com/en/news/press-releases/snowflake-to-announce-financial-results-for-the-second-quarter-of-fiscal-2027/">Q2 FY2027 财报日期公告</a>
+<br><br>
+电话会与分析：
+<a href="https://www.fool.com/earnings/call-transcripts/2026/05/27/snowflake-snow-q1-2027-earnings-transcript/">Q1 FY2027 earnings call transcript（The Motley Fool）</a> ·
+<a href="https://www.cnbc.com/2026/05/27/snowflake-amazon-graviton-cloud-chips.html">CNBC：Snowflake rockets 36%</a> ·
+<a href="https://techcrunch.com/2026/05/27/in-more-good-news-for-amazon-snowflake-signs-6b-deal-with-aws-for-ai-cpu-chips/">TechCrunch：$6B AWS deal</a> ·
+<a href="https://www.tikr.com/blog/snowflake-stock-analysis-2026-coco-acceleration-6-billion-aws-deal-and-a-677-target">TIKR：CoCo 加速分析</a> ·
+<a href="https://www.benzinga.com/trading-ideas/previews/26/09/61554337/snowflake-q2-preview-stock-moved-an-average-of-12-8-last-seven-earnings-reports-experts-says-buckle-up">Benzinga：Q2 前瞻</a> ·
+<a href="https://sg.finance.yahoo.com/news/buy-sell-hold-snow-stock-172000428.html">Zacks/Yahoo：财报前评估</a> ·
+<a href="https://markets.financialcontent.com/stocks/article/stockstory-2026-9-1-snowflake-earnings-what-to-look-for-from-snow">StockStory：财报看点</a>
+<br><br>
+市场数据与竞争：
+<a href="https://finance.yahoo.com/quote/SNOW/">Yahoo Finance（价格、股本、beta、一致预期、可比公司，2026-09-01 收盘）</a> ·
+<a href="https://www.databricks.com/company/newsroom/press-releases/databricks-grows-65-yoy-surpasses-5-4-billion-revenue-run-rate">Databricks 新闻稿</a> ·
+<a href="https://www.morningstar.com/stocks/after-earnings-is-snowflake-stock-buy-sell-or-fairly-valued-7">Morningstar（TAM 与份额口径）</a> ·
+<a href="https://www.snowflake.com/en/news/press-releases/snowflake-unveils-cortex-code-an-ai-coding-agent-that-drastically-increases-productivity-by-understanding-your-enterprise-data-context/">Cortex Code 发布稿</a>
+</p>
+
+<div class="disc">
+  <b>免责与方法说明。</b>本报告由 Claude Research 依据公开资料撰写，用于投资研究与学习，不构成投资建议。
+  所有价格、财务数据均标注来源与日期；无法从一手资料核对的字段已在 §12.1 显式列出，未以主观判断填补。
+  本报告遵循本项目的核心约束：不编造数据、价格锚点优先、不使用「低估/高估/合理」等主观估值评价词、
+  完整性自检、以及临近催化剂（14 天内）时加仓建议一律改为观望。
+  <br><br>
+  <b>本报告撰写于 2026-09-02 SGT，Snowflake Q2 FY2027 财报尚未发布。财报落地后本报告的全部结论需要重审。</b>
+</div>
+
+</div></body></html>
